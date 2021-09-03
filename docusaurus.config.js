@@ -6,7 +6,7 @@ module.exports = {
   title: 'MilMove Documentation',
   tagline: '',
   url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  baseUrl: '/mymove-docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
