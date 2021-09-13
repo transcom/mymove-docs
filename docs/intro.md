@@ -33,3 +33,7 @@ npx docusaurus start
 Your site starts at `http://localhost:3000`.
 
 Open `docs/intro.md` and edit some lines: the site **reloads automatically** and display your changes.
+
+Hi I'm sandy and I work at Truss
+
+![Truss logo](/img/truss-icon-light.png)
