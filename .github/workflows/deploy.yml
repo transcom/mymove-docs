@@ -2,7 +2,7 @@ name: Deploy Docusaurus to GitHub Pages
 
 on:
   push:
-    branches: [ sw-build-docs ]
+    branches: [ main ]
 
   # enables manual runs
   workflow_dispatch:
