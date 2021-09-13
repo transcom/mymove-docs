@@ -1,0 +1,2883 @@
+{
+	"info": {
+		"_postman_id": "1d2ab1ed-8250-42ce-96a5-fd9bc5a11cc0",
+		"name": "Prime E2E Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "fetchMTOUpdates",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/move-task-orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"move-task-orders"
+					],
+					"query": [
+						{
+							"key": "since",
+							"value": "<timestamp>",
+							"description": "Only return move task orders updated since this time.",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Gets all move task orders where `availableToPrimeAt` has been set. This prevents viewing any move task orders that have not been made available to the Prime.\n"
+			},
+			"response": [
+				{
+					"name": "Successfully retrieved move task orders where `availableToPrimeAt` has been set.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders?since=<timestamp>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders"
+							],
+							"query": [
+								{
+									"key": "since",
+									"value": "<timestamp>"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n {\n  \"mtoShipments\": [\n   {\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"createdAt\": \"1993-12-25T23:08:20.456Z\",\n    \"updatedAt\": \"1961-12-03T02:11:38.527Z\",\n    \"approvedDate\": \"2007-02-26\",\n    \"scheduledPickupDate\": \"1976-05-21\",\n    \"requestedPickupDate\": \"1968-03-24\",\n    \"firstAvailableDeliveryDate\": \"2004-09-07\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"primeEstimatedWeightRecordedDate\": \"1982-01-29\",\n    \"actualPickupDate\": \"1961-12-16\",\n    \"requiredDeliveryDate\": \"1974-02-01\",\n    \"agents\": [\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    ],\n    \"mtoServiceItems\": [\n     {\n      \"modelType\": \"MTOServiceItemShuttle\",\n      \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"reServiceName\": \"fugiat exercitation enim aliquip\",\n      \"status\": \"REJECTED\",\n      \"rejectionReason\": \"item was too heavy\",\n      \"eTag\": \"ea sint do in non\"\n     },\n     {\n      \"modelType\": \"MTOServiceItemShuttle\",\n      \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"reServiceName\": \"dolore sit\",\n      \"status\": \"APPROVED\",\n      \"rejectionReason\": \"item was too heavy\",\n      \"eTag\": \"non culpa nisi\"\n     }\n    ],\n    \"customerRemarks\": \"handle with care\",\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"SD\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"nostrud ea culpa in\"\n    },\n    \"destinationAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"MD\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"Ut\"\n    },\n    \"secondaryPickupAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"MO\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"aute exercitation do\"\n    },\n    \"secondaryDeliveryAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"NJ\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"aute velit ex in in\"\n    },\n    \"eTag\": \"dolore sunt\",\n    \"status\": \"REJECTED\",\n    \"rejectionReason\": \"MTO Shipment not good enough\",\n    \"pointOfContact\": \"en\"\n   },\n   {\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"createdAt\": \"1995-05-28T01:47:49.911Z\",\n    \"updatedAt\": \"1945-11-08T11:06:52.729Z\",\n    \"approvedDate\": \"1986-03-18\",\n    \"scheduledPickupDate\": \"1958-10-24\",\n    \"requestedPickupDate\": \"1986-11-17\",\n    \"firstAvailableDeliveryDate\": \"2016-10-31\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"primeEstimatedWeightRecordedDate\": \"1944-06-13\",\n    \"actualPickupDate\": \"1963-10-14\",\n    \"requiredDeliveryDate\": \"2011-09-23\",\n    \"agents\": [\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    ],\n    \"mtoServiceItems\": [\n     {\n      \"modelType\": \"MTOServiceItemBasic\",\n      \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"reServiceName\": \"dolore dolor\",\n      \"status\": \"SUBMITTED\",\n      \"rejectionReason\": \"item was too heavy\",\n      \"eTag\": \"adipisicing aliquip\"\n     },\n     {\n      \"modelType\": \"MTOServiceItemBasic\",\n      \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"reServiceName\": \"nostrud\",\n      \"status\": \"REJECTED\",\n      \"rejectionReason\": \"item was too heavy\",\n      \"eTag\": \"in eu\"\n     }\n    ],\n    \"customerRemarks\": \"handle with care\",\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"MI\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"labore ipsum occaecat elit nostrud\"\n    },\n    \"destinationAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"MT\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"nostrud\"\n    },\n    \"secondaryPickupAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"NC\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"ad amet consequat\"\n    },\n    \"secondaryDeliveryAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"SD\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"nulla exercitation ut cillum\"\n    },\n    \"eTag\": \"occaecat consectetur\",\n    \"status\": \"REJECTED\",\n    \"rejectionReason\": \"MTO Shipment not good enough\",\n    \"pointOfContact\": \"officia minim \"\n   }\n  ],\n  \"mtoServiceItems\": [\n   {\n    \"modelType\": \"MTOServiceItemSITDeparture\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"reServiceName\": \"est aute\",\n    \"status\": \"APPROVED\",\n    \"rejectionReason\": \"item was too heavy\",\n    \"eTag\": \"ex velit\"\n   },\n   {\n    \"modelType\": \"MTOServiceItemDDFSIT\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"reServiceName\": \"elit in aliquip cillum\",\n    \"status\": \"SUBMITTED\",\n    \"rejectionReason\": \"item was too heavy\",\n    \"eTag\": \"exercitation in\"\n   }\n  ],\n  \"paymentRequests\": [\n   {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"isFinal\": false,\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"rejectionReason\": \"documentation was incomplete\",\n    \"status\": \"SENT_TO_GEX\",\n    \"paymentRequestNumber\": \"1234-5678-1\",\n    \"proofOfServiceDocs\": {\n     \"uploads\": [\n      {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     ]\n    },\n    \"paymentServiceItems\": [\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    ],\n    \"eTag\": \"adipisicing\"\n   },\n   {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"isFinal\": false,\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"rejectionReason\": \"documentation was incomplete\",\n    \"status\": \"PAID\",\n    \"paymentRequestNumber\": \"1234-5678-1\",\n    \"proofOfServiceDocs\": {\n     \"uploads\": [\n      {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     ]\n    },\n    \"paymentServiceItems\": [\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    ],\n    \"eTag\": \"quis veniam mollit in\"\n   }\n  ],\n  \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"createdAt\": \"1993-03-26T09:21:18.070Z\",\n  \"moveOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n  \"moveOrder\": {\n   \"orderNumber\": \"consequat in qui\",\n   \"rank\": \"E_5\",\n   \"linesOfAccounting\": \"voluptate\",\n   \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"customer\": {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"dodID\": \"velit culpa in\",\n    \"userID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"currentAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"ND\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"anim aliqua cupidatat \"\n    },\n    \"firstName\": \"Vanya\",\n    \"lastName\": \"Petrovna\",\n    \"branch\": \"COAST_GUARD\",\n    \"phone\": \"ipsum aute enim\",\n    \"email\": \"fake@example.com\",\n    \"eTag\": \"ad ut reprehenderit\"\n   },\n   \"customerID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"entitlement\": {\n    \"id\": \"571008b1-b0de-454d-b843-d71be9f02c04\",\n    \"authorizedWeight\": 2000,\n    \"dependentsAuthorized\": true,\n    \"nonTemporaryStorage\": false,\n    \"privatelyOwnedVehicle\": false,\n    \"proGearWeight\": 2000,\n    \"proGearWeightSpouse\": 500,\n    \"storageInTransit\": 90,\n    \"totalWeight\": 500,\n    \"totalDependents\": 2,\n    \"eTag\": \"do magna non dolor\"\n   },\n   \"destinationDutyStation\": {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"name\": \"Fort Bragg North Station\",\n    \"addressID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"address\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"MS\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"nulla in dolor\"\n    },\n    \"eTag\": \"id fugiat in\"\n   },\n   \"originDutyStation\": {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"name\": \"Fort Bragg North Station\",\n    \"addressID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"address\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"RI\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"in\"\n    },\n    \"eTag\": \"irur\"\n   },\n   \"reportByDate\": \"1942-05-04\",\n   \"confirmationNumber\": \"HYXFJF\",\n   \"eTag\": \"aute nisi eiusmod\"\n  },\n  \"referenceId\": \"1001-3456\",\n  \"availableToPrimeAt\": \"1991-05-16T23:06:29.372Z\",\n  \"isCanceled\": false,\n  \"updatedAt\": \"1970-04-16T04:54:12.517Z\",\n  \"ppmType\": \"PARTIAL\",\n  \"ppmEstimatedWeight\": 32469852,\n  \"eTag\": \"in pariatur ut tempor\"\n },\n {\n  \"mtoShipments\": [\n   {\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"createdAt\": \"1985-07-20T01:28:28.820Z\",\n    \"updatedAt\": \"1946-12-20T22:25:47.350Z\",\n    \"approvedDate\": \"1949-05-05\",\n    \"scheduledPickupDate\": \"1969-01-15\",\n    \"requestedPickupDate\": \"1946-06-24\",\n    \"firstAvailableDeliveryDate\": \"1957-08-24\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"primeEstimatedWeightRecordedDate\": \"2001-03-26\",\n    \"actualPickupDate\": \"1980-12-25\",\n    \"requiredDeliveryDate\": \"1955-10-21\",\n    \"agents\": [\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    ],\n    \"mtoServiceItems\": [\n     {\n      \"modelType\": \"MTOServiceItemDOFSIT\",\n      \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"reServiceName\": \"ipsum consectetur ut\",\n      \"status\": \"SUBMITTED\",\n      \"rejectionReason\": \"item was too heavy\",\n      \"eTag\": \"nulla ea voluptate\"\n     },\n     {\n      \"modelType\": \"MTOServiceItemDDFSIT\",\n      \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"reServiceName\": \"ut e\",\n      \"status\": \"APPROVED\",\n      \"rejectionReason\": \"item was too heavy\",\n      \"eTag\": \"aute ullamco Ut reprehenderit\"\n     }\n    ],\n    \"customerRemarks\": \"handle with care\",\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"FL\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"Duis magna\"\n    },\n    \"destinationAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"SC\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"consequat exercitation\"\n    },\n    \"secondaryPickupAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"AZ\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"nulla ullamco cupidatat\"\n    },\n    \"secondaryDeliveryAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"MI\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"sunt\"\n    },\n    \"eTag\": \"anim fugiat\",\n    \"status\": \"APPROVED\",\n    \"rejectionReason\": \"MTO Shipment not good enough\",\n    \"pointOfContact\": \"eu aliqua do ad laboris\"\n   },\n   {\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"createdAt\": \"2019-01-09T23:35:01.223Z\",\n    \"updatedAt\": \"1968-09-21T06:13:52.912Z\",\n    \"approvedDate\": \"1949-05-24\",\n    \"scheduledPickupDate\": \"1971-06-29\",\n    \"requestedPickupDate\": \"1942-12-11\",\n    \"firstAvailableDeliveryDate\": \"1955-12-09\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"primeEstimatedWeightRecordedDate\": \"1994-10-04\",\n    \"actualPickupDate\": \"1953-01-29\",\n    \"requiredDeliveryDate\": \"2015-06-18\",\n    \"agents\": [\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    ],\n    \"mtoServiceItems\": [\n     {\n      \"modelType\": \"MTOServiceItemSITDeparture\",\n      \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"reServiceName\": \"dolore ex mollit fugiat tempor\",\n      \"status\": \"REJECTED\",\n      \"rejectionReason\": \"item was too heavy\",\n      \"eTag\": \"cillum\"\n     },\n     {\n      \"modelType\": \"MTOServiceItemDOFSIT\",\n      \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n      \"reServiceName\": \"pariatur incididunt Lorem\",\n      \"status\": \"REJECTED\",\n      \"rejectionReason\": \"item was too heavy\",\n      \"eTag\": \"quis exercitation\"\n     }\n    ],\n    \"customerRemarks\": \"handle with care\",\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"SD\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"enim\"\n    },\n    \"destinationAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"ND\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"deserunt sint\"\n    },\n    \"secondaryPickupAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"NY\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"consequ\"\n    },\n    \"secondaryDeliveryAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"DC\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"consectetur c\"\n    },\n    \"eTag\": \"ex nulla sunt velit\",\n    \"status\": \"APPROVED\",\n    \"rejectionReason\": \"MTO Shipment not good enough\",\n    \"pointOfContact\": \"laboris quis ut amet\"\n   }\n  ],\n  \"mtoServiceItems\": [\n   {\n    \"modelType\": \"MTOServiceItemDomesticCrating\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"reServiceName\": \"dolor magna dolore tempor\",\n    \"status\": \"SUBMITTED\",\n    \"rejectionReason\": \"item was too heavy\",\n    \"eTag\": \"officia id reprehenderit do sint\"\n   },\n   {\n    \"modelType\": \"MTOServiceItemBasic\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"reServiceName\": \"magna\",\n    \"status\": \"REJECTED\",\n    \"rejectionReason\": \"item was too heavy\",\n    \"eTag\": \"enim Duis adipisicing in elit\"\n   }\n  ],\n  \"paymentRequests\": [\n   {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"isFinal\": false,\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"rejectionReason\": \"documentation was incomplete\",\n    \"status\": \"PAID\",\n    \"paymentRequestNumber\": \"1234-5678-1\",\n    \"proofOfServiceDocs\": {\n     \"uploads\": [\n      {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     ]\n    },\n    \"paymentServiceItems\": [\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    ],\n    \"eTag\": \"laboris\"\n   },\n   {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"isFinal\": false,\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"rejectionReason\": \"documentation was incomplete\",\n    \"status\": \"RECEIVED_BY_GEX\",\n    \"paymentRequestNumber\": \"1234-5678-1\",\n    \"proofOfServiceDocs\": {\n     \"uploads\": [\n      {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n       \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n     ]\n    },\n    \"paymentServiceItems\": [\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    ],\n    \"eTag\": \"aliquip qui sunt \"\n   }\n  ],\n  \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"createdAt\": \"1972-03-26T10:40:37.172Z\",\n  \"moveOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n  \"moveOrder\": {\n   \"orderNumber\": \"ut ullamco non\",\n   \"rank\": \"E_5\",\n   \"linesOfAccounting\": \"amet in anim exercitation\",\n   \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"customer\": {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"dodID\": \"proident culpa in nostrud\",\n    \"userID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"currentAddress\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"PA\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"ad in minim reprehender\"\n    },\n    \"firstName\": \"Vanya\",\n    \"lastName\": \"Petrovna\",\n    \"branch\": \"COAST_GUARD\",\n    \"phone\": \"Lorem dolor pariatur\",\n    \"email\": \"fake@example.com\",\n    \"eTag\": \"in esse ullamco ve\"\n   },\n   \"customerID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"entitlement\": {\n    \"id\": \"571008b1-b0de-454d-b843-d71be9f02c04\",\n    \"authorizedWeight\": 2000,\n    \"dependentsAuthorized\": true,\n    \"nonTemporaryStorage\": false,\n    \"privatelyOwnedVehicle\": false,\n    \"proGearWeight\": 2000,\n    \"proGearWeightSpouse\": 500,\n    \"storageInTransit\": 90,\n    \"totalWeight\": 500,\n    \"totalDependents\": 2,\n    \"eTag\": \"eu occaecat\"\n   },\n   \"destinationDutyStation\": {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"name\": \"Fort Bragg North Station\",\n    \"addressID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"address\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"NV\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"et culp\"\n    },\n    \"eTag\": \"anim sint elit\"\n   },\n   \"originDutyStation\": {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"name\": \"Fort Bragg North Station\",\n    \"addressID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"address\": {\n     \"streetAddress1\": \"123 Main Ave\",\n     \"city\": \"Anytown\",\n     \"state\": \"AR\",\n     \"postalCode\": \"90210\",\n     \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n     \"streetAddress2\": \"Apartment 9000\",\n     \"streetAddress3\": \"Montmârtre\",\n     \"country\": \"USA\",\n     \"eTag\": \"pariatur officia\"\n    },\n    \"eTag\": \"eu in proident magna\"\n   },\n   \"reportByDate\": \"1996-09-01\",\n   \"confirmationNumber\": \"HYXFJF\",\n   \"eTag\": \"dolore fugiat Duis laborum\"\n  },\n  \"referenceId\": \"1001-3456\",\n  \"availableToPrimeAt\": \"1983-01-19T00:26:16.512Z\",\n  \"isCanceled\": true,\n  \"updatedAt\": \"1959-12-24T16:04:30.588Z\",\n  \"ppmType\": \"FULL\",\n  \"ppmEstimatedWeight\": -66769000,\n  \"eTag\": \"iru\"\n }\n]"
+				},
+				{
+					"name": "The request payload is invalid.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders?since=<timestamp>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders"
+							],
+							"query": [
+								{
+									"key": "since",
+									"value": "<timestamp>"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders?since=<timestamp>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders"
+							],
+							"query": [
+								{
+									"key": "since",
+									"value": "<timestamp>"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders?since=<timestamp>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders"
+							],
+							"query": [
+								{
+									"key": "since",
+									"value": "<timestamp>"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The requested resource wasn't found.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders?since=<timestamp>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders"
+							],
+							"query": [
+								{
+									"key": "since",
+									"value": "<timestamp>"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "A server error occurred.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders?since=<timestamp>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders"
+							],
+							"query": [
+								{
+									"key": "since",
+									"value": "<timestamp>"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "getMoveTaskOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"if (pm.response.code == 200){",
+							"",
+							"    json = pm.response.json()",
+							"    if (json.mtoShipments) {",
+							"        let field = \"mtoShipmentID\";",
+							"        let value = json.mtoShipments[0].id;",
+							"        console.log(`Setting ${field} = ${value}`)",
+							"        pm.collectionVariables.set(field, value)",
+							"    } else {",
+							"        console.log(\"Error: No Shipments found on Move.\")",
+							"    }",
+							"    if (json.mtoShipments && json.mtoShipments[0].eTag) {",
+							"        let field = \"mtoShipmentETAG\";",
+							"        let value = json.mtoShipments[0].eTag;",
+							"        console.log(`Setting ${field} = ${value}`)",
+							"        pm.collectionVariables.set(field, value)",
+							"    }",
+							"}",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{supportUrl}}/move-task-orders/:moveTaskOrderID",
+					"host": [
+						"{{supportUrl}}"
+					],
+					"path": [
+						"move-task-orders",
+						":moveTaskOrderID"
+					],
+					"variable": [
+						{
+							"key": "moveTaskOrderID",
+							"value": "{{moveTaskOrderID}}",
+							"type": "string",
+							"description": "(Required) UUID of move task order to use."
+						}
+					]
+				},
+				"description": "### Functionality\nThis endpoint gets an individual MoveTaskOrder by ID.\n\nIt will provide nested information about the Customer and any associated MTOShipments, MTOServiceItems and PaymentRequests.\n\nThis is a support endpoint and is not available in production.\n"
+			},
+			"response": [
+				{
+					"name": "A server error occurred.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders/:moveTaskOrderID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders",
+								":moveTaskOrderID"
+							],
+							"variable": [
+								{
+									"key": "moveTaskOrderID"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders/:moveTaskOrderID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders",
+								":moveTaskOrderID"
+							],
+							"variable": [
+								{
+									"key": "moveTaskOrderID"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Successfully retrieve an individual move task order.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders/:moveTaskOrderID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders",
+								":moveTaskOrderID"
+							],
+							"variable": [
+								{
+									"key": "moveTaskOrderID"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"order\": {\n  \"orderNumber\": \"030-00362\",\n  \"ordersType\": \"NTS\",\n  \"rank\": \"ACADEMY_CADET\",\n  \"reportByDate\": \"2019-03-19\",\n  \"issueDate\": \"1994-11-14\",\n  \"status\": \"APPROVED\",\n  \"uploadedOrdersID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n  \"tac\": \"F8J1\",\n  \"originDutyStationID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n  \"destinationDutyStationID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n  \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"customer\": {\n   \"firstName\": \"Vanya\",\n   \"lastName\": \"Petrovna\",\n   \"dodID\": \"quis Lorem voluptate culpa\",\n   \"rank\": \"W_5\",\n   \"agency\": \"sed in ex reprehenderi\",\n   \"phone\": \"491-259-4852\",\n   \"email\": \"_cMRnufCX%@xn.t.ETgyohAv\",\n   \"currentAddress\": {\n    \"streetAddress1\": \"123 Main Ave\",\n    \"city\": \"Anytown\",\n    \"state\": \"OH\",\n    \"postalCode\": \"90210\",\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"streetAddress2\": \"Apartment 9000\",\n    \"streetAddress3\": \"Montmârtre\",\n    \"eTag\": \"elit minim amet\",\n    \"country\": \"USA\"\n   },\n   \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"userID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"eTag\": \"sunt quis officia\"\n  },\n  \"customerID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n  \"entitlement\": {\n   \"id\": \"571008b1-b0de-454d-b843-d71be9f02c04\",\n   \"authorizedWeight\": 2000,\n   \"dependentsAuthorized\": true,\n   \"nonTemporaryStorage\": false,\n   \"privatelyOwnedVehicle\": false,\n   \"proGearWeight\": 2000,\n   \"proGearWeightSpouse\": 500,\n   \"storageInTransit\": 90,\n   \"totalWeight\": 500,\n   \"totalDependents\": 2,\n   \"eTag\": \"magna irure qui\"\n  },\n  \"destinationDutyStation\": {\n   \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"name\": \"Fort Bragg North Station\"\n  },\n  \"originDutyStation\": {\n   \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"name\": \"Fort Bragg North Station\"\n  },\n  \"uploadedOrders\": {\n   \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"serviceMemberID\": \"d929ea76-f869-c628-e7ba-5a987bc8b94f\",\n   \"uploads\": [\n    {\n     \"id\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"url\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"filename\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"contentType\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"bytes\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"status\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"createdAt\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"updatedAt\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    },\n    {\n     \"id\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"url\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"filename\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"contentType\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"bytes\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"status\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"createdAt\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     \"updatedAt\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    }\n   ]\n  },\n  \"eTag\": \"laboris Excepteur Lorem\"\n },\n \"contractorID\": \"5db13bb4-6d29-4bdb-bc81-262f4513ecf6\",\n \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n \"createdAt\": \"1959-03-10T03:36:43.764Z\",\n \"orderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n \"referenceId\": \"1001-3456\",\n \"availableToPrimeAt\": \"<dateTime>\",\n \"isCanceled\": false,\n \"updatedAt\": \"2002-10-07T00:14:59.891Z\",\n \"paymentRequests\": [\n  {\n   \"documentPackage\": {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"uploads\": [\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    ]\n   },\n   \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"isFinal\": false,\n   \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"rejectionReason\": \"documentation was incomplete\",\n   \"status\": \"PENDING\",\n   \"paymentRequestNumber\": \"1234-5678-1\",\n   \"eTag\": \"magna\"\n  },\n  {\n   \"documentPackage\": {\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"uploads\": [\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     },\n     {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n     }\n    ]\n   },\n   \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"isFinal\": false,\n   \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n   \"rejectionReason\": \"documentation was incomplete\",\n   \"status\": \"REVIEWED\",\n   \"paymentRequestNumber\": \"1234-5678-1\",\n   \"eTag\": \"ut laborum dolore sint\"\n  }\n ],\n \"mtoServiceItems\": [\n  {\n   \"modelType\": \"MTOServiceItemBasic\",\n   \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"reServiceName\": \"laboris velit elit id quis\",\n   \"status\": \"REJECTED\",\n   \"rejectionReason\": \"item was too heavy\",\n   \"eTag\": \"mollit exercit\"\n  },\n  {\n   \"modelType\": \"MTOServiceItemBasic\",\n   \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"reServiceName\": \"aliquip sint\",\n   \"status\": \"SUBMITTED\",\n   \"rejectionReason\": \"item was too heavy\",\n   \"eTag\": \"tempor s\"\n  }\n ],\n \"mtoShipments\": [\n  {\n   \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"createdAt\": \"1963-01-05T01:07:33.422Z\",\n   \"updatedAt\": \"1943-10-17T10:57:08.558Z\",\n   \"approvedDate\": \"1961-07-03\",\n   \"scheduledPickupDate\": \"1955-12-08\",\n   \"requestedPickupDate\": \"2012-03-08\",\n   \"firstAvailableDeliveryDate\": \"1970-10-02\",\n   \"primeActualWeight\": 4500,\n   \"primeEstimatedWeight\": 4500,\n   \"primeEstimatedWeightRecordedDate\": \"1990-02-08\",\n   \"actualPickupDate\": \"1946-10-22\",\n   \"requiredDeliveryDate\": \"1944-08-23\",\n   \"agents\": [\n    {\n     \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n     \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n   ],\n   \"mtoServiceItems\": [\n    {\n     \"modelType\": \"MTOServiceItemDestSIT\",\n     \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"reServiceName\": \"qui enim pariatur\",\n     \"status\": \"SUBMITTED\",\n     \"rejectionReason\": \"item was too heavy\",\n     \"eTag\": \"exercitation Ut reprehenderit\"\n    },\n    {\n     \"modelType\": \"MTOServiceItemDomesticCrating\",\n     \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"reServiceName\": \"proident eu\",\n     \"status\": \"SUBMITTED\",\n     \"rejectionReason\": \"item was too heavy\",\n     \"eTag\": \"laboris ad\"\n    }\n   ],\n   \"customerRemarks\": \"handle with care\",\n   \"shipmentType\": \"HHG\",\n   \"pickupAddress\": {\n    \"streetAddress1\": \"123 Main Ave\",\n    \"city\": \"Anytown\",\n    \"state\": \"TX\",\n    \"postalCode\": \"90210\",\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"streetAddress2\": \"Apartment 9000\",\n    \"streetAddress3\": \"Montmârtre\",\n    \"eTag\": \"reprehenderit sint\",\n    \"country\": \"USA\"\n   },\n   \"destinationAddress\": {\n    \"streetAddress1\": \"123 Main Ave\",\n    \"city\": \"Anytown\",\n    \"state\": \"CO\",\n    \"postalCode\": \"90210\",\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"streetAddress2\": \"Apartment 9000\",\n    \"streetAddress3\": \"Montmârtre\",\n    \"eTag\": \"consequat quis occaecat velit amet\",\n    \"country\": \"USA\"\n   },\n   \"secondaryPickupAddress\": {\n    \"streetAddress1\": \"123 Main Ave\",\n    \"city\": \"Anytown\",\n    \"state\": \"CO\",\n    \"postalCode\": \"90210\",\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"streetAddress2\": \"Apartment 9000\",\n    \"streetAddress3\": \"Montmârtre\",\n    \"eTag\": \"irure veniam\",\n    \"country\": \"USA\"\n   },\n   \"secondaryDeliveryAddress\": {\n    \"streetAddress1\": \"123 Main Ave\",\n    \"city\": \"Anytown\",\n    \"state\": \"ND\",\n    \"postalCode\": \"90210\",\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"streetAddress2\": \"Apartment 9000\",\n    \"streetAddress3\": \"Montmârtre\",\n    \"eTag\": \"ea ut\",\n    \"country\": \"USA\"\n   },\n   \"eTag\": \"quis labo\",\n   \"status\": \"SUBMITTED\",\n   \"rejectionReason\": \"MTO Shipment not good enough\",\n   \"pointOfContact\": \"aliqua anim\"\n  },\n  {\n   \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"createdAt\": \"2013-03-12T21:53:30.188Z\",\n   \"updatedAt\": \"1990-11-26T02:30:15.773Z\",\n   \"approvedDate\": \"2014-05-23\",\n   \"scheduledPickupDate\": \"1947-11-30\",\n   \"requestedPickupDate\": \"1977-06-04\",\n   \"firstAvailableDeliveryDate\": \"1945-06-21\",\n   \"primeActualWeight\": 4500,\n   \"primeEstimatedWeight\": 4500,\n   \"primeEstimatedWeightRecordedDate\": \"1966-03-30\",\n   \"actualPickupDate\": \"2000-01-04\",\n   \"requiredDeliveryDate\": \"1981-12-14\",\n   \"agents\": [\n    {\n     \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    {\n     \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n   ],\n   \"mtoServiceItems\": [\n    {\n     \"modelType\": \"MTOServiceItemDestSIT\",\n     \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"reServiceName\": \"voluptate sed cup\",\n     \"status\": \"REJECTED\",\n     \"rejectionReason\": \"item was too heavy\",\n     \"eTag\": \"cillum dolore magna et\"\n    },\n    {\n     \"modelType\": \"MTOServiceItemShuttle\",\n     \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n     \"reServiceName\": \"reprehenderit occaecat anim cupidatat\",\n     \"status\": \"REJECTED\",\n     \"rejectionReason\": \"item was too heavy\",\n     \"eTag\": \"velit in nulla d\"\n    }\n   ],\n   \"customerRemarks\": \"handle with care\",\n   \"shipmentType\": \"HHG\",\n   \"pickupAddress\": {\n    \"streetAddress1\": \"123 Main Ave\",\n    \"city\": \"Anytown\",\n    \"state\": \"FL\",\n    \"postalCode\": \"90210\",\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"streetAddress2\": \"Apartment 9000\",\n    \"streetAddress3\": \"Montmârtre\",\n    \"eTag\": \"reprehenderit qui\",\n    \"country\": \"USA\"\n   },\n   \"destinationAddress\": {\n    \"streetAddress1\": \"123 Main Ave\",\n    \"city\": \"Anytown\",\n    \"state\": \"OH\",\n    \"postalCode\": \"90210\",\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"streetAddress2\": \"Apartment 9000\",\n    \"streetAddress3\": \"Montmârtre\",\n    \"eTag\": \"culpa consequat\",\n    \"country\": \"USA\"\n   },\n   \"secondaryPickupAddress\": {\n    \"streetAddress1\": \"123 Main Ave\",\n    \"city\": \"Anytown\",\n    \"state\": \"FL\",\n    \"postalCode\": \"90210\",\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"streetAddress2\": \"Apartment 9000\",\n    \"streetAddress3\": \"Montmârtre\",\n    \"eTag\": \"consectetur\",\n    \"country\": \"USA\"\n   },\n   \"secondaryDeliveryAddress\": {\n    \"streetAddress1\": \"123 Main Ave\",\n    \"city\": \"Anytown\",\n    \"state\": \"NH\",\n    \"postalCode\": \"90210\",\n    \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"streetAddress2\": \"Apartment 9000\",\n    \"streetAddress3\": \"Montmârtre\",\n    \"eTag\": \"id\",\n    \"country\": \"USA\"\n   },\n   \"eTag\": \"molli\",\n   \"status\": \"APPROVED\",\n   \"rejectionReason\": \"MTO Shipment not good enough\",\n   \"pointOfContact\": \"ad officia\"\n  }\n ],\n \"ppmType\": \"<string>\",\n \"ppmEstimatedWeight\": \"<integer>\",\n \"eTag\": \"adipisicing Duis\",\n \"status\": \"APPROVED\",\n \"moveCode\": \"ABC123\"\n}"
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders/:moveTaskOrderID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders",
+								":moveTaskOrderID"
+							],
+							"variable": [
+								{
+									"key": "moveTaskOrderID"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The requested resource wasn't found.",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/move-task-orders/:moveTaskOrderID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"move-task-orders",
+								":moveTaskOrderID"
+							],
+							"variable": [
+								{
+									"key": "moveTaskOrderID"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "updateMTOShipment",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"description": "(Required) Optimistic locking is implemented via the `If-Match` header. If the ETag header does not match the value of the resource on the server, the server rejects the change with a `412 Precondition Failed` error.\n",
+						"key": "If-Match",
+						"value": "{{mtoShipmentETAG}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"scheduledPickupDate\": \"2021-06-15\",\n    \"actualPickupDate\": \"2021-06-20\",\n    \"primeActualWeight\": 3300,\n    \"primeEstimatedWeight\": 3000\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/mto-shipments/:mtoShipmentID",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"mto-shipments",
+						":mtoShipmentID"
+					],
+					"variable": [
+						{
+							"key": "mtoShipmentID",
+							"value": "{{mtoShipmentID}}",
+							"type": "string",
+							"description": "(Required) UUID of the shipment being updated."
+						}
+					]
+				},
+				"description": "Updates an existing shipment for a Move Task Order (MTO). Only the following fields can be updated using this endpoint:\n\n* `scheduledPickupDate`\n* `actualPickupDate`\n* `firstAvailableDeliveryDate`\n* `destinationAddress`\n* `pickupAddress`\n* `secondaryDeliveryAddress`\n* `secondaryPickupAddress`\n* `primeEstimatedWeight`\n* `primeActualWeight`\n* `shipmentType`\n* `agents` - all subfields except `mtoShipmentID`, `createdAt`, `updatedAt`. You cannot add new agents to a shipment.\n\nNote that some fields cannot be manually changed but will still be updated automatically, such as `primeEstimatedWeightRecordedDate` and `requiredDeliveryDate`.\n"
+			},
+			"response": [
+				{
+					"name": "Successfully updated the MTO shipment.",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"description": "(Required) Optimistic locking is implemented via the `If-Match` header. If the ETag header does not match the value of the resource on the server, the server rejects the change with a `412 Precondition Failed` error.\n",
+								"key": "If-Match",
+								"value": "<string>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduledPickupDate\": \"<date>\",\n    \"firstAvailableDeliveryDate\": \"<date>\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"actualPickupDate\": \"<date>\",\n    \"agents\": [\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n    ],\n    \"mtoServiceItems\": [\n        {\n            \"modelType\": \"MTOServiceItemDomesticCrating\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"irure \",\n            \"status\": \"REJECTED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"Lorem tempor laborum\"\n        },\n        {\n            \"modelType\": \"MTOServiceItemDOFSIT\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"labore in anim dolore occaecat\",\n            \"status\": \"APPROVED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"eiusmod est magna\"\n        }\n    ],\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"KS\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"ex occaecat eiusmod\"\n    },\n    \"destinationAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"ID\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"nisi cillum ut consectetur nostrud\"\n    },\n    \"secondaryPickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"MN\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"enim proident culpa\"\n    },\n    \"secondaryDeliveryAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"VA\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"Ut velit ullamco\"\n    },\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-shipments/:mtoShipmentID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-shipments",
+								":mtoShipmentID"
+							],
+							"variable": [
+								{
+									"key": "mtoShipmentID"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n \"createdAt\": \"2002-08-01T06:28:27.690Z\",\n \"updatedAt\": \"2014-08-24T01:23:34.042Z\",\n \"approvedDate\": \"1967-11-06\",\n \"scheduledPickupDate\": \"<date>\",\n \"requestedPickupDate\": \"1986-10-07\",\n \"firstAvailableDeliveryDate\": \"<date>\",\n \"primeActualWeight\": 4500,\n \"primeEstimatedWeight\": 4500,\n \"primeEstimatedWeightRecordedDate\": \"1978-11-27\",\n \"actualPickupDate\": \"<date>\",\n \"requiredDeliveryDate\": \"1943-04-24\",\n \"agents\": [\n  {\n   \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n  },\n  {\n   \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n  }\n ],\n \"mtoServiceItems\": [\n  {\n   \"modelType\": \"MTOServiceItemDOFSIT\",\n   \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"reServiceName\": \"Excepteur adipisicing quis reprehenderit\",\n   \"status\": \"APPROVED\",\n   \"rejectionReason\": \"item was too heavy\",\n   \"eTag\": \"cupidat\"\n  },\n  {\n   \"modelType\": \"MTOServiceItemShuttle\",\n   \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n   \"reServiceName\": \"ullamco sunt\",\n   \"status\": \"REJECTED\",\n   \"rejectionReason\": \"item was too heavy\",\n   \"eTag\": \"n\"\n  }\n ],\n \"customerRemarks\": \"handle with care\",\n \"shipmentType\": \"HHG\",\n \"pickupAddress\": {\n  \"streetAddress1\": \"123 Main Ave\",\n  \"city\": \"Anytown\",\n  \"state\": \"FL\",\n  \"postalCode\": \"90210\",\n  \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n  \"streetAddress2\": \"Apartment 9000\",\n  \"streetAddress3\": \"Montmârtre\",\n  \"country\": \"USA\",\n  \"eTag\": \"Lorem qui\"\n },\n \"destinationAddress\": {\n  \"streetAddress1\": \"123 Main Ave\",\n  \"city\": \"Anytown\",\n  \"state\": \"MT\",\n  \"postalCode\": \"90210\",\n  \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n  \"streetAddress2\": \"Apartment 9000\",\n  \"streetAddress3\": \"Montmârtre\",\n  \"country\": \"USA\",\n  \"eTag\": \"velit\"\n },\n \"secondaryPickupAddress\": {\n  \"streetAddress1\": \"123 Main Ave\",\n  \"city\": \"Anytown\",\n  \"state\": \"RI\",\n  \"postalCode\": \"90210\",\n  \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n  \"streetAddress2\": \"Apartment 9000\",\n  \"streetAddress3\": \"Montmârtre\",\n  \"country\": \"USA\",\n  \"eTag\": \"ullamco\"\n },\n \"secondaryDeliveryAddress\": {\n  \"streetAddress1\": \"123 Main Ave\",\n  \"city\": \"Anytown\",\n  \"state\": \"SC\",\n  \"postalCode\": \"90210\",\n  \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n  \"streetAddress2\": \"Apartment 9000\",\n  \"streetAddress3\": \"Montmârtre\",\n  \"country\": \"USA\",\n  \"eTag\": \"mollit adipisicing laboris\"\n },\n \"eTag\": \"ad Duis laboris in cillum\",\n \"status\": \"APPROVED\",\n \"rejectionReason\": \"MTO Shipment not good enough\",\n \"pointOfContact\": \"<string>\"\n}"
+				},
+				{
+					"name": "A server error occurred.",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"description": "(Required) Optimistic locking is implemented via the `If-Match` header. If the ETag header does not match the value of the resource on the server, the server rejects the change with a `412 Precondition Failed` error.\n",
+								"key": "If-Match",
+								"value": "<string>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduledPickupDate\": \"<date>\",\n    \"firstAvailableDeliveryDate\": \"<date>\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"actualPickupDate\": \"<date>\",\n    \"agents\": [\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n    ],\n    \"mtoServiceItems\": [\n        {\n            \"modelType\": \"MTOServiceItemDomesticCrating\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"irure \",\n            \"status\": \"REJECTED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"Lorem tempor laborum\"\n        },\n        {\n            \"modelType\": \"MTOServiceItemDOFSIT\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"labore in anim dolore occaecat\",\n            \"status\": \"APPROVED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"eiusmod est magna\"\n        }\n    ],\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"KS\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"ex occaecat eiusmod\"\n    },\n    \"destinationAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"ID\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"nisi cillum ut consectetur nostrud\"\n    },\n    \"secondaryPickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"MN\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"enim proident culpa\"\n    },\n    \"secondaryDeliveryAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"VA\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"Ut velit ullamco\"\n    },\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-shipments/:mtoShipmentID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-shipments",
+								":mtoShipmentID"
+							],
+							"variable": [
+								{
+									"key": "mtoShipmentID"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The payload was unprocessable.",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"description": "(Required) Optimistic locking is implemented via the `If-Match` header. If the ETag header does not match the value of the resource on the server, the server rejects the change with a `412 Precondition Failed` error.\n",
+								"key": "If-Match",
+								"value": "<string>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduledPickupDate\": \"<date>\",\n    \"firstAvailableDeliveryDate\": \"<date>\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"actualPickupDate\": \"<date>\",\n    \"agents\": [\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n    ],\n    \"mtoServiceItems\": [\n        {\n            \"modelType\": \"MTOServiceItemDomesticCrating\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"irure \",\n            \"status\": \"REJECTED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"Lorem tempor laborum\"\n        },\n        {\n            \"modelType\": \"MTOServiceItemDOFSIT\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"labore in anim dolore occaecat\",\n            \"status\": \"APPROVED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"eiusmod est magna\"\n        }\n    ],\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"KS\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"ex occaecat eiusmod\"\n    },\n    \"destinationAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"ID\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"nisi cillum ut consectetur nostrud\"\n    },\n    \"secondaryPickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"MN\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"enim proident culpa\"\n    },\n    \"secondaryDeliveryAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"VA\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"Ut velit ullamco\"\n    },\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-shipments/:mtoShipmentID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-shipments",
+								":mtoShipmentID"
+							],
+							"variable": [
+								{
+									"key": "mtoShipmentID"
+								}
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request payload is invalid.",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"description": "(Required) Optimistic locking is implemented via the `If-Match` header. If the ETag header does not match the value of the resource on the server, the server rejects the change with a `412 Precondition Failed` error.\n",
+								"key": "If-Match",
+								"value": "<string>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduledPickupDate\": \"<date>\",\n    \"firstAvailableDeliveryDate\": \"<date>\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"actualPickupDate\": \"<date>\",\n    \"agents\": [\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n    ],\n    \"mtoServiceItems\": [\n        {\n            \"modelType\": \"MTOServiceItemDomesticCrating\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"irure \",\n            \"status\": \"REJECTED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"Lorem tempor laborum\"\n        },\n        {\n            \"modelType\": \"MTOServiceItemDOFSIT\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"labore in anim dolore occaecat\",\n            \"status\": \"APPROVED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"eiusmod est magna\"\n        }\n    ],\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"KS\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"ex occaecat eiusmod\"\n    },\n    \"destinationAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"ID\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"nisi cillum ut consectetur nostrud\"\n    },\n    \"secondaryPickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"MN\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"enim proident culpa\"\n    },\n    \"secondaryDeliveryAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"VA\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"Ut velit ullamco\"\n    },\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-shipments/:mtoShipmentID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-shipments",
+								":mtoShipmentID"
+							],
+							"variable": [
+								{
+									"key": "mtoShipmentID"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Precondition failed, likely due to a stale eTag (If-Match). Fetch the request again to get the updated eTag value.",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"description": "(Required) Optimistic locking is implemented via the `If-Match` header. If the ETag header does not match the value of the resource on the server, the server rejects the change with a `412 Precondition Failed` error.\n",
+								"key": "If-Match",
+								"value": "<string>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduledPickupDate\": \"<date>\",\n    \"firstAvailableDeliveryDate\": \"<date>\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"actualPickupDate\": \"<date>\",\n    \"agents\": [\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n    ],\n    \"mtoServiceItems\": [\n        {\n            \"modelType\": \"MTOServiceItemDomesticCrating\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"irure \",\n            \"status\": \"REJECTED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"Lorem tempor laborum\"\n        },\n        {\n            \"modelType\": \"MTOServiceItemDOFSIT\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"labore in anim dolore occaecat\",\n            \"status\": \"APPROVED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"eiusmod est magna\"\n        }\n    ],\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"KS\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"ex occaecat eiusmod\"\n    },\n    \"destinationAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"ID\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"nisi cillum ut consectetur nostrud\"\n    },\n    \"secondaryPickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"MN\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"enim proident culpa\"\n    },\n    \"secondaryDeliveryAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"VA\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"Ut velit ullamco\"\n    },\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-shipments/:mtoShipmentID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-shipments",
+								":mtoShipmentID"
+							],
+							"variable": [
+								{
+									"key": "mtoShipmentID"
+								}
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"description": "(Required) Optimistic locking is implemented via the `If-Match` header. If the ETag header does not match the value of the resource on the server, the server rejects the change with a `412 Precondition Failed` error.\n",
+								"key": "If-Match",
+								"value": "<string>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduledPickupDate\": \"<date>\",\n    \"firstAvailableDeliveryDate\": \"<date>\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"actualPickupDate\": \"<date>\",\n    \"agents\": [\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n    ],\n    \"mtoServiceItems\": [\n        {\n            \"modelType\": \"MTOServiceItemDomesticCrating\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"irure \",\n            \"status\": \"REJECTED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"Lorem tempor laborum\"\n        },\n        {\n            \"modelType\": \"MTOServiceItemDOFSIT\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"labore in anim dolore occaecat\",\n            \"status\": \"APPROVED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"eiusmod est magna\"\n        }\n    ],\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"KS\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"ex occaecat eiusmod\"\n    },\n    \"destinationAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"ID\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"nisi cillum ut consectetur nostrud\"\n    },\n    \"secondaryPickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"MN\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"enim proident culpa\"\n    },\n    \"secondaryDeliveryAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"VA\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"Ut velit ullamco\"\n    },\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-shipments/:mtoShipmentID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-shipments",
+								":mtoShipmentID"
+							],
+							"variable": [
+								{
+									"key": "mtoShipmentID"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The requested resource wasn't found.",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"description": "(Required) Optimistic locking is implemented via the `If-Match` header. If the ETag header does not match the value of the resource on the server, the server rejects the change with a `412 Precondition Failed` error.\n",
+								"key": "If-Match",
+								"value": "<string>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduledPickupDate\": \"<date>\",\n    \"firstAvailableDeliveryDate\": \"<date>\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"actualPickupDate\": \"<date>\",\n    \"agents\": [\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n    ],\n    \"mtoServiceItems\": [\n        {\n            \"modelType\": \"MTOServiceItemDomesticCrating\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"irure \",\n            \"status\": \"REJECTED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"Lorem tempor laborum\"\n        },\n        {\n            \"modelType\": \"MTOServiceItemDOFSIT\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"labore in anim dolore occaecat\",\n            \"status\": \"APPROVED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"eiusmod est magna\"\n        }\n    ],\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"KS\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"ex occaecat eiusmod\"\n    },\n    \"destinationAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"ID\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"nisi cillum ut consectetur nostrud\"\n    },\n    \"secondaryPickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"MN\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"enim proident culpa\"\n    },\n    \"secondaryDeliveryAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"VA\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"Ut velit ullamco\"\n    },\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-shipments/:mtoShipmentID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-shipments",
+								":mtoShipmentID"
+							],
+							"variable": [
+								{
+									"key": "mtoShipmentID"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"description": "(Required) Optimistic locking is implemented via the `If-Match` header. If the ETag header does not match the value of the resource on the server, the server rejects the change with a `412 Precondition Failed` error.\n",
+								"key": "If-Match",
+								"value": "<string>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scheduledPickupDate\": \"<date>\",\n    \"firstAvailableDeliveryDate\": \"<date>\",\n    \"primeActualWeight\": 4500,\n    \"primeEstimatedWeight\": 4500,\n    \"actualPickupDate\": \"<date>\",\n    \"agents\": [\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n    ],\n    \"mtoServiceItems\": [\n        {\n            \"modelType\": \"MTOServiceItemDomesticCrating\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"irure \",\n            \"status\": \"REJECTED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"Lorem tempor laborum\"\n        },\n        {\n            \"modelType\": \"MTOServiceItemDOFSIT\",\n            \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n            \"reServiceName\": \"labore in anim dolore occaecat\",\n            \"status\": \"APPROVED\",\n            \"rejectionReason\": \"item was too heavy\",\n            \"eTag\": \"eiusmod est magna\"\n        }\n    ],\n    \"shipmentType\": \"HHG\",\n    \"pickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"KS\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"ex occaecat eiusmod\"\n    },\n    \"destinationAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"ID\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"nisi cillum ut consectetur nostrud\"\n    },\n    \"secondaryPickupAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"MN\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"enim proident culpa\"\n    },\n    \"secondaryDeliveryAddress\": {\n        \"streetAddress1\": \"123 Main Ave\",\n        \"city\": \"Anytown\",\n        \"state\": \"VA\",\n        \"postalCode\": \"90210\",\n        \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n        \"streetAddress2\": \"Apartment 9000\",\n        \"streetAddress3\": \"Montmârtre\",\n        \"country\": \"USA\",\n        \"eTag\": \"Ut velit ullamco\"\n    },\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-shipments/:mtoShipmentID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-shipments",
+								":mtoShipmentID"
+							],
+							"variable": [
+								{
+									"key": "mtoShipmentID"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "createMTOServiceItem - DOSHUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"if (pm.response.code == 200){",
+							"    json = pm.response.json()",
+							"    console.log(\"Created mtoServiceItems\")",
+							"        ",
+							"        let field = \"DOSHUT\"",
+							"        let value = json[0].id",
+							"        pm.collectionVariables.set(field, value)",
+							"        console.log(`Setting ${field} = ${value}`)",
+							"}",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"reServiceCode\": \"DOSHUT\",\n    \"moveTaskOrderID\": \"{{moveTaskOrderID}}\",\n    \"mtoShipmentID\": \"{{mtoShipmentID}}\",\n    \"reason\": \"Storage items need to be picked up.\",\n    \"description\": \"Rural roads with limited access\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/mto-service-items",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"mto-service-items"
+					]
+				},
+				"description": "Creates one or more MTOServiceItems. Not all service items may be created, please see details below.\n\nThis endpoint supports different body definitions. In the modelType field below, select the modelType corresponding\n to the service item you wish to create and the documentation will update with the new definition.\n\nUpon creation these items are associated with a Move Task Order and an MTO Shipment.\nThe request must include UUIDs for the MTO and MTO Shipment connected to this service item. Some service item types require\nadditional service items to be autogenerated when added - all created service items, autogenerated included,\nwill be returned in the response.\n\nTo update a service item, please use [updateMTOServiceItem](#operation/updateMTOServiceItem) endpoint.\n"
+			},
+			"response": [
+				{
+					"name": "The payload was unprocessable.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "A server error occurred.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The requested resource wasn't found.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request could not be processed because of conflict in the current state of the resource.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request payload is invalid.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Successfully created an MTO service item.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n {\n  \"modelType\": \"MTOServiceItemDomesticCrating\",\n  \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"reServiceName\": \"culpa nisi\",\n  \"status\": \"SUBMITTED\",\n  \"rejectionReason\": \"item was too heavy\",\n  \"eTag\": \"ut minim o\"\n },\n {\n  \"modelType\": \"MTOServiceItemDDFSIT\",\n  \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"reServiceName\": \"velit\",\n  \"status\": \"SUBMITTED\",\n  \"rejectionReason\": \"item was too heavy\",\n  \"eTag\": \"in id nisi esse\"\n }\n]"
+				}
+			]
+		},
+		{
+			"name": "createMTOServiceItem - DOFSIT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"if (pm.response.code == 200){",
+							"    json = pm.response.json()",
+							"    ",
+							"        for (i in json){",
+							"        let field = json[i].reServiceCode",
+							"        let value = json[i].id",
+							"        pm.collectionVariables.set(field, value)",
+							"        console.log(`Setting ${field} = ${value}`)",
+							"}",
+							"}",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reServiceCode\": \"DOFSIT\",\n    \"modelType\": \"MTOServiceItemOriginSIT\",\n    \"moveTaskOrderID\": \"{{moveTaskOrderID}}\",\n    \"mtoShipmentID\": \"{{mtoShipmentID}}\",\n    \"sitPostalCode\": \"92103\",\n    \"pickupPostalCode\": \"94105\",\n    \"sitEntryDate\": \"2021-05-01\",\n    \"sitHHGActualOrigin\": {\n        \"streetAddress1\": \"441 SW Río de la Plata Drive\",\n        \"streetAddress2\": \"17 8th St\",\n        \"streetAddress3\": \"\",\n        \"city\": \"Anytown\",\n        \"state\": \"AL\",\n        \"postalCode\": \"90210\",\n        \"country\": \"USA\"\n    },\n    \"reason\": \"Customer requires storage at origin\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/mto-service-items",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"mto-service-items"
+					]
+				},
+				"description": "Creates one or more MTOServiceItems. Not all service items may be created, please see details below.\n\nThis endpoint supports different body definitions. In the modelType field below, select the modelType corresponding\n to the service item you wish to create and the documentation will update with the new definition.\n\nUpon creation these items are associated with a Move Task Order and an MTO Shipment.\nThe request must include UUIDs for the MTO and MTO Shipment connected to this service item. Some service item types require\nadditional service items to be autogenerated when added - all created service items, autogenerated included,\nwill be returned in the response.\n\nTo update a service item, please use [updateMTOServiceItem](#operation/updateMTOServiceItem) endpoint.\n"
+			},
+			"response": [
+				{
+					"name": "The payload was unprocessable.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "A server error occurred.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The requested resource wasn't found.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request could not be processed because of conflict in the current state of the resource.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request payload is invalid.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Successfully created an MTO service item.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n {\n  \"modelType\": \"MTOServiceItemDomesticCrating\",\n  \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"reServiceName\": \"culpa nisi\",\n  \"status\": \"SUBMITTED\",\n  \"rejectionReason\": \"item was too heavy\",\n  \"eTag\": \"ut minim o\"\n },\n {\n  \"modelType\": \"MTOServiceItemDDFSIT\",\n  \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"reServiceName\": \"velit\",\n  \"status\": \"SUBMITTED\",\n  \"rejectionReason\": \"item was too heavy\",\n  \"eTag\": \"in id nisi esse\"\n }\n]"
+				}
+			]
+		},
+		{
+			"name": "createMTOServiceItem - DCRT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"modelType\": \"MTOServiceItemDomesticCrating\",\n    \"reServiceCode\": \"DCRT\",\n    \"moveTaskOrderID\": \"{{moveTaskOrderID}}\",\n    \"mtoShipmentID\": \"{{mtoShipmentID}}\",\n    \"item\": {\n        \"type\": \"ITEM\",\n        \"length\": 1000,\n        \"width\": 1000,\n        \"height\": 1000\n    },\n    \"crate\": {\n        \"type\": \"ITEM\",\n        \"length\": 1200,\n        \"width\": 1200,\n        \"height\": 1200\n    },\n    \"description\": \"Full size dragon alebrije in papier mache.\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/mto-service-items",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"mto-service-items"
+					]
+				},
+				"description": "Creates one or more MTOServiceItems. Not all service items may be created, please see details below.\n\nThis endpoint supports different body definitions. In the modelType field below, select the modelType corresponding\n to the service item you wish to create and the documentation will update with the new definition.\n\nUpon creation these items are associated with a Move Task Order and an MTO Shipment.\nThe request must include UUIDs for the MTO and MTO Shipment connected to this service item. Some service item types require\nadditional service items to be autogenerated when added - all created service items, autogenerated included,\nwill be returned in the response.\n\nTo update a service item, please use [updateMTOServiceItem](#operation/updateMTOServiceItem) endpoint.\n"
+			},
+			"response": [
+				{
+					"name": "The payload was unprocessable.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "A server error occurred.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The requested resource wasn't found.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request could not be processed because of conflict in the current state of the resource.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request payload is invalid.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Successfully created an MTO service item.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelType\": \"MTOServiceItemShuttle\",\n    \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n    \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/mto-service-items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mto-service-items"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n {\n  \"modelType\": \"MTOServiceItemDomesticCrating\",\n  \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"reServiceName\": \"culpa nisi\",\n  \"status\": \"SUBMITTED\",\n  \"rejectionReason\": \"item was too heavy\",\n  \"eTag\": \"ut minim o\"\n },\n {\n  \"modelType\": \"MTOServiceItemDDFSIT\",\n  \"moveTaskOrderID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"id\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"mtoShipmentID\": \"1f2270c7-7166-40ae-981e-b200ebdf3054\",\n  \"reServiceName\": \"velit\",\n  \"status\": \"SUBMITTED\",\n  \"rejectionReason\": \"item was too heavy\",\n  \"eTag\": \"in id nisi esse\"\n }\n]"
+				}
+			]
+		},
+		{
+			"name": "createPaymentRequest1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Currently only DOSHUT is being passed in the body. Try requesting payment for other service items, too.",
+							"",
+							"if (pm.response.code == 201){",
+							"    json = pm.response.json()",
+							"",
+							"        let field = \"paymentRequestID\"",
+							"        let value = json.id",
+							"        pm.collectionVariables.set(field, value)",
+							"        console.log(`Setting ${field} = ${value}`)",
+							"",
+							"}",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"moveTaskOrderID\": \"{{moveTaskOrderID}}\",\n    \"serviceItems\":[\n    {\"id\": \"{{DOSHUT}}\"}\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/payment-requests",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"payment-requests"
+					]
+				},
+				"description": "Creates a new instance of a paymentRequest.\nA newly created payment request is assigned the status `PENDING`.\nA move task order can have multiple payment requests, and\na final payment request can be marked using boolean `isFinal`.\n"
+			},
+			"response": [
+				{
+					"name": "Successfully created a paymentRequest object.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n \"isFinal\": false,\n \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n \"rejectionReason\": \"documentation was incomplete\",\n \"status\": \"PAID\",\n \"paymentRequestNumber\": \"1234-5678-1\",\n \"proofOfServiceDocs\": {\n  \"uploads\": [\n   {\n    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n   },\n   {\n    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n   }\n  ]\n },\n \"paymentServiceItems\": [\n  {\n   \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n  },\n  {\n   \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n  }\n ],\n \"eTag\": \"Lorem sit nulla deserunt\"\n}"
+				},
+				{
+					"name": "A server error occurred.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request could not be processed because of conflict in the current state of the resource.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Request payload is invalid.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"title\": \"dolor in\",\n \"detail\": \"aliqua\",\n \"instance\": \"d2734939-4017-ec7b-2bd6-75bc4b5fde09\"\n}"
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The requested resource wasn't found.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"title\": \"dolor in\",\n \"detail\": \"aliqua\",\n \"instance\": \"d2734939-4017-ec7b-2bd6-75bc4b5fde09\"\n}"
+				},
+				{
+					"name": "The payload was unprocessable.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "createPaymentRequest2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Currently only DOSHUT is being passed in the body. Try requesting payment for other service items, too.",
+							"",
+							"if (pm.response.code == 201){",
+							"    json = pm.response.json()",
+							"",
+							"        let field = \"paymentRequestID\"",
+							"        let value = json.id",
+							"        pm.collectionVariables.set(field, value)",
+							"        console.log(`Setting ${field} = ${value}`)",
+							"",
+							"}",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"moveTaskOrderID\": \"{{moveTaskOrderID}}\",\n    \"serviceItems\":[\n        {\"id\": \"{{DOASIT}}\"},\n        {\"id\": \"{{DOPSIT}}\"},\n        {\"id\": \"{{DOFSIT}}\"}\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/payment-requests",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"payment-requests"
+					]
+				},
+				"description": "Creates a new instance of a paymentRequest.\nA newly created payment request is assigned the status `PENDING`.\nA move task order can have multiple payment requests, and\na final payment request can be marked using boolean `isFinal`.\n"
+			},
+			"response": [
+				{
+					"name": "Successfully created a paymentRequest object.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n \"isFinal\": false,\n \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n \"rejectionReason\": \"documentation was incomplete\",\n \"status\": \"PAID\",\n \"paymentRequestNumber\": \"1234-5678-1\",\n \"proofOfServiceDocs\": {\n  \"uploads\": [\n   {\n    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n   },\n   {\n    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n   }\n  ]\n },\n \"paymentServiceItems\": [\n  {\n   \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n  },\n  {\n   \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n  }\n ],\n \"eTag\": \"Lorem sit nulla deserunt\"\n}"
+				},
+				{
+					"name": "A server error occurred.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request could not be processed because of conflict in the current state of the resource.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Request payload is invalid.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"title\": \"dolor in\",\n \"detail\": \"aliqua\",\n \"instance\": \"d2734939-4017-ec7b-2bd6-75bc4b5fde09\"\n}"
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The requested resource wasn't found.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"title\": \"dolor in\",\n \"detail\": \"aliqua\",\n \"instance\": \"d2734939-4017-ec7b-2bd6-75bc4b5fde09\"\n}"
+				},
+				{
+					"name": "The payload was unprocessable.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moveTaskOrderID\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\",\n    \"serviceItems\": [\n        {\n            \"id\": \"c56a4180-65aa-42ec-a945-5fd21dec0538\"\n        }\n    ],\n    \"isFinal\": false,\n    \"pointOfContact\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests"
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "createUpload",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"prID = pm.collectionVariables.get(\"paymentRequestID\")",
+							"console.log(\"prID \", prID)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"",
+							"<!DOCTYPE html>",
+							"<html lang=\"en\">",
+							"<head>",
+							"    <meta charset=\"UTF-8\">",
+							"    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">",
+							"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+							"    <title>GHC Contractor - Moves</title>",
+							"    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/uswds/2.11.1/css/uswds.min.css\" integrity=\"sha512-jTdlH2LXTQ/nSPgY0SoocLYibqnSu0B7/DM2cmA3jPrw89dbtZKeytKXDJPYlZpjkHfHUlTe/4MTGovdM73AJw==\" crossorigin=\"anonymous\" />",
+							"    <style>",
+							"    li {",
+							"        list-style-type: none !important;",
+							"    }",
+							"    .hide {",
+							"        display: none;",
+							"    }",
+							"    .show {",
+							"        display: block;",
+							"    }",
+							"    </style>",
+							"    <script>",
+							"",
+							"</script>",
+							"</head>",
+							"<body>",
+							"<h2 class=\"site-preview-heading font-sans-2xl\">GHC Contractor</h6>",
+							"<h3 class=\"site-component-section-title font-sans-xl\">Move #{{response.moveCode}}</h3>",
+							"",
+							"<div class=\"usa-alert usa-alert--info\" id=\"alert\" >",
+							"  <div class=\"usa-alert__body\">",
+							"    <h4 id=\"alert-heading\" class=\"usa-alert__heading margin-bottom-2\">Document Uploaded</h4>",
+							"  </div>",
+							"</div>",
+							"",
+							"<div class=\"customer-info\">",
+							"Customer Name:</strong> {{response.customerName}} ",
+							"    <table class=\"usa-table usa-table--borderless usa-table--striped\">",
+							"  <caption>Payment Request</caption>",
+							"  <tbody>",
+							"   <tr>",
+							"            <th>ID</th>",
+							"            <th>No.</th>",
+							"            <th>Status</th>",
+							"            <th>Document</th>",
+							"            ",
+							"        </tr>",
+							"    <tr>",
+							"      <td>{{response.paymentRequestId}}</td>",
+							"        <td>{{response.paymentRequestNumber}}</td>",
+							"        <td>{{response.paymentRequestStatus}}</td>",
+							"        <td>{{response.filename}}",
+							"    </tr>",
+							"  </tbody>",
+							"</table>",
+							"</div>",
+							"",
+							"",
+							"",
+							"</body>",
+							"</html>",
+							"`",
+							"let responseJSON = pm.response.json();",
+							"let templateJSON;",
+							"if (pm.response.code == 201){",
+							"         templateJSON = {",
+							"        \"mtoShipmentID\": pm.collectionVariables.get(\"mtoShipmentID\"),",
+							"        \"moveTaskOrderID\": pm.collectionVariables.get(\"moveTaskOrderID\"),",
+							"        \"customerName\": pm.collectionVariables.get(\"customerName\"),",
+							"        \"moveCode\": pm.collectionVariables.get(\"moveCode\"),",
+							"        \"filename\": responseJSON.filename,",
+							"        \"updatedAt\": responseJSON.updatedAt,",
+							"        \"contentType\": responseJSON.contentType,",
+							"        \"paymentRequestId\": pm.collectionVariables.get(\"paymentRequestId\"),",
+							"        \"paymentRequestNumber\": pm.collectionVariables.get(\"paymentRequestNumber\"),",
+							"        \"paymentRequestStatus\": pm.collectionVariables.get(\"paymentRequestStatus\")",
+							"    }",
+							"    console.log(templateJSON)",
+							"pm.visualizer.set(template, {",
+							"    response: templateJSON",
+							"})",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data; charset=utf-8; boundary=\";\""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "The file to upload.",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/payment-requests/:paymentRequestID/uploads",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"payment-requests",
+						":paymentRequestID",
+						"uploads"
+					],
+					"variable": [
+						{
+							"key": "paymentRequestID",
+							"value": "{{paymentRequestID}}",
+							"type": "string",
+							"description": "(Required) UUID of payment request to use."
+						}
+					]
+				},
+				"description": "### Functionality\nThis endpoint **uploads** a Proof of Service document for a PaymentRequest.\n\nThe PaymentRequest should already exist.\n\nPaymentRequests are created with the [createPaymentRequest](#operation/createPaymentRequest) endpoint.\n"
+			},
+			"response": [
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"value": "<binary>",
+									"description": {
+										"content": "The file to upload.",
+										"type": "text/plain"
+									},
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests/:paymentRequestID/uploads",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests",
+								":paymentRequestID",
+								"uploads"
+							],
+							"variable": [
+								{
+									"key": "paymentRequestID"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Successfully created upload of digital file.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"value": "<binary>",
+									"description": {
+										"content": "The file to upload.",
+										"type": "text/plain"
+									},
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests/:paymentRequestID/uploads",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests",
+								":paymentRequestID",
+								"uploads"
+							],
+							"variable": [
+								{
+									"key": "paymentRequestID"
+								}
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"filename\": \"filename.pdf\",\n \"contentType\": \"application/pdf\",\n \"bytes\": -49064154,\n \"createdAt\": \"1947-07-14T23:37:42.436Z\",\n \"updatedAt\": \"1947-12-08T17:56:35.251Z\"\n}"
+				},
+				{
+					"name": "The request payload is invalid.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"value": "<binary>",
+									"description": {
+										"content": "The file to upload.",
+										"type": "text/plain"
+									},
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests/:paymentRequestID/uploads",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests",
+								":paymentRequestID",
+								"uploads"
+							],
+							"variable": [
+								{
+									"key": "paymentRequestID"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The payload was unprocessable.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"value": "<binary>",
+									"description": {
+										"content": "The file to upload.",
+										"type": "text/plain"
+									},
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests/:paymentRequestID/uploads",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests",
+								":paymentRequestID",
+								"uploads"
+							],
+							"variable": [
+								{
+									"key": "paymentRequestID"
+								}
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The requested resource wasn't found.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"value": "<binary>",
+									"description": {
+										"content": "The file to upload.",
+										"type": "text/plain"
+									},
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests/:paymentRequestID/uploads",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests",
+								":paymentRequestID",
+								"uploads"
+							],
+							"variable": [
+								{
+									"key": "paymentRequestID"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "A server error occurred.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"value": "<binary>",
+									"description": {
+										"content": "The file to upload.",
+										"type": "text/plain"
+									},
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests/:paymentRequestID/uploads",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests",
+								":paymentRequestID",
+								"uploads"
+							],
+							"variable": [
+								{
+									"key": "paymentRequestID"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The request was denied.",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"value": "<binary>",
+									"description": {
+										"content": "The file to upload.",
+										"type": "text/plain"
+									},
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payment-requests/:paymentRequestID/uploads",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payment-requests",
+								":paymentRequestID",
+								"uploads"
+							],
+							"variable": [
+								{
+									"key": "paymentRequestID"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "moveTaskOrderID",
+			"value": "02181b47-aff0-4e45-a792-ddce4b70bf32"
+		},
+		{
+			"key": "mtoShipmentID",
+			"value": "df9e96aa-2192-4014-8b9f-3eb707d0c902"
+		},
+		{
+			"key": "mtoShipmentETAG",
+			"value": "MjAyMS0wNS0xOVQxODoyMDoyNi4xNDg0OTNa"
+		},
+		{
+			"key": "DOSHUT",
+			"value": "3e82fb1e-6e51-4b24-b512-4770603ed881"
+		},
+		{
+			"key": "DOASIT",
+			"value": "0820b108-fafe-44b4-8f55-77b9ffef7927"
+		},
+		{
+			"key": "DOPSIT",
+			"value": "6b4c6869-325a-4a58-9c78-8548e0d373a0"
+		},
+		{
+			"key": "DOFSIT",
+			"value": "6492e1cc-cff1-4436-b8c0-0b41c69dcae4"
+		},
+		{
+			"key": "paymentRequestID",
+			"value": "7f828767-c83a-494f-b971-838d27bf0396"
+		}
+	]
+}
