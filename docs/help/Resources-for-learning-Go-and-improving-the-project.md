@@ -1,3 +1,5 @@
+# Go Resources
+
 This is a collection of interesting tools and tutorials that might benefit this project. Most of them are from the [Golang Weekly newsletter](https://golangweekly.com).
 
 ## Books / Courses / Tutorials

@@ -27,6 +27,12 @@ module.exports = {
           label: 'About',
         },
         {
+            type: 'doc',
+            docId: 'help/index',
+            position: 'left',
+            label: 'Help',
+        },
+        {
           type: 'doc',
           docId: 'intro',
           position: 'left',

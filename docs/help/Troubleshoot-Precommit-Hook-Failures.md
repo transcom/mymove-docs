@@ -1,3 +1,5 @@
+# Precommit Hooks
+
 The precommit hooks run automatically when you try to make a commit. They are a set of scripts that validate the commit. 
 If the validation fails, the commit isn't committed. 
 
