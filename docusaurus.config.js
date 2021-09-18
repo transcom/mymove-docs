@@ -3,7 +3,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'MilMove Documentation',
+  title: 'MilMove Developer Portal',
   tagline: '',
   url: 'https://transcom.github.io/mymove-docs/',
   baseUrl: '/mymove-docs/',
@@ -14,12 +14,18 @@ module.exports = {
   projectName: 'mymove-docs',
   themeConfig: {
     navbar: {
-      title: 'MilMove Docs',
+      title: 'MilMove.dev',
       logo: {
         alt: 'MilMove Logo',
         src: 'img/logo.svg',
       },
       items: [
+        {
+          type: 'doc',
+          docId: 'about/index',
+          position: 'left',
+          label: 'About',
+        },
         {
           type: 'doc',
           docId: 'intro',
@@ -28,7 +34,7 @@ module.exports = {
         },
         {
           href: 'https://github.com/transcom/mymove',
-          label: 'MilMove repo',
+          label: 'mymove',
           position: 'right',
         },
       ],
