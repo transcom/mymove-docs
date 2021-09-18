@@ -28,6 +28,12 @@ module.exports = {
         },
         {
             type: 'doc',
+            docId: 'docs/index',
+            position: 'left',
+            label: 'Docs',
+        },
+        {
+            type: 'doc',
             docId: 'help/index',
             position: 'left',
             label: 'Help',
