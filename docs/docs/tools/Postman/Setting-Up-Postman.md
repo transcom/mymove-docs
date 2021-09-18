@@ -1,4 +1,4 @@
-In addition to using the UI, you can use Postman to hit the [Admin](https://github.com/transcom/mymove/blob/master/swagger/admin.yaml), [Customer](https://github.com/transcom/mymove/blob/master/swagger/internal.yaml), and [Office](https://github.com/transcom/mymove/blob/master/swagger/ghc.yaml) APIs. They require a slightly different setup process from other uses of Postman on the Milmove project (see: [mTLS setup](https://github.com/transcom/mymove/wiki/setup-postman-to-make-mutual-tls-api-calls)).
+In addition to using the UI, you can use Postman to hit the [Admin](https://github.com/transcom/mymove/blob/master/swagger/admin.yaml), [Customer](https://github.com/transcom/mymove/blob/master/swagger/internal.yaml), and [Office](https://github.com/transcom/mymove/blob/master/swagger/ghc.yaml) APIs. They require a slightly different setup process from other uses of Postman on the Milmove project (see: [mTLS setup](https://github.com/transcom/mymove/wiki/setup-postman-to-make-mutual-tls-api-calls)). 
 
 In order to set up Postman, you need to have Postman, local server, and local client running.
 
@@ -7,7 +7,7 @@ In order to set up Postman, you need to have Postman, local server, and local cl
 `make office_client_run`
 
 ### IMPORTANT: devlocal vs STG / EXP
-The example on this page is written for **devlocal**. **If you want to hit STG or EXP, you must use https:// in your base path**. If you don't, you will get strange behavior, zero helpful error messages, and a headache.
+The example on this page is written for **devlocal**. **If you want to hit STG or EXP, you must use https:// in your base path**. If you don't, you will get strange behavior, zero helpful error messages, and a headache. 
 
 **Remember:**
 * Use `https://` in your `{{baseUrl}}` on STG/EXP
@@ -64,13 +64,13 @@ For these APIs, we need to supply Postman with the appropriate session cookies f
 You can either create your own environment to hold the cookies, or use a cookie interceptor.
 
 ### [Creating an Environment](https://github.com/transcom/mymove/wiki/Creating-A-Local-Environment-for-Postman)
-You'll want to make your own environment if:
+You'll want to make your own environment if: 
 * You're having trouble using the cookie interceptor
 * You want a relatively quick setup
 * You want to configure additional variables to use in your API calls
 
 ### [Using a Cookie Interceptor](https://github.com/transcom/mymove/wiki/Intercepting-Cookies-for-Postman)
-You'll want to use the cookie interceptor if:
+You'll want to use the cookie interceptor if: 
 * You're having trouble creating the environment
 * You don't want to have to create a new environment file for each API and have to swap between them
 * You want cookies to be grabbed automatically for you

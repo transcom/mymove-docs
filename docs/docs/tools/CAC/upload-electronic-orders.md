@@ -2,7 +2,7 @@
 
 ## Requirements
 
-You must first read the article on [How to Use mTLS with CAC](./use-mtls-with-cac.md).
+You must first read the article on [How to Use mTLS with CAC](use-mtls-with-cac.md).
 
 ## Uploading Electronic Orders Locally with [transcom/milmove_orders](https://github.com/transcom/milmove_orders/)
 

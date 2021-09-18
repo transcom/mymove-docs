@@ -75,6 +75,6 @@ Once you have added this environment and closed the dialog select the new enviro
 
    If so, this means Postman did not send your certificates successfully to the server when making the request, OR the server did not send the correct cert back.
 
-   **Solution:** Make sure you have your `devlocal-mtls.cer` and `devlocal-mtls.key` set up as described above in [General Postman Settings](#general-postman-settings). This ensures you are sending the correct cert.
+   **Solution:** Make sure you have your `devlocal-mtls.cer` and `devlocal-mtls.key` set up as described above in [General Postman Settings](#general-postman-settings). This ensures you are sending the correct cert. 
 
-   If you are using `devlocal`, the server does not send a correct certificate back. Check that you have SSL certificate verification set to **off** in the Settings, this ensures you are not trying to verify that certificate.
+   If you are using `devlocal`, the server does not send a correct certificate back. Check that you have SSL certificate verification set to **off** in the Settings, this ensures you are not trying to verify that certificate. 
