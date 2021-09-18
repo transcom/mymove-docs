@@ -1,7 +1,7 @@
 When working with or testing our system, it can be helpful to have sample data in the system that gives you good starting points for different steps in the process and/or seeing different features in action.
 
 ## Scenarios and Usage
-We have data set up for various scenarios and use cases. You can find them in `pkg/testdatagen/scenario`.
+We have data set up for various scenarios and use cases. You can find them in `pkg/testdatagen/scenario`. 
 
 ### Common
 The primary ones you'll probably interact with will be:
@@ -64,7 +64,7 @@ Currently available sub-scenarios for each main named scenarios:
 The scenarios use our `testdatagen` functions to quickly wire up the data they need. You can find more info on using `testdatagen` functions here: https://github.com/transcom/mymove/wiki/Understanding-Testdatagen-Functions
 
 ## Updating Scenarios
-If you want to add more data to a given scenario, or tweak it, you can edit the file of the scenario you want as needed.
+If you want to add more data to a given scenario, or tweak it, you can edit the file of the scenario you want as needed. 
 
 ### Adding a New Case (e2ebasic and bandwidth only)
 If you are adding a new case, e.g. an un-submitted move with an HHG shipment that has multiple destination addresses, you would add a function to the file like this:

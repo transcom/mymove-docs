@@ -36,8 +36,8 @@ This page will walk you through creating and pricing a move with SIT service ite
 Origin SIT pickup (DOPSIT) and Destination SIT delivery (DDDSIT) service items are priced in 3 different ways, depending on the "original" and "actual" ZIP3 (a ZIP3 is the first 3 digits of a ZIP code). See the [pricing notes doc](https://docs.google.com/document/d/1jRl91aslMnOMt2zS1tt_XT0lD1I-xvsiKOfprAaFrAs/edit#heading=h.qvz570f9mzig) for details.
 
 The 3 scenarios are:
-* ZIP3 to same ZIP3 
-* ZIP3 to different ZIP3 and > 50 miles 
+* ZIP3 to same ZIP3
+* ZIP3 to different ZIP3 and > 50 miles
 * ZIP3 to different ZIP3 and <= 50 miles
 
 ## Distance calculation
@@ -50,20 +50,20 @@ For Destination SIT, the original ZIP comes from the destination address on the 
 
 ## Example ZIP codes for testing
 - close to Fort Gordon (useful when testing Destination SIT)
-  - ZIP3 to same ZIP3 
+  - ZIP3 to same ZIP3
     - from: Fort Gordon, GA 30905
     - to: Augusta, GA 30909
-  - ZIP3 to different ZIP3 and > 50 miles 
+  - ZIP3 to different ZIP3 and > 50 miles
     - from: Aberdeen Proving Ground, MD, 21005 
     - to: Fort Gordon, GA 30813
   - ZIP3 to different ZIP3 and <= 50 miles
     - from: Fort Gordon, GA 30905
     - to: Fort Gordon, GA 30813
 - close to Fort Irwin (useful when testing Origin SIT)
-  - ZIP3 to same ZIP3 
+  - ZIP3 to same ZIP3
     - from: Fort Irwin, CA 92310
     - to: Baker, CA 92309
-  - ZIP3 to different ZIP3 and > 50 miles 
+  - ZIP3 to different ZIP3 and > 50 miles
     - from: Fort Irwin, CA 92310
     - to: Henderson, NV 89002
   - ZIP3 to different ZIP3 and <= 50 miles
