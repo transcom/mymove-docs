@@ -30,7 +30,7 @@ When looking up objects that have a one-to-many relationship, ORMs such as Pop c
 
 With our new version of Pop, there is a feature called EagerPreload that helps us mitigate the N+1 problem. 
 
-[Read this article](Using-EagerPreload-in-Pop) to know how to use it properly. 
+[Read this article](Using-EagerPreload-in-Pop.md) to know how to use it properly. 
 
 #### Excessive Joins (e.g. open-ended *Eager* call)
 
