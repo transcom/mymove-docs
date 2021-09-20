@@ -28,7 +28,7 @@ module.exports = {
         },
         {
             type: 'doc',
-            docId: 'docs/index',
+            docId: 'dev/index',
             position: 'left',
             label: 'Docs',
         },
@@ -37,12 +37,6 @@ module.exports = {
             docId: 'help/index',
             position: 'left',
             label: 'Help',
-        },
-        {
-          type: 'doc',
-          docId: 'intro',
-          position: 'left',
-          label: 'Tutorial',
         },
         {
           href: 'https://github.com/transcom/mymove',
@@ -58,25 +52,45 @@ module.exports = {
           title: 'Docs',
           items: [
             {
+              label: 'About',
+              to: '/docs/about',
+            },
+            {
+              label: 'Getting Started',
+              to: '/docs',
+            },
+            {
+              label: 'Help',
+              to: '/docs/help',
+            },
+            {
+              label: 'Vault',
+              to: '/docs/vault',
+            },
+            {
               label: 'Tutorial',
               to: '/docs/intro',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'Contributing',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Frontend',
+              to: '/docs/dev/contributing/frontend',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              label: 'Backend',
+              to: '/docs/dev/contributing/backend',
             },
             {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              label: 'Database',
+              to: '/docs/dev/contributing/database',
+            },
+            {
+              label: 'Testing',
+              to: '/docs/dev/testing',
             },
           ],
         },
@@ -84,12 +98,8 @@ module.exports = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/transcom/mymove-docs',
             },
           ],
         },
