@@ -11,8 +11,8 @@ All docker images that are deployed must not use `root` as their user inside the
 | Dockerfile.migrations* | alpine:\<version\> | root | Running migrations when deploying the app, staging, experimental, and production |
 | Dockerfile.migrations_local | alpine:\<version\> | root | Running migrations locally only |
 | cypress/Dockerfile.cypress | cypress/base:\<version\> | root | Running cypress tests locally and in CircleCI only |
-| Dockerfile.storybook | milmove/circleci-docker:milmove-app-browsers-{SHA} | circleci | Used when running storybook tests in CircleCI only |
-| Dockerfile.storybook_local | milmove/circleci-docker:milmove-app-browsers-{SHA} | circleci | Used when running `make storybook_tests` or `make storybook_docker` locally only |
+| Dockerfile.storybook | milmove/circleci-docker:milmove-app-browsers-`<SHA>` | circleci | Used when running storybook tests in CircleCI only |
+| Dockerfile.storybook_local | milmove/circleci-docker:milmove-app-browsers-`<SHA>` | circleci | Used when running `make storybook_tests` or `make storybook_docker` locally only |
 | Dockerfile.tasks* | gcr.io/distroless/base:latest | `root` (locally) and `UID:1042` (CircleCI / Deployed) | ECS Scheduled Tasks |
 | Dockerfile.tasks_local | gcr.io/distroless/base:latest | `root` (locally) and `UID:1042` (CircleCI / Deployed) | ECS Scheduled Tasks local only |
 | Dockerfile.tools | alpine:\<version\> | root | Container for tools used in e2e testing on CircleCI |

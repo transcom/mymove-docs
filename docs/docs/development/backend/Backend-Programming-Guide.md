@@ -353,7 +353,7 @@ Additional resources:
 
 ### Service Objects
 
-Service Objects are an architectural design pattern we use to encapsulate business logic. Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. For more information on service objects, including how we use them and how to write them, please see the [documentation](service-objects)
+Service Objects are an architectural design pattern we use to encapsulate business logic. Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. For more information on service objects, including how we use them and how to write them, please see the [documentation](service-objects.md)
 
 ### Testing
 
@@ -388,7 +388,7 @@ In general, focus on testing non-trivial behavior.
 
 Some helpful tips on dealing with time
 in the MilMove Go codebase
-can be found in [this doc](time)
+can be found in [this doc](time.md)
 
 ### Miscellaneous Tips
 

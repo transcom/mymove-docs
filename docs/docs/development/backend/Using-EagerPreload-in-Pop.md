@@ -18,7 +18,7 @@ We use [Pop](https://github.com/gobuffalo/pop) as our ORM
 ([object-relational mapping](https://en.wikipedia.org/wiki/Object–relational_mapping)) tool
 for querying the database. Pop provides the ability to eagerly fetch associations via its
 [Eager method](https://gobuffalo.io/en/docs/db/relations#eager-mode).
-However, the `Eager` method is subject to the ["n+1" problem](database#excessive-queries-eg-n1-problem)
+However, the `Eager` method is subject to the ["n+1" problem](database.md#excessive-queries-eg-n1-problem)
 where each association is loaded via a separate query.  For Pop queries that
 return records in which each has an eagerly-loaded tree of associated data, the amount of
 SQL queries executed as a result can be substantial.
