@@ -3,7 +3,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'MilMove Documentation',
+  title: 'MilMove Developer Portal',
   tagline: '',
   url: 'https://transcom.github.io/mymove-docs/',
   baseUrl: '/mymove-docs/',
@@ -14,7 +14,7 @@ module.exports = {
   projectName: 'mymove-docs',
   themeConfig: {
     navbar: {
-      title: 'MilMove Docs',
+      title: 'MilMove.dev',
       logo: {
         alt: 'MilMove Logo',
         src: 'img/logo.svg',
@@ -22,13 +22,25 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'intro',
+          docId: 'about/index',
           position: 'left',
-          label: 'Tutorial',
+          label: 'About',
+        },
+        {
+            type: 'doc',
+            docId: 'dev/index',
+            position: 'left',
+            label: 'Docs',
+        },
+        {
+            type: 'doc',
+            docId: 'help/index',
+            position: 'left',
+            label: 'Help',
         },
         {
           href: 'https://github.com/transcom/mymove',
-          label: 'MilMove repo',
+          label: 'mymove',
           position: 'right',
         },
       ],
@@ -40,25 +52,45 @@ module.exports = {
           title: 'Docs',
           items: [
             {
+              label: 'About',
+              to: '/docs/about',
+            },
+            {
+              label: 'Getting Started',
+              to: '/docs',
+            },
+            {
+              label: 'Help',
+              to: '/docs/help',
+            },
+            {
+              label: 'Vault',
+              to: '/docs/vault',
+            },
+            {
               label: 'Tutorial',
               to: '/docs/intro',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'Contributing',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Frontend',
+              to: '/docs/dev/contributing/frontend',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              label: 'Backend',
+              to: '/docs/dev/contributing/backend',
             },
             {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              label: 'Database',
+              to: '/docs/dev/contributing/database',
+            },
+            {
+              label: 'Testing',
+              to: '/docs/dev/testing',
             },
           ],
         },
@@ -66,17 +98,13 @@ module.exports = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/transcom/mymove-docs',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} United States Transportation Command. Built with Docusaurus.`,
     },
     prism: {
       theme: lightCodeTheme,
@@ -89,14 +117,7 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/main/website/blog/',
+          editUrl: 'https://github.com/transcom/mymove-docs/edit/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
