@@ -124,5 +124,14 @@ module.exports = {
         },
       },
     ],
+    [
+      'redocusaurus',
+      {
+        specs: [{
+          specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
+          routePath: '/api/',
+        }],
+      }
+    ],
   ],
 };
