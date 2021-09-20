@@ -49,7 +49,7 @@ Check the severity level of the [master spreadsheet](https://docs.google.com/spr
 2. Depending on the severity level of the eslint, there are two routes:
    1. If the finding is an eslint with N/A severity
       - Add it to the `approvedBypassableRules` list in the <code>[eslint-plugin-ato/no-unapproved-annotation.js](https://github.com/transcom/mymove/blob/master/eslint-plugin-ato/no-unapproved-annotation.js) </code>file
-   2. If the finding is of severity level CAT I, II, or III
+   2. If the finding is of severity level CAT I, II, or III 
 
       - First choice is for it to be remediated (refactor code so that the rule does not need to be violated)
 
@@ -57,7 +57,7 @@ Check the severity level of the [master spreadsheet](https://docs.google.com/spr
 
 ## If you need to write an annotation
 
-- see [Guide to Static Analysis Annotations for Disabled Linters](guide-to-static-analysis-annotations-for-disabled-Linters#guide-to-static-analysis-annotations-for-disabled-linters)
+- see [Guide to Static Analysis Annotations for Disabled Linters](Guide-to-Static-Analysis-Annotations-for-Disabled-Linters.md#guide-to-static-analysis-annotations-for-disabled-linters)
 
 - Make sure all disabling code appears immediately below the annotation, or else the linter will give you an error.
 
