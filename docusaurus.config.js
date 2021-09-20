@@ -41,6 +41,10 @@ module.exports = {
                 label: 'Prime',
                 to: '/api/prime',
               },
+              {
+                label: 'Support',
+                to: '/api/support',
+              },
             ],
         },
         {
@@ -142,7 +146,11 @@ module.exports = {
           {
             specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
             routePath: '/api/prime',
-          }
+          },
+          {
+            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
+            routePath: '/api/support',
+          },
         ],
       }
     ],
