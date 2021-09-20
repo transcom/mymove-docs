@@ -33,6 +33,17 @@ module.exports = {
             label: 'Docs',
         },
         {
+            type: 'dropdown',
+            position: 'left',
+            label: 'APIs',
+            items: [
+              {
+                label: 'Prime',
+                to: '/api/prime',
+              },
+            ],
+        },
+        {
             type: 'doc',
             docId: 'help/index',
             position: 'left',
@@ -127,10 +138,12 @@ module.exports = {
     [
       'redocusaurus',
       {
-        specs: [{
-          specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
-          routePath: '/api/',
-        }],
+        specs: [
+          {
+            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
+            routePath: '/api/prime',
+          }
+        ],
       }
     ],
   ],
