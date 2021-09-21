@@ -1,19 +1,4 @@
-- [Overview](#overview)
-    + [Domestic SIT service items](#domestic-sit-service-items)
-- [Choosing a pricing scenario](#choosing-a-pricing-scenario)
-  * [Distance calculation](#distance-calculation)
-  * [Where do I put these ZIPs?](#where-do-i-put-these-zips)
-  * [Example ZIP codes for testing](#example-zip-codes-for-testing)
-- [Initial move setup from scratch](#initial-move-setup-from-scratch)
-- [Creating SIT service items](#creating-sit-service-items)
-  * [Create Origin SIT service items](#create-origin-sit-service-items)
-  * [Create Destination SIT service items](#create-destination-sit-service-items)
-- [Creating a Payment Request](#creating-a-payment-request)
-- [Approve payment request as TIO](#approve-payment-request-as-tio)
-- [References](#references)
-
-
-# Overview
+# Testing Payment Requests
 Storage In Transit (SIT) pricing is composed of the following three elements:
 
 - SIT First Day: Covers the warehouse and handing in/out costs (but not transit).
