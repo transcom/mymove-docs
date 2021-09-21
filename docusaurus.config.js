@@ -33,6 +33,21 @@ module.exports = {
             label: 'Docs',
         },
         {
+            type: 'dropdown',
+            position: 'left',
+            label: 'APIs',
+            items: [
+              {
+                label: 'Prime',
+                to: '/api/prime',
+              },
+              {
+                label: 'Support',
+                to: '/api/support',
+              },
+            ],
+        },
+        {
             type: 'doc',
             docId: 'help/index',
             position: 'left',
@@ -123,6 +138,21 @@ module.exports = {
           customCss: require.resolve('./src/css/custom.css'),
         },
       },
+    ],
+    [
+      'redocusaurus',
+      {
+        specs: [
+          {
+            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
+            routePath: '/api/prime',
+          },
+          {
+            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
+            routePath: '/api/support',
+          },
+        ],
+      }
     ],
   ],
 };
