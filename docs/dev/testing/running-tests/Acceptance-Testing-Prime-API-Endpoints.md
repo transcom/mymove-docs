@@ -1,12 +1,4 @@
-# Table of Contents
-
-- [Current Prime API Endpoints](#current-prime-api-endpoints)
-- [Checklist for Acceptance Testing Prime API Endpoints](#checklist-for-acceptance-testing-prime-api-endpoints)
-  * [1. Verify Business Logic](#1-verify-business-logic)
-  * [2. Validate Requests](#2-validate-requests)
-  * [3. Validate Responses](#3-validate-responses)
-  * [4. Validate Errors](#4-validate-errors)
-
+# Acceptance Testing Prime API
 
 ## Current Prime API Endpoints
 * `fetchMTOUpdates`
