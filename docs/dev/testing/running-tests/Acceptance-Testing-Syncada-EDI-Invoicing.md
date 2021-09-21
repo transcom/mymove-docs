@@ -1,24 +1,4 @@
-## TOC
-
-<!-- toc -->
-
-- [Prerequisites](#prerequisites)
-  * [Move](#move)
-  * [Orders](#orders)
-  * [Shipment](#shipment)
-  * [Payment Request](#payment-request)
-- [Invoicing Operations](#invoicing-operations)
-  * [Generate EDI locally](#generate-edi-locally)
-  * [Generate EDI via support API](#generate-edi-via-support-api)
-  * [Update status of Payment Request](#update-status-of-payment-request)
-    + [JSON to update status of all reviewed paymentrequests to SENT_TO_GEX](#json-to-update-status-of-all-reviewed-paymentrequests-to-sent_to_gex)
-    + [JSON to update status of all reviewed paymentrequests to another one](#json-to-update-status-of-all-reviewed-paymentrequests-to-another-one)
-    + [JSON to update status of one reviewed paymentrequest to SENT_TO_GEX](#json-to-update-status-of-one-reviewed-paymentrequest-to-sent_to_gex)
-    + [JSON to update status of one reviewed paymentrequest to something else](#json-to-update-status-of-one-reviewed-paymentrequest-to-something-else)
-  * [Generate and send EDI to Syncada](#generate-and-send-edi-to-syncada)
-- [References](#references)
-
-<!-- tocstop -->
+# Acceptance Testing Syncada
 
 ## Prerequisites
 
