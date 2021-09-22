@@ -76,3 +76,7 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
 
 6. Start the app: `yarn start` (or `npx yarn start`)
 7. Go to wherever it tells you to (probably http://localhost:3000/mymove-docs/) and look around!
+
+## Deployment
+
+This site is currently deployed using GitHub pages: https://transcom.github.io/mymove-docs/. We're using GitHub actions to redeploy whenever changes are merged to the main branch, which includes all commits that are made and saved directly in GitHub. Be aware that GitHub pages has a _soft_ limit of 10 deploys per hour, and it is possible we could run up against this (read more about the limitations of pages here: [About GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#usage-limits)). It should not have a significant affect on our day-to-day activities, however, and may never become a noticeable issue. 
