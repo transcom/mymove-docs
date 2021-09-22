@@ -57,13 +57,13 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
          ```
          source ~/.bashrc
          ```
-      - Install this version of `node`: 
+      - Install a version of `node` that is 12 or above (I recommend [the same version we use on MilMove](https://github.com/transcom/mymove/blob/master/.node-version)): 
          ```
-         nodenv install 14.17.1
+         nodenv install <version>
          ```
       - Then set the global version to the one you installed: 
          ```
-         nodenv global 14.17.1
+         nodenv global <version>
          ```
    - Finally, install `yarn`: 
       ```
