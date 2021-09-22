@@ -15,14 +15,14 @@ Information about running and testing this app, and coding against its APIs, is 
 - `/static/` contains all of our images and other static files. If you want to add a screenshot or other visual to your doc page, you will need to upload it to this folder.
 - `/sidebars.js` contains the sidebars for our doc folders. We autogenerate our sidebars in order to minimize how often our JavaScript files will need to be updated. It is highly unlikely that you will need to update this file directly.
 
-## Running locally
+## Running locally (on MacOS)
 
 1. Open your terminal/command line. 
 2. Clone the repo onto your machine: 
    ```
    git clone https://github.com/transcom/mymove-docs.git
    ```
-   - If you get a bizarre error about "xcurl" or something, try: `xcode-select --install` and run through the full installation of the MacOS command line tools.
+   - If you get a bizarre error about "xcrun", try: `xcode-select --install` and run through the full installation of the MacOS command line tools.
    - If you need to install `git`, please follow these instructions: https://git-scm.com/download/mac
 
 3. Change into the repo directory: `cd mymove-docs`
