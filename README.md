@@ -1,6 +1,6 @@
 # MilMove Documentation
 
-![GitHub pages](https://github.com/transcom/mymove-docs/.github/workflows/deploy.yaml/badge.svg)
+[![GitHub pages deployment](https://github.com/transcom/mymove-docs/actions/workflows/deploy.yml/badge.svg)](https://github.com/transcom/mymove-docs/actions/workflows/deploy.yml)
 
 ## Overview
 
