@@ -13,7 +13,7 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
 - `/docs/` contains all of our documentation files (in markdown). If you are here to edit or peruse the docs, this is where you want to go.
 - `/src/` contains our React components and pages. Currently, this only contains our main page. It will be rare to need to be in this folder.
 - `/static/` contains all of our images and other static files. If you want to add a screenshot or other visual to your doc page, you will need to upload it to this folder.
-- `/sidebars.js` contains the sidebars for our doc folders. We autogenerate our sidebars in order to minimize how often our JavaScript files will need to be updated. It is highly unlikely that you will need to update this file directly.
+- `/sidebars.js` contains the sidebars for our doc folders. We autogenerate our sidebars in order to minimize how often our JavaScript files need to be updated. It is highly unlikely that you will need to update this file directly.
 
 ## Running locally (on MacOS)
 
