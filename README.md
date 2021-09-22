@@ -76,3 +76,5 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
 
 6. Start the app: `yarn start` (or `npx yarn start`)
 7. Go to wherever it tells you to (probably http://localhost:3000/mymove-docs/) and look around!
+
+TEST CLOSE
