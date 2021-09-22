@@ -30,9 +30,9 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
    cd mymove-docs
    ```
 
-4. Checkout this branch:
+4. If you are looking at a PR or working on a branch other than the default branch, run:
    ```
-   git checkout add-redocusaurus
+   git checkout <branch-name>
    ```
 
 5. Install dependencies:
