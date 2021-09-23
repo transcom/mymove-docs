@@ -69,9 +69,9 @@ This is kind of a pain. I would recommend checking the repo out and moving files
 
 These are some common edits you might want to make to the documentation. The official documentation for Docusaurus also contains an [exhaustive overview of the features available](https://docusaurus.io/docs/markdown-features) to you. It is recommended to read through their docs for more context and instructions.
 
-:::info Frontmatter
+:::info What is frontmatter?
 
-What is frontmatter?
+Frontmatter is the part of a markdown page that contains meta-information about that page. Tags, labels, and sidebar settings can be specified in the frontmatter. For more information, read Docusaurus' [official documentation](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-docs#markdown-frontmatter).
 
 :::
 
@@ -91,6 +91,7 @@ This will appear as the name of the page on the sidebar and in the page itself. 
 ---
 title: My sidebar title
 ---
+
 # My title
 ```
 
