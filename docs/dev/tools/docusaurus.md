@@ -16,11 +16,11 @@ When you're browsing the docs and you come across a page you'd like to edit, scr
 This should take you to the edit screen in GitHub for this particular markdown file. In this screen, you can edit the page however you please (the section after this goes through some [common edits](#common-edits)), and then preview your changes using the "**Preview**" tab at the top of the text box. Note there are some quirks about previewing your work in GitHub:
 
 * Embedded images will not be shown in GitHub, but you will see them in the Docusaurus site.
-* The front matter will be visible at the top of the page in GitHub, but this will not show up in Docusaurus.
+* The frontmatter will be visible at the top of the page in GitHub, but this will not show up in Docusaurus.
 
 ![Preview the page](/img/docusaurus/preview_page.png)
 
-You can also rename a file in GitHub. Keep in mind that this filename will be in the url for that page (unless otherwise specified in the front matter), so it should be lowercase and separated by hyphens (also known as `kebab-case`).
+You can also rename a file in GitHub. Keep in mind that this filename will be in the url for that page (unless otherwise specified in the frontmatter), so it should be lowercase and separated by hyphens (also known as `kebab-case`).
 
 ![Edit a filename](/img/docusaurus/edit_filename.png)
 
@@ -69,9 +69,9 @@ This is kind of a pain. I would recommend checking the repo out and moving files
 
 These are some common edits you might want to make to the documentation. The official documentation for Docusaurus also contains an [exhaustive overview of the features available](https://docusaurus.io/docs/markdown-features) to you. It is recommended to read through their docs for more context and instructions.
 
-:::info Front Matter
+:::info Frontmatter
 
-What is front matter?
+What is frontmatter?
 
 :::
 
@@ -85,7 +85,7 @@ The easiest way to specify a different title is to set a top-level header with t
 # My title
 ```
 
-This will appear as the name of the page on the sidebar and in the page itself. If you want to specify a different title for the sidebar, you can do so in the front matter:
+This will appear as the name of the page on the sidebar and in the page itself. If you want to specify a different title for the sidebar, you can do so in the frontmatter:
 
 ```md
 ---
@@ -94,11 +94,11 @@ title: My sidebar title
 # My title
 ```
 
-If you remove the top-level header from this document, Docusaurus will automatically replace it with whatever you have specified as the title in the front matter.
+If you remove the top-level header from this document, Docusaurus will automatically replace it with whatever you have specified as the title in the frontmatter.
 
 ### Change the sidebar position
 
-Sidebars are set up to autogenerate based on their parent folder (within the `docs/` directory). Without any other instructions, the order of the pages will default to an alphabetized order. If you want to specify a position, you can do so in the front matter of a page:
+Sidebars are set up to autogenerate based on their parent folder (within the `docs/` directory). Without any other instructions, the order of the pages will default to an alphabetized order. If you want to specify a position, you can do so in the frontmatter of a page:
 
 ```md
 ---
@@ -117,7 +117,7 @@ If you are trying to change the position of a subfolder in the sidebar, you can 
 
 ### Change the URL
 
-The URL for a page is tied to the filename, so one way to change the URL is to change the filename. This will be the best option for most situations. The other method is to specify the URL using the `slug` option in the front matter:
+The URL for a page is tied to the filename, so one way to change the URL is to change the filename. This will be the best option for most situations. The other method is to specify the URL using the `slug` option in the frontmatter:
 
 ```md
 ---
