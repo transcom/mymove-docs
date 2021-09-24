@@ -161,3 +161,44 @@ function helloWorld() {
 ```
 
 More variations on this syntax are available in the [Docusaurus official documentation](https://docusaurus.io/docs/markdown-features/code-blocks).
+
+## Linking between pages
+
+:::note
+
+This section of documentation deals with working with the documentation project
+locally and can lead to errors or warnings in the server output of Docusaurus.
+For help, please reach out in [#wg-documentation][slack-wg-documentation]🔒 if
+you get stuck.
+
+[slack-wg-documentation]: https://ustcdp3.slack.com/archives/C027BDJ4678
+
+:::
+
+See [the official Docusaurus documentation][docusaurus-linking-docs] around linking documentation pages together for
+more general information. The goal for this documentation is to help ease the
+transition from linking documentation pages with GitHub wiki versus Docusaurus.
+
+[docusaurus-linking-docs]: https://docusaurus.io/docs/versioning#linking-docs
+
+So the main differences between GitHub Wiki linking and Docusaurus linking is
+that linking between documents can be relative to the file you're working with
+or absolute to how it's laid out in the directory structure of the
+`transcom/mymove-docs` documentation directory.
+
+For example, linking to _Access a Global Application Variable_ in Docusaurus
+means that you can link to it like this.
+
+```markdown title="Linking from the file at docs/about/Home.md with a relative link"
+[Access a Global Application Variable](../dev/contributing/backend/access-global-variables.md#how-to-access-a-global-application-variable)
+```
+
+Notice in the above example that the path (`../dev/contributing/backend/`)
+is relative to the file `docs/about/Home.md`.
+
+```markdown title="Linking from the file at docs/about/Home.md with an absolute link"
+[Access a Global Application Variable](/docs/dev/contributing/backend/access-global-variables.md#how-to-access-a-global-application-variable)
+```
+
+Notice in the above example that the path (`/docs/dev/contributing/backend/`)
+matches the directory structure of the `transcom/mymove-docs` project.
