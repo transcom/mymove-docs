@@ -82,3 +82,20 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
 This site is currently deployed using GitHub pages: https://transcom.github.io/mymove-docs/. We're using GitHub actions to redeploy whenever changes are merged to the main branch, which includes all commits that are made and saved directly in GitHub. 
 
 Be aware that GitHub pages has a _soft_ limit of 10 deploys per hour, and it is possible we could run up against this (read more about the limitations of pages here: [About GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#usage-limits)). It should not have a significant affect on our day-to-day activities, however, and may never become a noticeable issue. 
+## Open API / Swagger API documentation
+
+This site leverages the [Redocusaurus plugin][gh-redocusaurus] to add embedded
+support for documentation related to the Open API / Swagger API documentation
+within the `trancom/mymove` repository.
+
+The way the preset works is by leveraging the raw GitHub URLs for the YAML files
+found in `transcom/mymove`. This means that the API documentation on this site
+will only contain the latest changes that are available in the default branch
+for the `transcom/mymove` repository.
+
+You can see this in the `./docusaurus.config.js` file under the `presets` named
+`redocusaurus`. For more information, [see the documentation around setting
+things up][redocusaurus-docs].
+
+[redocusaurus-docs]: https://github.com/rohit-gohri/redocusaurus/tree/main/packages/redocusaurus
+[gh-redocusaurus]: https://github.com/rohit-gohri/redocusaurus
