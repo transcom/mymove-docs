@@ -13,7 +13,7 @@ When you're browsing the docs and you come across a page you'd like to edit, scr
 
 ![Edit this page](/img/docusaurus/edit_this_page.png)
 
-This should take you to the edit screen in GitHub for this particular markdown file. In this screen, you can edit the page however you please (the section after this goes through some [common edits](#common-edits)), and then preview your changes using the "**Preview**" tab at the top of the text box. Note there are some quirks about previewing your work in GitHub:
+This should take you to the edit screen in GitHub for this particular markdown file. In this screen, you can edit the page however you please (we have instructions for some [common edits](#common-edits) below), and then preview your changes using the "**Preview**" tab at the top of the text box. Note there are some quirks about previewing your work in GitHub:
 
 * Embedded images will not be shown in GitHub, but you will see them in the Docusaurus site.
 * The frontmatter will be visible at the top of the page in GitHub, but this will not show up in Docusaurus.
@@ -32,7 +32,20 @@ Once you are done, scroll down to the bottom and save your changes. You can writ
 
 The file structure in our GitHub repo determines where your new page will show up in the deployed Docusaurus site. Therefore, you should first figure out what section your page belongs to and navigate to that directory in GitHub.
 
-[file structure]
+```text
+mymove-docs/
+├── docs/  <- All of our docs should go in this directory
+│   ├── about/
+│   │   ├── ^ These docs give context on MilMove.
+│   ├── dev/
+│   │   ├── ^ These docs are relevant for developing or using the MilMove app.
+│   ├── help/
+│   │   ├── ^ HALP! These docs should help folks resolve common issues encountered in the system.
+│   ├── tutorial/
+│   │   ├── ^ This folder preserves the original Docusaurus Tutorial. Do NOT add any docs here.
+│   ├── vault/
+│   │   ├── ^ This folder is the place to store experimental, archived, or deprecated docs.
+```
 
 Once you're in the directory for your new page, click on the "**Add file**" dropdown near the top right. Select the "**Create new file**" option.
 
