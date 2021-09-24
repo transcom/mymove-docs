@@ -161,5 +161,3 @@ function helloWorld() {
 ```
 
 More variations on this syntax are available in the [Docusaurus official documentation](https://docusaurus.io/docs/markdown-features/code-blocks).
-
-## `git` basics
