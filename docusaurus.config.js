@@ -83,8 +83,8 @@ module.exports = {
               to: '/docs/vault',
             },
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Docusaurus Tutorial',
+              to: '/docs/tutorial',
             },
           ],
         },
@@ -115,6 +115,10 @@ module.exports = {
             {
               label: 'GitHub',
               href: 'https://github.com/transcom/mymove-docs',
+            },
+            {
+              label: 'Docusaurus Official Docs',
+              href: 'https://docusaurus.io/',
             },
           ],
         },
