@@ -4,7 +4,7 @@
 
 ## Overview
 
-This repo contains the documentation for [MilMove](https://github.com/transcom/mymove), a possible next generation version of the Defense Personal Property System (DPS). DPS is an online system managed by the U.S. [Department of Defense](https://www.defense.gov/) (DoD) [Transportation Command](http://www.ustranscom.mil/) (USTRANSCOM) and is used by service members and their families to manage household goods moves. 
+This repo contains the documentation for [MilMove](https://github.com/transcom/mymove), a possible next generation version of the Defense Personal Property System (DPS). DPS is an online system managed by the U.S. [Department of Defense](https://www.defense.gov/) (DoD) [Transportation Command](http://www.ustranscom.mil/) (USTRANSCOM) and is used by service members and their families to manage household goods moves.
 
 This website is created using [Docusaurus](https://docusaurus.io/), a React-based static site generator. Information about running and testing the MilMove app, and coding against its APIs, is located here. If you have questions or notice inaccuracies, feel to either (if you are on the project) edit the docs directly or (if you an external contractor) open an issue regarding the problem.
 
@@ -17,8 +17,8 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
 
 ## Running locally (on MacOS)
 
-1. Open your terminal/command line. 
-2. Clone the repo onto your machine: 
+1. Open your terminal/command line.
+2. Clone the repo onto your machine:
    ```
    git clone https://github.com/transcom/mymove-docs.git
    ```
@@ -40,36 +40,36 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
    yarn install
    ```
    - If you need to install `yarn`, first check if you have Homebrew, the MacOS package/software manager: `which brew`
-      - If you don't get a response, you need to install it: 
+      - If you don't get a response, you need to install it:
          ```
          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
          ```
    - Then check if you have `node` or `nodenv`: `which node`, `which nodenv`
-      - If you have `node`, continue on. If not, first install `nodenv`: 
+      - If you have `node`, continue on. If not, first install `nodenv`:
          ```
          brew install nodenv
          ```
-      - Add `nodenv` to your terminal configuration file: 
+      - Add `nodenv` to your terminal configuration file:
          ```
          echo 'eval "$(nodenv init -)"' >> ~/.bashrc
          ```
-      - Reset your terminal configuration: 
+      - Reset your terminal configuration:
          ```
          source ~/.bashrc
          ```
-      - Install a version of `node` that is 12 or above (I recommend [the same version we use on MilMove](https://github.com/transcom/mymove/blob/master/.node-version)): 
+      - Install a version of `node` that is 12 or above (I recommend [the same version we use on MilMove](https://github.com/transcom/mymove/blob/master/.node-version)):
          ```
          nodenv install <version>
          ```
-      - Then set the global version to the one you installed: 
+      - Then set the global version to the one you installed:
          ```
          nodenv global <version>
          ```
-   - Finally, install `yarn`: 
+   - Finally, install `yarn`:
       ```
       npm install --global yarn
       ```
-   - Now you should be able to run the local site! If you're still having trouble, try adding `npx` to the start of every `yarn` command: 
+   - Now you should be able to run the local site! If you're still having trouble, try adding `npx` to the start of every `yarn` command:
       ```
       npx yarn install
       ```
@@ -79,23 +79,10 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
 
 ## Deployment
 
-This site is currently deployed using GitHub pages: https://transcom.github.io/mymove-docs/. We're using GitHub actions to redeploy whenever changes are merged to the main branch, which includes all commits that are made and saved directly in GitHub. 
+This site is currently deployed using GitHub pages: https://transcom.github.io/mymove-docs/. We're using GitHub actions to redeploy whenever changes are merged to the main branch, which includes all commits that are made and saved directly in GitHub.
 
-Be aware that GitHub pages has a _soft_ limit of 10 deploys per hour, and it is possible we could run up against this (read more about the limitations of pages here: [About GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#usage-limits)). It should not have a significant affect on our day-to-day activities, however, and may never become a noticeable issue. 
-## Open API / Swagger API documentation
+Be aware that GitHub pages has a _soft_ limit of 10 deploys per hour, and it is possible we could run up against this (read more about the limitations of pages here: [About GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#usage-limits)). It should not have a significant affect on our day-to-day activities, however, and may never become a noticeable issue.
 
-This site leverages the [Redocusaurus plugin][gh-redocusaurus] to add embedded
-support for documentation related to the Open API / Swagger API documentation
-within the `trancom/mymove` repository.
+## API Documentation
 
-The way the preset works is by leveraging the raw GitHub URLs for the YAML files
-found in `transcom/mymove`. This means that the API documentation on this site
-will only contain the latest changes that are available in the default branch
-for the `transcom/mymove` repository.
-
-You can see this in the `./docusaurus.config.js` file under the `presets` named
-`redocusaurus`. For more information, [see the documentation around setting
-things up][redocusaurus-docs].
-
-[redocusaurus-docs]: https://github.com/rohit-gohri/redocusaurus/tree/main/packages/redocusaurus
-[gh-redocusaurus]: https://github.com/rohit-gohri/redocusaurus
+[Please read more about Redocusaurus is being used for API documentation.](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus)
