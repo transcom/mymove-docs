@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 module.exports = {
   title: 'MilMove Developer Portal',
   tagline: '',
-  url: 'https://transcom.github.io/mymove-docs/',
+  url: 'https://transcom.github.io',
   baseUrl: '/mymove-docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
