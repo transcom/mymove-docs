@@ -85,4 +85,4 @@ Be aware that GitHub pages has a _soft_ limit of 10 deploys per hour, and it is 
 
 ## API Documentation
 
-[Please read more about Redocusaurus is being used for API documentation.](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus)
+[Please read more about how Redocusaurus is being used for API documentation.](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus)
