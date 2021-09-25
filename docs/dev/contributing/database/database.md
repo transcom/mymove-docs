@@ -1,11 +1,27 @@
-# Database Guides
+---
+title: Guides
+sidebar_position: 2
+---
 
-* [[How To Backup and Restore the Development Database|backup-and-restore-dev-database]]
-* [[How To Migrate the Database|database-migrations]]
-* [[How To Soft Delete|soft-delete]]
-* [[Using EagerPreload in Pop]]
-* [[How database cleanup works in Go server tests]]
-* [[Understanding Testdatagen Functions]]
+# MilMove Database Guides
+
+:::info Table of contents
+
+Below are some helpful links that are a holdover from the GitHub Wiki
+documentation file structure. This may not be relevant since the shift to using
+Docusaurus and may change in the future.
+
+* [How to backup and restore the development
+    database](./Backup-and-Restore-Dev-Database.md)
+* [How to migrate the database](./migrations.md)
+* [How to soft delete](../backend/soft-delete.md)
+* [Using EagerPreload in Pop](../backend/Using-EagerPreload-in-Pop.md)
+* [How database cleanup works in Go server
+    tests](./How-database-cleanup-works-in-Go-server-tests.md)
+* [Understanding `Testdatagen`
+    functions](../../testing/test-data/Understanding-Testdatagen-Functions.md)
+
+:::
 
 ## Pop SQL logging on by default in development
 
