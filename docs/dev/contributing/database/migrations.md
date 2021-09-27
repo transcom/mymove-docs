@@ -1,14 +1,25 @@
+---
+title: Migrations
+
+---
+
+:::info Ask in Slack
+
+If you have any questions, ask for help from the `@database-reviewers` in
+[#g-database][slack_g-database].
+
+[slack_g-database]: https://ustcdp3.slack.com/archives/CSGDM3NUW
+
+:::
+
 # How to Migrate the Database
 
-If you need to change the database schema, you'll need to write a migration. These are the general steps you'll need to follow:
+If you need to change the database schema, you'll need to write a migration.
+This page contains the documentation that you will need to follow to do so.
 
-1. [Generate a new migration file](#Creating-Migrations)
-1. [Add the new SQL to the generated file](#writing-migrations)
-1. [Set up your database](#Setup)
-1. [Run the migrations](#Running-Migrations)
-1. Test your new migration
+## Test your new migration
 
-After your testing, if you find that you need to change your migration, you'll need to reset your DB (`make db_<env>_reset`) and rerun the migrations to make sure your updates are reflected in the local DB instance. 
+After your testing, if you find that you need to change your migration, you'll need to reset your DB (`make db_<env>_reset`) and rerun the migrations to make sure your updates are reflected in the local DB instance.
 
 Once you have completed your testing, push your changes up for review! You'll need a review from someone in the DB reviewers group, and if it's a secure migration, you'll need to test your changes on Experimental. Read [[these instructions|deploy-to-experimental]] to learn about deploying to Experimental.
 
@@ -16,14 +27,14 @@ Once you have completed your testing, push your changes up for review! You'll ne
 
 ## Understanding Migrations
 
-Database migrations are SQL scripts that modify the state of the database (ie, the database schema). They are how we add and modify tables, columns, indexes, comments, and other aspects of our database. We also have migrations that insert constant data into our tables so that we will always have access to certain data values/records. 
+Database migrations are SQL scripts that modify the state of the database (ie, the database schema). They are how we add and modify tables, columns, indexes, comments, and other aspects of our database. We also have migrations that insert constant data into our tables so that we will always have access to certain data values/records.
 
-These scripts are not living files like the rest of our source code. You can think of them as snapshots of the state of the DB over time. **In general, we should not update old migration files.** If you need to change something added in the past, create a new migration that overrides the old one instead. 
+These scripts are not living files like the rest of our source code. You can think of them as snapshots of the state of the DB over time. **In general, we should not update old migration files.** If you need to change something added in the past, create a new migration that overrides the old one instead.
 
 The MilMove migration files are located in the `migrations/app` directory. There are two subdirectories:
 
 - `/schema`: the migrations that define the schema for our DB. This is most likely where you'll be working.
-- `/secure`: these migrations are adding or modifying sensitive data in the DB. CAC credentials, for example, will be in this directory. You will need to follow special instructions if you are working with these files. 
+- `/secure`: these migrations are adding or modifying sensitive data in the DB. CAC credentials, for example, will be in this directory. You will need to follow special instructions if you are working with these files.
 
 The `migrations_manifest.txt` file contains a list of all of the migrations in both `schema` and `secure`. This file is what tells the database which scripts to run when we call the `migrate` command. It will be updated automatically as part of the process of generating a new migration - you will likely never need to make manual updates to this file.
 
@@ -52,11 +63,11 @@ These commands will tear down the existing instance of the database and rebuild 
 
 ## Creating Migrations
 
-To generate a new migration file, use: 
+To generate a new migration file, use:
 
 ```sh
 milmove gen migration -n <migration_name>
-``` 
+```
 
 where `<migration_name>` is a brief description of the action being performed. The name must be in snake case, such as `add_status_to_moves`. This will create a placeholder migration and add it to the manifest.
 
@@ -72,7 +83,7 @@ run `milmove gen`. To run a specific subcommand, use the syntax `milmove gen <su
 
 _NOTE: We **don't** use `down-migrations` to revert changes to the schema; any problems are to be fixed by a follow-up migration._
 
-You can also run `update-migrations-manifest` to update the `migrations_manifest.txt` file. This is only necessary if you manually create a new migration file instead of using `milmove gen migration` to generate a new file. There's really no reason to manually create a file; just use `milmove gen`. 
+You can also run `update-migrations-manifest` to update the `migrations_manifest.txt` file. This is only necessary if you manually create a new migration file instead of using `milmove gen migration` to generate a new file. There's really no reason to manually create a file; just use `milmove gen`.
 
 ### Writing migrations
 
@@ -86,8 +97,8 @@ When you are writing the code for your new migration, there are a few things you
     * Get a valid UUID4 from [the Online UUID Generator](https://www.uuidgenerator.net/)
     * Use `python -c 'import uuid; print(str(uuid.uuid4()))'`
     * Use `brew install uuidgen; uuidgen`
-   
-    Never use the same UUID more than once. It should be unique across the whole database. 
+
+    Never use the same UUID more than once. It should be unique across the whole database.
 
 * Follow best practices for ensuring [Zero-Downtime Deploys](#zero-downtime-migrations). Your migrations should create a database state that is compatible with the current version of the application code _and_ the new version of the application code.
 
@@ -156,11 +167,27 @@ The reason to use a `make` target is because it will correctly set the migration
 
 ## Secure Migrations
 
-> ❗️ **Before adding SSNs or other PII, please consult with Infra.**
+:::caution Ask in Slack
 
-We are piggy-backing on the migration system for importing static datasets. This approach causes problems if the data isn't public, as all of the migrations are in this open source repository. To address this, we have what are called "secure migrations."
+**Before adding SSNs or other PII, please consult with
+[#prac-infrasec](https://ustcdp3.slack.com/archives/CP496B8DB).**
+
+:::
+
+We are piggy-backing on the migration system for importing static datasets. This
+approach causes problems if the data isn't public, as all of the migrations are
+in this open source repository. To address this, we have what are called "secure
+migrations."
 
 ### Creating Secure Migrations
+
+:::danger Before you start
+
+Make sure you don't have any pending Migrations files before you start with this
+section. If you're unsure about running these commands, ask for help from the
+`@database-reviewers` in [#g-database][slack_g-database].
+
+:::
 
 1. Set up a local `deployed_migrations` database by running:
     ```shell
@@ -168,7 +195,12 @@ We are piggy-backing on the migration system for importing static datasets. This
     ```
     This will help you test the migration you are creating later.
 
-1. Generate new migration files with `generate-secure-migration <migration_name>`. This creates two migration files:
+1. Generate new migration files.
+    ```sh title="Replace the $migration_name variable"
+    generate-secure-migration $migration_name
+    ```
+
+    This creates two migration files:
    - a file in `migrations/app/secure` with no secret data. This one will be used to set up the dev db
    - a file in `tmp` which will be uploaded to S3 and contain sensitive data
 
@@ -211,7 +243,7 @@ We are piggy-backing on the migration system for importing static datasets. This
 
 ### Secure Migrations for One Environment
 
-To run a secure migration on ONLY staging (or other chosen environment), upload the migration only to the S3 environment and blank files to the others. 
+To run a secure migration on ONLY staging (or other chosen environment), upload the migration only to the S3 environment and blank files to the others.
 
 1. Similar to the "Upload the migration" step above, run `ENVIRONMENTS="stg" upload-secure-migration <production_migration_file>` where `ENVIRONMENTS` is a quoted list of all the environments you wish to upload to. The default is `"exp stg prd"` but you can just do staging and production with `ENVIRONMENTS="stg prd"`
 
