@@ -15,7 +15,7 @@ The `services` package is a combination of the bottom two layers, **business log
 
 Our "service objects," as we call them (this is MilMove-specific terminology), are the structs/functions within this package that implement our business logic. We organize them by data type, or **model**. For example, all service objects that implement the business logic for shipments will be grouped together in the same sub-package.
 
-This design pattern was decided in our [Service Object Layer ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0033-service-object-layer.md). Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. We have also developed clear patterns for creating and using this code.
+This design pattern was decided in our [Service Object Layer ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0033-service-object-layer.md). Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. We have also developed clear patterns for [creating] and [using] this structure.
 
 ### When a Service Object Makes Sense
 
@@ -28,176 +28,330 @@ When to use a service object?
 * [ ] does this focus beyond parsing a request and rendering data
 * [ ] does this singular piece of business logic use many different dependencies and/or different models
 
-If you answered no to more than two of these questions, then a service object may not be the appropriate design pattern to use in your use case.
+If you answered no to more than two of 
+
+TODO: "Ideally, the service object
+should expose only one public function, with helper private functions, as needed and when it makes sense. Oftentimes,
+smaller private functions are good to unit test smaller units of functionality."
 
 ## Creating Service Objects
 
 Once you have analyzed and determined that a service object is appropriate the next step is to actually create it.
 
-### Folder Structure And Naming
 
-1. Find or create appropriate directory.
 
-Find or create the appropriate directory, in `/services` where the service object will live. Oftentimes, this directory
-will be related to the actual model entity that it is dealing with. If this is something that involves multiple models, or
-does not necessarily easily map to a model entity name, then it might be best to create a new folder that has a relevant name.
+### Where does it go?
 
- ```bash
- /mymove
-   /pkg
-     /services
-       /paperwork
+In the `mymove` codebase, navigate to the `./pkg/services` directory. You should see a bunch of sub-directories (these are all Go packages themselves) and then singular Go files at the end. The names of these solo Go files should match that of a directory above.
+
+```text
+mymove/
+├── pkg/
+│   ├── services/
+│   │   ├── ...
+│   │   ├── mto_agent/
+│   │   ├── mto_service_item/   <- a subpackage
+│   │   ├── mto_shipment/ 
+│   │   ├── ...
+│   │   ├── mto_agent.go
+│   │   ├── mto_service_item.go <- the interface in the services package
+│   │   ├── mto_shipment.go
+│   │   ├── ...
 ```
 
-1. Create the appropriate file(s) for the service object file, service object test file, and service object directory file.
+Note that the names here **match our database tables**, but in the singular form. 
 
-Create a file with a name that captures what the service object is responsible for. Choose this name carefully as it will also be
-the name of the service object struct.
+Each of these subpackages handles the operations for one particular data model. This helps us keep track of our database interactions and allows for differently-focused teams to speak with the database and APIs using the same validation and functionality.
 
-```bash
-/mymove
-  /pkg
-    /services
-      /paperwork
-        form_creator.go
-        form_creator_test.go
-      paperwork.go
+Now you must either find the subpackage that corresponds to the data model for your new function, or create a new one. Make sure to add the directory _and_ the top-level Go file:
+
+```text {6,9}
+mymove/
+├── pkg/
+│   ├── services/
+│   │   ├── ...
+│   │   ├── mto_shipment/ 
+│   │   ├── reweigh/ 
+│   │   ├── ...
+│   │   ├── mto_shipment.go
+│   │   ├── reweigh.go
+│   │   ├── ...
 ```
 
-### Parameters and Return Values
+Leave this Go file blank for the time being.
 
-**Parameters**
-Remember that service objects should be reusable. Try to abstract as much out of the logic specific parameters to achieve this.
-Pass as many parameters as make sense. Use your best judgment. In the following example from the codebase, we are only passing in one parameter to the `CreateForm` execution method, a
-`template` variable with the type `FormTemplate`. This is because the `FormTemplate` is more complex than most service objects and this use case works for use here.
- Some service objects will only require one or two parameters and a struct is not appropriate.`FormTemplate` only holds relatively abstract parameters such that the service
-object can be reused if needed. Regarding `FormCreator`, this service object can be reused to generate another PDF by passing
-different valid parameters.
+:::info 
+If your service involves multiple models or does not easily map to a model entity name, then it might be best to create a new folder that has a relevant name. 
+
+However, first consider whether or not the additional models are being updated as a _side-effect_ of another model's update and which model is being exposed as an input or return value. In either of those cases, you can determine which model is the true subject of your service.
+
+Ultimately, you must use your best judgment.
+:::
+
+### Adding a new file
+
+Once you have identified or creating the subpackage for your new service object, navigate into that folder. 
+
+We name our files for the main **action** of that particular service object. For example, the file that contains the service to update a shipment is called `mto_shipment_updater.go`. If you are modifying an existing action, open that particular file. Otherwise, you should create a new one.
+
+If you are working from scratch, you will also need to add a service test file so that your tests will run properly. This file is boilerplate and can be copy/pasted from any other `services` subpackage.
+
+Your new subpackage should look like this:
+
+```text
+mymove/
+├── pkg/
+│   ├── services/
+│   │   ├── reweigh/ 
+│   │   │   ├── reweigh_creator.go  <------ this name can be any action
+│   │   │   ├── reweigh_creator_test.go
+│   │   │   ├── reweigh_service_test.go  <- boilerplate
+│   │   ├── ...
+│   │   ├── reweigh.go
+│   │   ├── ...
+```
+
+:::caution Stuttering
+You might notice that there's a lot of redundancy in this naming scheme. This is commonly referred to as **"stuttering"** and is considered an anti-pattern in most languages and frameworks. 
+
+We may at some point try to move away from this convention, but it is preferrable to be consistent with our less-than-ideal naming scheme for now.
+:::
+
+### Creating the struct
+
+Now that you have your directory and files set up, you can start to add the code within. Open up the Go file corresponding to your action.
+
+Every service object has a base struct type, and all of its actions will be methods on that struct. This struct should be private to the subpackage.
+
+```go title="./pkg/services/reweigh/reweigh_creator.go"
+package reweigh
+
+type reweighCreator struct {
+    // does not have any defined fields yet
+}
+```
+
+This struct should contain all the required fields for your new service. You may not know what these are yet, which is okay. Commonly, you'll see validator functions or other services that facilitate the business logic:
 
 ```go
-// paperwork.go
-package services
-
-// FormTemplate are the struct fields defined to call CreateForm service object
-type FormTemplate struct {
-  Buffer       *bytes.Reader
-  FieldsLayout map[string]paperworkforms.FieldPos
-  FormType
-  FileName string
-  Data     interface{}
-}
-
-// FormCreator is the service object interface for CreateForm
-type FormCreator interface {
-  CreateForm(template FormTemplate) (afero.File, error)
+type reweighUpdater struct {
+	checks       []reweighValidator // validator functions
+	recalculator services.PaymentRequestShipmentRecalculator // another service object
 }
 ```
 
-**Return Values**
-Service objects should return as many return values as appropriate. In the case of a service object like the CreateForm, the first parameter is whatever the service object is responsible for creating. If the first parameter returns a created entity, the second parameter should be an error.
-In the case of a simple entity fetch by ID, the first parameter could be model validation errors. There are some situations that require more complex returns. For those, use your best judgment.
+You should think of these fields as _dependencies_ for your new service object. The more you have, the more work the caller will have to do to set up this service. This can get inconvenient very quickly.
 
-*Remember all `errors` should be Wrapped by using `fmt.Errorf` using the `%w` verb so that the underlying error is propagated properly*
+### Creating the function
 
-```go
-// form_creator.go
-package paperwork
+Once you have a struct defined, you can start working on the main function for your service. This will be a method on the previously defined struct.
 
-func (c formCreator) CreateForm(template services.FormTemplate) (afero.File, error) {
-  // Populate form fields with data
-  err := c.FormFiller.AppendPage(template.Buffer, template.FieldsLayout, template.Data)
-  if err != nil {
-    return nil, fmt.Errorf("Failure writing %s data to form: %w", template.FormType.String(), err))
-  }
-  ...
+We follow a similar naming convention where the function is the active form of your action verb + the name of the object.
+
+```go title="./pkg/services/reweigh/reweigh_creator.go"
+// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.
+func (f *reweighCreator) CreateReweigh() {
+    // no code yet
 }
 ```
 
-### Naming And Defining Service Object Structs and Interfaces
+Once you have your bare function signature, you can start to fill in the parameters and return values.
 
-1. Define a private struct with the same name as the service object file, making sure that it is a noun camel-cased.
+#### Parameters
 
-The struct fields are the dependencies needed for the service. To implement an interface in Go, all we need to do is to implement all the methods in the interface. By using an interface here
-we are able to easily do mock testing on this service object. Adding these struct fields as interfaces will allow you to do testing with mocks; they are not required.
+Service objects should be reusable and modular, so keep this in mind while defining your parameters. To start with, they should be the bare minimum needed for someone to call this function. Use your best judgment. 
 
-21 Add an interface for the service, that captures the behavior of the service object.
+You will always need to pass in the `AppContext`. This is standard in our codebase.
+
+Often, the particular model type you are dealing with is passed in as input as well. This is not a hard rule, but it is a common convention. For our example, we are creating a reweigh and therefore will need information from a `models.Reweigh` type.
+
+```go title="./pkg/services/reweigh/reweigh_creator.go"
+// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.
+func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *models.Reweigh) {
+    // no code yet
+}
+```
+
+#### Return values
+
+Service objects should return as many return values as appropriate, and this will always include possible errors. A common convention is to return the pointer of the subject model type and a possible error.
+
+```go title="./pkg/services/reweigh/reweigh_creator.go"
+// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.
+func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error) {
+    return nil, nil // so the compiler stays happy
+}
+```
+
+#### Implementation
+
+Once you have defined the signature for your function, you can start to fill out the logic of your action. **This is going to be highly context-dependent.** Keep in mind that the following guidance may not be directly useful for your particular situation.
+
+For creating a new model record, we generally need to:
+
+1. Find any related objects in the database. For a reweigh, we'll need to verify that the shipment exists.
+2. Validate the input data against our business rules.
+3. Make the change to the database.
+4. Return the successfully created object.
+
+We're going to skip Step #2 for now, since that goes into our [validator pattern]. We also might not know our business rules just yet. We will be implementing #1, 3, and 4.
+
+**Step #1** involves a query on the database using our ORM, [Pop](https://gobuffalo.io/en/docs/db/getting-started).
 
 ```go
-// paperwork.go
+// Set up an empty model to receive any data found by Pop
+mtoShipment := &models.MTOShipment{}
+// Find the shipment using the ShipmentID provided in our reweigh input
+err := appCtx.DB().Find(mtoShipment, reweigh.ShipmentID)
+if err != nil {
+    // Return our standard NotFoundError type if there's an error
+    return nil, services.NewNotFoundError(reweigh.ShipmentID, "while looking for MTOShipment")
+}
+```
+
+**Step #3** (remember: we're skipping Step #2) also leverages [Pop](https://gobuffalo.io/en/docs/db/mutations/) to create the new reweigh record on the database.
+
+```go
+verrs, err := appCtx.DB().ValidateAndCreate(reweigh)
+// Check for validation errors encountered before Pop created the reweigh
+if verrs != nil && verrs.HasAny() {
+    // Return our standard InvalidInputError type
+    return nil, services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
+} else if err != nil {
+    // If the error is something else (this is unexpected), we create a QueryError
+    return nil, services.NewQueryError("Reweigh", err, "")
+}
+```
+
+For **Step #4**, we simply return our new reweigh! Putting all of the above code together, we'll get:
+
+```go title="./pkg/services/reweigh/reweigh_creator.go"
+// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.
+func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error) {
+    // Set up an empty model to receive any data found by Pop
+    mtoShipment := &models.MTOShipment{}
+    // Find the shipment using the ShipmentID provided in our reweigh input
+    err := appCtx.DB().Find(mtoShipment, reweigh.ShipmentID)
+    if err != nil {
+        // Return our standard NotFoundError type if there's an error
+        return nil, services.NewNotFoundError(reweigh.ShipmentID, "while looking for MTOShipment")
+    }
+
+    verrs, err := appCtx.DB().ValidateAndCreate(reweigh)
+    // Check for validation errors encountered before Pop created the reweigh
+    if verrs != nil && verrs.HasAny() {
+        // Return our standard InvalidInputError type
+        return nil, services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
+    } else if err != nil {
+        // If the error is something else (this is unexpected), we create a QueryError
+        return nil, services.NewQueryError("Reweigh", err, "")
+    }
+
+    // highlight-next-line
+    return reweigh, nil
+}
+```
+
+### Creating the interface
+
+Now we get to go back to our top-level Go file (`reweigh.go`, in this example).
+
+Our pattern for service objects involves creating an interface type in the `services` package proper that is implemented by your new service object. One reason for this is import cycles. Another is to keep this functionality grouped together in `services` without having to put all our code in one huge pile. Finally, interfaces are the only objects in Go that can be effectively mocked, so this is advantageous for our testing.
+
+The main thing to remember for an interface is that **it must match your function signature _exactly_**. Any deviation will break the relationship between these two types (the struct and the interface).
+
+:::tip Interfaces vs Structs
+If you are new to Go and are still a little wobbly on the concept of "interfaces" vs "structs" remember:
+
+- **Interface** types define _functions_. They are concerned with _verbs_.
+- **Struct** types define _objects_. The are concerned with _nouns_.
+:::
+
+Using the function signature we defined above, we can complete our interface right away.
+
+```go title="./pkg/services/reweigh.go"
 package services
 
 import (
-  "bytes"
-  "github.com/spf13/afero"
-  paperworkforms "github.com/transcom/mymove/pkg/paperwork"
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/models"
 )
 
-// FormTemplate are the struct fields defined to call CreateForm service object
-type FormTemplate struct {
-  Buffer       *bytes.Reader
-  FieldsLayout map[string]paperworkforms.FieldPos
-  FormType
-  FileName string
-  Data     interface{}
+// ReweighCreator creates a reweigh
+type ReweighCreator interface {
+	CreateReweighCheck(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error)
 }
-
-// FormCreator is the service object interface for CreateForm
-type FormCreator interface {
-  CreateForm(template FormTemplate) (afero.File, error)
-}
-
 ```
+
+Once you have defined this interface, we can go back to our service object's file and add a function that returns an instance of the interface. 
+
+```go title="./pkg/services/reweigh/reweigh_creator.go"
+// NewReweighCreator creates a new struct with the service dependencies and returns the interface type
+func NewReweighCreator() services.ReweighCreator {
+	return &reweighCreator{}
+}
+```
+
+This function lets us keep our struct and dependencies private to this subpackage and helps us standardize the way folks use our service. By abstracting implementation and returning an interface, we are creating boundaries between functionality and implementation that allow our codebase to be more flexible. 
+
+### Example file
+
+Putting together everything we did above, this is what our new service object file would look like:
+
+```go title="./pkg/services/reweigh/reweigh_creator.go"
+package reweigh
+
+import (
+	"github.com/gofrs/uuid"
+
+	"github.com/transcom/mymove/pkg/appcontext"
+
+	"github.com/transcom/mymove/pkg/services"
+
+	"github.com/transcom/mymove/pkg/models"
+)
+
+
+type reweighCreator struct {
+    // does not have any defined fields yet
+}
+
+// NewReweighCreator creates a new struct with the service dependencies and returns the interface type
+func NewReweighCreator() services.ReweighCreator {
+	return &reweighCreator{}
+}
+
+// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.
+func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error) {
+    // Set up an empty model to receive any data found by Pop
+    mtoShipment := &models.MTOShipment{}
+    // Find the shipment using the ShipmentID provided in our reweigh input
+    err := appCtx.DB().Find(mtoShipment, reweigh.ShipmentID)
+    if err != nil {
+        // Return our standard NotFoundError type if there's an error
+        return nil, services.NewNotFoundError(reweigh.ShipmentID, "while looking for MTOShipment")
+    }
+
+    verrs, err := appCtx.DB().ValidateAndCreate(reweigh)
+    // Check for validation errors encountered before Pop created the reweigh
+    if verrs != nil && verrs.HasAny() {
+        // Return our standard InvalidInputError type
+        return nil, services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
+    } else if err != nil {
+        // If the error is something else (this is unexpected), we create a QueryError
+        return nil, services.NewQueryError("Reweigh", err, "")
+    }
+
+    return reweigh, nil
+}
+```
+
+## Using Service Objects
+
+bloop
 
 ### Naming and Defining Service Object Execution Method
 
-The service object execution method is responsible for kicking off the service object call. Ideally, the service object
-should expose only one public function, with helper private functions, as needed and when it makes sense. Oftentimes,
-smaller private functions are good to unit test smaller units of functionality. The service object execution method should be the same as the file name
-and struct. The service object execution method should be a method of the service object struct,
-a struct of parameters that the service object requires, and returning values, as appropriate.
-
-```go
-// form_creator.go
-package paperwork
-
-import (
-    "github.com/spf13/afero"
-    "github.com/transcom/mymove/pkg/services"
-)
-
-type createForm struct {
-  fileStorer FileStorer
-  formFiller FormFiller
-}
-
-func (c formCreator) CreateForm(template services.FormTemplate) (afero.File, error) {
-  ...
-}
-```
-
-### Instantiating Service Objects
-
-1. Create a `NewServiceObjectStruct` method that is responsible for creating a new service object. This method should be used whenever a new service object struct is needed. One of the main benefits of using service objects is abstracting implementation and returning an interface, then only using the interface in our codebase elsewhere. This allows us to separate interface from implementation.
-
-```go
-// form_creator.go
-package paperwork
-
-import (
-  "github.com/spf13/afero"
-  "github.com/transcom/mymove/pkg/services"
-)
-
-type formCreator struct {
-  fileStorer Storer
-  formFiller Filler
-}
-
-func NewFormCreator(FileStorer Storer, FormFiller Filler) services.FormCreator {
-  return &formCreator{FileStorer: FileStorer, FormFiller: FormFiller}
-}
-
-```
 
 1. Add the service object as a field for the Handler struct of the handler that the service object will be executed in.
 
@@ -229,9 +383,6 @@ func NewPublicAPIHandler(context handlers.HandlerContext) http.Handler {
 }
 ```
 
-## Using Service Objects
-
-bloop
 
 ## Testing Service Objects with Mocks
 
