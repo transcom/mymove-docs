@@ -15,7 +15,7 @@ The `services` package is a combination of the bottom two layers, **business log
 
 Our "service objects," as we call them (this is MilMove-specific terminology), are the structs/functions within this package that implement our business logic. We organize them by data type, or **model**. For example, all service objects that implement the business logic for shipments will be grouped together in the same sub-package.
 
-This design pattern was decided in our [Service Object Layer ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0033-service-object-layer.md). Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. We have also developed clear patterns for [creating] and [using] this structure.
+This design pattern was decided in our [Service Object Layer ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0033-service-object-layer.md). Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. We have also developed clear patterns for [creating](#creating-service-objects) and [using](#using-service-objects) this structure.
 
 ### When a Service Object Makes Sense
 
@@ -209,17 +209,27 @@ if err != nil {
 }
 ```
 
-**Step #3** (remember: we're skipping Step #2) also leverages [Pop](https://gobuffalo.io/en/docs/db/mutations/) to create the new reweigh record on the database.
+**Step #3** (remember: we're skipping Step #2) also leverages [Pop](https://gobuffalo.io/en/docs/db/mutations/) to create the new reweigh record on the database. First, we want to create a **transaction** so that we can rollback this operation (or any calling operations) if something goes wrong.
 
 ```go
-verrs, err := appCtx.DB().ValidateAndCreate(reweigh)
+txErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
+    // Our database modification will go in here
+    // We also only need to return an error because our reweigh is a pointer and will be updated by the Pop method
+    return nil
+})
+```
+
+Now lets fill in the creation code, making sure to use the transaction context:
+
+```go
+verrs, err := txnCtx.DB().ValidateAndCreate(reweigh)
 // Check for validation errors encountered before Pop created the reweigh
 if verrs != nil && verrs.HasAny() {
     // Return our standard InvalidInputError type
-    return nil, services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
+    return services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
 } else if err != nil {
     // If the error is something else (this is unexpected), we create a QueryError
-    return nil, services.NewQueryError("Reweigh", err, "")
+    return services.NewQueryError("Reweigh", err, "")
 }
 ```
 
@@ -237,15 +247,18 @@ func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *mo
         return nil, services.NewNotFoundError(reweigh.ShipmentID, "while looking for MTOShipment")
     }
 
-    verrs, err := appCtx.DB().ValidateAndCreate(reweigh)
-    // Check for validation errors encountered before Pop created the reweigh
-    if verrs != nil && verrs.HasAny() {
-        // Return our standard InvalidInputError type
-        return nil, services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
-    } else if err != nil {
-        // If the error is something else (this is unexpected), we create a QueryError
-        return nil, services.NewQueryError("Reweigh", err, "")
-    }
+    txErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
+        verrs, err := txnCtx.DB().ValidateAndCreate(reweigh)
+        // Check for validation errors encountered before Pop created the reweigh
+        if verrs != nil && verrs.HasAny() {
+            // Return our standard InvalidInputError type
+            return services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
+        } else if err != nil {
+            // If the error is something else (this is unexpected), we create a QueryError
+            return services.NewQueryError("Reweigh", err, "")
+        }
+        return nil
+    })
 
     // highlight-next-line
     return reweigh, nil
@@ -264,7 +277,7 @@ The main thing to remember for an interface is that **it must match your functio
 If you are new to Go and are still a little wobbly on the concept of "interfaces" vs "structs" remember:
 
 - **Interface** types define _functions_. They are concerned with _verbs_.
-- **Struct** types define _objects_. The are concerned with _nouns_.
+- **Struct** types define _objects_. They are concerned with _nouns_.
 :::
 
 Using the function signature we defined above, we can complete our interface right away.
@@ -332,15 +345,18 @@ func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *mo
         return nil, services.NewNotFoundError(reweigh.ShipmentID, "while looking for MTOShipment")
     }
 
-    verrs, err := appCtx.DB().ValidateAndCreate(reweigh)
-    // Check for validation errors encountered before Pop created the reweigh
-    if verrs != nil && verrs.HasAny() {
-        // Return our standard InvalidInputError type
-        return nil, services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
-    } else if err != nil {
-        // If the error is something else (this is unexpected), we create a QueryError
-        return nil, services.NewQueryError("Reweigh", err, "")
-    }
+    txErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
+        verrs, err := txnCtx.DB().ValidateAndCreate(reweigh)
+        // Check for validation errors encountered before Pop created the reweigh
+        if verrs != nil && verrs.HasAny() {
+            // Return our standard InvalidInputError type
+            return services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
+        } else if err != nil {
+            // If the error is something else (this is unexpected), we create a QueryError
+            return services.NewQueryError("Reweigh", err, "")
+        }
+        return nil
+    })
 
     return reweigh, nil
 }
@@ -348,9 +364,43 @@ func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *mo
 
 ## Using Service Objects
 
-bloop
+Service objects are often used in other services, but they're most commonly used by our handler functions. Handlers are the **presentation layer** of our backend, and they correspond to API endpoints.
 
-### Naming and Defining Service Object Execution Method
+In either case, they will be used in much the same way. Service objects are often (although not necessarily) defined as a dependency in a struct:
+
+```go {4}
+// CreateReweighHandler is the handler for the API endpoint to create a reweigh
+type CreateReweighHandler struct {
+	handlers.HandlerContext
+	creator services.ReweighCreator // our service object
+}
+```
+
+When that struct is being instantiated, they are created using their `New<MyServiceObject>` function:
+
+```go {4}
+// Create an instance of CreateReweighHandler and assign it to our generated Swagger Go code
+sampleAPI.MtoShipmentCreateReweighHandler = CreateReweighHandler{
+    ctx,
+    reweigh.NewReweighCreator(), // instantiating our service object
+}
+```
+
+And finally, once the service object is instantiated, it will be used by calling the function defined in the interface type:
+
+```go
+// Call the service object using the creator set in our handler struct (h, defined above)
+createdReweigh, err := h.creator.CreateReweigh(appCtx, newReweigh)
+```
+
+### Examples
+
+- [CreateUpload](https://github.com/transcom/mymove/blob/master/pkg/services/upload/upload_creator.go)
+- [CreateExcessWeightUpload](https://github.com/transcom/mymove/blob/master/pkg/services/move/excess_weight_uploader.go) - calls `CreateUpload`
+
+
+
+## Naming and Defining Service Object Execution Method
 
 
 1. Add the service object as a field for the Handler struct of the handler that the service object will be executed in.
@@ -384,7 +434,9 @@ func NewPublicAPIHandler(context handlers.HandlerContext) http.Handler {
 ```
 
 
-## Testing Service Objects with Mocks
+## Testing Service Objects
+
+// TODO mocking
 
 1. Make sure the mock generation tool is installed by running `make server_deps`.
 1. Generate the mock for the interface you'd like to test. See the [document on generating mocks with mockery](https://github.com/transcom/mymove/wiki/generate-mocks-with-mockery)
