@@ -1,26 +1,23 @@
-# Backend Service Objects Development Guide
+---
+title: Service Objects
+---
+# Guide to Service Objects
 
-## Table of Contents
+## What is a Service Object?
 
-<!-- Table of Contents auto-generated with `bin/generate-md-toc.sh` -->
+The MilMove backend is _loosely_ designed with this [3-layer structure](https://docs.google.com/presentation/d/1kVQzrYWY0AnYyPbiqfuFv8Fh_7IwwIFv3XKRxZI44Hs/edit#slide=id.p):
 
-<!-- toc -->
+1. **Presentation layer.** Our endpoint handlers that perform type conversions and connect user requests to business logic functions.
+2. **Business logic layer.** Code that implements MilMove's business logic.
+3. **Data access layer.** Code that directly interacts with and manipulates the database. 
 
-* [When a Service Object Makes Sense](#when-a-service-object-makes-sense)
-* [Creating Service Objects](#creating-service-objects)
-  * [Folder Structure And Naming](#folder-structure-and-naming)
-  * [Parameters and Return Values](#parameters-and-return-values)
-  * [Naming And Defining Service Object Structs and Interfaces](#naming-and-defining-service-object-structs-and-interfaces)
-  * [Naming and Defining Service Object Execution Method](#naming-and-defining-service-object-execution-method)
-  * [Instantiating Service Objects](#instantiating-service-objects)
-* [Testing Service Objects with Mocks](#testing-service-objects-with-mocks)
-* [Resources](#resources)
+The `services` package is a combination of the bottom two layers, **business logic** and **data access**. It is located within the `./pkg/services` directory.
 
-Regenerate with "pre-commit run -a markdown-toc"
+Our "service objects," as we call them (this is MilMove-specific terminology), are the structs/functions within this package that implement our business logic. We organize them by data type, or **model**. For example, all service objects that implement the business logic for shipments will be grouped together in the same sub-package.
 
-<!-- tocstop -->
+This design pattern was decided in our [Service Object Layer ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0033-service-object-layer.md). Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. We have also developed clear patterns for creating and using this code.
 
-## When a Service Object Makes Sense
+### When a Service Object Makes Sense
 
 When writing or refactoring a piece of business logic to adhere to the service object pattern, it is important that this business function truly is the responsibility of a service object. Overusing this pattern and not applying it when appropriate can lead to several problems. It is necessary that developers make sure they are using the service object layer pattern when appropriate.
 
@@ -231,6 +228,10 @@ func NewPublicAPIHandler(context handlers.HandlerContext) http.Handler {
   return publicAPI.Serve(nil)
 }
 ```
+
+## Using Service Objects
+
+bloop
 
 ## Testing Service Objects with Mocks
 
