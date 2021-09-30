@@ -39,7 +39,7 @@ mymove/
 │   ├── services/
 │   │   ├── ...
 │   │   ├── mto_agent/
-│   │   ├── mto_service_item/   <- a subpackage
+│   │   ├── mto_service_item/   <- a sub-package
 │   │   ├── mto_shipment/ 
 │   │   ├── ...
 │   │   ├── mto_agent.go
@@ -50,9 +50,9 @@ mymove/
 
 Note that the names here **match our database tables**, but in the singular form. 
 
-Each of these subpackages handles the operations for one particular data model. This helps us keep track of our database interactions and allows for differently-focused teams to speak with the database and APIs using the same validation and functionality.
+Each of these sub-packages handles the operations for one particular data model. This helps us keep track of our database interactions and allows for differently-focused teams to speak with the database and APIs using the same validation and functionality.
 
-Now you must either find the subpackage that corresponds to the data model for your new function, or create a new one. Make sure to add the directory _and_ the top-level Go file:
+Now you must either find the sub-package that corresponds to the data model for your new function, or create a new one. Make sure to add the directory _and_ the top-level Go file:
 
 ```text {6,9}
 mymove/
@@ -79,13 +79,13 @@ Ultimately, you must use your best judgment.
 
 ### Adding a new file
 
-Once you have identified or creating the subpackage for your new service object, navigate into that folder. 
+Once you have identified or creating the sub-package for your new service object, navigate into that folder. 
 
 We name our files for the main **action** of that particular service object. For example, the file that contains the service to update a shipment is called `mto_shipment_updater.go`. If you are modifying an existing action, open that particular file. Otherwise, you should create a new one.
 
-If you are working from scratch, you will also need to add a service test file so that your tests will run properly. This file is boilerplate and can be copy/pasted from any other `services` subpackage.
+If you are working from scratch, you will also need to add a service test file so that your tests will run properly. This file is boilerplate and can be copy/pasted from any other `services` sub-package.
 
-Your new subpackage should look like this:
+Your new sub-package should look like this:
 
 ```text
 mymove/
@@ -110,7 +110,7 @@ We may at some point try to move away from this convention, but it is preferrabl
 
 Now that you have your directory and files set up, you can start to add the code within. Open up the Go file corresponding to your action.
 
-Every service object has a base struct type, and all of its actions will be methods on that struct. This struct should be private to the subpackage.
+Every service object has a base struct type, and all of its actions will be methods on that struct. This struct should be private to the sub-package.
 
 ```go title="./pkg/services/reweigh/reweigh_creator.go"
 package reweigh
@@ -294,7 +294,7 @@ func NewReweighCreator() services.ReweighCreator {
 }
 ```
 
-This function lets us keep our struct and dependencies private to this subpackage and helps us standardize the way folks use our service. By abstracting implementation and returning an interface, we are creating boundaries between functionality and implementation that allow our codebase to be more flexible. 
+This function lets us keep our struct and dependencies private to this sub-package and helps us standardize the way folks use our service. By abstracting implementation and returning an interface, we are creating boundaries between functionality and implementation that allow our codebase to be more flexible. 
 
 ### Example file
 
