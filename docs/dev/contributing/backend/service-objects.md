@@ -17,28 +17,17 @@ Our "service objects," as we call them (this is MilMove-specific terminology), a
 
 This design pattern was decided in our [Service Object Layer ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0033-service-object-layer.md). Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. We have also developed clear patterns for [creating](#creating-service-objects) and [using](#using-service-objects) this structure.
 
-### When a Service Object Makes Sense
+### Key features
 
-When writing or refactoring a piece of business logic to adhere to the service object pattern, it is important that this business function truly is the responsibility of a service object. Overusing this pattern and not applying it when appropriate can lead to several problems. It is necessary that developers make sure they are using the service object layer pattern when appropriate.
+A well-defined service object is:
 
-When to use a service object?
+- Concerned primarily with one data object (although it may use other service objects to modify additional data objects),
+- Reusable and modular,
+- Not related to or affected by our API design.
 
-* [ ] dedicated encapsulation of a single piece business logic
-* [ ] could possibly be re-purposed
-* [ ] does this focus beyond parsing a request and rendering data
-* [ ] does this singular piece of business logic use many different dependencies and/or different models
-
-If you answered no to more than two of 
-
-TODO: "Ideally, the service object
-should expose only one public function, with helper private functions, as needed and when it makes sense. Oftentimes,
-smaller private functions are good to unit test smaller units of functionality."
+Service objects should expose clear and self-explanatory public functions. Niche utilities and business logic should be in private functions within the service object's package.
 
 ## Creating Service Objects
-
-Once you have analyzed and determined that a service object is appropriate the next step is to actually create it.
-
-
 
 ### Where does it go?
 
