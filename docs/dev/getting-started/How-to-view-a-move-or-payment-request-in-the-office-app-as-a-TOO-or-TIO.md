@@ -37,7 +37,7 @@ scripts/ds-for-gbloc "Scott AFB"
 This will list all the duty stations with the same GBLOC as `Scott AFB`. As a service member, you can select any of the duty stations listed by the script as your origin duty station.  A move must have at least one non-PPM shipment (HHG Longhaul, HHG Shorthaul, NTS, or NTS Release) for the move to appear in the queue when you sign in as a TOO.
 
 ### Exception!
-There is a special case where the above won't work. If a service member chooses `Marine Corps` as their "Branch of service", then the TOO/TIO won't see the moves/payment requests unless their GBLOC is "USMC". Currently, the only transportation office with that GBLOC is `Camp LeJeune (USMC)`. So, to test Marines moves, you will need to create a new office user with that specific transportation office. Unfortunately, it's currently not possible to update an existing office user's transportation office via the admin site, but we hope to add that feature soon.
+There is a special case where the above won't work. If a service member chooses `Marine Corps` as their "Branch of service", then the TOO/TIO won't see the moves/payment requests unless their GBLOC is "USMC". Currently, the only transportation office with that GBLOC is `Camp LeJeune (USMC)`. So, to test Marines moves, you will need to create a new office user with that specific transportation office. If you need to change an office user's transportation office after creating them, you can do so from the admin interface.
 
 ## When using the pre-populated development data
 
