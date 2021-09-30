@@ -287,7 +287,7 @@ import (
 
 // ReweighCreator creates a reweigh
 type ReweighCreator interface {
-	CreateReweighCheck(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error)
+	CreateReweigh(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error)
 }
 ```
 
