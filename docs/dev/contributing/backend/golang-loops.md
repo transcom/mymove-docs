@@ -1,14 +1,4 @@
-## TOC
-
-<!-- toc -->
-
-- [Introduction](#introduction)
-- [Problem Manifestation](#problem-manifestation)
-- [Discovery](#discovery)
-- [How to Fix](#how-to-fix)
-- [References](#references)
-
-<!-- tocstop -->
+# Loop Iteration in Golang
 
 ## Introduction
 
