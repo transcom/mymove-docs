@@ -206,6 +206,9 @@ txErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
     // We also only need to return an error because our reweigh is a pointer and will be updated by the Pop method
     return nil
 })
+if txErr != nil {
+    return nil, txErr
+}
 ```
 
 Now lets fill in the creation code, making sure to use the transaction context:
@@ -248,6 +251,9 @@ func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *mo
         }
         return nil
     })
+    if txErr != nil {
+        return nil, txErr
+    }
 
     // highlight-next-line
     return reweigh, nil
@@ -346,6 +352,9 @@ func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *mo
         }
         return nil
     })
+    if txErr != nil {
+        return nil, txErr
+    }
 
     return reweigh, nil
 }
