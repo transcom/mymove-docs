@@ -343,9 +343,7 @@ In general, focus on testing non-trivial behavior.
 
 ## Time
 
-Some helpful tips on dealing with time
-in the MilMove Go codebase
-can be found in [this doc](time.md)
+Some helpful tips on dealing with time in the MilMove Go codebase can be found in [this doc](golang-time.md)
 
 ## Miscellaneous Tips
 

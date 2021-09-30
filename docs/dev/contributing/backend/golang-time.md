@@ -1,23 +1,8 @@
 # Time in Golang
 
-## Table of Contents
-
-<!-- toc -->
-
-* [Clock Dependency](#clock-dependency)
-  * [Setting the Mock Clock](#setting-the-mock-clock)
-* [MilMove Calendar Utils](#milmove-calendar-utils)
-
-Regenerate with "pre-commit run -a markdown-toc"
-
-<!-- tocstop -->
-
 ## Clock Dependency
 
-`time.Now()` can cause a lot of side effects in a codebase.
-One example is
-that you can't test the "current" time
-that happened in a function you called in the past
+`time.Now()` can cause a lot of side effects in a codebase. One example is that you can't test the "current" time that happened in a function you called in the past.
 
 For example, let's say we have the following:
 
@@ -39,22 +24,9 @@ func TestMyTimeFunc(t *testing.T) {
 }
 ```
 
-How do we test the contents of the return here?
-If we want to assert the time
-we need a way to know what `time.Now()` was when the function was called.
+How do we test the contents of the return here? If we want to assert the time we need a way to know what `time.Now()` was when the function was called.
 
-Instead of directly using the `time` package,
-we can pass a clock as a dependency and call `.Now()` on that.
-Then in our tests, we can assert against that clock!
-The clock can be anything as long as it adheres to the `clock.Clock` interface
-as defined in the
-[facebookgo clock package](https://godoc.org/github.com/facebookgo/clock#Clock).
-We could, for example,
-make the clock always return the year 0,
-or the 2019 New Year,
-or maybe your birthday!
-In this clock package,
-there are two clocks.
+Instead of directly using the `time` package, we can pass a clock as a dependency and call `.Now()` on that. Then in our tests, we can assert against that clock! The clock can be anything as long as it adheres to the `clock.Clock` interface as defined in the [facebookgo clock package](https://godoc.org/github.com/facebookgo/clock#Clock). We could, for example, make the clock always return the year 0, or the 2019 New Year, or maybe your birthday! In this clock package, there are two clocks.
 
 * The real clock where `clock.Now()` will call `time.Now()`.
 * A mock clock where `clock.Now()` always returns epoch time.
@@ -95,11 +67,8 @@ func TestMyTimeFunc(t *testing.T) {
 ```
 
 Cool, but what if I want to use a different date?
-Say my test relies on our `TestYear` constant.
-The [clock.Mock clock](https://godoc.org/github.com/facebookgo/clock#Mock)
-allows us to add durations to the clock and set the current time.
-Note that the `clock.Clock` interface does not allow this,
-it needs to happen before passing the mock clock through the interface parameter.
+
+Say my test relies on our `TestYear` constant. The [clock.Mock clock](https://godoc.org/github.com/facebookgo/clock#Mock) allows us to add durations to the clock and set the current time. Note that the `clock.Clock` interface does not allow this, it needs to happen before passing the mock clock through the interface parameter.
 
 ### Setting the Mock Clock
 
@@ -121,10 +90,6 @@ func TestMyTimeFunc(t *testing.T) {
 
 ## MilMove Calendar Utils
 
-The MilMove project has a set of date/calendar util
-to help develop and test.
-You can find them in the [dates package](../../pkg/dates)
+The MilMove project has a set of date/calendar util to help develop and test. You can find them in the [dates package](https://github.com/transcom/mymove/tree/master/pkg/dates)
 
-For testing, we also have `TestYear`
-in the [constants package](../../pkg/testdatagen/constants.go)
-which should be used instead of the current year.
+For testing, we also have `TestYear` in the [constants package](https://github.com/transcom/mymove/blob/master/pkg/testdatagen/constants.go), which should be used instead of the current year.
