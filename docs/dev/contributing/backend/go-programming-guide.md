@@ -1,81 +1,6 @@
-# Backend Programming Guide
+# Golang Programming Guide
 
-## Table of Contents
-
-<!-- toc -->
-
-* [Go](#go)
-  * [Acronyms](#acronyms)
-  * [Style and Conventions](#style-and-conventions)
-  * [Importing Dependencies](#importing-dependencies)
-  * [Querying the Database Safely](#querying-the-database-safely)
-  * [`models.Fetch*` functions](#modelsfetch-functions)
-  * [Logging](#logging)
-    * [Logging Levels](#logging-levels)
-    * [Tip use JSON friendly names for Zap.Objects](#tip-use-json-friendly-names-for-zapobjects)
-  * [Errors](#errors)
-    * [Don't bury your errors in underscores](#dont-bury-your-errors-in-underscores)
-    * [Log at the top level; create and pass along errors below](#log-at-the-top-level-create-and-pass-along-errors-below)
-    * [Use `fmt.Errorf` and `%w` verb when using external libraries](#use-fmterrorf-and-%25w-verb-when-using-external-libraries)
-    * [Don't `fmt` errors; log instead](#dont-fmt-errors-log-instead)
-    * [If some of your errors are predictable, pattern match on them to provide more error detail](#if-some-of-your-errors-are-predictable-pattern-match-on-them-to-provide-more-error-detail)
-  * [Libraries](#libraries)
-    * [Pop](#pop)
-  * [Learning](#learning)
-  * [Service Objects](#service-objects)
-  * [Testing](#testing)
-    * [General](#general)
-    * [Coverage](#coverage)
-    * [Models](#models)
-  * [Time](#time)
-  * [Miscellaneous Tips](#miscellaneous-tips)
-* [Environment settings](#environment-settings)
-  * [Adding `ulimit`](#adding-ulimit)
-
-Regenerate with "pre-commit run -a markdown-toc"
-
-<!-- tocstop -->
-
-## Go
-
-### Acronyms
-
-Domain concepts should be used without abbreviation when used alone.
-
-Do:
-
-* `TransportationServiceProvider`
-* `TrafficDistributionList`
-
-Avoid:
-
-* `TSP`
-* `TDL`
-
-However, when used as a specifier or part of another name, names that have existing acronyms should use the acronym for brevity.
-
-Do:
-
-* `TSPPerformance`
-
-Avoid:
-
-* `TransportationServiceProviderPerformance`
-
-Acronyms should always be either all caps or all lower-cased.
-
-Do:
-
-* `TSPPerformance`
-* `tspPerformance`
-
-Avoid:
-
-* `tSPPerformance`
-* `tspperformance`
-* `TspPerformance`
-
-### Style and Conventions
+## Style and Conventions
 
 Generally speaking, we will follow the recommendations laid out in [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments). By its own admission, this page:
 
@@ -89,7 +14,30 @@ Beyond what is described above, the following contain additional insights into h
 * [Go best practices, six years in](https://peter.bourgon.org/go-best-practices-2016/)
 * [A theory of modern Go](https://peter.bourgon.org/blog/2017/06/09/theory-of-modern-go.html)
 
-### Importing Dependencies
+### Acronyms
+
+Domain concepts should be used without abbreviation when used alone.
+
+| Do | Avoid |
+| :-- | :-- |
+| `TransportationServiceProvider` | `TSP` |
+| `TrafficDistributionList` | `TDL` |
+
+However, when used as a specifier or part of another name, names that have existing acronyms should use the acronym for brevity.
+
+| Do | Avoid |
+| :-- | :-- |
+| `TSPPerformance` | `TransportationServiceProviderPerformance` |
+
+Acronyms should always be either all caps or all lower-cased.
+
+| Do | Avoid |
+| :-- | :-- |
+| `TSPPerformance` | `tSPPerformance` |
+| `tspPerformance` | `tspperformance` |
+| | `TspPerformance` |
+
+## Importing Dependencies
 
 Dependencies are managed by [dep](https://github.com/golang/dep). New dependencies are automatically detected in import statements. To add a new dependency to the project:
 
@@ -99,14 +47,14 @@ Dependencies are managed by [dep](https://github.com/golang/dep). New dependenci
 1. `dep check` (to verify what's missing.) If it looks reasonable then...
 1. `dep ensure`
 
-### Querying the Database Safely
+## Querying the Database Safely
 
 * SQL statements _must_ use PostgreSQL-native parameter replacement format (e.g. `$1`, `$2`, etc.) and _never_ interpolate values into SQL fragments in any other way.
 * SQL statements must only be defined in the `models` package.
 
 Here is an example of a safe query for a single `Shipment`:
 
-```golang
+```go
 // db is a *pop.Connection
 
 id := "0186ad95-14ed-4c9b-9f62-d5bd124f62a1"
@@ -123,13 +71,13 @@ if err = query.First(shipment); err == nil {
 
 Functions that return model structs should return pointers.
 
-Do:
+**Do**
 
 ```go
 func FetchShipment(db *pop.Connection, id uuid.UUID) (*Shipment, error) {}
 ```
 
-Avoid:
+**Avoid**
 
 ```go
 func FetchShipment(db *pop.Connection, id uuid.UUID) (Shipment, error) {}
@@ -142,13 +90,13 @@ This is for a few reasons:
 * Any methods on struct model instances need to have pointer receivers in order to mutate the struct. This is a common point of confusion
   and an easy way to introduce bugs into a codebase.
 
-### Logging
+## Logging
 
 We use the [Zap](https://github.com/uber-go/zap) logging framework from Uber to produce structured log records.
 To this end, code should avoid using the [SugaredLogger](https://godoc.org/go.uber.org/zap#Logger.Sugar)s without
 a very explicit reason which should be record in an inline comment where the SugaredLogger is constructed.
 
-#### Logging Levels
+### Logging Levels
 
 Another reason to use the Zap logging package is that it provides more nuanced logging levels than the basic Go logging package.
 That said, leveled logging is only meaningful if there is a common pattern in the usage of each logging level. To that end,
@@ -171,18 +119,18 @@ the following indicates when each level of Logging should be used.
   as to obscure other debug log entries. This leads to people an arms race of folks adding 'XXXXXXX' to comments
   in order to identify their log items. If you must use them, I suggest adding an, e.g. zap.String("owner", "nick")
 
-#### Tip use JSON friendly names for Zap.Objects
+:::tip Use JSON friendly names for Zap.Objects
 
-Use JSON friendly names for Zap.Objects since then you will be able to extract the values easily in CloudWatch Insights queries.
+Use JSON friendly names for `zap.Object` so that you will be able to extract the values easily in CloudWatch Insights queries.
 
 ```go
-		s.logger.Info("EDIs processed", zap.Object("edisProcessed", &ediProcessing))
+s.logger.Info("EDIs processed", zap.Object("edisProcessed", &ediProcessing))
 ```
 
 vs
 
 ```go
-		s.logger.Info("EDIs processed", zap.Object("EDIs Processed", &ediProcessing))
+s.logger.Info("EDIs processed", zap.Object("EDIs Processed", &ediProcessing))
 ```
 
 The latter was nearly impossible to filter on. But the following insights query works
@@ -192,33 +140,38 @@ fields @timestamp, edisProcessed, @message
 | sort @timestamp desc
 ```
 
-### Errors
+:::
+
+## Errors
 
 Some general guidelines for errors:
 
-#### Don't bury your errors in underscores
+**1. Don't bury your errors in underscores.**
 
 If a function or other action generates an error, assign it to a variable and either return it as part of your function's output or handle it in place (`if err != nil`, etc.). There will be the very occasional exception to this - one is within tests, depending on the test's goal. If you find yourself typing that underscore, take a moment to ask yourself why you're choosing that option. On those very rare occasions when it is the correct behavior, please add a comment explaining why.
 
 _Don't:_
-`myVal, _ := functionThatShouldReturnAnInt()`
+
+```go
+myVal, _ := functionThatShouldReturnAnInt()
+```
 
 _Do:_
 
-```golang
-    myVal, err := functionThatShouldReturnAnInt()
-    if err != nil {
-         return myVal, fmt.Errorf("function didn't return an int: %w", err)
-   }
+```go
+myVal, err := functionThatShouldReturnAnInt()
+if err != nil {
+     return myVal, fmt.Errorf("function didn't return an int: %w", err)
+}
 ```
 
-#### Log at the top level; create and pass along errors below
+**2. Log at the top level; create and pass along errors below.**
 
 If you're creating a query (1) that is called by a function (2) that is in turned called by another function (3), create and return errors at levels 1 and 2 (and possibly handle them immediately after creation, if needed), and log them at level 3. Logs should be created at the top level and contain context about what created them. This is more difficult if logs are being created in every function and file that supports the operation you're working on. Here's an example of when to create errors and when to handle them:
 
 In `pkg/models/blackout_dates.go`, an error is created and returned:
 
-```golang
+```go
 func FetchTSPBlackoutDates(tx *pop.Connection, tspID uuid.UUID, shipment Shipment) ([]BlackoutDate, error) {
   ...
   err = query.All(&blackoutDates)
@@ -232,7 +185,7 @@ func FetchTSPBlackoutDates(tx *pop.Connection, tspID uuid.UUID, shipment Shipmen
 
 In `pkg/awardqueue/awardqueue.go`, `FetchTSPBlackoutDates` is called, and any possible error is handled. This function also returns an error.
 
-```golang
+```go
 func ShipmentWithinBlackoutDates(tspID uuid.UUID, shipment models.Shipment) (bool, error) {
   blackoutDates, err := models.FetchTSPBlackoutDates(aq.db, tspID, shipment)
 
@@ -246,7 +199,7 @@ func ShipmentWithinBlackoutDates(tspID uuid.UUID, shipment models.Shipment) (boo
 
 Finally, at the top level in `attemptShipmentOffer` in the same file, any errors bubbled up from `ShipmentWithinBlackoutDates` or `FetchTSPBlackoutDates` are handled definitively, halting the progress of the longer function if the underlying processes and queries didn't complete as expected in the functions being called:
 
-```golang
+```go
 func (aq *AwardQueue) attemptShipmentOffer(shipment models.Shipment) (*models.ShipmentOffer, error) {
   aq.logger.Info("Attempting to offer shipment", zap.Any("shipment_id", shipment.ID))
   ...
@@ -261,7 +214,7 @@ func (aq *AwardQueue) attemptShipmentOffer(shipment models.Shipment) (*models.Sh
 
 The error is created and passed along at the lowest level, logged and passed along at the middle level (along with other errors that can happen within that function), and logged again at the highest level before finally halting the progress of the process if an error is present.
 
-#### Use `fmt.Errorf` and `%w` verb when using external libraries
+**3. Use `fmt.Errorf` and `%w` verb when using external libraries.**
 
 [`fmt.Errorf() with %w`](https://blog.golang.org/go1.13-errors) provides greater error context and a stack trace, making it especially useful when dealing with the opacity that sometimes comes with external libraries. As of go 1.13 `fmt.Errorf()` provides a new `%w` verb that replaces the need for `errors.Wrap()`. It takes a string with the `%w` in it and the error as parameters: the string and error to provide context and explanation. Keep the string brief and clear, assuming that the fuller cause will be provided by the context `%w` verb brings. It can also add useful context for errors related to internal code if there might otherwise be unhelpful opacity. `fmt.Errorf()` in combination with `%w` also capture stack traces with the additional function of string substitution/formatting for output.
 
@@ -269,9 +222,9 @@ Instead of just returning the error, offer greater context with something like t
 
 _Current Recommendation:_
 
-```golang
+```go
 if err != nil {
-        return fmt.Errorf("Pop validate failed: %w", err)
+    return fmt.Errorf("Pop validate failed: %w", err)
 }
 ```
 
@@ -279,29 +232,33 @@ As this is a recent change in golang standards you will see many uses of the `er
 
 _Old Recommendation:_
 
-```golang
+```go
 if err != nil {
-        return errors.Wrap(err, "Pop validate failed")
+    return errors.Wrap(err, "Pop validate failed")
 }
 ```
 
 Using the new `%w` provides access to some new features such as the new `errors.Is` and `errors.As` functions. For more on the changes in go 1.13 see [this official blog post](https://blog.golang.org/go1.13-errors) and [this article](https://medium.com/@felipedutratine/golang-how-to-handle-errors-in-v1-13-fda7f035d027) that go into more depth.
 
-#### Don't `fmt` errors; log instead
+**4. Don't `fmt` errors; log instead.**
 
 `fmt` can provide useful error handling during initial debugging, but we strongly suggest logging instead, from when you write the initial lines of a new function. Using logging creates structured logs instead of the unstructured, human-friendly-only output that `fmt` does. If an `fmt` statement offers usefulness beyond your initial troubleshooting while working, switch it to `fmt.Errorf("text: %w", err)` or `logger.Error()`, perhaps with [Zap](https://github.com/uber-go/zap).
 
 _Don't:_
-`fmt.Println("Blackout dates fetch failed: ", err)`
+```go
+fmt.Println("Blackout dates fetch failed: ", err)
+```
 
 _Do:_
-`logger.Error("Blackout dates fetch failed: ", err)`
+```go
+logger.Error("Blackout dates fetch failed: ", err)
+```
 
-#### If some of your errors are predictable, pattern match on them to provide more error detail
+**5. If some of your errors are predictable, pattern match on them to provide more error detail.**
 
 Some errors are predictable, such as those from the database that Pop returns to us. This gives you the option to use those predictable errors to give yourself and fellow maintainers of code more detail than you might get otherwise, like so:
 
-```golang
+```go
 // FetchServiceMemberForUser returns a service member only if it is allowed for the given user to access that service member.
  func FetchServiceMemberForUser(ctx context.Context, db *pop.Connection, user User, id uuid.UUID) (ServiceMember, error) {
   var serviceMember ServiceMember
@@ -324,13 +281,13 @@ Some errors are predictable, such as those from the database that Pop returns to
 
 You can also use `fmt.Errorf("text: %w", err)` in this situation to provide access to even more information, beyond the breadcrumbs left here.
 
-### Libraries
+## Libraries
 
-#### Pop
+### Pop
 
 We use Pop as the ORM(-ish) to mediate access to the database. [The Unofficial Pop Book](https://andrew-sledge.gitbooks.io/the-unofficial-pop-book/content/) is a valuable companion to Pop’s [GitHub documentation](https://github.com/gobuffalo/pop).
 
-### Learning
+## Learning
 
 If you are new to Go, you should work your way through all of these resources (in this order, ideally):
 
@@ -351,20 +308,20 @@ Additional resources:
 * [Ultimate Go Notebook](https://docs.google.com/document/d/1QQq8Yf90ar59OUQM6qRDS6Bwk5hfOCpcqw_WUX43YOg/edit) by Bill Kennedy
 * [Practical Go Lessons](https://www.practical-go-lessons.com)
 
-### Service Objects
+## Service Objects
 
 Service Objects are an architectural design pattern we use to encapsulate business logic. Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. For more information on service objects, including how we use them and how to write them, please see the [documentation](service-objects.md)
 
-### Testing
+## Testing
 
 Knowing what deserves a test and what doesn’t can be tricky, especially early on when a project’s testing conventions haven’t been established. Use the following guidelines to determine if and how some code should be tested.
 
-#### General
+### General
 
 * Use table-driven tests where appropriate.
 * Make judicious use of helper functions so that the intent of a test is not lost in a sea of error checking and boilerplate. Use [`t.Helper()`](https://golang.org/pkg/testing/#T.Helper) in your test helper functions to keep stack traces clean.
 
-#### Coverage
+### Coverage
 
 * Always test exported functions.
   Exported functions should be treated as an API layer for other packages.
@@ -375,7 +332,7 @@ Knowing what deserves a test and what doesn’t can be tricky, especially early 
   If you find that an unexported function is complex and needs testing,
   it might mean it needs to be refactored as it's exported function elsewhere.
 
-#### Models
+### Models
 
 In general, focus on testing non-trivial behavior.
 
@@ -384,13 +341,13 @@ In general, focus on testing non-trivial behavior.
 * Avoid testing functionality of libraries, e.g. model saving and loading (which is provided by Pop)
 * Try to leverage the type system to ensure that components are “hooked up correctly” instead of writing integration tests.
 
-### Time
+## Time
 
 Some helpful tips on dealing with time
 in the MilMove Go codebase
 can be found in [this doc](time.md)
 
-### Miscellaneous Tips
+## Miscellaneous Tips
 
 * Use `golang` instead of `go` in Google searches.
 * Try to use the standard lib as much as possible, especially when learning.
