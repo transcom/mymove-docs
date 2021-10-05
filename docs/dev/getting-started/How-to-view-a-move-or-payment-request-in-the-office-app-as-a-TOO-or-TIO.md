@@ -1,3 +1,5 @@
+# How to view a move or payment request in the office app as a TOO or TIO
+
 ## Background
 
 When a TOO or TIO signs in to the Office app, they see a list of moves with non-PPM shipments or payment requests, respectively. This list is filtered by default to only show moves/payment requests that have the same GBLOC as the transportation office that the TOO/TIO is assigned to. GBLOC stands for `Government Bill of Lading Office Code`, and represents a geographical area. GBLOCs are identified by 4 characters, such as `LKNQ`.
