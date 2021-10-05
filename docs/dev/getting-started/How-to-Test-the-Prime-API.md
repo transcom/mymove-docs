@@ -1,3 +1,5 @@
+# How to Test the Prime API
+
 > ❗ For the most up-to-date information about the Prime API, please visit https://github.com/transcom/prime_api_deliverable/wiki. The Prime API Deliverable wiki is the client-facing documentation and will be your best resource for understanding how to use this API. This article is a stub that has been kept to preserve some of the old information that might be useful for current MilMove developers.
 
 ## Overview
