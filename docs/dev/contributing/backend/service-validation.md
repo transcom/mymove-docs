@@ -237,12 +237,89 @@ For our example, we will implement two different rules:
 * Check that an ID value isn't present when creating a reweigh. This can cause unexpected server errors if we don't catch it.
 * Check if a reweigh is associated with a Prime-available move.
 
+```go title="./pkg/services/reweigh/rules.go"
+package reweigh
 
+import (
+	"github.com/transcom/mymove/pkg/appcontext"
+    "github.com/transcom/mymove/pkg/models"
+)
 
+// checkReweighID checks that the user can't manually set the reweigh's ID
+func checkReweighID() validator {
+	return validatorFunc(func(appCtx appcontext.AppContext, reweigh models.Reweigh, delta *models.Reweigh, shipment *models.MTOShipment) error {
+		//TODO
+	})
+}
 
+// checkPrimeAvailability checks that move associated with the reweigh is available to the Prime contractor
+func checkPrimeAvailability() validator {
+	return validatorFunc(func(appCtx appcontext.AppContext, reweigh models.Reweigh, delta *models.Reweigh, shipment *models.MTOShipment) error {
+		//TODO
+	})
+}
+```
 
+These functions are [**closures**](https://www.geeksforgeeks.org/closures-in-golang/), which basically means a function within function. In this case, the outer function has no parameters and returns the `validator` interface type. 
 
+The _inner_ function, however, must have a signature that is exactly the same as our `validatorFunc` function type so that we can use the interface. This means you will have to change all of these rule functions if you ever change that base signature, so keep that in mind as you continue working on validation.
 
+#### `checkReweighID`
+
+Let's add the logic for our `checkReweighID` rule:
+
+```go title="./pkg/services/reweigh/rules.go" {3}
+// checkReweighID checks that the user can't manually set the reweigh's ID
+func checkReweighID() validator {
+	return validatorFunc(func(_ appcontext.AppContext, reweigh models.Reweigh, delta *models.Reweigh, _ *models.MTOShipment) error {
+		verrs := validate.NewErrors()
+        // If there is no delta, then we are creating a new reweigh:
+		if delta == nil {
+			if reweigh.ID != uuid.Nil {
+				verrs.Add("ID", "cannot manually set a new reweigh's UUID")
+			}
+		}
+		return verrs
+	})
+}
+```
+
+Observe that on line 3, we use `_` to mark the input parameters that we don't use in this rule (in this case, `appCtx` and `shipment`). Since we need a verbose signature to fit our needs for _all_ of these rules, there is no way we're going to use everything in every single rule. Use `_` to make clear what is relevant and what isn't.
+
+On line 4, we also initialize a `verrs` variable. This is so we can accumulate our invalid input errors. We always return this at the end of our rule function. An empty `verrs` instance will be ignored.
+
+#### `checkPrimeAvailability`
+
+This one is a little different:
+
+```go title="./pkg/services/reweigh/rules.go" {2,8}
+// checkPrimeAvailability checks that move associated with the reweigh is available to the Prime contractor
+func checkPrimeAvailability(checker services.MoveTaskOrderChecker) validator {
+	return validatorFunc(func(appCtx appcontext.AppContext, reweigh models.Reweigh, _ *models.Reweigh, shipment *models.MTOShipment) error {
+		if shipment == nil {
+			return services.NewNotFoundError(newReweigh.ID, "while looking for Prime-available Shipment")
+		}
+
+		isAvailable, err := checker.MTOAvailableToPrime(appCtx, shipment.MoveTaskOrderID)
+		if !isAvailable || err != nil {
+			return services.NewNotFoundError(
+				reweigh.ID, fmt.Sprintf("while looking for Prime-available Shipment with id: %s", shipment.ID))
+		}
+		return nil
+	})
+}
+```
+
+We pass in a parameter to the top function, `checkPrimeAvailability`! This is the true power of closures, and it's cool because it means we were able to pass in a new parameter without changing the signature for all of the other rule functions. The parameter `checker` is a service that we need for this function in particular to validate the Prime-availability rule.
+
+**So what goes in the validator signature and what goes in the input of the outer function?**
+
+There is a lot of room for interpretation with this, but some general guidelines are:
+
+- If it's a dependency that can be set up before the service function is called, pass it in as the input of the outer function.
+- If it's data that _must_ be retrieved _during_ the service function, it should be in the validator function signature. 
+
+The parameters in the outer functions are like _dependencies_, and the validator function signature is the true input.
 
 ### Grouping `rules` functions
 
