@@ -188,6 +188,7 @@ Additionally in your file containing the handler make sure to pass in the servic
    
         
 #### How to handle errors
+TODO: WIP
 ### Add event key and update event map
 Each API has a corresponding file in `/pkg/services/event/<apiName>_endpoint.go`
 1. Add new `const` to represent event key
