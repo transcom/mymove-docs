@@ -1,13 +1,12 @@
-These are the various steps that are involved in creating a new endpoint.
-
-It was written for external facing APIs, rather than internal ones. But most concepts should apply equally to internal APIs.
+# Creating an Endpoint
+###### These are the various steps that are involved in creating a new endpoint.
 
 Prior to creating adding an endpoint to the Handler folder, we must first add a new endpoint definition to swagger. We are using Swagger 2.0, which is [OpenAPI](https://swagger.io/specification/v2/), a specification we use to format our RESTful APIs and provide a template for us to communicate the information in our API.
 Always start with swagger. This step creates your endpoint definition and generates the files and helper functions you will need to create your endpoint. More specifically, swagger converts JSON user input into generated Go types.
 ## Adding  a new entry into the yaml
 All new definitions will be added in `mymove/swagger-def`. Note that we have broken down our spec into different files and we share definitions between files. 
 Built compiled versions of our API spec will be generated and stored in the swagger folder, which we will not edit directly. Notice that there is a yaml file for each of our APIs. 
-An endpoint definition for the prime will likely go into the Prime yaml, but you may notice there are some definitions in `mymove/swagger-def/definitions`.
+An endpoint definition for the prime will go into the Prime yaml, but you may notice there are some definitions in `mymove/swagger-def/definitions`.
 This is because some definitions are shared across APIs and we've created a space to add those definitions in one place. 
 
 For the purposes for adding a new endpoint, make sure that your endpoint is defined in these top level sections:
