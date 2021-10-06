@@ -432,7 +432,15 @@ And we're done! Now it's up to the caller to decide whether to use the base chec
 
 ## Testing the Pattern
 
-...
+Testing the pattern is generally like testing any Go code (look at the tests for the [linked examples](#examples) for more inspiration). However, here are some guidelines for what you should focus on for each part of the pattern:
+
+* Testing rule functions (`rules_test.go`)
+  * Each one of these functions should be independent and modular, so creating test cases should be easiest to do at this level. Take advantage of this and write thorough unit tests for all the cases you can think of.
+* Testing the validation utility code (`validation_test.go`)
+  * This code is generally boilerplate and extremely similar across service objects. An integration test or two is generally fine.
+* Testing the service object (`<service_action>_test.go`)
+  * You should still be testing for every possible return value from this service object. When it comes to testing interactions with the validators, a few integration tests and/or some mocks should be sufficient.
+  * You should have at least one test for each different version of the `New<ServiceObject>()` function you wrote. Make sure the correct checks are being used, but you do not need to thoroughly unit test each distinct test again (since that should be done in `rules_test.go`).
 
 ## Examples
 
