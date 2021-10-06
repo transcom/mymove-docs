@@ -197,3 +197,11 @@ An example of an event key for MoveTaskOrder Create Handler is as follows:
 
     // MoveTaskOrderCreateEventKey is a key containing MoveTaskOrder.Create
     const MoveTaskOrderCreateEventKey KeyType = "MoveTaskOrder.Create"
+
+The event would be added to the event map called eventModels:
+    
+    var eventModels = map[KeyType]eventModel{
+    	EndpointEventKey:                    {EndpointEventKey, models.Model{}}, // this is an example
+    	NewEndpointEventKey:                 {NewEndpointEventKey, models.Model{}}, // this is an example
+    	MoveTaskOrderCreateEventKey:         {MoveTaskOrderCreateEventKey, models.Move{}},
+        
