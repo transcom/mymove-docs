@@ -54,17 +54,17 @@ If you don't know what business rules you'll be working with, **you won't know w
 
 The validation pattern documented here makes use of some advanced Go patterns. If you're struggling with the syntax or would like more context on what is happening, here are some helpful resources:
 
-* Interfaces
+* **Interfaces**
   * [Go by Example: Interfaces](https://gobyexample.com/interfaces)
   * [Interfaces in Go](https://golangbot.com/interfaces-part-1/)
-* Function types
+* **Function types**
   * [Working with function types in Go](https://stackoverflow.com/questions/9398739/working-with-function-types-in-go)
   * [Function types and values](https://yourbasic.org/golang/function-pointer-type-declaration/)
-* Variadic functions
+* **Variadic functions**
   * [Go by Example: Variadic Functions](https://gobyexample.com/variadic-functions)
   * [Variadic Functions](https://golangbot.com/variadic-functions/)
   * [How to use variadic functions in Go](https://www.digitalocean.com/community/tutorials/how-to-use-variadic-functions-in-go)
-* Closures
+* **Closures**
   * [Go by Example: Closures](https://gobyexample.com/closures)
   * [5 useful ways to use closures in Go](https://www.calhoun.io/5-useful-ways-to-use-closures-in-go/)
 
@@ -436,4 +436,11 @@ And we're done! Now it's up to the caller to decide whether to use the base chec
 
 ## Examples
 
-
+* Move Excess Weight Uploader
+  * https://github.com/transcom/mymove/blob/master/pkg/services/move/excess_weight_uploader.go
+  * https://github.com/transcom/mymove/blob/master/pkg/services/move/validation.go
+* Reweighs
+  * https://github.com/transcom/mymove/blob/master/pkg/services/reweigh/rules.go
+  * https://github.com/transcom/mymove/blob/master/pkg/services/reweigh/validation.go
+* https://github.com/transcom/mymove/blob/master/pkg/services/reweigh/validation.go
+* https://github.com/transcom/mymove/blob/master/pkg/services/mto_shipment/validation.go
