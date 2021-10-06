@@ -15,19 +15,77 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
 - `/static/` contains all of our images and other static files. If you want to add a screenshot or other visual to your doc page, you will need to upload it to this folder.
 - `/sidebars.js` contains the sidebars for our doc folders. We autogenerate our sidebars in order to minimize how often our JavaScript files need to be updated. It is highly unlikely that you will need to update this file directly.
 
-## Running locally (on MacOS)
+## Running locally (on macOS)
+
+**Prerequisites**
+- A working installation of Homebrew and Apple's Command Line Tools (CLT), which
+can be verified with this command:
+
+```
+brew doctor
+```
+
+It should say "Your system is ready to brew".
+
+If you get a message about the command brew not being found, you'll need to
+install Homebrew, which also installs the CLT for you:
+```shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+If you already have Hombrew but it’s not ready to brew, one of the most common
+issues, and the first one you should fix, is missing or outdated Command Line
+Tools. The outdated tools message looks like this:
+
+```
+Warning: A newer Command Line Tools release is available.
+Update them from Software Update in System Preferences or run:
+  softwareupdate --all --install --force
+
+If that doesn't show you any updates, run:
+  sudo rm -rf /Library/Developer/CommandLineTools
+  sudo xcode-select --install
+
+Alternatively, manually download them from:
+  https://developer.apple.com/download/more/.
+```
+
+Homebrew usually provides detailed instructions for fixing things, so read them
+carefully and follow their instructions. Quit and restart your terminal once the
+CLT are installed.
+
+- Direnv and Git, which can be installed with Homebrew:
+```shell
+brew install direnv git
+```
+
+### With Nix
+
+1. Install Nix if you don't already have it:
+```
+sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume --no-daemon
+```
+
+Note: if you're using the Fish shell, you'll need to [complete an extra step](https://github.com/trussworks/Engineering-Playbook/tree/main/developing/nix#extra-setup-only-fish-shell-users).
+
+2. Quit and restart your terminal
+3. Clone this repo onto your machine and `cd` into it:
+   ```
+   git clone https://github.com/transcom/mymove-docs.git && cd mymove-docs
+   ```
+3. Run `direnv allow`
+4. Run `nix/update.sh`
+5. Run `yarn install`
+6. Run `yarn start`
+
+The site should load automatically in your browser at http://localhost:3000/mymove-docs/
+
+### Manual setup
 
 1. Open your terminal/command line.
-2. Clone the repo onto your machine:
+2. Clone the repo onto your machine and `cd` into it:
    ```
-   git clone https://github.com/transcom/mymove-docs.git
-   ```
-   - If you get a bizarre error about "xcrun", try: `xcode-select --install` and run through the full installation of the MacOS command line tools.
-   - If you need to install `git`, please follow these instructions: https://git-scm.com/download/mac
-
-3. Change into the repo directory: `cd mymove-docs`
-   ```
-   cd mymove-docs
+   git clone https://github.com/transcom/mymove-docs.git && cd mymove-docs
    ```
 
 4. If you are looking at a PR or working on a branch other than the default branch, run:
@@ -37,34 +95,29 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
 
 5. Install dependencies:
    ```
-   yarn install
+   brew install nodenv
    ```
-   - If you need to install `yarn`, first check if you have Homebrew, the MacOS package/software manager: `which brew`
-      - If you don't get a response, you need to install it:
-         ```
-         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-         ```
-   - Then check if you have `node` or `nodenv`: `which node`, `which nodenv`
-      - If you have `node`, continue on. If not, first install `nodenv`:
-         ```
-         brew install nodenv
-         ```
-      - Add `nodenv` to your terminal configuration file:
-         ```
-         echo 'eval "$(nodenv init -)"' >> ~/.bashrc
-         ```
-      - Reset your terminal configuration:
-         ```
-         source ~/.bashrc
-         ```
-      - Install a version of `node` that is 12 or above (I recommend [the same version we use on MilMove](https://github.com/transcom/mymove/blob/master/.node-version)):
-         ```
-         nodenv install <version>
-         ```
-      - Then set the global version to the one you installed:
-         ```
-         nodenv global <version>
-         ```
+
+   - Add `nodenv` to your terminal configuration file:
+      ```
+      echo 'eval "$(nodenv init -)"' >> ~/.zshrc
+      ```
+   - Refresh your terminal configuration:
+      ```
+      source ~/.zshrc
+      ```
+      Note that the above two commands assume you are using Zsh as your shell,
+      which is the default shell on macOS. If you're using Bash, then replace
+      `.zshrc` with `.bash_profile`. If you're not sure, read Moncef's guide to
+      [find out which shell you're using](https://www.moncefbelyamani.com/which-shell-am-i-using-how-can-i-switch/).
+   - Install a version of `node` that is 12 or above (we recommend [the same version we use on MilMove](https://github.com/transcom/mymove/blob/master/.node-version)):
+      ```
+      nodenv install <version>
+      ```
+   - Then set the global version to the one you installed:
+      ```
+      nodenv global <version>
+      ```
    - Finally, install `yarn`:
       ```
       npm install --global yarn
