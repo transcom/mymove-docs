@@ -35,7 +35,9 @@ Defining your endpoint path follows this simple convention:
                 produces: this field will always be application/json
                 parameters: include parameters associated with this path
                 responses: response codes for this path, and a schema reference and the description if needed.
-                
+
+NOTE: The description item will reference markdown files in `swagger-def/info/`. This change is further described in a recent [PR](https://github.com/transcom/mymove/pull/7435).                
+
 An example of the `Moves` path is as follows:
 
       /moves:
