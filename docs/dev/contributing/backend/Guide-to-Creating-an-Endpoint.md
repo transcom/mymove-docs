@@ -1,21 +1,25 @@
 # Creating an Endpoint
 ###### These are the various steps that are involved in creating a new endpoint.
 
-Prior to creating adding an endpoint to the Handler folder, we must first add a new endpoint definition to swagger. We are using Swagger 2.0, which is [OpenAPI](https://swagger.io/specification/v2/), a specification we use to format our RESTful APIs and provide a template for us to communicate the information in our API.
+Prior to creating an endpoint in the Handler folder, we must first add a new endpoint definition to swagger. We are using Swagger 2.0, which is [OpenAPI](https://swagger.io/specification/v2/), a specification we use to format our RESTful APIs and provide a template for us to communicate the information in our API.
 Always start with swagger. This step creates your endpoint definition and generates the files and helper functions you will need to create your endpoint. More specifically, swagger converts JSON user input into generated Go types.
 ## Adding  a new entry into the yaml
 All new definitions will be added in `mymove/swagger-def`. Note that we have broken down our spec into different files and we share definitions between files. 
 Built compiled versions of our API spec will be generated and stored in the swagger folder, which we will not edit directly. Notice that there is a yaml file for each of our APIs. 
-An endpoint definition for the prime will go into the Prime yaml, but you may notice there are some definitions in `mymove/swagger-def/definitions`.
+An endpoint definition for the prime will go into the Prime yaml, but you may notice there are some definitions in `mymove/swagger-def/definitions`. 
 This is because some definitions are shared across APIs and we've created a space to add those definitions in one place. 
+For example, `Uploads.yaml` shares its definition across various APIs, and rather than creating various yaml files for this action, we have created one and added it to the shared `definitions` folder.
 
-For the purposes for adding a new endpoint, make sure that your endpoint is defined in these top level sections:
+For the purposes for adding a new endpoint, make sure that your endpoint is defined in these sections:
 * `tags` - is where we group all of our endpoints by category (i.e. shipment endpoints, agent endpoints, service item endpoints, etc.). 
          This top level field is where our gen files will divide the endpoints into their own packages. Tag component names are `camelCase`.
 * `paths` - defines our endpoint. Path names use `kebab-case`.
 * `definitions` - defines the shape of the data for our endpoint. Definitions component names are `PascalCase`.
 * `responses` - define what the endpoints return. Responses component names are `PascalCase`.
 * `parameters` - define what an endpoint needs (e.g. headers). Parameter component names are `camelCase`.
+
+#### Troubleshooting your local swagger state:
+If you are having issues with your local swagger state it is recommended to run `make server_generate`, accept the prompt, and then run `make server_run` again. For more information on troubleshooting, [this](https://ustcdp3.slack.com/archives/CP6PTUPQF/p1632254277386600) explanation will be helpful.
 
 #### Defining a path for your endpoint 
 For more information about URL design and structure checkout: [API Style Guide](https://github.com/transcom/mymove/wiki/API-Style-Guide)
@@ -24,12 +28,12 @@ Defining your endpoint path follows this simple convention:
 
         /your path:
             HTTP request:
-                summary:
-                description:
+                summary: this is the name of the action your endpoint performs, in camelCase
+                description: new convention is to reference description files in the swagger-def/info/ folder
                 operationId: this should match the endpoint title in the definitions section and summary in your paths section.
                 tags: matches the tag section for this endpoint
-                produces: This field will always be application/json
-                parameters: Include parameters associated with this path
+                produces: this field will always be application/json
+                parameters: include parameters associated with this path
                 responses: response codes for this path, and a schema reference and the description if needed.
                 
 An example of the `Moves` path is as follows:
@@ -37,8 +41,8 @@ An example of the `Moves` path is as follows:
       /moves:
         get:
           summary: listMoves
-          description: |
-            Gets all moves that have been reviewed and approved by the TOO. 
+          description:
+              $ref: 'info/{file_name}.md'
           operationId: listMoves
           tags:
             - moveTaskOrder
@@ -65,16 +69,16 @@ An example of the `Moves` path is as follows:
 #### Description Section and the response body
 In your endpoint description make sure that the following fields are included when necessary:
 * required - fields that are required are listed in the description section.
-* x-nullable - this indicates that the value of a particular property may be null. 
+* x-nullable - this indicates that the value of a particular property may be null. It will also return null if the value doesn't exist otherwise it will be omitted if x-nullable is false.
+* x-omitempty -  this extension is good to add and set it to false if we don't want that field to be omitted if it is empty.
 * readOnly - sometimes you will need specify a readyonly property, for example when the property differs in a GET from a POST or PATCH. Note: readOnly properties are included in responses but not in requests.
 * eTag - An entity tag is provided so that a browser client or a script can make conditional REST requests using optimistic concurrency control. All eTags must be marked as readOnly.
 
 An example of the ListMove description is as follows:
         
           ListMove:
-            description: >
-              An abbreviated definition for a move, without all the nested information (shipments, service items, etc). Used to
-              fetch a list of moves more efficiently.
+            description:
+                $ref: 'info/{file_name}.md'
             type: object
             properties:
               id:
@@ -119,10 +123,10 @@ An example of the ListMove description is as follows:
 For information on error responses, check out: [API Errors Guide](https://github.com/transcom/mymove/wiki/API-Errors)
 
 #### Gen files:
-Once you finishing updating the yaml files with the new endpoint information make sure to run your make commands to autogenerate your swagger files, or simply run `make server_run`, 
+Once you finishing updating the yaml files with the new endpoint information make sure to run your make commands like `make swagger-generate` to autogenerate your swagger files, or simply run `make server_run`, 
 which runs your server and other useful make commands in one go.
 
-## Creating an endpoint. 
+## Creating a Handler:
 Now you're ready to add your endpoint to the `handlers` folder. Start building out the service object before creating your handler. 
 For more information about service objects and when to create one: [Service Objects](https://github.com/transcom/mymove/wiki/service-objects).
 
@@ -187,7 +191,7 @@ Additionally in your file containing the handler make sure to pass in the servic
    
         
 #### How to handle errors
-TODO: WIP
+For more information on how we handle errors,  check out our detailed [documentation](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/API-Errors.md).
 ### Add event key and update event map
 Each API has a corresponding file in `/pkg/services/event/<apiName>_endpoint.go`
 1. Add new `const` to represent event key
@@ -204,4 +208,5 @@ The event would be added to the event map called eventModels:
     	EndpointEventKey:                    {EndpointEventKey, models.Model{}}, // this is an example
     	NewEndpointEventKey:                 {NewEndpointEventKey, models.Model{}}, // this is an example
     	MoveTaskOrderCreateEventKey:         {MoveTaskOrderCreateEventKey, models.Move{}},
-        
+
+If you'd like to learn more about event triggers, you cna find more details [here](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/How-to-Add-an-Event-Trigger.md).
