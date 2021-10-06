@@ -54,12 +54,19 @@ If you don't know what business rules you'll be working with, **you won't know w
 
 The validation pattern documented here makes use of some advanced Go patterns. If you're struggling with the syntax or would like more context on what is happening, here are some helpful resources:
 
-* TODO
 * Interfaces
-* Closures
-* Context
+  * [Go by Example: Interfaces](https://gobyexample.com/interfaces)
+  * [Interfaces in Go](https://golangbot.com/interfaces-part-1/)
 * Function types
-* Variadic types/parameters
+  * [Working with function types in Go](https://stackoverflow.com/questions/9398739/working-with-function-types-in-go)
+  * [Function types and values](https://yourbasic.org/golang/function-pointer-type-declaration/)
+* Variadic functions
+  * [Go by Example: Variadic Functions](https://gobyexample.com/variadic-functions)
+  * [Variadic Functions](https://golangbot.com/variadic-functions/)
+  * [How to use variadic functions in Go](https://www.digitalocean.com/community/tutorials/how-to-use-variadic-functions-in-go)
+* Closures
+  * [Go by Example: Closures](https://gobyexample.com/closures)
+  * [5 useful ways to use closures in Go](https://www.calhoun.io/5-useful-ways-to-use-closures-in-go/)
 
 :::
 
@@ -260,7 +267,7 @@ func checkPrimeAvailability() validator {
 }
 ```
 
-These functions are [**closures**](https://www.geeksforgeeks.org/closures-in-golang/), which basically means a function within function. In this case, the outer function has no parameters and returns the `validator` interface type. 
+These functions are [**closures**](https://gobyexample.com/closures), which basically means a function within function. In this case, the outer function has no parameters and returns the `validator` interface type. 
 
 The _inner_ function, however, must have a signature that is exactly the same as our `validatorFunc` function type so that we can use the interface. This means you will have to change all of these rule functions if you ever change that base signature, so keep that in mind as you continue working on validation.
 
@@ -323,21 +330,110 @@ The parameters in the outer functions are like _dependencies_, and the validator
 
 ### Grouping `rules` functions
 
-...
+Once we have some rules, we'll want to be able to group them according who called the service. The key here is to define functions that will return slices of validator functions, instead of constant slice variables.
+
+```go
+// basicChecks are the rules that should always run for reweigh validation
+func basicChecks() []validator {
+	return []validator{
+		checkReweighID(),
+	}
+}
+
+// primeChecks are the rules that should only run for validating Prime reweigh actions
+func primeChecks(checker services.MoveTaskOrderChecker) []validator {
+	return []validator{
+		checkReweighID(),
+		checkPrimeAvailability(checker),
+	}
+}
+```
+
+It looks like we're calling these functions now, which wouldn't make sense because we don't have all of the input. But remember: These are _closures_, so by calling the outer function, we're getting another function that has not been called yet. The returned function is our validator. The validators won't be called until the `validateReweigh()` function is executed.
+
+Note that we _do_ pass in whatever parameters we use in the outer functions at this level. This is where we set those "dependencies."
+
+These grouping functions can be used in multiple places, and are meant for utility. They are not a hard requirement to implement the validator pattern, but they are helpful organizational tools. 
+
+In general, you should always have a set of rules for "basic" validation, which is as bare as possible. You'll build up more requirements as you go, so it's better to err on the side of fewer checks to start with. You may place these group functions in the `validation.go` or the `rules,go` file - whichever makes more sense for your use case.
 
 ### Connecting the service
 
-...
+Once you have finished creating the `validateModel` function and defining your rules, you are ready to connect your service object to the validation. First, go to your service object's struct and add a field for the validators:
+
+```go title="./pkg/services/reweigh/reweigh_creator.go"
+type reweighCreator struct {
+    checks []validator // a slice of validator functions
+}
+```
+
+Now we're going to set the validators in the `New<ServiceObject>` function. To start with, we'll set the basic set of checks:
+
+```go title="./pkg/services/reweigh/reweigh_creator.go" {3}
+// NewReweighCreator creates a new struct with the service dependencies and returns the interface type
+func NewReweighCreator() services.ReweighCreator {
+    return &reweighCreator{basicChecks()}
+}
+```
+
+We don't allow the user to pass in the checks so that way we can dictate how our service is validated across the entire app. To allow the caller to use the Prime validator functions instead, we'll make a new `New<ServiceObject>` function to handle it:
+
+```go title="./pkg/services/reweigh/reweigh_creator.go"
+// NewPrimeReweighCreator creates a new ReweighCreator with Prime-specific validation
+func NewPrimeReweighCreator(checker services.MoveTaskOrderChecker) services.ReweighCreator {
+    return &reweighCreator{primeChecks(checker)}
+}
+```
+
+Using this strategy, we can add however many `New<Validation><ServiceObject>` functions as we need to. They will all return the same service interface with different validators. This way we don't have to muddle with our interface definition, which is great because every modification to an interface has to be reproduced with every struct that implements that interface. Creating new initializer functions is the least invasive way to change up our validation.
+
+Finally, we have to call the `validateModel` function in our service method: 
+
+```go title="./pkg/services/reweigh/reweigh_creator.go"
+// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.
+func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error) {
+    // Set up an empty model to receive any data found by Pop
+    mtoShipment := &models.MTOShipment{}
+    // Find the shipment using the ShipmentID provided in our reweigh input
+    err := appCtx.DB().Find(mtoShipment, reweigh.ShipmentID)
+    if err != nil {
+        // Return our standard NotFoundError type if there's an error
+        return nil, services.NewNotFoundError(reweigh.ShipmentID, "while looking for MTOShipment")
+    }
+
+    // Run the (read-only) validations
+    // highlight-start
+	if verr := validateReweigh(appCtx, *reweigh, nil, mtoShipment, f.checks...); verr != nil {
+		return nil, verr
+	}
+    // highlight-end
+
+    txErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
+        verrs, err := txnCtx.DB().ValidateAndCreate(reweigh)
+        // Check for validation errors encountered before Pop created the reweigh
+        if verrs != nil && verrs.HasAny() {
+            // Return our standard InvalidInputError type
+            return services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
+        } else if err != nil {
+            // If the error is something else (this is unexpected), we create a QueryError
+            return services.NewQueryError("Reweigh", err, "")
+        }
+        return nil
+    })
+    if txErr != nil {
+        return nil, txErr
+    }
+
+    return reweigh, nil
+}
+```
+
+And we're done! Now it's up to the caller to decide whether to use the base checks, the Prime checks, or to write new rules functions and create a different set of checks, if necessaary. 
 
 ## Testing the Pattern
 
+...
+
 ## Examples
 
-
-
-Next, establish the general validator. 
-
-Now let's add some rules. These utilize closures and will return our validator function type. This allows us to pass in extra parameters if needed for specific rules. 
-
-After that, let's put it in our service function.
 
