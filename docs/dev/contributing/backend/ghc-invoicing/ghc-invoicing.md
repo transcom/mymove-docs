@@ -80,6 +80,8 @@ High level overview diagrams
 * [Payment Request Uploader Design](https://miro.com/app/board/o9J_kuh516s=/?moveToWidget=3074457347367317910&cot=14) and [GH pull request](https://github.com/transcom/mymove/pull/3775) for the refactor.
 * [SIT Pricing Distance Flow Design](https://miro.com/app/board/o9J_lZAfvO0=/?moveToWidget=3074457353115567897&cot=14)
 * [Design how data will be imported into production](https://docs.google.com/document/d/1QVwY5uobUpz87WEeAXSnIXG0NE1o4YnFW0Lf7PnMqO0/edit#heading=h.8wmuqkn9o6rd)
+* [Initial PR to setup service item param lookup framework](https://github.com/transcom/mymove/pull/3401)
+* [Service-object-based implementation of domestic linehaul pricer #2836](https://github.com/transcom/mymove/pull/2836)
 
 ## Miro boards
 * [Payment Request state diagram](https://miro.com/app/board/o9J_krR2Tt8=/?moveToWidget=3074457349208255435&cot=13)

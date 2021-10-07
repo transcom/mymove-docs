@@ -3,6 +3,14 @@
 High level overview diagrams
 * [Sequence diagram](https://miro.com/app/board/o9J_ls9Gt7E=/?moveToWidget=3074457365163319192&cot=14)
 
+_TODO: this file is to describe specifics about what packages do. The sequence diagram above shows how they interact.
+Word descriptions, diagrams, or anything that makes sense to get into the details of the packages should go here. 
+For the most part, I'd expect a paragraph or two. But when needed, can go deeper. Useful PRs are also something to consider.
+I do not expect the filenames to be left in this doc unless a file needs to be called out. But for now, they are here are a
+memory jogger of what these packages are and what to describe. Then the files names can be erased. I do think leaving the
+directory paths on this page is useful.
+
+In the Bins and CLI tools, leaving the filenames might be useful, because only certain files pertain directly to invoicing._
 
 ## Bins
 TODO description!
@@ -67,6 +75,9 @@ TODO description!
 
 ## [Service Param Value Lookups](https://github.com/transcom/mymove/tree/master/pkg/payment_request/service_param_value_lookups)
 TODO description!
+
+[Initial PR to setup service item param lookup framework](https://github.com/transcom/mymove/pull/3401)
+
 
 ```
 /mymove/pkg/payment_request/service_param_value_lookups
