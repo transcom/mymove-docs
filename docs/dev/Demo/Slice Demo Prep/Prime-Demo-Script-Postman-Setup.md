@@ -17,7 +17,7 @@ During the slice demo there will be various points of handoff from the TOO/TIO t
 #### Handoff from TOO -> Prime
     Visual 1: Prime receives a notification of a move. Prime updates the move details. Prime performs another action (e.g. creates a service item)
 #### Handoff from Prime --> TOO 
-After the Prime creates a Service Item, there is a verbal handoff to the TOO, nothing technical happens
+After the Prime creates the Service Item(or Reweigh Reques/SIT Extension/ or another action), there is a verbal handoff to the TOO. Nothing technical happens.
 #### Handoff TOO --> Prime
 The TOO reviews the Service Item and approves them and there is a verbal handoff to the Prime to show how a payment request is created and proof od service is uploaded
     
@@ -25,7 +25,7 @@ The TOO reviews the Service Item and approves them and there is a verbal handoff
 #### Handoff from Prime to TOO/TIO
 After the prime uploads the proof of service, they submit the payment request ID to teh TIO and do a verbal handoff to teh TOO.
 ## Getting Started:
-We have created a repo in GitHub with postman collections from previous slice demos. This means you can clone the collection the way you would any other repo on GitHub: 
+We have created a repo in GitHub with postman collections from previous slice demos. This means you can get a copy of all of them the way you would clone any other repo on GitHub: 
 
 1. Clone the `prime_api_deliverable` repo: `git clone git@github.com:transcom/prime_api_deliverable.git`
 2. Navigate to the `postman` folder, where you will find previous slice demo collections (e.g. 202108-slice-demo)
@@ -56,6 +56,11 @@ Following these two requirements must create your collection constant and a path
     const fileName = path.basename(__dirname + '.postman_collection.json');
     const savePath = path.join(process.cwd(), '/collections');
     const filePath = `${savePath}/${fileName}`;
+    
+In the code above, the constant `filePath` knows to store your new colleciton in your current working directory's `collection` folder. 
+Index.js does a lot for us. But the main purpose is to generate the JSON for postman to understand.
+
+//TODO: Share code snipet of file write.stringigy() to show how it stringfies the js code into JSON
     
 Next build your collection. In this case we will build a collection with two requests:
 
@@ -116,7 +121,17 @@ For now, create a payload folder for your new collection. Each file should conta
        
        module.exports = payload;
        
+If you've used postman before, you'll notice that request and response bodies are JSON files in postman, however our payloads are JavaScript files. JavaScript provides us with a few advantages.
+Firstly, it allows the developer to leave comments within the payload file. Second, we can import utils to use in our code. Lastly, we can also use template tags when we are using JS files. 
 
+In a different folder, our JS code gets assembles into a JSON collection string that is outputted to a file for postman to generate our collection. 
 #### Setting up the Requests folder:
+TODO: Note how all the files are similar and that we may want to take out teh repetitive parts and find a way to pass in a new item every time.
+TODO: Show code snipet of the item variable.
 #### Setting up the Templates folder:
+In the `templates` folder we will create a file called `test.js`. This file will set up variables for the view and environment variables that will be used in our collection.
+This file is also where we will create a test script that will toggle between different views as we run through the demo.
+
+If you've created demo scripts in postman in the past, you may have used the `Test` tab to add your HTML and JS that generated the visuals during the demo. 
+This `test.js` file is essentially our test script and it will populate that tab once your collection is imported.
 #### Setting up the Events folder:
