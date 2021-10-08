@@ -25,10 +25,13 @@ The TOO reviews the Service Item and approves them and there is a verbal handoff
 #### Handoff from Prime to TOO/TIO
 After the prime uploads the proof of service, they submit the payment request ID to teh TIO and do a verbal handoff to teh TOO.
 ## Getting Started:
-1. Clone the `prime_api_deliverable` repo: `git@github.com:transcom/prime_api_deliverable.git`
+We have created a repo in GitHub with postman collections from previous slice demos. This means you can clone the collection the way you would any other repo on GitHub: 
+
+1. Clone the `prime_api_deliverable` repo: `git clone git@github.com:transcom/prime_api_deliverable.git`
 2. Navigate to the `postman` folder, where you will find previous slice demo collections (e.g. 202108-slice-demo)
 3. Copy over contents from a previous collection or create a new collection from scratch.
 
+If you have never set up postman before checkout our instructions for [setting up postman](https://transcom.github.io/mymove-docs/docs/dev/tools/Postman/Setting-Up-Postman).
 ### Creating a Collection from scratch:
 Once you have cloned the `prime_api_deliverable` repo, feel free to create a new branch if someone is reviewing your script or just start working directly in master. 
 Open the file in your favorite text editor. Under the postman folder, create a new folder for our slice demo collection.
@@ -98,6 +101,22 @@ Next build your collection. In this case we will build a collection with two req
 run `npm run build_202109-slice-demo` so that you can use this new collection.
 
 #### Setting up the Payloads folder:
+The Payloads folder feeds objects to the request folder. This is where we will create reusable objects that we pass to the requests. Examples of this include:
+updating a shipment with the actual pickup date, actual weight, and estimated weight, updating a reweigh weight, scheduleing a pickup date, etc.
+
+Each action will have it's own JS file and as more collections are added, we can begin making the payloads folder a top level folder so that payloads can be used across collections.
+
+For now, create a payload folder for your new collection. Each file should contain one object. For example if you have a folder called `update-shipment-with-actual-pickup-date.js`, it'll contain an update to the pickup date:
+    
+       var addDays = require('../../utils/addDays');
+       
+       const payload = {
+         actualPickupDate: addDays(17),
+       };
+       
+       module.exports = payload;
+       
+
 #### Setting up the Requests folder:
 #### Setting up the Templates folder:
 #### Setting up the Events folder:
