@@ -97,3 +97,7 @@ Next build your collection. In this case we will build a collection with two req
 
 run `npm run build_202109-slice-demo` so that you can use this new collection.
 
+#### Setting up the Payloads folder:
+#### Setting up the Requests folder:
+#### Setting up the Templates folder:
+#### Setting up the Events folder:
