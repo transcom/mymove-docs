@@ -128,7 +128,7 @@ The site should load automatically in your browser at http://localhost:3000/mymo
       ```
 
 6. Start the app: `yarn start` (or `npx yarn start`)
-7. Go to wherever it tells you to (probably http://localhost:3000/mymove-docs/) and look around!
+7. Go to wherever it tells you to (probably http://localhost:4000/mymove-docs/) and look around!
 
 ## Deployment
 
