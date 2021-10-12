@@ -1,12 +1,19 @@
+---
+title: Test Data Generation
+---
+
+
 When working with or testing our system, it can be helpful to have sample data in the system that gives you good starting points for different steps in the process and/or seeing different features in action.
 
 ## Scenarios and Usage
-We have data set up for various scenarios and use cases. You can find them in `pkg/testdatagen/scenario`. 
+We have data set up for various scenarios and use cases. You can find them in `pkg/testdatagen/scenario`.
 
-### Common
-The primary ones you'll probably interact with will be:
-* `devseed` - Used to populate the local `dev` database and for the databases used in ephemeral environments.
+:::info Primary use cases
+
+* `devseed` - Used to populate the local `dev` database and for the databases used in __Ephemeral__ environments.
 * `e2ebasic` - Used by our e2e tests, either by Circle CI, or when you run those tests locally (depending on how you run them).
+
+:::
 
 ### Usage
 To generate the test data, you can use either `make` targets that are set up to use specific sets of data, or you can use the `generate-test-data` command.
@@ -64,7 +71,7 @@ Currently available sub-scenarios for each main named scenarios:
 The scenarios use our `testdatagen` functions to quickly wire up the data they need. You can find more info on using `testdatagen` functions here: https://github.com/transcom/mymove/wiki/Understanding-Testdatagen-Functions
 
 ## Updating Scenarios
-If you want to add more data to a given scenario, or tweak it, you can edit the file of the scenario you want as needed. 
+If you want to add more data to a given scenario, or tweak it, you can edit the file of the scenario you want as needed.
 
 ### Adding a New Case (e2ebasic and bandwidth only)
 If you are adding a new case, e.g. an un-submitted move with an HHG shipment that has multiple destination addresses, you would add a function to the file like this:
