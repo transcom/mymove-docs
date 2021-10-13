@@ -118,7 +118,7 @@ Next build your collection. In this case we will build a collection with two req
         console.log(`💾 The Postman Collection has been saved at ${filePath}`);
       }
 
-run `npm run build_202109-slice-demo` so that you can use this new collection.
+To check to make sure that your empty collection is created, run teh first step in [Running your new collection](#running-your-new-collection)
 
 #### Utilizing the `utils` folder:
 There is a utils folder that lives outside of your new collection in the `postman` folder. 
@@ -192,9 +192,10 @@ The `templates` folder is important because it contains teh HTML that we use to 
 ![Screenshot of Postman Visualization](/img/postman/postman_visualize.png)
 ### Running your new collection:
 When you're finished with your collection, it is time to generate the postman collection. 
-First do an `npm install`, then run `node <collection_name/index.js>`
+1. do an `npm install`
+2. run `npm run build_<collection-name>`
 
-If you ever need to update your collection run `npm run build_<collection-name>`. 
+If you ever need to update your collection run  `node <collection_name/index.js>`. 
 
 Your collection will be imported into a top level folder called `collections`, from there import the collection into postman directly.
 
