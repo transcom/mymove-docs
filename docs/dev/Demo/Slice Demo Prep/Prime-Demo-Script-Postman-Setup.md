@@ -188,6 +188,8 @@ Both JS files in the `event` folder will run directly in postman, unlike hte oth
 
 #### Setting up the Templates folder:
 The `templates` folder is important because it contains teh HTML that we use to visualize the role of the prime in a file called `visualize.html`.
+
+![Screenshot of Postman Visualization](/img/postman/postman_visualize.png)
 ### Running your new collection:
 When you're finished with your collection, it is time to generate the postman collection. 
 First do an `npm install`, then run `node <collection_name/index.js>`
@@ -199,3 +201,5 @@ Your collection will be imported into a top level folder called `collections`, f
 ### Checking for errors:
 Debugging after hitting an endpoint has not been optimized yet. Unfortunately, you will still need to check the console in postman to see what errors pop up. 
 Optimizing debugging is something we need to continue to work on as postman debugging tools are few and far between. 
+
+![Screenshot of Postman Console](/img/postman/postman_console.png)
