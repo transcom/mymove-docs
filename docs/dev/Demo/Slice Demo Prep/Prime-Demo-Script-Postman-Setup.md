@@ -48,7 +48,7 @@ Open the file in your favorite text editor. Under the postman folder, create a n
 Our naming convention for each slice demo folder is going to be: YYYYMM-slice-demo.
 
 If your slice demo is happening in September 2021, for example, you will create a folder called `202109-slice-demo`. In this folder create 3 more empty folders, and a file for payloads:
-* `payloads.js` - feeds the requests folder
+* `payloads.js` - is a file that feeds the `requests` folder
 * `requests` - this folder contains node JS files that postman uses to build the collection.
 * `events` - this folder contains node JS files that contain the objects that feed into the templates folder for the visualizations. 
 * `templates` - this folder contains HTML to add visualizations in the demo.
