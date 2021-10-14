@@ -23,3 +23,10 @@ yarn-error.log*
 .nix-hash
 .nix-disable
 .npmglobal
+
+# fresh-brew
+# These files are meant to be updated in the trussworks/fresh-brew repo
+Brewfile
+pour.sh
+Brewfile.local.lock.json
+Brewfile.lock.json
