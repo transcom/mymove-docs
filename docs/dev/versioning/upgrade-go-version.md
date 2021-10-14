@@ -48,6 +48,7 @@ go version go1.16.4 darwin/amd64
     - `Dockerfile.tasks_local`
     - `Dockerfile.tools_local`
     - `Dockerfile.webhook_client`
+    - `Dockerfile.webhook_client_dp3`
     - `Dockerfile.webhook_client_local`
     - `cypress/Dockerfile.cypress`
     - `scripts/gen-assets`
