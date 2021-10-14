@@ -17,25 +17,36 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
 
 ## Running locally (on macOS)
 
-**Prerequisites**
-- A working installation of Homebrew and Apple's Command Line Tools (CLT), which
-can be verified with this command:
+### Clone the repo
 
-```
-brew doctor
-```
+1. Open your terminal/command line.
+2. Clone the repo onto your machine and `cd` into it:
+   ```
+   git clone https://github.com/transcom/mymove-docs.git && cd mymove-docs
+   ```
+### With Homebrew
 
-It should say "Your system is ready to brew".
-
-If you get a message about the command brew not being found, you'll need to
-install Homebrew, which also installs the CLT for you:
 ```shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+bash <(curl -s https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press)
 ```
 
-If you already have Hombrew but it’s not ready to brew, one of the most common
-issues, and the first one you should fix, is missing or outdated Command Line
-Tools. The outdated tools message looks like this:
+If you're using the Fish shell, run this command instead:
+
+```shell
+bash (curl -s https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press | psub)
+```
+
+This command will install Homebrew if you don't already have it, or update it
+if you already have it. It will also install or update `git` and the GitHub CLI,
+as well as the dependencies that are specific to this project, as defined in
+`fresh-brew.local` and `Brewfile.local`. Finally, it will launch the MilMove docs
+website for you. Read more about the script by visiting the repo:
+https://github.com/trussworks/fresh-brew.
+
+If the script fails, pay attention to any errors or warnings from Homebrew in
+the terminal. Homebrew usually provides detailed instructions for fixing things,
+so read them carefully and follow their instructions. For example, a common issue
+is missing or outdated Command Line Tools. The message looks like this:
 
 ```
 Warning: A newer Command Line Tools release is available.
@@ -50,16 +61,24 @@ Alternatively, manually download them from:
   https://developer.apple.com/download/more/.
 ```
 
-Homebrew usually provides detailed instructions for fixing things, so read them
-carefully and follow their instructions. Quit and restart your terminal once the
-CLT are installed.
+If you see this, follow the instructions, then quit and restart your terminal
+once the Command Line Tools are installed, and run the setup script above again.
 
-- Direnv and Git, which can be installed with Homebrew:
-```shell
-brew install direnv git
-```
 
 ### With Nix
+
+1. Install or update Homebrew using the same script as in the previous section,
+but without running the `*.local` scripts:
+```shell
+export SKIP_LOCAL=true
+bash <(curl -s https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press)
+```
+
+For Fish shell:
+```shell
+export SKIP_LOCAL=true
+bash (curl -s https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press | psub)
+```
 
 1. Install Nix if you don't already have it:
 ```
@@ -69,66 +88,12 @@ sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-v
 Note: if you're using the Fish shell, you'll need to [complete an extra step](https://github.com/trussworks/Engineering-Playbook/tree/main/developing/nix#extra-setup-only-fish-shell-users).
 
 2. Quit and restart your terminal
-3. Clone this repo onto your machine and `cd` into it:
-   ```
-   git clone https://github.com/transcom/mymove-docs.git && cd mymove-docs
-   ```
 3. Run `direnv allow`
 4. Run `nix/update.sh`
 5. Run `yarn install`
 6. Run `yarn start`
 
 The site should load automatically in your browser at http://localhost:3000/mymove-docs/
-
-### Manual setup
-
-1. Open your terminal/command line.
-2. Clone the repo onto your machine and `cd` into it:
-   ```
-   git clone https://github.com/transcom/mymove-docs.git && cd mymove-docs
-   ```
-
-4. If you are looking at a PR or working on a branch other than the default branch, run:
-   ```
-   git checkout <branch-name>
-   ```
-
-5. Install dependencies:
-   ```
-   brew install nodenv
-   ```
-
-   - Add `nodenv` to your terminal configuration file:
-      ```
-      echo 'eval "$(nodenv init -)"' >> ~/.zshrc
-      ```
-   - Refresh your terminal configuration:
-      ```
-      source ~/.zshrc
-      ```
-      Note that the above two commands assume you are using Zsh as your shell,
-      which is the default shell on macOS. If you're using Bash, then replace
-      `.zshrc` with `.bash_profile`. If you're not sure, read Moncef's guide to
-      [find out which shell you're using](https://www.moncefbelyamani.com/which-shell-am-i-using-how-can-i-switch/).
-   - Install a version of `node` that is 12 or above (we recommend [the same version we use on MilMove](https://github.com/transcom/mymove/blob/master/.node-version)):
-      ```
-      nodenv install <version>
-      ```
-   - Then set the global version to the one you installed:
-      ```
-      nodenv global <version>
-      ```
-   - Finally, install `yarn`:
-      ```
-      npm install --global yarn
-      ```
-   - Now you should be able to run the local site! If you're still having trouble, try adding `npx` to the start of every `yarn` command:
-      ```
-      npx yarn install
-      ```
-
-6. Start the app: `yarn start` (or `npx yarn start`)
-7. Go to wherever it tells you to (probably http://localhost:4000/mymove-docs/) and look around!
 
 ## Deployment
 
