@@ -22,7 +22,7 @@ For the purposes for adding a new endpoint, make sure that your endpoint is defi
 If you are having issues with your local swagger state it is recommended to run `make server_generate`, accept the prompt, and then run `make server_run` again. For more information on troubleshooting, [this](https://ustcdp3.slack.com/archives/CP6PTUPQF/p1632254277386600) explanation will be helpful.
 
 #### Defining a path for your endpoint 
-For more information about URL design and structure checkout: [API Style Guide](https://github.com/transcom/mymove/wiki/API-Style-Guide)
+For more information about URL design and structure checkout: [API Style Guide](https://transcom.github.io/mymove-docs/docs/dev/contributing/backend/API-Style-Guide)
 
 Defining your endpoint path follows this simple convention:
 
@@ -122,7 +122,7 @@ An example of the ListMove description is as follows:
                 type: string
                 readOnly: true
 
-For information on error responses, check out: [API Errors Guide](https://github.com/transcom/mymove/wiki/API-Errors)
+For information on error responses, check out: [API Errors Guide](https://transcom.github.io/mymove-docs/docs/dev/contributing/backend/API-Errors#api-errors)
 
 #### Gen files:
 Once you finishing updating the yaml files with the new endpoint information make sure to run your make commands like `make swagger-generate` to autogenerate your swagger files, or simply run `make server_run`, 
@@ -130,7 +130,7 @@ which runs your server and other useful make commands in one go.
 
 ## Creating a Handler:
 Now you're ready to add your endpoint to the `handlers` folder. Start building out the service object before creating your handler. 
-For more information about service objects and when to create one: [Service Objects](https://github.com/transcom/mymove/wiki/service-objects).
+For more information about service objects and when to create one: [Service Objects](https://transcom.github.io/mymove-docs/docs/dev/contributing/backend/service-objects).
 
 An important note about service objects: The service layer is where we will store our business logic and connect to the database. Once a service object is created, it will be passed in to the handler `NewPrimeAPIHandler` function in `pkg/handlers/primeapi/api.go`,
 and the handler will only be aware of the service object interface, while the service object will contain all of the rules and validations as well as accessing object from the database.
@@ -147,7 +147,7 @@ Handlers must never hit the database. Ideally, endpoint handlers are for type va
 5. Add tests for the handler
    	* Add test code
            * Use testdatagen functions [[Understanding Testdatagen Functions]]
-    * Add mocks (only if absolutely necessary): [Generating Mocks with mockery](https://github.com/transcom/mymove/wiki/generate-mocks-with-mockery)
+    * Add mocks (only if absolutely necessary): [Generating Mocks with mockery](https://transcom.github.io/mymove-docs/docs/dev/testing/writing-tests/generate-mocks-with-mockery)
 	
 Here is an example of what the `ListMovesHandler` will look like:
 
@@ -211,4 +211,4 @@ The event would be added to the event map called eventModels:
     	NewEndpointEventKey:                 {NewEndpointEventKey, models.Model{}}, // this is an example
     	MoveTaskOrderCreateEventKey:         {MoveTaskOrderCreateEventKey, models.Move{}},
 
-If you'd like to learn more about event triggers, you cna find more details [here](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/How-to-Add-an-Event-Trigger.md).
+If you'd like to learn more about event triggers, you can find more details [here](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/How-to-Add-an-Event-Trigger.md).
