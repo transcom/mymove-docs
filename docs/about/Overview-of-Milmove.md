@@ -3,6 +3,13 @@ sidebar_position: 2
 ---
 # Overview
 
+:::caution About this page
+
+While this page has been migrated and organized, some sections of this
+documentation may be out-of-date and will be updated in the future.
+
+:::
+
 MilMove is a system to help service members (and other authorized personnel) move their gear and possessions from one place to another.
 It also allows the GHC "Prime" Contractor to request payment for services.
 
@@ -12,21 +19,28 @@ It also allows the GHC "Prime" Contractor to request payment for services.
 
 There are three websites (React apps) that compose the front end of the system:
 
-- **Milmove app**, located at my.move.mil.
+- **Milmove app**, located at `https://my.move.mil`
 
   This app is used by the people moving, namely the service members and their family.
 
-- **Office app**, located at office.move.mil.
+- **Office app**, located at `https://office.move.mil`
 
-  This app is used by the [office users](User-Management.md) to review/approve/reject moves and payments.
+  This app is used by the [Office users](./security/User-Management.md) to review/approve/reject moves and payments.
 
-- **Admin app**, located at admin.move.mil
+- **Prime UI app**, located as a Prime Simulator Role user within the Office app
+    in **non-Production systems**.
 
-  This app is used by [administrators](User-Management.md) to create new office.move.mil users and grant permissions for various office roles.
+  This app is used by [Testers](./security/User-Management.md) to simulate
+  actions of the GHC Prime contractor. The Office user must be granted Prime
+  Simulator Role by an Administrator.
 
-The links above (my.move.mil) are for the production versions of the site. We have multiple deployed environments, for staging and testing.
+- **Admin app**, located at `https://admin.move.mil`
 
-[Read more about those here](https://github.com/transcom/mymove/wiki/Deployment-Process). 
+  This app is used by [Administrators](./security/User-Management.md) to create new https://office.move.mil users and grant permissions for various office roles.
+
+The links above are for the Production versions of the site. We have multiple
+deployed environments and you can [read more about those
+here][dp3-deployment-process].
 
 ### The APIs
 
@@ -38,7 +52,12 @@ The two external facing APIs are served over mTLS, which is a higher security pr
 
   The Prime is the contractor who will handle all moves for USTC. Once a customer (service member or related) has entered their information in Milmove and the office user has released the move, the Prime will then perform the move. They will use the API to inform milmove of the details of the move, dates, weights, addresses. They will also use these APIs to send invoices for the move.
 
-   > Note: Prime is just an internal name for the GHC contractor.
+
+:::note
+
+Prime is just an internal name for the GHC contractor.
+
+:::
 
 - **Orders API**, which is used by the services to send us *orders*.
 
@@ -66,7 +85,7 @@ We use Pop to
 
 - Handle and execute queries to the database
 
-Read more about Pop here: <https://gobuffalo.io/en/docs/db/getting-started>
+Read more about Pop here: https://gobuffalo.io/en/docs/db/getting-started
 
 ### Swagger
 
@@ -80,12 +99,14 @@ It's useful in several ways
 
 - Swagger UI or Redoc generates documentation for users of the API directly from the yaml.
 
-  For TLS APIs, we can test endpoints from within [the doc itself](#setup-milmovelocal-client).
-  For mTLS APIs, you can view non-interactive documentation [here](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml)
+  - For TLS APIs, we can test endpoints from within the doc itself.
+
+  - For mTLS APIs, you can view non-interactive documentation on this very site.
+  Click on the **APIs** menu item at the top of this page.
 
 - Swagger also has a JS client that generates a set of API functions that are hooked into the React apps giving them easier access to the data.
 
-Read more about Swagger here: <https://swagger.io/docs/specification/2-0/what-is-swagger/>
+Read more about Swagger here: https://swagger.io/docs/specification/2-0/what-is-swagger/
 
 ### Historical apps [need update]
 
@@ -95,6 +116,20 @@ In addition to the front end interfaces, MilMove comprises a set of APIs that wo
 
 `DPS`: This is also the name of the system MilMove is replacing, but in terms of APIs, DPS acts as an authenticator that will route a user to DPS or MilMove, as appropriate.
 
-### Historical note
+:::note Historical note
 
-> The history of the project is detailed in the MilMove onboarding document, but one thing for application engineers to keep in mind is that as of this writing, in early 2020, there are two different supported approaches to moves, with one being phased out, but still present in parts of the code. The old model of moves included PPM (Personally Procured Moves--do it yourself and get reimbursed) and HHG (HouseHold Goods moves--the government hires a moving company for you). In that rubric, there was no explicit role system for office app users. We are now phasing out HHG moves in favor of GHC (Global Household goods Contract) moves, in which a single company will handle all subcontracting for moves and explicit roles, like Transportation Ordering Officer (TOO) and Transportation Invoicing Officer (TIO), are defined and assigned.
+The history of the project is detailed in the MilMove onboarding document, but
+one thing for application engineers to keep in mind is that as of this writing,
+in early 2020, there are two different supported approaches to moves, with one
+being phased out, but still present in parts of the code. The old model of moves
+included PPM (Personally Procured Moves--do it yourself and get reimbursed) and
+HHG (HouseHold Goods moves--the government hires a moving company for you). In
+that rubric, there was no explicit role system for Office app users. We are now
+phasing out HHG moves in favor of GHC (Global Household goods Contract) moves,
+in which a single company will handle all subcontracting for moves and explicit
+roles, like Transportation Ordering Officer (TOO) and Transportation Invoicing
+Officer (TIO), are defined and assigned.
+
+:::
+
+[dp3-deployment-process]: https://dp3.atlassian.net/wiki/spaces/MT/pages/1383530526/Deploying+MilMove+to+Production
