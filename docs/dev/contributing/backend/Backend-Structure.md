@@ -1,18 +1,34 @@
+---
+slug: /dev/contributing/backend/structure
+title: Structure
+sidebar_position: 2
+---
 # Backend Structure
-...
 
+This article provides a high-level overview of the MilMove backend. It is intended for folks who are brand new to the project and need some guidance to navigate through the complexity and clutter in our codebase. It is not intended to be an in-depth analysis of _why_ our backend is the way it is.
 
-So what is a server? You can google this question and get loads of dense, complicated answers back. But practically - what is it? What is our MilMove server and how do we work with it?
+## The Server
+
+So what is a server? You can google this question and get loads of dense, complicated answers back. But practically, what is our MilMove server and how do we work with it?
 
 At the lowest level, our server is a Go script. We run a Go command that executes a process with multiple concurrent channels that "listen" for requests to our APIs. (TODO: Add a link to the Go concurrency exercise in A Tour to Go in case folks what to learn more about concurrency) This same script also exits the server. Basically, we run one command for a really long time to serve up our MilMove APIs.
 
 This command is in `cmd/milmove/serve.go`. This file contains the entire lifecycle of our server. We're not going to change this very often, so although it's nice to know where to find it, you'll rarely have to go into this file during your day-to-day.
 
-Naturally, this command doesn't handle all of our backend logic. We store the bulk of our server code elsewhere, and the `serve.go` file simply references it at the right times. The rest of our backend code is in the `pkg/` folder. There are some, _small_ exceptions, but any backend logic should be found in here. `pkg/` is a backend developer's homebase.
+Naturally, this command doesn't handle all of our backend logic. We store the bulk of our server code elsewhere, and the `serve.go` file simply references it at the right times. The rest of our backend code is in the `pkg/` folder. There are some, _small_ exceptions, but practically all backend logic should be found in here. `pkg/` is the backend developer's homebase.
 
-NOTE: A lot of concepts in the backend have shared terminology. We have the concept of an "endpoint," but it can be called different things depending on which part of the stack you're in. For example, and "endpoint" in the API YAML file actually goes under the `paths:` category. So "endpoint" = "path" in this context.
+:::tip Terminology
 
-In the YAML file, we also have a property on each path called `operationId:`. This is the unique name for your endpoint, or "path," or "operation." So now "endpoint" = "path" = "operation."
+A lot of concepts in the backend have shared terminology. We have the concept of an "**endpoint**," but it can be called different things depending on which part of the stack you're in. For example, an "endpoint" in the API YAML file actually goes under the `paths:` category. So "endpoint" = "**path**" in this context.
+
+In the YAML file, we also have a property on each path called `operationId:`. This is the unique name for your endpoint, or "path." Now "endpoint" = "path" = "**operation**."
+
+In the backend, we also use "**handler**" functions to execute the logic for our endpoints. You will see the terms "handler" and "endpoint" used interchangeably throughout our documentation. Keep in mind that these things all tie back to the same concept, and remember that tech terminology is unfair and wacky.
+
+:::
+
+## The Backend: `pkg/`
+
 
 
 
