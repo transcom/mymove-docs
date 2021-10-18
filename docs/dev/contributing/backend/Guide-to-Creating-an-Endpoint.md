@@ -149,34 +149,80 @@ Handlers must never hit the database. Ideally, endpoint handlers are for type va
            * Use testdatagen functions [[Understanding Testdatagen Functions]]
     * Add mocks (only if absolutely necessary): [Generating Mocks with mockery](https://transcom.github.io/mymove-docs/docs/dev/testing/writing-tests/generate-mocks-with-mockery)
 	
-Here is an example of what the `ListMovesHandler` will look like:
+All handlers should begin by fetching the session and/or logger from the request:
 
-    // Handle fetches all moves with the option to filter since a particular date. Optimized version.
-    func (h ListMovesHandler) Handle(params movetaskorderops.ListMovesParams) middleware.Responder {
-    	logger := h.LoggerFromRequest(params.HTTPRequest)
-    	appCtx := appcontext.NewAppContext(h.DB(), logger)
-    
-    	var searchParams services.MoveTaskOrderFetcherParams
-    	if params.Since != nil {
-    		since := handlers.FmtDateTimePtrToPop(params.Since)
-    		searchParams.Since = &since
-    	}
-    
-    	mtos, err := h.MoveTaskOrderFetcher.ListPrimeMoveTaskOrders(appCtx, &searchParams)
-    
-    	if err != nil {
-    		logger.Error("Unexpected error while fetching moves:", zap.Error(err))
-    		return movetaskorderops.NewListMovesInternalServerError().WithPayload(payloads.InternalServerError(nil, h.GetTraceID()))
-    	}
-    
-    	payload := payloads.ListMoves(&mtos)
-    
-    	return movetaskorderops.NewListMovesOK().WithPayload(payload)
-    }
+```golang
+logger := h.LoggerFromRequest(params.HTTPRequest)
+```
 
-	
+or
+
+```golang
+session, logger := h.SessionAndLoggerFromRequest(params.HTTPRequest)
+```
+
+Then, all handlers should store the DB connection, logger, and/or session in the
+App Context:
+
+```golang
+appCtx := appcontext.NewAppContext(h.DB(), logger)
+```
+
+We also have a `AppContextFromRequest` helper function that will store
+the DB, logger, and session. For example:
+
+```golang
+appCtx := h.AppContextFromRequest(params.HTTPRequest)
+```
+
+And then this `appCtx` will be passed in as the first argument to any service object
+function. For example:
+
+```golang
+shipment, err := h.RejectShipment(appCtx, shipmentID, eTag, rejectionReason)
+```
+
+The DB, logger, and session can then be extracted from the app context like so:
+
+```golang
+appCtx.DB()
+appCtx.Logger()
+appCtx.Session()
+```
+
+You'll notice that many handlers perform authorization within the handler, such
+as:
+
+```golang
+if !session.IsOfficeUser() || !session.Roles.HasRole(roles.RoleTypeTOO) {
+    logger.Error("Only TOO role can reject shipments")
+    return shipmentops.NewRejectShipmentForbidden()
+}
+```
+
+This duplicated logic can be extracted into a service object. Perhaps something
+like this:
+
+```golang
+func (f *authorization) TOOAuthorized(appCtx appcontext.AppContext) bool {
+  session := appCtx.Session()
+
+  return session.IsOfficeUser() && session.Roles.HasRole(roles.RoleTypeTOO)
+}
+```
+
+and then the handler would be updated like this:
+
+```golang
+if !h.TOOAuthorized(appCtx) {
+  logger.Error("Only TOO role can reject shipments")
+  return shipmentops.NewRejectShipmentForbidden()
+}
+```
+
 #### Connecting the Handler to the Service Object:
-Once you create your handler type and Handle function, it can be added to api.go. This file is also where you can connect your service object to the handler. 
+Once you create your handler type and Handle function, it can be added to `api.go`.
+This file is also where you can connect your service object to the handler.
 For example, our ListsMoves Handler will be passed the service object interface as follows:
 
     primeAPI.MoveTaskOrderListMovesHandler = ListMovesHandler{

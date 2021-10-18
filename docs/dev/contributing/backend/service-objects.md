@@ -26,16 +26,16 @@ When writing or refactoring a piece of business logic to adhere to the service o
 
 When to use a service object?
 
-* [ ] dedicated encapsulation of a single piece business logic
-* [ ] could possibly be re-purposed
-* [ ] does this focus beyond parsing a request and rendering data
-* [ ] does this singular piece of business logic use many different dependencies and/or different models
+* [ ] will it be used to encapsulate a single piece of business logic?
+* [ ] could it possibly be re-purposed?
+* [ ] does its focus go beyond parsing a request and rendering data?
+* [ ] does this singular piece of business logic use many different dependencies and/or different models?
 
 If you answered no to more than two of these questions, then a service object may not be the appropriate design pattern to use in your use case.
 
 ## Creating Service Objects
 
-Once you have analyzed and determined that a service object is appropriate the next step is to actually create it.
+Once you have analyzed and determined that a service object is appropriate, the next step is to actually create it.
 
 ### Folder Structure And Naming
 
@@ -72,12 +72,12 @@ the name of the service object struct.
 **Parameters**
 Remember that service objects should be reusable. Try to abstract as much out of the logic specific parameters to achieve this.
 Pass as many parameters as make sense. Use your best judgment. In the following example from the codebase, we are only passing in one parameter to the `CreateForm` execution method, a
-`template` variable with the type `FormTemplate`. This is because the `FormTemplate` is more complex than most service objects and this use case works for use here.
- Some service objects will only require one or two parameters and a struct is not appropriate.`FormTemplate` only holds relatively abstract parameters such that the service
+`template` variable with the type `FormTemplate`. This is because the `FormTemplate` is more complex than most service objects and this use case works for us here.
+ Some service objects will only require one or two parameters, and a struct is not appropriate. `FormTemplate` only holds relatively abstract parameters such that the service
 object can be reused if needed. Regarding `FormCreator`, this service object can be reused to generate another PDF by passing
 different valid parameters.
 
-```go
+```golang
 // paperwork.go
 package services
 
@@ -102,7 +102,7 @@ In the case of a simple entity fetch by ID, the first parameter could be model v
 
 *Remember all `errors` should be Wrapped by using `fmt.Errorf` using the `%w` verb so that the underlying error is propagated properly*
 
-```go
+```golang
 // form_creator.go
 package paperwork
 
@@ -118,71 +118,72 @@ func (c formCreator) CreateForm(template services.FormTemplate) (afero.File, err
 
 ### Naming And Defining Service Object Structs and Interfaces
 
-1. Define a private struct with the same name as the service object file, making sure that it is a noun camel-cased.
+1. Define a private struct with the same name as the service object file, making
+sure that it is a noun camel-cased.
 
-The struct fields are the dependencies needed for the service. To implement an interface in Go, all we need to do is to implement all the methods in the interface. By using an interface here
-we are able to easily do mock testing on this service object. Adding these struct fields as interfaces will allow you to do testing with mocks; they are not required.
+For example, if you plan on creating a `ShipmentDeleter` service object in
+`pkg/services/shipment/shipment_deleter.go`, inside that file, there should be
+the following private struct:
 
-21 Add an interface for the service, that captures the behavior of the service object.
-
-```go
-// paperwork.go
-package services
-
-import (
-  "bytes"
-  "github.com/spf13/afero"
-  paperworkforms "github.com/transcom/mymove/pkg/paperwork"
-)
-
-// FormTemplate are the struct fields defined to call CreateForm service object
-type FormTemplate struct {
-  Buffer       *bytes.Reader
-  FieldsLayout map[string]paperworkforms.FieldPos
-  FormType
-  FileName string
-  Data     interface{}
-}
-
-// FormCreator is the service object interface for CreateForm
-type FormCreator interface {
-  CreateForm(template FormTemplate) (afero.File, error)
-}
-
-```
-
-### Naming and Defining Service Object Execution Method
-
-The service object execution method is responsible for kicking off the service object call. Ideally, the service object
-should expose only one public function, with helper private functions, as needed and when it makes sense. Oftentimes,
-smaller private functions are good to unit test smaller units of functionality. The service object execution method should be the same as the file name
-and struct. The service object execution method should be a method of the service object struct,
-a struct of parameters that the service object requires, and returning values, as appropriate.
-
-```go
-// form_creator.go
-package paperwork
-
-import (
-    "github.com/spf13/afero"
-    "github.com/transcom/mymove/pkg/services"
-)
-
-type createForm struct {
-  fileStorer FileStorer
-  formFiller FormFiller
-}
-
-func (c formCreator) CreateForm(template services.FormTemplate) (afero.File, error) {
-  ...
+```golang
+type shipmentDeleter struct {
 }
 ```
+
+The struct fields are the dependencies needed for the service. Typically, these
+dependencies will be interfaces, which makes it easier to mock them in tests.
+It is not required for a service object struct to have dependencies, as seen in
+`shipmentDeleter` above.
+
+`pkg/services/mto_shipment/shipment_rejecter.go` is an example of a service
+object that has dependencies:
+
+```golang
+type shipmentRejecter struct {
+  router services.ShipmentRouter
+}
+```
+
+2. Add an interface for the service, that captures the behavior of the service object.
+This will go in the appropriate file under `pkg/services`. For example, all
+shipment-related service objects live in `pkg/services/mto_shipment.go`. Here's
+an example of an interface you might add there:
+
+```golang
+//ShipmentRejecter is the service object interface for rejecting a shipment
+//go:generate mockery --name ShipmentRejecter --disable-version-string
+type ShipmentRejecter interface {
+  RejectShipment(appCtx appcontext.AppContext, shipmentID uuid.UUID, eTag string, reason *string) (*models.MTOShipment, error)
+}
+```
+
+### Naming and Defining Public Service Object Functions
+
+Ideally, the service object should expose only one public function, which should
+be as short as possible, with its various actions broken down into smaller
+private functions. The service object execution method should be a method of the
+service object struct, and **its first argument should always be of the type
+`appcontext.AppContext`**. For example:
+
+```golang
+// pkg/services/mto_service_item/mto_service_item_updater.go
+func (p *mtoServiceItemUpdater) ApproveOrRejectServiceItem(appCtx appcontext.AppContext, mtoServiceItemID uuid.UUID, status models.MTOServiceItemStatus, rejectionReason *string, eTag string) (*models.MTOServiceItem, error) {
+  mtoServiceItem, err := p.findServiceItem(appCtx, mtoServiceItemID)
+  if err != nil {
+    return &models.MTOServiceItem{}, err
+  }
+
+  return p.approveOrRejectServiceItem(appCtx, *mtoServiceItem, status, rejectionReason, eTag, checkMoveStatus(), checkETag())
+}
+```
+`appCtx` is how we pass around the DB connection, logger, and session from a
+handler to the service object.
 
 ### Instantiating Service Objects
 
 1. Create a `NewServiceObjectStruct` method that is responsible for creating a new service object. This method should be used whenever a new service object struct is needed. One of the main benefits of using service objects is abstracting implementation and returning an interface, then only using the interface in our codebase elsewhere. This allows us to separate interface from implementation.
 
-```go
+```golang
 // form_creator.go
 package paperwork
 
@@ -204,7 +205,7 @@ func NewFormCreator(FileStorer Storer, FormFiller Filler) services.FormCreator {
 
 1. Add the service object as a field for the Handler struct of the handler that the service object will be executed in.
 
-```go
+```golang
 // shipments.go
 package publicapi
 // CreateGovBillOfLadingHandler creates a GBL PDF & uploads it as a document associated to a move doc, shipment and move
@@ -216,7 +217,7 @@ type CreateGovBillOfLadingHandler struct {
 
 1. Instantiate the service object while passing it in as a field for the Handler struct in `NewAPIHandler` function call.
 
-```go
+```golang
 // publicapi/api.go
 package publicapi
 
@@ -235,9 +236,9 @@ func NewPublicAPIHandler(context handlers.HandlerContext) http.Handler {
 ## Testing Service Objects with Mocks
 
 1. Make sure the mock generation tool is installed by running `make server_deps`.
-1. Generate the mock for the interface you'd like to test. See the [document on generating mocks with mockery](https://github.com/transcom/mymove/wiki/generate-mocks-with-mockery)
+1. Generate the mock for the interface you'd like to test. See the [document on generating mocks with mockery](https://transcom.github.io/mymove-docs/docs/dev/testing/writing-tests/generate-mocks-with-mockery)
 
-```go
+```golang
 // Code generated by mockery v1.0.0. DO NOT EDIT.
 
 package mocks
@@ -271,7 +272,7 @@ func (_m *FormFiller) AppendPage(_a0 io.ReadSeeker, _a1 map[string]paperwork.Fie
 1. Properly mock all methods for interface, denoting the parameter types, along with the return value.
 1. Check the proper assertions
 
-```go
+```golang
 // create_form_test.go
 package paperwork
 
