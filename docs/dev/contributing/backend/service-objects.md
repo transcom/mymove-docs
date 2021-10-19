@@ -176,7 +176,7 @@ func (p *mtoServiceItemUpdater) ApproveOrRejectServiceItem(appCtx appcontext.App
   return p.approveOrRejectServiceItem(appCtx, *mtoServiceItem, status, rejectionReason, eTag, checkMoveStatus(), checkETag())
 }
 ```
-`appCtx` is how we pass around the DB connection, logger, and session from a
+[App Context](use-stateless-services-with-app-context.md) is how we pass around the DB connection, logger, and session from a
 handler to the service object.
 
 ### Instantiating Service Objects
