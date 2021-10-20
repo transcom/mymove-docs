@@ -2,27 +2,6 @@
 
 **See also:** [[React forms using Formik]]
 
-## Table of Contents
-
-<!-- toc -->
-
-- [Introduction](#introduction)
-- [TL;DR](#tldr)
-- [Form Libraries](#form-libraries)
-  * [What is Formik?](#what-is-formik)
-  * [Form Validation, Yup?](#form-validation-yup)
-- [React USWDS integration](#react-uswds-integration)
-  * [TextInput](#textinput)
-    + [TextInputMinimal](#textinputminimal)
-    + [TextInput](#textinput-1)
-  * [Form](#form)
-- [Storybook Form Stories](#storybook-form-stories)
-  * [Samples > Form > personal info](#samples--form--personal-info)
-  * [Samples > Form > inline first name](#samples--form--inline-first-name)
-  * [StackedTable > with buttons to edit](#stackedtable--with-buttons-to-edit)
-
-<!-- tocstop -->
-
 ## Introduction
 
 MilMove is transitioning to use Formik for rendering forms for data entry. This document strives to layout some of the basics of how to use it and links to helpful documentation.
