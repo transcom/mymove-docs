@@ -78,7 +78,7 @@ mtoshipmentops.NewCreateMTOShipmentNotFound().WithPayload(payload)
 
 ### Error types and Error responses
 
-Error types in the code are defined in `pkg/services/errors.go`.
+Error types in the code are defined in `pkg/apperror/errors.go`.
 
 Error responses are defined in the yamls, `swagger/prime.yaml` and `swagger/support.yaml`
 
