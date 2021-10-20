@@ -131,6 +131,8 @@ type reweighUpdater struct {
 
 You should think of these fields as _dependencies_ for your new service object. The more you have, the more work the caller will have to do to set up this service. This can get inconvenient very quickly.
 
+Typically, these dependencies will be interfaces, which makes it easier to mock them in tests.
+
 ### Creating the function
 
 Once you have a struct defined, you can start working on the main function for your service. This will be a method on the previously defined struct.
@@ -150,7 +152,9 @@ Once you have your bare function signature, you can start to fill in the paramet
 
 Service objects should be reusable and modular, so keep this in mind while defining your parameters. To start with, they should be the bare minimum needed for someone to call this function. Use your best judgment.
 
-You will always need to pass in the `AppContext`. This is standard in our codebase.
+:::info
+You will always need to pass in the `AppContext` as the first argument. This is standard in our codebase. Read more about [AppContext and how to use it](use-stateless-services-with-app-context).
+:::
 
 Often, the particular model type you are dealing with is passed in as input as well. This is not a hard rule, but it is a common convention. For our example, we are creating a reweigh and therefore will need information from a `models.Reweigh` type.
 
@@ -259,6 +263,13 @@ func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *mo
     return reweigh, nil
 }
 ```
+
+:::info
+Now that the function is filled out, you'll want to refactor it by extracting each logical step into a separate, smaller, and well-named private function. We should strive to keep all functions as small as possible for readability.
+
+[ApproveOrRejectServiceItem](https://github.com/transcom/mymove/blob/master/pkg/services/mto_service_item/mto_service_item_updater.go#L44-L123) is a good example of a function that performs a lot of actions, and each one is encapsulated in a separate function.
+:::
+
 
 ### Creating the interface
 
