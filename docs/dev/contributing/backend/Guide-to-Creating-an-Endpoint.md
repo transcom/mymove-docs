@@ -148,50 +148,107 @@ Handlers must never hit the database. Ideally, endpoint handlers are for type va
    	* Add test code
            * Use testdatagen functions [[Understanding Testdatagen Functions]]
     * Add mocks (only if absolutely necessary): [Generating Mocks with mockery](https://transcom.github.io/mymove-docs/docs/dev/testing/writing-tests/generate-mocks-with-mockery)
-	
-Here is an example of what the `ListMovesHandler` will look like:
 
-    // Handle fetches all moves with the option to filter since a particular date. Optimized version.
-    func (h ListMovesHandler) Handle(params movetaskorderops.ListMovesParams) middleware.Responder {
-    	logger := h.LoggerFromRequest(params.HTTPRequest)
-    	appCtx := appcontext.NewAppContext(h.DB(), logger)
-    
-    	var searchParams services.MoveTaskOrderFetcherParams
-    	if params.Since != nil {
-    		since := handlers.FmtDateTimePtrToPop(params.Since)
-    		searchParams.Since = &since
-    	}
-    
-    	mtos, err := h.MoveTaskOrderFetcher.ListPrimeMoveTaskOrders(appCtx, &searchParams)
-    
-    	if err != nil {
-    		logger.Error("Unexpected error while fetching moves:", zap.Error(err))
-    		return movetaskorderops.NewListMovesInternalServerError().WithPayload(payloads.InternalServerError(nil, h.GetTraceID()))
-    	}
-    
-    	payload := payloads.ListMoves(&mtos)
-    
-    	return movetaskorderops.NewListMovesOK().WithPayload(payload)
-    }
+#### Anatomy of a handler
 
-	
+All handlers should begin by storing the DB, logger, and/or session from the request into the [AppContext](use-stateless-services-with-app-context). This is the easiest way to get all three:
+
+```go
+appCtx := h.AppContextFromRequest(params.HTTPRequest)
+```
+
+And then this `appCtx` will be passed in as the first argument to any service object function. For example:
+
+```go
+shipment, err := h.RejectShipment(appCtx, shipmentID, eTag, rejectionReason)
+```
+
+The DB, logger, and session can then be extracted from the app context like so:
+
+```go
+appCtx.DB()
+appCtx.Logger()
+appCtx.Session()
+```
+
+Below are other ways to grab the logger and session from the request, and populating the AppContext with them.
+
+Grab just the logger:
+
+```go
+logger := h.LoggerFromRequest(params.HTTPRequest)
+```
+
+or the session and logger:
+
+```go
+session, logger := h.SessionAndLoggerFromRequest(params.HTTPRequest)
+```
+
+Then, store the DB connection and logger in the
+App Context:
+
+```go
+appCtx := appcontext.NewAppContext(h.DB(), logger)
+```
+
+If you also need the session, you can do all three at once:
+
+```go
+appCtx := appcontext.WithSession(appcontext.NewAppContext(h.DB(), logger), session)
+```
+
+#### Authorization
+
+You'll notice that many handlers perform authorization within the handler, such as:
+
+```go
+if !session.IsOfficeUser() || !session.Roles.HasRole(roles.RoleTypeTOO) {
+    logger.Error("Only TOO role can reject shipments")
+    return shipmentops.NewRejectShipmentForbidden()
+}
+```
+
+This duplicated logic can be extracted into a service object. Perhaps something like this:
+
+```go
+func (f *authorization) TOOAuthorized(appCtx appcontext.AppContext) bool {
+  session := appCtx.Session()
+
+  return session.IsOfficeUser() && session.Roles.HasRole(roles.RoleTypeTOO)
+}
+```
+
+and then the handler would be updated like this:
+
+```go
+if !h.TOOAuthorized(appCtx) {
+  logger.Error("Only TOO role can reject shipments")
+  return shipmentops.NewRejectShipmentForbidden()
+}
+```
+
 #### Connecting the Handler to the Service Object:
-Once you create your handler type and Handle function, it can be added to api.go. This file is also where you can connect your service object to the handler. 
+Once you create your handler type and Handle function, it can be added to `api.go`.
+This file is also where you can connect your service object to the handler.
 For example, our ListsMoves Handler will be passed the service object interface as follows:
 
-    primeAPI.MoveTaskOrderListMovesHandler = ListMovesHandler{
-        ctx,
-        movetaskorder.NewMoveTaskOrderFetcher(),
-    }
-    	
+```go
+primeAPI.MoveTaskOrderListMovesHandler = ListMovesHandler{
+    ctx,
+    movetaskorder.NewMoveTaskOrderFetcher(),
+}
+```
+
 Additionally in your file containing the handler make sure to pass in the services to your struct:
-    
-    type ListMovesHandler struct {
-    	handlers.HandlerContext
-    	services.MoveTaskOrderFetcher
-    }
-   
-        
+
+```go
+type ListMovesHandler struct {
+	handlers.HandlerContext
+	services.MoveTaskOrderFetcher
+}
+```
+
 #### How to handle errors
 For more information on how we handle errors,  check out our detailed [documentation](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/API-Errors.md).
 ### Add event key and update event map
@@ -201,14 +258,20 @@ Each API has a corresponding file in `/pkg/services/event/<apiName>_endpoint.go`
 
 An example of an event key for MoveTaskOrder Create Handler is as follows:
 
-    // MoveTaskOrderCreateEventKey is a key containing MoveTaskOrder.Create
-    const MoveTaskOrderCreateEventKey KeyType = "MoveTaskOrder.Create"
+```go
+// MoveTaskOrderCreateEventKey is a key containing MoveTaskOrder.Create
+const MoveTaskOrderCreateEventKey KeyType = "MoveTaskOrder.Create"
+```
 
 The event would be added to the event map called eventModels:
-    
-    var eventModels = map[KeyType]eventModel{
-    	EndpointEventKey:                    {EndpointEventKey, models.Model{}}, // this is an example
-    	NewEndpointEventKey:                 {NewEndpointEventKey, models.Model{}}, // this is an example
-    	MoveTaskOrderCreateEventKey:         {MoveTaskOrderCreateEventKey, models.Move{}},
+
+```go
+var eventModels = map[KeyType]eventModel{
+    EndpointEventKey:                    {EndpointEventKey, models.Model{}}, // this is an example
+    NewEndpointEventKey:                 {NewEndpointEventKey, models.Model{}}, // this is an example
+    MoveTaskOrderCreateEventKey:         {MoveTaskOrderCreateEventKey, models.Move{},
+}
+```
+
 
 If you'd like to learn more about event triggers, you can find more details [here](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/How-to-Add-an-Event-Trigger.md).

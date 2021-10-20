@@ -9,7 +9,7 @@ The MilMove backend is _loosely_ designed with this [3-layer structure](https://
 
 1. **Presentation layer.** Our endpoint handlers that perform type conversions and connect user requests to business logic functions.
 2. **Business logic layer.** Code that implements MilMove's business logic.
-3. **Data access layer.** Code that directly interacts with and manipulates the database. 
+3. **Data access layer.** Code that directly interacts with and manipulates the database.
 
 The `services` package is a combination of the bottom two layers, **business logic** and **data access**. It is located within the `./pkg/services` directory.
 
@@ -40,7 +40,7 @@ mymove/
 │   │   ├── ...
 │   │   ├── mto_agent/
 │   │   ├── mto_service_item/   <- a sub-package
-│   │   ├── mto_shipment/ 
+│   │   ├── mto_shipment/
 │   │   ├── ...
 │   │   ├── mto_agent.go
 │   │   ├── mto_service_item.go <- the interface in the services package
@@ -48,7 +48,7 @@ mymove/
 │   │   ├── ...
 ```
 
-Note that the names here **match our database tables**, but in the singular form. 
+Note that the names here **match our database tables**, but in the singular form.
 
 Each of these sub-packages handles the operations for one particular data model. This helps us keep track of our database interactions and allows for differently-focused teams to speak with the database and APIs using the same validation and functionality.
 
@@ -59,8 +59,8 @@ mymove/
 ├── pkg/
 │   ├── services/
 │   │   ├── ...
-│   │   ├── mto_shipment/ 
-│   │   ├── reweigh/ 
+│   │   ├── mto_shipment/
+│   │   ├── reweigh/
 │   │   ├── ...
 │   │   ├── mto_shipment.go
 │   │   ├── reweigh.go
@@ -69,8 +69,8 @@ mymove/
 
 Leave this Go file blank for the time being.
 
-:::info 
-If your service involves multiple models or does not easily map to a model entity name, then it might be best to create a new folder that has a relevant name. 
+:::info
+If your service involves multiple models or does not easily map to a model entity name, then it might be best to create a new folder that has a relevant name.
 
 However, first consider whether or not the additional models are being updated as a _side-effect_ of another model's update and which model is being exposed as an input or return value. In either of those cases, you can determine which model is the true subject of your service.
 
@@ -79,7 +79,7 @@ Ultimately, you must use your best judgment.
 
 ### Adding a new file
 
-Once you have identified or creating the sub-package for your new service object, navigate into that folder. 
+Once you have identified or creating the sub-package for your new service object, navigate into that folder.
 
 We name our files for the main **action** of that particular service object. For example, the file that contains the service to update a shipment is called `mto_shipment_updater.go`. If you are modifying an existing action, open that particular file. Otherwise, you should create a new one.
 
@@ -91,7 +91,7 @@ Your new sub-package should look like this:
 mymove/
 ├── pkg/
 │   ├── services/
-│   │   ├── reweigh/ 
+│   │   ├── reweigh/
 │   │   │   ├── reweigh_creator.go  <------ this name can be any action
 │   │   │   ├── reweigh_creator_test.go
 │   │   │   ├── reweigh_service_test.go  <- boilerplate
@@ -101,7 +101,7 @@ mymove/
 ```
 
 :::caution Stuttering
-You might notice that there's a lot of redundancy in this naming scheme. This is commonly referred to as **"stuttering"** and is considered an anti-pattern in most languages and frameworks. 
+You might notice that there's a lot of redundancy in this naming scheme. This is commonly referred to as **"stuttering"** and is considered an anti-pattern in most languages and frameworks.
 
 We may at some point try to move away from this convention, but it is preferrable to be consistent with our less-than-ideal naming scheme for now.
 :::
@@ -131,6 +131,8 @@ type reweighUpdater struct {
 
 You should think of these fields as _dependencies_ for your new service object. The more you have, the more work the caller will have to do to set up this service. This can get inconvenient very quickly.
 
+Typically, these dependencies will be interfaces, which makes it easier to mock them in tests.
+
 ### Creating the function
 
 Once you have a struct defined, you can start working on the main function for your service. This will be a method on the previously defined struct.
@@ -148,9 +150,11 @@ Once you have your bare function signature, you can start to fill in the paramet
 
 #### Parameters
 
-Service objects should be reusable and modular, so keep this in mind while defining your parameters. To start with, they should be the bare minimum needed for someone to call this function. Use your best judgment. 
+Service objects should be reusable and modular, so keep this in mind while defining your parameters. To start with, they should be the bare minimum needed for someone to call this function. Use your best judgment.
 
-You will always need to pass in the `AppContext`. This is standard in our codebase.
+:::info
+You will always need to pass in the `AppContext` as the first argument. This is standard in our codebase. Read more about [AppContext and how to use it](use-stateless-services-with-app-context).
+:::
 
 Often, the particular model type you are dealing with is passed in as input as well. This is not a hard rule, but it is a common convention. For our example, we are creating a reweigh and therefore will need information from a `models.Reweigh` type.
 
@@ -260,6 +264,13 @@ func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *mo
 }
 ```
 
+:::info
+Now that the function is filled out, you'll want to refactor it by extracting each logical step into a separate, smaller, and well-named private function. We should strive to keep all functions as small as possible for readability.
+
+[ApproveOrRejectServiceItem](https://github.com/transcom/mymove/blob/master/pkg/services/mto_service_item/mto_service_item_updater.go#L44-L123) is a good example of a function that performs a lot of actions, and each one is encapsulated in a separate function.
+:::
+
+
 ### Creating the interface
 
 Now we get to go back to our top-level Go file (`reweigh.go`, in this example).
@@ -291,7 +302,7 @@ type ReweighCreator interface {
 }
 ```
 
-Once you have defined this interface, we can go back to our service object's file and add a function that returns an instance of the interface. 
+Once you have defined this interface, we can go back to our service object's file and add a function that returns an instance of the interface.
 
 ```go title="./pkg/services/reweigh/reweigh_creator.go"
 // NewReweighCreator creates a new struct with the service dependencies and returns the interface type
@@ -300,7 +311,7 @@ func NewReweighCreator() services.ReweighCreator {
 }
 ```
 
-This function lets us keep our struct and dependencies private to this sub-package and helps us standardize the way folks use our service. By abstracting implementation and returning an interface, we are creating boundaries between functionality and implementation that allow our codebase to be more flexible. 
+This function lets us keep our struct and dependencies private to this sub-package and helps us standardize the way folks use our service. By abstracting implementation and returning an interface, we are creating boundaries between functionality and implementation that allow our codebase to be more flexible.
 
 ### Example file
 
@@ -423,7 +434,7 @@ This enables the the Go `mockery` tool to generate the mock type automatically. 
 When you use the mock type, you need to know two things:
 
 1. What you expect to receive as input.
-2. What you expect to receive as output. 
+2. What you expect to receive as output.
 
 :::danger Pointers in Mocks
 These should be defined as exactly as possible to preserve the integrity of your test. If you have to include pointer input, you must _always_ use copies of the pointer and **_never, ever use that specific pointer again_**. Otherwise, you could unknowingly change the input you expect and your test would be compromised.
