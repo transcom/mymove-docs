@@ -1,3 +1,9 @@
+---
+sidebar_position: 11
+---
+
+# Testing best practices
+
 ## General guidelines
 
 - Be explicit when verifying values
@@ -21,7 +27,7 @@ func (suite *HandlerSuite) TestUpdateMTOServiceItemStatusHandlerApproveSuccess()
     mtoServiceItem.Status = models.MTOServiceItemStatusApproved
     reason := "should not update reason"
     mtoServiceItem.RejectionReason = &reason
-    
+
     request := httptest.NewRequest("PATCH", "/service-items/{mtoServiceItemID}/status", nil)
     params := mtoserviceitemop.UpdateMTOServiceItemStatusParams{
 	HTTPRequest:      request,
@@ -46,7 +52,7 @@ func (suite *HandlerSuite) TestUpdateMTOServiceItemStatusHandlerApproveSuccess()
     mtoServiceItem.RejectionReason = &reason
     suite.MustSave(&mtoServiceItem)
     mtoServiceItem.Status = models.MTOServiceItemStatusApproved
-    
+
     request := httptest.NewRequest("PATCH", "/service-items/{mtoServiceItemID}/status", nil)
     params := mtoserviceitemop.UpdateMTOServiceItemStatusParams{
 	HTTPRequest:      request,
