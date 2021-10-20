@@ -1,3 +1,9 @@
+---
+sidebar_position: 7
+---
+
+# How to write fast tests
+
 ## Use stubbed models
 
 In many cases, we don't need to save models in the database. The less we use the DB, the faster our tests. For example, there are many tests that create a user only to pass it to the `suite.AuthenticateUserRequest` function. That function doesn't care whether or not the user exists in the DB. It uses the user to set Session variables so we can simulate an authenticated user. In these cases, you should use the `MakeStubbedUser` function in testdatagen.
@@ -23,7 +29,7 @@ suite.T().Run("When office user is not TOO, response should be 403", func(t *tes
     officeUser := testdatagen.MakeOfficeUser(suite.DB(), testdatagen.Assertions{
       Stub: true,
     })
-    
+
     req := httptest.NewRequest("GET", fmt.Sprintf("/move_orders"), nil)
     req = suite.AuthenticateOfficeRequest(req, officeUser)
 
