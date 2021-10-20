@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Acceptance Testing Syncada
+# Acceptance testing Syncada
 
 ## Prerequisites
 
