@@ -1,4 +1,8 @@
-# How To Run Go Tests
+---
+sidebar_position: 6
+---
+
+# How to run Go tests
 
 ## Run All Go Tests
 
@@ -55,7 +59,7 @@ $ go test -v ./pkg/handlers/internalapi/ -testify.m Test_name
 Then you can run the single subtest with:
 
 ```console
-$ go test -count=1 -v -run 'Test_suite_name/Test_name/sub_test_name' ./pkg/handlers/ghcapi 
+$ go test -count=1 -v -run 'Test_suite_name/Test_name/sub_test_name' ./pkg/handlers/ghcapi
 ```
 
 ## Run Tests when a File Changes
