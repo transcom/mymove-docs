@@ -1,8 +1,12 @@
-# How To Run End to End (Cypress) Tests
+---
+sidebar_position: 5
+---
+
+# How to run end to end (Cypress) tests
 
 ## Using the Cypress UI
 
-The fastest way to run end to end tests is with the following command, which will open the 
+The fastest way to run end to end tests is with the following command, which will open the
 Cypress UI, from which you can choose to run all integration specs (there should be a link in
 the top right that says something like "Run 25 integration specs"), or click on individual ones.
 
@@ -10,12 +14,12 @@ the top right that says something like "Run 25 integration specs"), or click on 
 $ make e2e_test
 ```
 
-This command truncates most tables in the test DB (which is much faster than destroying it, running it again, 
+This command truncates most tables in the test DB (which is much faster than destroying it, running it again,
 and running all the migrations), then populates the DB from the data in the
 `/pkg/testdatagen/scenario/e2ebasic.go` script, and then launches Cypress.
 
 Sometimes, a new recently-merged migration might prevent the script from running.
-In that case, or if something else seems wrong with the test DB, you can set everything 
+In that case, or if something else seems wrong with the test DB, you can set everything
 up from scratch:
 
 ```console
