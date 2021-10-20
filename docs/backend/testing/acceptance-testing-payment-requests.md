@@ -1,23 +1,32 @@
-# Acceptance Testing Payment Requests
+---
+sidebar_position: 3
+---
 
-Link to a video walkthrough example of acceptance testing a payment request. [Video in Google Drive](https://drive.google.com/file/d/1yDQAgRxGRGwkiwhUKgaor5C0vMtm6Ek4/view)
+# Acceptance testing payment requests
+
+Link to a video walk-through example of acceptance testing a payment request. [Video in Google Drive](https://drive.google.com/file/d/1yDQAgRxGRGwkiwhUKgaor5C0vMtm6Ek4/view)
 
 ## Pricing Acceptance Tool
-In lieu of the following instructions, you can use the pricing-acceptance script to kick off the acceptance process for pricing stories. NOTE this script creates a brand new shipment. To use, first find an approved move and use its moveCode or ID when calling the script
+
+In lieu of the following instructions, you can use the `pricing-acceptance`
+script to kick off the acceptance process for pricing stories.
+
+:::note
+This script creates a brand new shipment. To use, first find an approved move
+and use its moveCode or moveID when calling the script.
+:::
 
 ### Usage
 
-`pricing-acceptance <mtoID>`
+`pricing-acceptance <moveCodeOrID>`
 
-`pricing-acceptance <moveCode>`
+`pricing-acceptance <moveCodeOrID> api.stg.move.mil`
 
-`pricing-acceptance <moveCode> api.stg.move.mil`
+`pricing-acceptance <moveCodeOrID> api.stg.move.mil proof_of_service_docs.pdf`
 
-`pricing-acceptance <moveID> api.stg.move.mil proof_of_service_docs.pdf`
+After calling the tool, you will be prompted to include a path to a payload for the service item you wish to price.
 
-After calling the tool, you will be prompted to include a path to a payload for the service item you wish to price. An example:
-
-```json 
+```json {3,4} title="Example output:"
 {
   "body": {
     "moveTaskOrderID": "9c7b255c-2981-4bf8-839f-61c7458e2b4d",
@@ -32,7 +41,7 @@ After calling the tool, you will be prompted to include a path to a payload for 
 }
 ```
 
-The CLI will output the `moveTaskOrderID` and `mtoShipmentID` that should be use in the payload
+The CLI will output the `moveCodeOrID` and `mtoShipmentID` that should be use in the payload
 
 The CLI will create a payment request for the service item provided. You will be prompted to login as a TIO and approve the payment request. Once approved, you can resume the CLI which will then generate an EDI.
 
@@ -53,11 +62,19 @@ I'm not sure if you need to create a new service member each time but I think PP
 
 ![Successfully Submitted Screenshot](https://user-images.githubusercontent.com/940173/86168467-16b14600-bacd-11ea-9e31-041f2926d41a.png)
 
-**NOTE** For staging the only difference is to visit https://my.stg.move.mil/ and click `Sign in` and then `Create a new account` instead of local sign in.
+:::note
+For staging the only difference is to visit https://my.stg.move.mil/ and click `Sign in` and then `Create a new account` instead of local sign in.
+:::
 
 ### 2. Approve HHG shipments and send to prime
 
-**NOTE** *For staging after creating a PPM move it is automatically converted to an HHG because staging has `FEATURE_FLAG_CONVERT_PPMS_TO_GHC` on. But to see these HHG moves you have to log into the https://office.stg.move.mil/ with a user that has the `TOO` role. You can give yourself the `TOO` role in the https://admin.stg.move.mil/ app.*
+:::note
+*For staging after creating a PPM move it is automatically converted to an HHG
+because staging has `FEATURE_FLAG_CONVERT_PPMS_TO_GHC` on. But to see these HHG
+moves you have to log into the https://office.stg.move.mil/ with a user that has
+the `TOO` role. You can give yourself the `TOO` role in the
+https://admin.stg.move.mil/ app.*
+:::
 
 * Sign into http://officelocal:3000/ as `too_role@office.mil (PPM office)` via the local sign in feature
 * See that the move is listed in the queue
@@ -68,22 +85,27 @@ I'm not sure if you need to create a new service member each time but I think PP
 
 At this point you should be able to move on to setting up a payment request.
 
-**NOTE** *The MTO Shipments that are created will have `PrimeEstimatedWeight` set to `4096` for each shipment. This is done because of the restrictions on when the prime can set estimated weight making it extra difficult to setup examples in staging.*
+:::note
+*The MTO Shipments that are created will have `PrimeEstimatedWeight` set to
+`4096` for each shipment. This is done because of the restrictions on when the
+prime can set estimated weight making it extra difficult to setup examples in
+staging.*
+:::
 
 ## Adding Service Items to a Shipment
 
 Use the appropriate payload and create file to add service items to the shipment. Some examples are below, or [see reDoc createMTOServiceItem](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml#operation/createMTOServiceItem) for more help.
 
 ```sh
-prime-api-client --cac --hostname api.stg.move.mil --port 443 create-mto-service-item --filename create_payload.json | jq 
+prime-api-client --cac --hostname api.stg.move.mil --port 443 create-mto-service-item --filename create_payload.json | jq
 ```
 
 
 ### Adding Crating
 
-```json
-{                                                                                                        
-    "body" : { 
+```json {3-4,19-20}
+{
+    "body" : {
         "moveTaskOrderID": "<enter UUID>",
         "mtoShipmentID": "<enter UUID>",
         "modelType": "MTOServiceItemDomesticCrating",
@@ -93,33 +115,32 @@ prime-api-client --cac --hostname api.stg.move.mil --port 443 create-mto-service
             "length": 1000,
             "width": 1000,
             "height": 1000
-        },  
+        },
         "crate": {
             "type": "CRATE",
             "length": 1100,
             "width": 1100,
             "height": 1100
-        },  
+        },
         "description": "<enter drescription>",
         "reason": "<enter reason>"
-    }   
+    }
 }
 ```
 
 ### Add Shuttling
 
-```json
+```json {4-5,8-9}
 {
     "body" : {
-		
         "modelType": "MTOServiceItemShuttle",
-	"moveTaskOrderID": "<YOUR MOVE ID>",
-	"mtoShipmentID": "<YOUR SHIPMENT ID>",
-	"status": "SUBMITTED",
-	"reServiceCode": "DOSHUT",
-	"description": "description",
-	"reason": "reason",
-	"estimatedWeight": 4200
+        "moveTaskOrderID": "<YOUR MOVE ID>",
+        "mtoShipmentID": "<YOUR SHIPMENT ID>",
+        "status": "SUBMITTED",
+        "reServiceCode": "DOSHUT",
+        "description": "description",
+        "reason": "reason",
+        "estimatedWeight": 4200
     }
 }
 ```
@@ -134,15 +155,20 @@ It may be helpful to check out the API docs, see [Milmove Prime API Documentatio
 
 - MTO has to be made available to the prime
 - MTO has an approved shipment
-- MTOShipment has scheduledPickupDate set to at least 10 days after TOO approved date
-- MTOShipment has actualPickupDate, primeEstimatedWeight, and primeActualWeight set
-  + primeEstimatedWeight has restrictions:
-    * Cannot be edited once set
-    * Cannot be set if scheduledPickupDate is too close to TOO approved date
+- MTOShipment has `scheduledPickupDate` set to _at least 10 days_ after TOO approved date
+- MTOShipment has `actualPickupDate`, `primeEstimatedWeight`, and `primeActualWeight` set
+  - `primeEstimatedWeight` has restrictions:
+    - Cannot be edited once set
+    - Cannot be set if scheduledPickupDate is too close to TOO approved date
 
 ### Add weights to the shipment
 
-**NOTE** *The `PrimeEstimatedWeight` will be set already if using the PPM to HHG converter as instructed [above](#creating-a-new-mto-with-shipments). If it is you won't need to set it again, in fact you can't adjust it once set so omit it from the payloads*
+:::info
+*The `PrimeEstimatedWeight` will be set already if using the PPM to HHG
+converter as instructed [above](#creating-a-new-mto-with-shipments). If it is
+you won't need to set it again, in fact you can't adjust it once set so omit it
+from the payloads*
+:::
 
 To update a shipment with estimated and actual weights get the `eTag` for the shipment. The first id is for the MTO, and the second is for the MTOShipment.
 
@@ -158,10 +184,10 @@ prime-api-client --cac --hostname api.stg.move.mil --port 443 fetch-mto-updates 
 
 Then use that `eTag` in the following payload, which you should save in `update_mto_shipment.json`. This example includes the additional fields of `scheduledPickupDate` and `actualPickupDate`.
 
-```json
+```json title="update_mto_shipment.json"
 {
   "mtoShipmentID": "b4306be8-146f-482c-b4a2-8432d4b970ca",
-  "ifMatch": "MjAyMC0wNi0wOVQwNTo1ODowMC44MjA3NDha",
+  "If-Match": "MjAyMC0wNi0wOVQwNTo1ODowMC44MjA3NDha",
   "body": {
     "scheduledPickupDate": "2020-11-22",
     "actualPickupDate": "2020-11-22"
@@ -185,7 +211,7 @@ Once the `scheduledPickupDate` and `actualPickupDate` are set you will need to r
 ```json
 {
   "mtoShipmentID": "b4306be8-146f-482c-b4a2-8432d4b970ca",
-  "ifMatch": "MjAyMC0wNi0wOVQwNTo1ODowMC44MjA3NDha",
+  "If-Match": "MjAyMC0wNi0wOVQwNTo1ODowMC44MjA3NDha",
   "body": {
     "primeEstimatedWeight": 1000,
     "primeActualWeight": 3000
@@ -254,7 +280,7 @@ prime-api-client --cac --hostname api.stg.move.mil --port 443 create-mto-service
 
 You need to be sure that the MTO and MTO Shipment have the details needed for pricing the Service Items included in the payment request. For example to price a Domestic Linehaul service item the MTO Shipment will need both estimated and actual weight set. See above on how to update the shipment.
 
-To create a payment request add the following json to a file called `create_payment_request.json`
+To create a payment request add the following JSON to a file called `create_payment_request.json`
 
 ```json
 {
@@ -272,12 +298,12 @@ To create a payment request add the following json to a file called `create_paym
 
 Then execute the command to create the payment request.
 
-*Development*
+#### Development
 ```sh
 prime-api-client --insecure create-payment-request --filename create_payment_request.json | jq
 ```
 
-*Staging*
+#### Staging
 ```sh
 prime-api-client --cac --hostname api.stg.move.mil --port 443 create-payment-request --filename create_payment_request.json | jq
 ```
@@ -288,39 +314,48 @@ prime-api-client --cac --hostname api.stg.move.mil --port 443 create-payment-req
 TBD
 
 
-*Development*
+#### Development
 ```sh
 prime-api-client --insecure  create-upload --paymentRequestID "a6268f43-fcf9-4b71-aa59-ea2f55aeb324" --filename "/Users/jacquelinemckinney/Documents/mymove/pcs orders/dd1614_pcs.pdf" | jqprime-api-client --insecure create-payment-request --filename create_payment_request.json | jq
 ```
 
-*Staging*
+#### Staging
 ```sh
 prime-api-client --cac --hostname api.stg.move.mil --port 443 create-upload --paymentRequestID "a6268f43-fcf9-4b71-aa59-ea2f55aeb324" --filename "/Users/jacquelinemckinney/Documents/mymove/pcs orders/dd1614_pcs.pdf" | jq
 ```
 
 ## Verifying Pricing
 
-**NOTE** since we cannot run queries on staging you will need to run the below queries locally. However, you can load the staging rate data into your database locally by running `make run_staging_migrations` and then running the queries in `deployed_migrations` database.
+:::note
+Since we cannot run queries on staging you will need to run the below queries
+locally. However, you can load the staging rate data into your database locally
+by running `make run_staging_migrations` and then running the queries in
+`deployed_migrations` database.
+:::
 
 ### Domestic Short Haul (DSH)
 
-Formula for price calculation `priceInCents = (Weight Billed Actual / 100.0) * distanceInMiles * rateInCents * escalationCompounded` round to nearest cent. 
+Formula for price calculation `priceInCents = (Weight Billed Actual / 100.0) * distanceInMiles * rateInCents * escalationCompounded` round to nearest cent.
 
-**NOTE** `distanceInMiles` is obtained from the `DistanceZip5` field in `paymentServiceItemsParams` on the payment request. `Weight Billed Actual` is also found in `paymentServiceItemsParams`.
+:::note
+The `distanceInMiles` is obtained from the `DistanceZip5` field in
+`paymentServiceItemsParams` on the payment request. `Weight Billed Actual` is
+also found in `paymentServiceItemsParams`.
+:::
 
-To get the rate and escalationCompounded run the following query filling in the service item params for your payment request.
+To get the rate and `escalationCompounded` run the following query filling in the service item params for your payment request.
 
-```sql
-  select price_cents, escalation_compounded from re_domestic_service_area_prices dsap
-   inner join re_domestic_service_areas sa on dsap.domestic_service_area_id = sa.id
-   inner join re_services on dsap.service_id = re_services.id
-   inner join re_contracts on re_contracts.id = dsap.contract_id
-   inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-   where sa.service_area = '076'
-    and re_services.code = 'DSH'
-    and re_contracts.code = 'TRUSS_TEST'
-    and dsap.is_peak_period = true
-    and '2020-06-29' between re_contract_years.start_date and re_contract_years.end_date;
+```sql {6-10}
+select price_cents, escalation_compounded from re_domestic_service_area_prices dsap
+    inner join re_domestic_service_areas sa on dsap.domestic_service_area_id = sa.id
+    inner join re_services on dsap.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dsap.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where sa.service_area = '076'
+        and re_services.code = 'DSH'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dsap.is_peak_period = true
+        and '2020-06-29' between re_contract_years.start_date and re_contract_years.end_date;
 ```
 
 ### Domestic Long Haul (DLH)
@@ -329,16 +364,16 @@ Formula for price calculation `priceInCents = ((Weight Billed Actual / 100.0) * 
 
 ```sql
 select price_millicents, escalation_compounded
- from re_domestic_linehaul_prices dlp
- inner join re_contracts c on dlp.contract_id = c.id
- inner join re_contract_years cy on c.id = cy.contract_id
- inner join re_domestic_service_areas dsa on dlp.domestic_service_area_id = dsa.id
- where c.code = 'TRUSS_TEST'
-   and '2020-06-29' between cy.start_date and cy.end_date
-   and dlp.is_peak_period = true
-   and 3000 between dlp.weight_lower and dlp.weight_upper
-   and 2376 between dlp.miles_lower and dlp.miles_upper
-   and dsa.service_area = '076';
+    from re_domestic_linehaul_prices dlp
+    inner join re_contracts c on dlp.contract_id = c.id
+    inner join re_contract_years cy on c.id = cy.contract_id
+    inner join re_domestic_service_areas dsa on dlp.domestic_service_area_id = dsa.id
+    where c.code = 'TRUSS_TEST'
+        and '2020-06-29' between cy.start_date and cy.end_date
+        and dlp.is_peak_period = true
+        and 3000 between dlp.weight_lower and dlp.weight_upper
+        and 2376 between dlp.miles_lower and dlp.miles_upper
+        and dsa.service_area = '076';
 ```
 ### Domestic Destination Price (DDP)
 
@@ -346,15 +381,15 @@ Formula for price calculation `priceInCents = (Weight Billed Actual / 100.0) * r
 
 ```sql
 select price_cents, escalation_compounded from re_domestic_service_area_prices dsap
-   inner join re_domestic_service_areas sa on dsap.domestic_service_area_id = sa.id
-   inner join re_services on dsap.service_id = re_services.id
-   inner join re_contracts on re_contracts.id = dsap.contract_id
-   inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-   where sa.service_area = '080'
-    and re_services.code = 'DDP'
-    and re_contracts.code = 'TRUSS_TEST'
-    and dsap.is_peak_period = true
-    and '2020-06-26' between re_contract_years.start_date and re_contract_years.end_date;
+    inner join re_domestic_service_areas sa on dsap.domestic_service_area_id = sa.id
+    inner join re_services on dsap.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dsap.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where sa.service_area = '080'
+        and re_services.code = 'DDP'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dsap.is_peak_period = true
+        and '2020-06-26' between re_contract_years.start_date and re_contract_years.end_date;
 ```
 ### Domestic Origin Price (DOP)
 
@@ -362,15 +397,15 @@ Formula for price calculation `priceInCents = (Weight Billed Actual / 100.0) * r
 
 ```sql
 select price_cents, escalation_compounded from re_domestic_service_area_prices dsap
-   inner join re_domestic_service_areas sa on dsap.domestic_service_area_id = sa.id
-   inner join re_services on dsap.service_id = re_services.id
-   inner join re_contracts on re_contracts.id = dsap.contract_id
-   inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-   where sa.service_area = '080'
-    and re_services.code = 'DOP'
-    and re_contracts.code = 'TRUSS_TEST'
-    and dsap.is_peak_period = true
-    and '2020-06-26' between re_contract_years.start_date and re_contract_years.end_date;
+    inner join re_domestic_service_areas sa on dsap.domestic_service_area_id = sa.id
+    inner join re_services on dsap.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dsap.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where sa.service_area = '080'
+        and re_services.code = 'DOP'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dsap.is_peak_period = true
+        and '2020-06-26' between re_contract_years.start_date and re_contract_years.end_date;
 ```
 
 ### Domestic Packing Price (DPK)
@@ -379,14 +414,14 @@ Formula for price calculation `priceInCents = (Weight Billed Actual / 100.0) * r
 
 ```sql
 select price_cents, escalation_compounded from re_domestic_other_prices dop
-   inner join re_services on dop.service_id = re_services.id
-   inner join re_contracts on re_contracts.id = dop.contract_id
-   inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-   where re_services.code = 'DPK'
-    and re_contracts.code = 'TRUSS_TEST'
-    and dop.is_peak_period = true
-    and dop.schedule = 3
-    and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
+    inner join re_services on dop.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dop.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where re_services.code = 'DPK'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dop.is_peak_period = true
+        and dop.schedule = 3
+        and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
 ```
 
 ### Domestic Unpacking Price (DUPK)
@@ -395,27 +430,27 @@ Formula for price calculation `priceInCents = (Weight Billed Actual / 100.0) * r
 
 ```sql
 select price_cents, escalation_compounded from re_domestic_other_prices dop
-   inner join re_services on dop.service_id = re_services.id
-   inner join re_contracts on re_contracts.id = dop.contract_id
-   inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-   where re_services.code = 'DUPK'
-    and re_contracts.code = 'TRUSS_TEST'
-    and dop.is_peak_period = true
-    and dop.schedule = 3
-    and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
+    inner join re_services on dop.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dop.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where re_services.code = 'DUPK'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dop.is_peak_period = true
+        and dop.schedule = 3
+        and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
 ```
 
 ### Fuel Surcharge Price (FSC)
 Formula for price calculation
 
 1. (`weekly national diesel fuel price` - 2.50) x 100 = `price difference in cents`
-2. Determine the `weight based distance multiplier`
+1. Determine the `weight based distance multiplier`
     - For shipments up to 5,000 lbs, the amount is $0.000417 per mile.
     - For shipments between 5,001 and 10,000 lbs, the amount is $0.0006255 per mile.
     - For shipments 10,001 to 24,000, the amount is $0.000834 per mile.
     - For shipments over 24,001 lbs, the amount is $0.00139 per mile.
-3. `weight based distance multiplier` x `distance` = `fuel surcharge multiplier`
-4. `price difference in cents` x `fuel surcharge multiplier` = `fuel surcharge price`
+1. `weight based distance multiplier` x `distance` = `fuel surcharge multiplier`
+1. `price difference in cents` x `fuel surcharge multiplier` = `fuel surcharge price`
 
 All information for calculating the FSC and the FSC price can be verified by checking the params that are returned upon successfully creating a payment request.
 
@@ -445,17 +480,16 @@ note: edit `re_services.code = 'DDASIT'` for `DDASIT` or `DOASIT`
 priceInCents = (Weight Billed Actual / 100.0) * number of days * rateInCents * escalationCompounded round to nearest cent
 
 ```sql
-select price_cents, escalation_compounded
-from re_domestic_service_area_prices dsap
-         inner join re_domestic_service_areas sa on dsap.domestic_service_area_id = sa.id
-         inner join re_services on dsap.service_id = re_services.id
-         inner join re_contracts on re_contracts.id = dsap.contract_id
-         inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-where sa.service_area = '781'
-  and re_services.code = 'DDASIT'
-  and re_contracts.code = 'TRUSS_TEST'
-  and dsap.is_peak_period = false
-  and '2021-02-04' between re_contract_years.start_date and re_contract_years.end_date;
+select price_cents, escalation_compounded from re_domestic_service_area_prices dsap
+    inner join re_domestic_service_areas sa on dsap.domestic_service_area_id = sa.id
+    inner join re_services on dsap.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dsap.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where sa.service_area = '781'
+        and re_services.code = 'DDASIT'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dsap.is_peak_period = false
+        and '2021-02-04' between re_contract_years.start_date and re_contract_years.end_date;
 ```
 
 ### Domestic Destination Delivery or Origin Pickup SIT (DDDSIT or DOPSIT)
@@ -474,14 +508,14 @@ Formula for price calculation `priceInCents = (Weight Billed Actual / 100.0) * r
 
 ```sql
 select price_cents, escalation_compounded from re_domestic_other_prices dop
-   inner join re_services on dop.service_id = re_services.id
-   inner join re_contracts on re_contracts.id = dop.contract_id
-   inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-   where re_services.code = 'DDDSIT'
-    and re_contracts.code = 'TRUSS_TEST'
-    and dop.is_peak_period = true
-    and dop.schedule = 3
-    and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
+    inner join re_services on dop.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dop.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where re_services.code = 'DDDSIT'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dop.is_peak_period = true
+        and dop.schedule = 3
+        and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
 ```
 
 ### Domestic Destination Shuttling (DDSHUT)
@@ -489,13 +523,13 @@ Formula for price calculation priceInCents = (Weight Billed Actual / 100.0) * ra
 
 ```sql
 select per_unit_cents, escalation_compounded from re_domestic_accessorial_prices dap
-   inner join re_services on dap.service_id = re_services.id
-   inner join re_contracts on re_contracts.id = dap.contract_id
-   inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-   where re_services.code = 'DDSHUT'
-    and re_contracts.code = 'TRUSS_TEST'
-    and dap.services_schedule = 3
-    and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
+    inner join re_services on dap.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dap.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where re_services.code = 'DDSHUT'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dap.services_schedule = 3
+        and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
 ```
 
 ### Domestic Origin Shuttling (DOSHUT)
@@ -503,13 +537,13 @@ Formula for price calculation priceInCents = (Weight Billed Actual / 100.0) * ra
 
 ```sql
 select per_unit_cents, escalation_compounded from re_domestic_accessorial_prices dap
-   inner join re_services on dap.service_id = re_services.id
-   inner join re_contracts on re_contracts.id = dap.contract_id
-   inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-   where re_services.code = 'DOSHUT'
-    and re_contracts.code = 'TRUSS_TEST'
-    and dap.services_schedule = 3
-    and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
+    inner join re_services on dap.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dap.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where re_services.code = 'DOSHUT'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dap.services_schedule = 3
+        and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
 ```
 
 ### Domestic Crating (DCRT)
@@ -517,26 +551,27 @@ Formula for price calculation priceInCents = cubicFeetBilled * rateInCents * esc
 
 ```sql
 select per_unit_cents, escalation_compounded from re_domestic_accessorial_prices dap
-   inner join re_services on dap.service_id = re_services.id
-   inner join re_contracts on re_contracts.id = dap.contract_id
-   inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-   where re_services.code = 'DCRT'
-    and re_contracts.code = 'TRUSS_TEST'
-    and dap.services_schedule = 3
-    and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
+    inner join re_services on dap.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dap.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where re_services.code = 'DCRT'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dap.services_schedule = 3
+        and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
 ```
+
 ### Domestic Uncrating (DUCRT)
 Formula for price calculation priceInCents = cubicFeetBilled * rateInCents * escalationCompounded round to nearest cent
 
 ```sql
 select per_unit_cents, escalation_compounded from re_domestic_accessorial_prices dap
-   inner join re_services on dap.service_id = re_services.id
-   inner join re_contracts on re_contracts.id = dap.contract_id
-   inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
-   where re_services.code = 'DUCRT'
-    and re_contracts.code = 'TRUSS_TEST'
-    and dap.services_schedule = 3
-    and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
+    inner join re_services on dap.service_id = re_services.id
+    inner join re_contracts on re_contracts.id = dap.contract_id
+    inner join re_contract_years on re_contracts.id = re_contract_years.contract_id
+    where re_services.code = 'DUCRT'
+        and re_contracts.code = 'TRUSS_TEST'
+        and dap.services_schedule = 3
+        and '2020-07-22' between re_contract_years.start_date and re_contract_years.end_date;
 ```
 
 ## Generate EDI via Support API
@@ -549,22 +584,22 @@ select per_unit_cents, escalation_compounded from re_domestic_accessorial_prices
 
 ### Generate EDI via Support API
 
-To generate an EDI add the following json to a file called `get_payment_request_edi.json`
+To generate an EDI add the following JSON to a file called `get_payment_request_edi.json`
 
-```json
-{                                                                                                                                                      
+```json title="get_payment_request_edi.json"
+{
   "paymentRequestID": "6ed3829c-c83e-4ffd-8fcc-a7025638266f"
 }
 ```
 
 Then execute the command to create the payment request.
 
-*Development*
+#### Development
 ```sh
 prime-api-client --insecure support-get-payment-request-edi --filename get_payment_request_edi.json | jq -r '.edi'
 ```
 
-*Staging*
+#### Staging
 ```sh
 prime-api-client --cac --hostname api.stg.move.mil --port 443  support-get-payment-request-edi --filename get_payment_request_edi.json | jq -r '.edi'
 ```
@@ -576,7 +611,7 @@ prime-api-client --cac --hostname api.stg.move.mil --port 443  support-get-payme
 
 If you need to create a new MTO Shipment create a file named `create_mto_shipment.json` with the following data
 
-```json
+```json title="create_mto_shipment.json"
 {
   "body": {
     "moveTaskOrderID": "da3f34cc-fb94-4e0b-1c90-ba3333cb7791",
@@ -618,12 +653,12 @@ If you need to create a new MTO Shipment create a file named `create_mto_shipmen
 
 Execute the following command to create the shipment
 
-*Development*
+#### Development
 ```sh
 prime-api-client --insecure create-mto-shipment --filename create_mto_shipment.json | jq
 ```
 
-*Staging*
+#### Staging
 ```sh
 prime-api-client --cac --hostname api.stg.move.mil --port 443 create-mto-shipment --filename create_mto_shipment.json
 ```
@@ -659,18 +694,18 @@ If needed you can make a MTO available to the prime via the API you can save the
 ```json
 {
   "moveTaskOrderID": "da3f34cc-fb94-4e0b-1c90-ba3333cb7791",
-  "ifMatch": "MjAyMC0wNi0wOVQwNTo0MzozMC43MzA5Nzla"
+  "If-Match": "MjAyMC0wNi0wOVQwNTo0MzozMC43MzA5Nzla"
 }
 ```
 
 Then run the following command
 
-*Development*
+#### Development
 ```sh
 prime-api-client --insecure support-make-move-task-order-available --filename avail_to_prime.json | jq'
 ```
 
-*Staging*
+#### Staging
 ```sh
 prime-api-client --cac --hostname api.stg.move.mil --port 443 support-make-move-task-order-available --filename avail_to_prime.json | jq'
 ```
@@ -685,8 +720,8 @@ When creating a payment request you may get an empty payload. This is usually ca
 
 This can be done in CloudWatch using the Log Insights (See [this doc](How-to-Search-Cloudwatch-Logs-using-Instance-ID) for details), or more easily with the [ecs-service-logs tool](https://github.com/trussworks/ecs-service-logs). If you have a `instance` in the error message you can use that as the `milmove_trace_id`
 
-Example error response:
-```json
+
+```json title="Example error response:"
 {
   "Payload": {
     "detail": "An internal server error has occurred",
@@ -697,11 +732,10 @@ Example error response:
 ```
 
 ```sh
- aws-vault exec transcom-gov-milmove-stg -- ecs-service-logs show -s app-client-tls -e stg 'milmove_trace_id=4dacdb9e-0063-44c7-aa21-ebed1e8c221b' | jq .
+aws-vault exec transcom-gov-milmove-stg -- ecs-service-logs show -s app-client-tls -e stg 'milmove_trace_id=4dacdb9e-0063-44c7-aa21-ebed1e8c221b' | jq .
 ```
 
-Sample output
-```json
+```json title="Sample output:"
 [
   {
     "level": "info",
@@ -785,7 +819,7 @@ Sample output
 
 ## Filters
 
-Tips on filtering down the json responses from the API. You can experiment with jq filter options by inputting the json into this tool (https://jqplay.org/)
+Tips on filtering down the JSON responses from the API. You can experiment with jq filter options by inputting the JSON into this tool (https://jqplay.org/)
 
 ### Print only MTO
 
