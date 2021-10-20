@@ -1,3 +1,9 @@
+---
+sidebar_position: 13
+---
+
+# Understanding testdatagen functions
+
 ## Why we use testdatagen functions
 When we unit test our code, we need a way to insert records in the database to test with. We need sample records to manipulate, update, delete, etc.
 
@@ -13,11 +19,11 @@ So to test something as simple as a function to approve a Payment Request, you�
 
 That’s where `testdatagen.Make` functions come in handy. They efficiently **create records** with **default values**, while handling all the **dependencies**, and even allowing you to **override default values**.
 
-It's important to note that they create **records in the db** by default, so if you just want a model that doesn't need to exist in the db, use the [stub feature](#stubbing-objects). 
+It's important to note that they create **records in the db** by default, so if you just want a model that doesn't need to exist in the db, use the [stub feature](#stubbing-objects).
 
 ## How to use a testdatagen function
 
-To use a testdatagen function, you import the testdatagen package from `github.com/transcom/mymove/pkg/testdatagen` and use the Make functions. 
+To use a testdatagen function, you import the testdatagen package from `github.com/transcom/mymove/pkg/testdatagen` and use the Make functions.
 
 Let's assume we're creating an MTOShipment.
 
@@ -29,11 +35,11 @@ mtoShipment := testdatagen.MakeDefaultMTOShipment(suite.DB())
 ```
 
 ### Assertions
-However if you want to change a field in the record, you can provide an `assertion` to do so. 
+However if you want to change a field in the record, you can provide an `assertion` to do so.
 An assertion says, create the default record, but overwrite this field.
 
 ```go
-mtoShipment := testdatagen.MakeMTOShipment(suite.DB(), 
+mtoShipment := testdatagen.MakeMTOShipment(suite.DB(),
   testdatagen.Assertions{
     MTOShipment: models.MTOShipment{
       CustomerRemarks: swag.String("my special remarks"),
@@ -43,7 +49,7 @@ mtoShipment := testdatagen.MakeMTOShipment(suite.DB(),
 
 What this says is: create a default MTOShipment but overwrite the `CustomerRemarks` field.
 
-**CAVEAT**: Overriding does not work for `false` boolean values. If some attribute is `true` by default, setting it to `false` via Assertions won't work. This is a [known issue in the mergo](https://github.com/imdario/mergo/issues/165) package we use for merging the structs. To work around this, you can either just avoid making the default value `true` in the base function. 
+**CAVEAT**: Overriding does not work for `false` boolean values. If some attribute is `true` by default, setting it to `false` via Assertions won't work. This is a [known issue in the mergo](https://github.com/imdario/mergo/issues/165) package we use for merging the structs. To work around this, you can either just avoid making the default value `true` in the base function.
 
 Or you can use a helper function like this:
 ```golang
@@ -76,7 +82,7 @@ MakeMTOShipment
 └── MakeAddress
 ```
 
-So what if you want to overwrite fields in those nested objects? You can, in fact, pass in assertions for those records. 
+So what if you want to overwrite fields in those nested objects? You can, in fact, pass in assertions for those records.
 
 ### Assertions on dependent records
 Dependent records are things like `Move`, that `MTOShipment` nests in its model.
@@ -86,7 +92,7 @@ But the assertions work differently. You want to **flatten** the assertions, so 
 Notice inside the assertions, that `MTOShipment` and `Move` are at the same level.
 
 ```go
-mtoShipment := testdatagen.MakeMTOShipment(suite.DB(), 
+mtoShipment := testdatagen.MakeMTOShipment(suite.DB(),
   testdatagen.Assertions{
     MTOShipment: models.MTOShipment{
       CustomerRemarks: swag.String("my special remarks"),
@@ -100,20 +106,20 @@ mtoShipment := testdatagen.MakeMTOShipment(suite.DB(),
 This ensures that when the nested Make functions get called, they can find all your assertions and apply them correctly.
 
 ### Reusing objects
-In the above examples, the Make functions are always creating new records with a new uuid, so a new `MTOShipment`, `Move`, `Order` etc. At times, you may want to provide an record you have already created. 
+In the above examples, the Make functions are always creating new records with a new uuid, so a new `MTOShipment`, `Move`, `Order` etc. At times, you may want to provide an record you have already created.
 
 ```go
 mto := testdatagen.MakeAvailableMove(suite.DB())
 .
 .
 .
-mtoShipment1 := testdatagen.MakeMTOShipment(suite.DB(), 
+mtoShipment1 := testdatagen.MakeMTOShipment(suite.DB(),
   testdatagen.Assertions{
     Move: mto,
 })
 ```
 
-This will connect that shipment to the previously created MTO. 
+This will connect that shipment to the previously created MTO.
 
 ## Stubbing objects
 
