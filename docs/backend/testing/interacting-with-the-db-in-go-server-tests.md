@@ -1,3 +1,9 @@
+---
+sidebar_position: 8
+---
+
+# Interacting with the database in Go server tests
+
 ## Background
 The `mymove` repo uses the DB in some particular ways that might be surprising to folks who are new to Golang. Here are some things to be aware of that might trip you up if you have a background in Rails, RSpec, and ActiveRecord.
 
@@ -25,7 +31,7 @@ type MoveServiceSuite struct {
 
 func TestMoveServiceSuite(t *testing.T) {
     ts := &MoveServiceSuite{
-        PopTestSuite: testingsuite.NewPopTestSuite(testingsuite.CurrentPackage()), 
+        PopTestSuite: testingsuite.NewPopTestSuite(testingsuite.CurrentPackage()),
 	logger:       zap.NewNop(), // Use a no-op logger during testing
     }
     suite.Run(t, ts)
