@@ -1,7 +1,8 @@
 ---
-title: Test Data Generation
+sidebar_position: 10
 ---
 
+# Test data generation
 
 When working with or testing our system, it can be helpful to have sample data in the system that gives you good starting points for different steps in the process and/or seeing different features in action.
 
