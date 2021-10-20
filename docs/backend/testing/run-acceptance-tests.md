@@ -1,4 +1,8 @@
-# How to Run Acceptance Tests
+---
+sidebar_position: 4
+---
+
+# How to run acceptance tests
 
 Before accepting work to merge into master different feature branches need to go through manual acceptance testing.
 This document will get you set up for that testing and also show you how to run tests against feature branches.
@@ -11,8 +15,13 @@ This setup doc assumes you're new to development environments and that you also 
 computer to use the terminal. You'll have to do a modified version of what developers typically do to set up their
 machines. However, if you are a developer you likely have all this set up already.
 
-**NOTE:** Many of these instructions should only be run once. If you run it and have an error then a few of these
-commands will not work as intended the second time. Please reach out to engineering or infra for help.
+:::note
+Many of these instructions should only be run once. If you run it and have an
+error then a few of these commands will not work as intended the second time.
+Please reach out to
+[#prac-engineering](https://ustcdp3.slack.com/archives/CP6PTUPQF) or
+[#prac-infrasec](https://ustcdp3.slack.com/archives/CP496B8DB) for help.
+:::
 
 * Work with the Infrastructure team to ensure you have Github access and an AWS user provisioned
 * Install [Homebrew](https://brew.sh)
@@ -28,12 +37,12 @@ commands will not work as intended the second time. Please reach out to engineer
 * You will need to modify your `/etc/hosts` file to include the hosts required for this project.
   * Run `make check_hosts` and follow any of the instructions that it presents. Those instructions will likely look like:
 
-  ```sh
-  echo "127.0.0.1 milmovelocal" | sudo tee -a /etc/hosts
-  echo "127.0.0.1 officelocal" | sudo tee -a /etc/hosts
-  echo "127.0.0.1 orderslocal" | sudo tee -a /etc/hosts
-  echo "127.0.0.1 adminlocal" | sudo tee -a /etc/hosts
-  ```
+```sh
+echo "127.0.0.1 milmovelocal" | sudo tee -a /etc/hosts
+echo "127.0.0.1 officelocal" | sudo tee -a /etc/hosts
+echo "127.0.0.1 orderslocal" | sudo tee -a /etc/hosts
+echo "127.0.0.1 adminlocal" | sudo tee -a /etc/hosts
+```
 
 * Change directories into the `transcom/mymove` directory and install other dependencies with `cd mymove && make docker_compose_setup`
 * Update your `~/.bash_profile` to install `direnv` correctly.
@@ -49,8 +58,7 @@ At this point you should be ready to start running Acceptance Tests.
 ## Running Acceptance Tests
 
 The first step in running acceptance tests is getting the branch name for the feature you wish to test.
-A developer should be able to link you to the branch name in Pivotal or you can ask them directly. For this
-set of instructions we'll use `branch_name`. From the terminal run:
+A developer should be able to link you to the branch name in Pivotal or you can ask them directly. For this set of instructions we'll use `branch_name`. From the terminal run:
 
 ```sh
 cd ~/Projects/mymove
@@ -68,8 +76,11 @@ To log into the server you must browse to one of these websites:
 * [Office login](http://officelocal:4000/devlocal-auth/login)
 * [Admin login](http://adminlocal:4000/devlocal-auth/login)
 
-**NOTE:** Unlike in development there is no `Local Sign In` button. This is because the production builds are
-specifically disallowed from compiling that button into what we would deliver to production as a safety measure.
+:::note
+Unlike in development there is no `Local Sign In` button. This is because the
+production builds are specifically disallowed from compiling that button into
+what we would deliver to production as a safety measure.
+:::
 
 At this point you can run through any user flows that allow you test the feature and accept that it meets the
 requirements needed for acceptance.
