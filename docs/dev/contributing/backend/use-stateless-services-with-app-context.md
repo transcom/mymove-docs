@@ -11,7 +11,7 @@ The way we achieve that goal is by storing the DB connection, logger, and
 session inside an instance of `appcontext.AppContext`, and requiring all
 functions that need one or more of those elements (DB, logger, session) to accept an argument of type `appcontext.AppContext` as its first argument. The function can then extract those elements from the app context, like so:
 
-```golang
+```go
 func MyFunction(appCtx appcontext.AppContext) {
   db := appCtx.DB()
   logger := appCtx.Logger()
@@ -26,13 +26,13 @@ examples. We also have examples here in [Service Objects](service-objects#naming
 
 When testing a service object function, we need to pass in an instance of the AppContext that contains the test DB and test logger. That instance can be created like this:
 
-```golang
+```go
 appcontext.NewAppContext(suite.DB(), suite.logger)
 ```
 
 Since this is a common thing to do in tests, packages should extract this into a `TestAppContext()` helper method that's defined in the package's `*_test.go` file. For example, it is defined in `pkg/services/mto_shipment/mto_shipment_service_test.go` for the `mtoshipment` package:
 
-```golang
+```go
 // TestAppContext returns the AppContext for the test suite
 func (suite *MTOShipmentServiceSuite) TestAppContext() appcontext.AppContext {
   return appcontext.NewAppContext(suite.DB(), suite.logger)
@@ -43,7 +43,7 @@ Search for `TestAppContext() appcontext.AppContext` in the codebase for more exa
 
 You can then use it in tests like this:
 
-```golang
+```go
 func (suite *MTOShipmentServiceSuite) TestRejectShipment() {
   router := NewShipmentRouter()
   approver := NewShipmentRejecter(router)

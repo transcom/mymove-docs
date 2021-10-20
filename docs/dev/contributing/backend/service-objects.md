@@ -377,7 +377,7 @@ Service objects are often used in other services, but they're most commonly used
 
 In either case, they will be used in much the same way. Service objects are often (although not necessarily) defined as a dependency in a struct:
 
-```golang {4}
+```go {4}
 // CreateReweighHandler is the handler for the API endpoint to create a reweigh
 type CreateReweighHandler struct {
 	handlers.HandlerContext
@@ -387,7 +387,7 @@ type CreateReweighHandler struct {
 
 When that struct is being instantiated, they are created using their `New<MyServiceObject>` function:
 
-```golang {4}
+```go {4}
 // Create an instance of CreateReweighHandler and assign it to our generated Swagger Go code
 sampleAPI.MtoShipmentCreateReweighHandler = CreateReweighHandler{
     ctx,
@@ -397,7 +397,7 @@ sampleAPI.MtoShipmentCreateReweighHandler = CreateReweighHandler{
 
 And finally, once the service object is instantiated, it will be used by calling the function defined in the interface type:
 
-```golang
+```go
 // Call the service object using the creator set in our handler struct (h, defined above)
 createdReweigh, err := h.creator.CreateReweigh(appCtx, newReweigh)
 ```
