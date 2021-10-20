@@ -1,8 +1,15 @@
+---
+sidebar_position: 1
+---
+
 # Acceptance Testing Syncada
 
 ## Prerequisites
 
-***NOTE*** *The following examples use a Move from the devseed data if needed for local use.*
+:::note
+*The following examples use a Move from the devseed data if needed for local
+use.*
+:::
 
 This section will describe the prerequisites for invoicing, that are beyond the scope of documenting here. See the [References](#references) section for links that may help in setting these up.
 
@@ -12,9 +19,12 @@ A move with at least one shipment approved. Also helpful to have Management or C
 
 ### Orders
 
-The orders associated with the move must have all the required fields, particularly `Department indicator`, `TAC`, and `SAC` as all 3 are required for EDI Generation. 
+The orders associated with the move must have all the required fields, particularly `Department indicator`, `TAC`, and `SAC` as all 3 are required for EDI Generation.
 
-***NOTE:*** *TAC and SAC are large, 255 varchar and text in the database respectively; however, the EDI can only handle a max of 80 characters for those two fields.*
+:::note
+*TAC and SAC are large, 255 varchar and text in the database respectively;
+however, the EDI can only handle a max of 80 characters for those two fields.*
+:::
 
 ### Shipment
 
@@ -24,8 +34,9 @@ A shipment that is approved, with service items that can be priced.
 
 A payment request is created for price-able service items. That payment request then needs to be reviewed via the TIO interface and contain at least 1 approved payment service item.
 
-save the following to `payload.json`
-```json
+Save the following to `payload.json`.
+
+```json title="Save the following JSON to payload.json"
 {
   "body": {
     "isFinal": false,
@@ -48,23 +59,30 @@ save the following to `payload.json`
 }
 ```
 
-```sh
-❯ prime-api-client --insecure create-payment-request --filename payload.json | jq '.id,.paymentRequestNumber'
+```sh title="Run this command"
+prime-api-client --insecure create-payment-request --filename payload.json | jq '.id,.paymentRequestNumber'
+```
+
+```sh title="Previous command output"
 "ce261508-1bd3-4876-b5ca-fb761de43d4d"
 "5405-6058-1"
 ```
 
 ## Invoicing Operations
 
-***NOTE*** *The following examples use a Move from the devseed data if needed for local use.*
+:::note
+*The following examples use a Move from the devseed data if needed for local use.*
+:::
 
 ### Generate EDI locally
 
 You will need the payment request number that you can find in the fetch-mto-updates call
 
-```sh
-❯ bin/generate-payment-request-edi --payment-request-number 5405-6058-1
+```sh title="Run this command"
+bin/generate-payment-request-edi --payment-request-number 5405-6058-1
+```
 
+```sh title="Previous command output"
 ISA*00*0084182369*00*0000000000*ZZ*MILMOVE        *12*8004171844     *210116*0827*U*00401*533069921*0*T*|
 GS*SI*MILMOVE*8004171844*20210116*0827*100001251*X*004010
 ST*858*0001
@@ -124,16 +142,20 @@ IEA*1*533069921
 ### Generate EDI via support API
 
 Save the following to `payload.json`
-```json
+
+```json title="Save the following JSON to payload.json"
 {
   "paymentRequestID": "ce261508-1bd3-4876-b5ca-fb761de43d4d"
 }
 ```
 
-Use the support api endpoint to generate the edi
-```sh
-❯ bin/prime-api-client --insecure support-get-payment-request-edi --filename payload.json | jq -r .edi
+Use the Support API endpoint to generate the EDI
 
+```sh title="Run this command"
+bin/prime-api-client --insecure support-get-payment-request-edi --filename payload.json | jq -r .edi
+```
+
+```sh title="Previous command output"
 ISA*00*0084182369*00*0000000000*ZZ*MILMOVE        *12*8004171844     *210116*0834*U*00401*000000002*0*T*|
 GS*SI*MILMOVE*8004171844*20210116*0834*100001251*X*004010
 ST*858*0001
@@ -194,16 +216,19 @@ IEA*1*000000002
 
 To update the status of one payment request you can trigger the reviewed payment request processor.
 
-***NOTE:*** *The payment request processor will only apply changes to payment requests in the Reviewed status*
+:::note
+*The payment request processor will only apply changes to payment requests in
+the Reviewed status*
+:::
 
-Save one of the below json snippets to `payload.json` and run the following command to change the status
+Save one of the below JSON snippets to `payload.json` and run the following command to change the status
 
-```sh
-❯ prime-api-client --insecure support-reviewed-payment-requests --filename tmp/payloads/process_payment.json|jq .
+```sh title="Run this command"
+prime-api-client --insecure support-reviewed-payment-requests --filename tmp/payloads/process_payment.json|jq .
 ```
 
-Example Result:
-```json
+
+```json title="Example of previous command output"
 [
   {
     "eTag": "MjAyMS0wMS0xNlQwODo0Nzo1Ni41NDczMjRa",
@@ -234,8 +259,7 @@ Example Result:
 
 Below are 3 examples of the status update JSON
 
-#### JSON to update status of all reviewed paymentrequests to SENT_TO_GEX
-```json
+```json title="JSON to update status of all reviewed paymentrequests to SENT_TO_GEX"
 {
   "body": {
     "sendToSyncada": false
@@ -243,8 +267,7 @@ Below are 3 examples of the status update JSON
 }
 ```
 
-#### JSON to update status of all reviewed paymentrequests to another one
-```json
+```json title="JSON to update status of all reviewed paymentrequests to another one"
 {
   "body": {
     "status": "PAID",
@@ -253,8 +276,7 @@ Below are 3 examples of the status update JSON
 }
 ```
 
-#### JSON to update status of one reviewed paymentrequest to SENT_TO_GEX
-```json
+```json title="JSON to update status of one reviewed paymentrequest to SENT_TO_GEX"
 {
   "body": {
     "paymentRequestID": "ce261508-1bd3-4876-b5ca-fb761de43d4d",
@@ -263,8 +285,7 @@ Below are 3 examples of the status update JSON
 }
 ```
 
-#### JSON to update status of one reviewed paymentrequest to something else
-```json
+```json title="JSON to update status of one reviewed paymentrequest to something else"
 {
   "body": {
     "paymentRequestID": "ce261508-1bd3-4876-b5ca-fb761de43d4d",
@@ -276,16 +297,23 @@ Below are 3 examples of the status update JSON
 
 ### Generate and send EDI to Syncada
 
-To send to syncada you will need to make use of the reviewed payment request processor
+To send to Syncada you will need to make use of the reviewed payment request processor
 
-***NOTE:*** *The payment request processor will only apply changes to payment requests in the Reviewed status*
+:::note
+*The payment request processor will only apply changes to payment requests in
+the Reviewed status*
+:::
 
-***NOTE:*** *This can be run locally if you have the SYNCADA credentials from chamber*
+:::note
+*This can be run locally if you have the SYNCADA credentials from Chamber*
+:::
 
-***NOTE:*** *The paymentRequestID parameter is ignored if sendToSyncada is set to true*
+:::note
+*The `paymentRequestID` parameter is ignored if `sendToSyncada` is set to true*
+:::
 
-Save the following json to `payload.json`
-```json
+
+```json title="Save the following JSON to payload.json"
 {
   "body": {
     "sendToSyncada": true
@@ -293,12 +321,11 @@ Save the following json to `payload.json`
 }
 ```
 
-```sh
-❯ prime-api-client --insecure support-reviewed-payment-requests --filename payload.json | jq .
+```sh title="Run this command"
+prime-api-client --insecure support-reviewed-payment-requests --filename payload.json | jq .
 ```
 
-Example Result:
-```json
+```json title="Example of previous command output"
 [
   {
     "eTag": "MjAyMS0wMS0xNlQwODo0Nzo1Ni41NDczMjRa",
