@@ -27,16 +27,16 @@ module.exports = {
           label: 'About',
         },
         {
-          type: 'doc',
-          docId: 'backend/index',
-          position: 'left',
-          label: 'Backend',
-        },
-        {
             type: 'doc',
             docId: 'frontend/index',
             position: 'left',
             label: 'Frontend',
+        },
+        {
+          type: 'doc',
+          docId: 'backend/index',
+          position: 'left',
+          label: 'Backend',
         },
         {
             type: 'doc',
