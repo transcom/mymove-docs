@@ -1,4 +1,9 @@
-# Testing Payment Requests
+---
+sidebar_position: 12
+---
+
+# Testing payment requests
+
 Storage In Transit (SIT) pricing is composed of the following three elements:
 
 - SIT First Day: Covers the warehouse and handing in/out costs (but not transit).
@@ -31,7 +36,7 @@ DTOD is used to calculate distances within the same ZIP3, and Rand McNally is us
 ## Where do I put these ZIPs?
 For both types of SIT, the original ZIP comes from an address entered by the service member when creating their shipment, and the actual ZIP is set by the prime.
 For Origin SIT, the original ZIP comes from the pickup address on the shipment (`mto_shipments.pickup_address_id`), and the actual address is sent in the `sitHHGActualOrigin` field when creating the DOFSIT service item.
-For Destination SIT, the original ZIP comes from the destination address on the shipment (`mto_shipments.destination_address_id`), and the actual address is sent in the `sitDestinationFinalAddress` field when updating the DDDSIT service item. 
+For Destination SIT, the original ZIP comes from the destination address on the shipment (`mto_shipments.destination_address_id`), and the actual address is sent in the `sitDestinationFinalAddress` field when updating the DDDSIT service item.
 
 ## Example ZIP codes for testing
 - close to Fort Gordon (useful when testing Destination SIT)
@@ -39,7 +44,7 @@ For Destination SIT, the original ZIP comes from the destination address on the 
     - from: Fort Gordon, GA 30905
     - to: Augusta, GA 30909
   - ZIP3 to different ZIP3 and > 50 miles
-    - from: Aberdeen Proving Ground, MD, 21005 
+    - from: Aberdeen Proving Ground, MD, 21005
     - to: Fort Gordon, GA 30813
   - ZIP3 to different ZIP3 and <= 50 miles
     - from: Fort Gordon, GA 30905
@@ -60,14 +65,14 @@ For Destination SIT, the original ZIP comes from the destination address on the 
 Before you can add SIT service items to a move, you have to set up a move and get it ready for the Prime.
 Create an account for a new service member and create a new HHG move with a shipment. The origin duty station's GBLOC must be in the same GBLOC as the office user you look at it with (see [this Wiki page](https://github.com/transcom/mymove/wiki/How-to-view-a-move-or-payment-request-in-the-office-app-as-a-TOO-or-TIO) for more details). Take note of the move locator on the last page.
 
-For Origin SIT, choose a pickup address with a ZIP that fits your chosen pricing scenario. 
+For Origin SIT, choose a pickup address with a ZIP that fits your chosen pricing scenario.
 
 For Destination SIT, choose a delivery address with a ZIP that fits your chosen pricing scenario. If the destination duty station ZIP fits, you can opt to use that instead of entering a delivery address.
 
 
 Go to the office app ([local](http://officelocal:3000), [staging](https://office.stg.move.mil/)) and find the move you just created via the move locator. Go to the orders and set any empty fields like TAC/SAC. Go ahead and approve the move and the default service items for shipment management and counseling fees.
 
-Now let's use the pricing-acceptance script to handle some of the usual things like updating dates/weights that the prime would be doing. 
+Now let's use the pricing-acceptance script to handle some of the usual things like updating dates/weights that the prime would be doing.
 ```sh
 rm bin/prime-api-client
 make bin/prime-api-client
@@ -76,7 +81,7 @@ make bin/prime-api-client
 pricing-acceptance <insert move ID> local
 
 # staging
-pricing-acceptance <insert move ID> api.stg.move.mil 
+pricing-acceptance <insert move ID> api.stg.move.mil
 
 ```
 Note that this script can create destination SIT service items (DDFSIT, DDASIT, DDDSIT), but it will not update the DDDSIT item with `sitDestinationFinalAddress`. It will also create a payment request.
@@ -265,7 +270,7 @@ If you want to send an invoice, approve some of the service items and the move, 
 - explains the 3 pricing scenarios for destination SIT
 
 <https://github.com/transcom/mymove/pull/6417>
-- Use prime api demo to set up some sit service items 
+- Use prime api demo to set up some sit service items
 - How to add DDASIT service item
 - Create a payment request for that service item
 - Screenshots for TIO view of the service item
