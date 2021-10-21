@@ -1,12 +1,11 @@
 ---
-title: GHC Rate Engine & Invoicing
-sidebar_position: 1
+sidebar_position: 11
 ---
 
 # GHC Rate Engine & Invoicing
 
-The MilMove Rate Engine and Invoicing components are responsible for processing requests from the 
-GHC Prime to receive payment for services rendered by creating a Payment Request, pricing the Payment Request, 
+The MilMove Rate Engine and Invoicing components are responsible for processing requests from the
+GHC Prime to receive payment for services rendered by creating a Payment Request, pricing the Payment Request,
 and storing the pricing information and details about the inputs used for pricing to the database. Once this information
 is stored in the database, the TIO UI is able to query the database for Payment Request(s) details for display on the UI.
 
@@ -27,7 +26,7 @@ High level overview diagrams
     * Creates Payment Request (optionally marked “final” to indicate no more payments due on this Task Order)
         * Payment Request contains a subset of MTO Service Items from a Move or MoveTaskOrder (MTO)
     * Sends “Proof of Service Document Package” to MilMove
-    
+
 * MilMove
     * Receive Payment Request along with Proof of Service Doc Package
     * Validates Payment Request
@@ -40,7 +39,7 @@ High level overview diagrams
         * If not valid
             * Send rejection to GHC Prime
             * **End**
-    
+
 * Transportation Invoicing Officer
     * Validates Payment Request (manual, web UI)
         * Ensure Proof of Service Document Package exists and properly backs up requested Service Items
@@ -54,12 +53,12 @@ High level overview diagrams
             * **End**
     * If last / “final” Payment Request, mark the Task Order “complete”
         * No future Task Orders may be sent on this.
-    
+
 * MilMove
-    * Sends EDI 858 order to TPPS (GEX) for payment 
-      
-* TPPS processes payment… 
-  
+    * Sends EDI 858 order to TPPS (GEX) for payment
+
+* TPPS processes payment…
+
 * MilMove
     * Receives EDI 997 to acknowledge receipt of the EDI
     * If there are issues/errors with EDI 858, MilMove receives EDI 824 with a description of the issue

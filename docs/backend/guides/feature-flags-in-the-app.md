@@ -1,3 +1,9 @@
+---
+sidebar_position: 6
+---
+
+# Feature flags in the app
+
 To add a new feature flag, see [[How to Set Up a Feature Flag]].
 
 Here are the feature flags being used in the app:

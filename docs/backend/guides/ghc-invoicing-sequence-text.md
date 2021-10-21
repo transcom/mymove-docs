@@ -1,6 +1,10 @@
+---
+sidebar_position: 8
+---
+
 # GHC Invoicing Sequence Text
 
-The text used to generate the [GHC Invoice Overview Sequence diagram](https://miro.com/app/board/o9J_ls9Gt7E=/?moveToWidget=3074457365163319192&cot=14) is here. 
+The text used to generate the [GHC Invoice Overview Sequence diagram](https://miro.com/app/board/o9J_ls9Gt7E=/?moveToWidget=3074457365163319192&cot=14) is here.
 You can use something like https://sequencediagram.org/ to generate a new and make changes.
 
 
