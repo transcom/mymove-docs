@@ -1,3 +1,7 @@
+---
+sidebar_position: 13
+---
+
 # Guide to Static Analysis Security Workflow
 
 **Contents**
@@ -49,7 +53,7 @@ Check the severity level of the [master spreadsheet](https://docs.google.com/spr
 2. Depending on the severity level of the eslint, there are two routes:
    1. If the finding is an eslint with N/A severity
       - Add it to the `approvedBypassableRules` list in the <code>[eslint-plugin-ato/no-unapproved-annotation.js](https://github.com/transcom/mymove/blob/master/eslint-plugin-ato/no-unapproved-annotation.js) </code>file
-   2. If the finding is of severity level CAT I, II, or III 
+   2. If the finding is of severity level CAT I, II, or III
 
       - First choice is for it to be remediated (refactor code so that the rule does not need to be violated)
 
