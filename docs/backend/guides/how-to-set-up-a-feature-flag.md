@@ -1,3 +1,6 @@
+---
+sidebar_position: 21
+---
 # How to Set Up a Feature Flag
 
 There is a feature flag feature for both frontend and backend.  Here's how to set up a new feature flag.
@@ -47,7 +50,7 @@ The backend feature flag works by assigning a flag value as environment variable
 
 1) Create the flag in `InitFeatureFlags` in `pkg/cli/featureflag.go`
 
-2) Set environment variables for each environment: 
+2) Set environment variables for each environment:
 
 `MY_FEATURE_FLAG=true`
 

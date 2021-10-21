@@ -1,3 +1,7 @@
+---
+sidebar_position: 17
+---
+
 # How To Manage Docker Locally
 
 There is a lot to know about Docker and how to use it.  You can always read [Docker Documentation](https://docs.docker.com/)

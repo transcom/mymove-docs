@@ -1,4 +1,8 @@
-# How to Manage Dependencies With go mod
+---
+sidebar_position: 16
+---
+
+# How to manage dependencies with go mod
 
 [Go modules](https://github.com/golang/go/wiki/Modules) is the built-in dependency system provided by Go. It supersedes [dep](https://golang.github.io/dep/), which we previously used to manage Go dependencies.
 

@@ -1,3 +1,7 @@
+---
+sidebar_position: 19
+---
+
 # How to run the GHC Pricing Import and Verify Data
 
 To support loading GHC Pricing data you can use the `bin/ghc-pricing-parser` to do so.
