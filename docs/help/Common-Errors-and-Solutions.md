@@ -20,7 +20,7 @@ panic: invalid configuration: Expected migrations//secure to be a path in the fi
 Run `direnv allow`
 
 ## Pre-Commit Hook Failures
-These can happen when committing your code, or when manually running the `pre-commit install-hooks` command. Check out this doc for all the errors and fixes: [Troubleshoot Precommit Hook Failures](https://github.com/transcom/mymove/wiki/Troubleshoot-Precommit-Hook-Failures)
+These can happen when committing your code, or when manually running the `pre-commit install-hooks` command. Check out this doc for all the errors and fixes: [Troubleshoot Precommit Hook Failures](https://transcom.github.io/mymove-docs/docs/help/Troubleshoot-Precommit-Hook-Failures/)
 
 ## Yarn
 
