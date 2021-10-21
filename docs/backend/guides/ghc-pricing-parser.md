@@ -1,3 +1,7 @@
+---
+sidebar_position: 9
+---
+
 # GHC Pricing Parser
 
 TODO

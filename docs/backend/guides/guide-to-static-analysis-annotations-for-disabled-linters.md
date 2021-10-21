@@ -1,3 +1,7 @@
+---
+sidebar_position: 12
+---
+
 # Guide to Static Analysis Annotations for Disabled Linters
 
 **Contents**
@@ -34,7 +38,7 @@ In an ideal world, we would be able to fix all potential vulnerabilities, but so
 // RA Developer Status: {RA Request, RA Accepted, POA&M Request, POA&M Accepted, Mitigated, Need Developer Fix, False Positive, Bad Practice}
 // RA Validator Status: {RA Accepted, Return to Developer, Known Issue, Mitigated, False Positive, Bad Practice}
 // RA Validator:
-// RA Modified Severity: 
+// RA Modified Severity:
 // #nosec [linter code] (or disable code specific to linter)
 ```
 
@@ -46,12 +50,12 @@ Throughout this document, you will see examples of lint errors that already have
 Once you have added your annotation, you will need an ISSO to look over the annotation and approve it via the RA Validator Status field. The ISSO may provide feedback on ways you could fix the potential vulnerability, but if not, then the ISSO will commit to your branch and modify the Validator Status. Once the validator status is a specific value then the linter will unblock you and you are free to merge your code. **ISSO approval process TBD...**
 
 
-# **Front end annotation templates** 
+# **Front end annotation templates**
 
 In this section you will see a list of templates for a given eslint rule. Although we have to have annotations for potential vulnerabilities, there are many [rules that are not potential vulnerabilities and are merely style preferences](https://github.com/transcom/mymove/wiki/Guide-to-Static-Analysis-Security-Workflow#exceptions). Those lint errors do not need annotation. Below is a list of lint rules that need annotations, along with their annotation templates.
 
 
-## security/detect-unsafe-regex 
+## security/detect-unsafe-regex
 
 ```
 // RA Summary: eslint - security/detect-unsafe-regex - Denial of Service: Regular Expression
@@ -67,7 +71,7 @@ In this section you will see a list of templates for a given eslint rule. Althou
 
 
 
-## no-console 
+## no-console
 
 
 ```
@@ -84,7 +88,7 @@ In this section you will see a list of templates for a given eslint rule. Althou
 
 
 
-## react/no-array-index-key 
+## react/no-array-index-key
 
 
 ```
@@ -142,10 +146,10 @@ Note: Please collocate the annotation right above the line you are disabling.
 
 
 
-# **Back end annotations templates** 
+# **Back end annotations templates**
 
 
-## gosec G101 
+## gosec G101
 
 
 ```
@@ -177,7 +181,7 @@ Note: Please collocate the annotation right above the line you are disabling.
 
 
 
-## gosec G404 
+## gosec G404
 
 
 ```
@@ -192,6 +196,6 @@ Note: Please collocate the annotation right above the line you are disabling.
 
 
 
-## Note on Errcheck 
+## Note on Errcheck
 
 We _should_ be handling errors. There are legacy errcheck violations with annotations.  We should not be adding any new errcheck annotations.

@@ -1,3 +1,8 @@
+---
+title: Adding ShipmentLineItem records to the 400ng table (tariff400ng_items)
+sidebar_position: 4
+---
+
 # Adding `ShipmentLineItem` records to the 400ng table (`tariff400ng_items`)
 
 ## Update the [400ng Common Item Code List](https://docs.google.com/spreadsheets/d/1MSkrhLHH9tHGVGN7ELVLkdpg7XRTb3R3I1xd-ZEkCI4/edit#gid=1382174367)

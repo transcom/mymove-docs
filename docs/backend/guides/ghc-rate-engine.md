@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # GHC Rate Engine
 
 The Rate Engine is the tool that determines what the Prime will get paid for [various components](https://docs.google.com/document/d/1U6a8-zc67eo1g888wM9LzFebQ8SBjGY7hTYYzbMyPPg/edit#heading=h.kl6kxd8pauo6) of their move.
