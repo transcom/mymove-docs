@@ -164,14 +164,20 @@ module.exports = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        createRedirects: (existingPath) => {
-          if (existingPath === 'docs/about/overview-of-milmove') {
-            return ['docs/about/Overview-of-Milmove'];
-          }
-          if (existingPath === 'docs/about/security/user-management') {
-            return ['docs/about/security/User-Management'];
-          }
-        },
+        redirects: [
+          {
+            to: '/docs/about/overview-of-milmove',
+            from: [
+              '/docs/about/Overview-of-Milmove',
+            ],
+          },
+          {
+            to: '/docs/about/security/user-management',
+            from: [
+              '/docs/about/security/User-Management',
+            ],
+          },
+        ],
       }
     ],
   ],
