@@ -9,5 +9,5 @@ Running the elastic search offering locally turns out to be easy.
 
 1. In another, run `TELEMETRY_ENDPOINT=localhost:55680 TELEMETRY_ENABLED=1 make server_run`
 
-1. Visit http://locahost:5601
+1. Visit http://localhost:5601
 
