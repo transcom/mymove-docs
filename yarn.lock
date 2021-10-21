@@ -1424,6 +1424,23 @@
     url-loader "^4.1.1"
     webpack "^5.40.0"
 
+"@docusaurus/plugin-client-redirects@2.0.0-beta.5":
+  version "2.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-client-redirects/-/plugin-client-redirects-2.0.0-beta.5.tgz#fbef807b382afb6bf8b186d7a92412b86fd9bd34"
+  integrity sha512-tWYde0PLUULMW7tCVWxZosjLvE42MLOrt6QGz1YVGzOrSCkY54hozn5zJgRASdzh+9zdtdJbq52cIv7284ET9g==
+  dependencies:
+    "@docusaurus/core" "2.0.0-beta.5"
+    "@docusaurus/types" "2.0.0-beta.5"
+    "@docusaurus/utils" "2.0.0-beta.5"
+    "@docusaurus/utils-common" "2.0.0-beta.5"
+    "@docusaurus/utils-validation" "2.0.0-beta.5"
+    chalk "^4.1.1"
+    eta "^1.11.0"
+    fs-extra "^10.0.0"
+    globby "^11.0.2"
+    lodash "^4.17.20"
+    tslib "^2.2.0"
+
 "@docusaurus/plugin-content-blog@2.0.0-beta.5":
   version "2.0.0-beta.5"
   resolved "https://registry.npmjs.org/@docusaurus/plugin-content-blog/-/plugin-content-blog-2.0.0-beta.5.tgz"
@@ -4275,7 +4292,7 @@ esutils@^2.0.2:
   resolved "https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz"
   integrity sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
 
-eta@^1.12.1:
+eta@^1.11.0, eta@^1.12.1:
   version "1.12.3"
   resolved "https://registry.npmjs.org/eta/-/eta-1.12.3.tgz"
   integrity sha512-qHixwbDLtekO/d51Yr4glcaUJCIjGVJyTzuqV4GPlgZo1YpgOKG+avQynErZIYrfM6JIJdtiG2Kox8tbb+DoGg==

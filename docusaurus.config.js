@@ -161,5 +161,24 @@ module.exports = {
   ],
   plugins: [
     require.resolve('@cmfcmf/docusaurus-search-local'),
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            to: '/docs/about/overview-of-milmove',
+            from: [
+              '/docs/about/Overview-of-Milmove',
+            ],
+          },
+          {
+            to: '/docs/about/security/user-management',
+            from: [
+              '/docs/about/security/User-Management',
+            ],
+          },
+        ],
+      }
+    ],
   ],
 };
