@@ -1,7 +1,6 @@
 ---
-slug: /dev/contributing/backend/structure
 title: Structure
-sidebar_position: 2
+sidebar_position: 3
 ---
 # Backend Structure
 
@@ -49,17 +48,17 @@ handlers/
 Now go back to your API definition in the YAML file. You should see a `tags:` key. It will look like:
 
 ```yaml
-/mto-shipments:  
-  post:  
-    summary: createMTOShipment  
-    description: |  
+/mto-shipments:
+  post:
+    summary: createMTOShipment
+    description: |
       ...
-    consumes:  
-      - application/json  
-    produces:  
-      - application/json  
-    operationId: createMTOShipment  
-    tags:  
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    operationId: createMTOShipment
+    tags:
       - mtoShipment
 ```
 
@@ -75,11 +74,11 @@ handlers/
 
 Back in the API definition again, this time look for the `operationId:` key. If you look at the example above, you can see we have the value `createMTOShipment` as our operation ID for this endpoint.
 
-Within the `mto_shipment.go` file, we now know we're looking for a struct called `CreateMTOShipmentHandler`. This struct will have an associated `Handle()` function. Almost all of the logic (save for auths, and some validation in the generated Swagger files) for your the action your endpoint represents is executed from this function. 
+Within the `mto_shipment.go` file, we now know we're looking for a struct called `CreateMTOShipmentHandler`. This struct will have an associated `Handle()` function. Almost all of the logic (save for auths, and some validation in the generated Swagger files) for your the action your endpoint represents is executed from this function.
 
 Although this function executes the logic for this endpoint's action, it generally calls other functions to complete the bulk of the business logic. In the MilMove codebase, we have a concept of "services." Services are shared business logic that we use across all of our APIs - see below (TODO LINK) for a more in-depth explanation.
 
-In the struct for the handler (`CreateMTOShipmentHandler` in this example), you'll see that some services are defined ... 
+In the struct for the handler (`CreateMTOShipmentHandler` in this example), you'll see that some services are defined ...
 
 `services/` - contains the code for our "service objects." Service objects, or services, are utility functions that access the database. Generally, no other part of the codebase should be directly accessing the database (although there are always exceptions to any rule).
 
