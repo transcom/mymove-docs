@@ -1,3 +1,6 @@
+---
+sidebar_position: 20
+---
 # How to run the GHC Transit Time Import and Verify Data
 
 To support loading GHC Transit Time data you can use the `bin/ghc-transit-time-parser` to do so.

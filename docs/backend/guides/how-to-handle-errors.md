@@ -1,4 +1,9 @@
-# How to handle back-end errors
+---
+sidebar_position: 15
+---
+
+
+# How to handle errors
 
 ## What we want
 

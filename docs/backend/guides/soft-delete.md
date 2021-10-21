@@ -1,3 +1,7 @@
+---
+sidebar_position: 22
+---
+
 # How to Soft Delete
 
 Due to our contractual obligations with the federal government, we must be able to access deleted data even several years after it’s been used in the system. For this reason, MilMove is shifting away from hard deleting data and adopting the practice to soft delete instead. Soft delete functionality has not yet been implemented throughout the entire codebase but it is expected to be the sole deletion method moving forward.
