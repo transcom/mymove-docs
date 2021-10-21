@@ -1,11 +1,26 @@
+---
+sidebar_position: 5
+---
+
 # Database Guides
 
-* [[How To Backup and Restore the Development Database|backup-and-restore-dev-database]]
-* [[How To Migrate the Database|database-migrations]]
-* [[How To Soft Delete|soft-delete]]
-* [[Using EagerPreload in Pop]]
-* [[How database cleanup works in Go server tests]]
-* [[Understanding Testdatagen Functions]]
+:::info Table of contents
+
+Below are some helpful links that are a holdover from the GitHub Wiki
+documentation file structure. This may not be relevant since the shift to using
+Docusaurus and may change in the future.
+
+* [How to backup and restore the development
+    database](./Backup-and-Restore-Dev-Database.md)
+* [How to migrate the database](./migrations.md)
+* [How to soft delete](../backend/soft-delete.md)
+* [Using EagerPreload in Pop](../backend/Using-EagerPreload-in-Pop.md)
+* [How database cleanup works in Go server
+    tests](./How-database-cleanup-works-in-Go-server-tests.md)
+* [Understanding `Testdatagen`
+    functions](../../testing/test-data/Understanding-Testdatagen-Functions.md)
+
+:::
 
 ## Pop SQL logging on by default in development
 
@@ -13,11 +28,15 @@ Pop is an ORM which helps ease communication with the database by providing data
 
 If you want to turn this off _temporarily_, just prefix your command with `DB_DEBUG=0` for example:
 
-> DB_DEBUG=0 make server_run
+```sh
+DB_DEBUG=0 make server_run
+```
 
 If you need to turn this off _permanently_ on your local instance add the following to the `.envrc.local` file
 
-> export DB_DEBUG=0
+```sh
+export DB_DEBUG=0
+```
 
 ### Some problems to look out for with SQL logging on
 
@@ -28,9 +47,9 @@ When looking up objects that have a one-to-many relationship, ORMs such as Pop c
 * [What is the "N+1 selects problem" in Object-Relational Mapping?](https://stackoverflow.com/questions/97197/what-is-the-n1-selects-problem-in-orm-object-relational-mapping)
 * [N+1 Queries and How to Avoid Them!](https://medium.com/@bretdoucette/n-1-queries-and-how-to-avoid-them-a12f02345be5) -- This uses examples from Ruby on Rails but the concept is the same
 
-With our new version of Pop, there is a feature called EagerPreload that helps us mitigate the N+1 problem. 
+With our new version of Pop, there is a feature called EagerPreload that helps us mitigate the N+1 problem.
 
-[Read this article](Using-EagerPreload-in-Pop.md) to know how to use it properly. 
+[Read this article](Using-EagerPreload-in-Pop.md) to know how to use it properly.
 
 #### Excessive Joins (e.g. open-ended *Eager* call)
 
