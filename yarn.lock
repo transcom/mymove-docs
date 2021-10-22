@@ -1277,9 +1277,9 @@
     to-fast-properties "^2.0.0"
 
 "@cmfcmf/docusaurus-search-local@^0.6.6":
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/@cmfcmf/docusaurus-search-local/-/docusaurus-search-local-0.6.6.tgz#213a1e674f7d550baaab7be85e187fa114b55c1c"
-  integrity sha512-hbRBH6uEgwioB+xldRaq+y9NFu2R/ipmgMBgoAndv5sCDMJhvjUy+IJWwxGmMt+Qk16BPnpPTgNWF+Qtl5qUdw==
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/@cmfcmf/docusaurus-search-local/-/docusaurus-search-local-0.6.7.tgz#07d825b580f14d0dc912a5122ea140342638ec7e"
+  integrity sha512-wPRDc95S7wHExFKrjA1KtR9+5J04OuQCBZSub5C6UHyTk6/ISseG6rEWjYbzvlPVMVnICtVZRFQYll7EPByR9A==
   dependencies:
     "@algolia/autocomplete-js" "^1.2.2"
     "@algolia/autocomplete-theme-classic" "^1.2.2"
@@ -7787,7 +7787,7 @@ react-dev-utils@^11.0.1:
 
 react-dom@^17.0.1:
   version "17.0.2"
-  resolved "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
   integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
   dependencies:
     loose-envify "^1.1.0"
@@ -7908,7 +7908,7 @@ react-textarea-autosize@^8.3.2:
 
 react@^17.0.1:
   version "17.0.2"
-  resolved "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
   dependencies:
     loose-envify "^1.1.0"
@@ -8373,7 +8373,7 @@ sax@^1.2.4, sax@~1.2.4:
 
 scheduler@^0.20.2:
   version "0.20.2"
-  resolved "https://registry.npmjs.org/scheduler/-/scheduler-0.20.2.tgz"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.2.tgz#4baee39436e34aa93b4874bddcbf0fe8b8b50e91"
   integrity sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
   dependencies:
     loose-envify "^1.1.0"
@@ -9314,9 +9314,9 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-ua-parser-js@^0.7.18:
+ua-parser-js@0.7.28, ua-parser-js@^0.7.18:
   version "0.7.28"
-  resolved "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.28.tgz"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.28.tgz#8ba04e653f35ce210239c64661685bf9121dec31"
   integrity sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==
 
 unbox-primitive@^1.0.1:
