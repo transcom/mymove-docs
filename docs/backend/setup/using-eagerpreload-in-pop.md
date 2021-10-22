@@ -1,3 +1,9 @@
+---
+sidebar_position: 6
+---
+
+# Using EagerPreload in Pop
+
 ## TOC
 
 <!-- toc -->
