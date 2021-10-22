@@ -243,6 +243,12 @@ module.exports = {
               '/docs/dev/contributing/frontend/display-dates-and-times',
             ],
           },
+          {
+            to: '/docs/frontend/guides/store-data-in-redux',
+            from: [
+              '/docs/dev/contributing/frontend/store-data-in-redux',
+            ],
+          },
         ],
       }
     ],
