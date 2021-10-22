@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Configure Postico or TablePlus to connect to mymove DB
 
 If you prefer to use an app to view and update the DB, [Postico](https://eggerapps.at/postico/) and [TablePlus](https://www.tableplus.io/) are popular options.
