@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # How To Backup and Restore the Development Database
 
 ## Backup
