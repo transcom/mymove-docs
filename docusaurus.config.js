@@ -189,6 +189,12 @@ module.exports = {
               '/docs/dev/testing/running-tests/How-to-run-Frontend-test-coverage-reports',
             ],
           },
+          {
+            to: '/docs/frontend/testing/unit-test-react-components',
+            from: [
+              '/docs/dev/testing/writing-tests/unit-test-react-components',
+            ],
+          },
         ],
       }
     ],
