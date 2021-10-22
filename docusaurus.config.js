@@ -225,6 +225,12 @@ module.exports = {
               '/docs/dev/contributing/frontend/Guide-to-Implementing-UI',
             ],
           },
+          {
+            to: '/docs/frontend/guides/access-swagger-endpoints-from-react',
+            from: [
+              '/docs/dev/contributing/frontend/access-swagger-endpoints-from-react',
+            ],
+          },
         ],
       }
     ],
