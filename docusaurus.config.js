@@ -195,6 +195,12 @@ module.exports = {
               '/docs/dev/testing/writing-tests/unit-test-react-components',
             ],
           },
+          {
+            to: '/docs/frontend/testing/how-to-view-a-move-or-payment-request-in-the-office-app-as-a-too-or-tio',
+            from: [
+              '/docs/dev/getting-started/How-to-view-a-move-or-payment-request-in-the-office-app-as-a-TOO-or-TIO',
+            ],
+          },
         ],
       }
     ],
