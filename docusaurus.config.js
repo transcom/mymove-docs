@@ -201,6 +201,12 @@ module.exports = {
               '/docs/dev/getting-started/How-to-view-a-move-or-payment-request-in-the-office-app-as-a-TOO-or-TIO',
             ],
           },
+          {
+            to: '/docs/frontend/testing/writing-frontend-tests-for-milmove',
+            from: [
+              '/docs/dev/testing/writing-tests/Writing-Frontend-Tests-for-MilMove',
+            ],
+          },
         ],
       }
     ],
