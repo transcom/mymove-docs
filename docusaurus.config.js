@@ -261,6 +261,12 @@ module.exports = {
               '/docs/dev/contributing/frontend/Icons',
             ],
           },
+          {
+            to: '/docs/frontend/guides/react-forms-using-formik',
+            from: [
+              '/docs/dev/contributing/frontend/React-forms-using-Formik',
+            ],
+          },
         ],
       }
     ],
