@@ -207,6 +207,12 @@ module.exports = {
               '/docs/dev/testing/writing-tests/Writing-Frontend-Tests-for-MilMove',
             ],
           },
+          {
+            to: '/docs/frontend/testing/writing-frontend-tests-enzyme-and-react-testing-library',
+            from: [
+              '/docs/dev/testing/writing-tests/Writing-Frontend-Tests-Enzyme-and-React-Testing-Library',
+            ],
+          },
         ],
       }
     ],
