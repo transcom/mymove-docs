@@ -249,6 +249,12 @@ module.exports = {
               '/docs/dev/contributing/frontend/store-data-in-redux',
             ],
           },
+          {
+            to: '/docs/frontend/guides/store-ui-state-in-redux',
+            from: [
+              '/docs/dev/contributing/frontend/store-ui-state-in-redux',
+            ],
+          },
         ],
       }
     ],
