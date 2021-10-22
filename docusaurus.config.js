@@ -255,6 +255,12 @@ module.exports = {
               '/docs/dev/contributing/frontend/store-ui-state-in-redux',
             ],
           },
+          {
+            to: '/docs/frontend/guides/icons',
+            from: [
+              '/docs/dev/contributing/frontend/Icons',
+            ],
+          },
         ],
       }
     ],
