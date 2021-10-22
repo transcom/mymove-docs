@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # How to Migrate the Database
 
 If you need to change the database schema, you'll need to write a migration. These are the general steps you'll need to follow:
