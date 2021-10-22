@@ -231,6 +231,12 @@ module.exports = {
               '/docs/dev/contributing/frontend/access-swagger-endpoints-from-react',
             ],
           },
+          {
+            to: '/docs/frontend/guides/create-a-form-using-formik',
+            from: [
+              '/docs/dev/contributing/frontend/Create-a-Form-Using-Formik',
+            ],
+          },
         ],
       }
     ],
