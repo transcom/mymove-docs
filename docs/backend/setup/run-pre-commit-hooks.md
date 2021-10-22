@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # Run pre-commit hooks
 
 [Pre-commit](https://pre-commit.com/) is a powerful tool that automates validations, lint checks and adds to developer quality of life. The config file that determines the actions of pre-commit hooks can be found [here](https://github.com/transcom/mymove/blob/master/.pre-commit-config.yaml).
