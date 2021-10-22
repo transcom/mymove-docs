@@ -267,6 +267,12 @@ module.exports = {
               '/docs/dev/contributing/frontend/React-forms-using-Formik',
             ],
           },
+          {
+            to: '/docs/frontend/setup/designers-guide-to-setting-up-app-locally',
+            from: [
+              '/docs/dev/getting-started/Designers-guide-to-setting-up-app-locally',
+            ],
+          },
         ],
       }
     ],
