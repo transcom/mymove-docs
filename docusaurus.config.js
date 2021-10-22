@@ -237,6 +237,12 @@ module.exports = {
               '/docs/dev/contributing/frontend/Create-a-Form-Using-Formik',
             ],
           },
+          {
+            to: '/docs/frontend/guides/display-dates-and-times',
+            from: [
+              '/docs/dev/contributing/frontend/display-dates-and-times',
+            ],
+          },
         ],
       }
     ],
