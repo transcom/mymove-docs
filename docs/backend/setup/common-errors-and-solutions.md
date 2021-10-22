@@ -1,8 +1,7 @@
 ---
-id: index
-slug: /help/
-sidebar_position: 1
+sidebar_position: 2
 ---
+
 # Common Errors and Solutions
 
 Having trouble running mymove locally? This page collects common errors and their solutions.
