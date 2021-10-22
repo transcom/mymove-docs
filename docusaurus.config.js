@@ -213,6 +213,12 @@ module.exports = {
               '/docs/dev/testing/writing-tests/Writing-Frontend-Tests-Enzyme-and-React-Testing-Library',
             ],
           },
+          {
+            to: '/docs/frontend/testing/writing-tests-using-react-testing-library-and-jest',
+            from: [
+              '/docs/dev/testing/writing-tests/Writing-Tests-Using-React-Testing-Library-and-Jest',
+            ],
+          },
         ],
       }
     ],
