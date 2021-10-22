@@ -273,6 +273,12 @@ module.exports = {
               '/docs/dev/getting-started/Designers-guide-to-setting-up-app-locally',
             ],
           },
+          {
+            to: '/docs/frontend/setup/run-storybook',
+            from: [
+              '/docs/dev/tools/run-storybook',
+            ],
+          },
         ],
       }
     ],
