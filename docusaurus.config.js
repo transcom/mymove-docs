@@ -177,6 +177,12 @@ module.exports = {
               '/docs/about/security/User-Management',
             ],
           },
+          {
+            to: '/docs/frontend/testing/frontend',
+            from: [
+              '/docs/dev/contributing/frontend/frontend',
+            ],
+          },
         ],
       }
     ],
