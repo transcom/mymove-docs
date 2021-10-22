@@ -219,6 +219,12 @@ module.exports = {
               '/docs/dev/testing/writing-tests/Writing-Tests-Using-React-Testing-Library-and-Jest',
             ],
           },
+          {
+            to: '/docs/frontend/guides/guide-to-implementing-ui',
+            from: [
+              '/docs/dev/contributing/frontend/Guide-to-Implementing-UI',
+            ],
+          },
         ],
       }
     ],
