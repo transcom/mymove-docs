@@ -183,6 +183,12 @@ module.exports = {
               '/docs/dev/contributing/frontend/frontend',
             ],
           },
+          {
+            to: '/docs/frontend/testing/how-to-run-frontend-test-coverage-reports',
+            from: [
+              '/docs/dev/testing/running-tests/How-to-run-Frontend-test-coverage-reports',
+            ],
+          },
         ],
       }
     ],
