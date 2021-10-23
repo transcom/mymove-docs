@@ -327,6 +327,12 @@ module.exports = {
               '/docs/dev/testing/running-tests/Acceptance-Testing-Prime-API-Endpoints',
             ],
           },
+          {
+            to: '/docs/api/testing/end-to-end-testing-playing-the-prime',
+            from: [
+              '/docs/dev/testing/running-tests/End-to-End-Testing-Playing-the-Prime',
+            ],
+          },
         ],
       }
     ],
