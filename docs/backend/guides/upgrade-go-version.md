@@ -1,3 +1,7 @@
+---
+sidebar_position: 24
+---
+
 # How to Upgrade Go Version
 
 Upgrading the Go version that we use happens in roughly these steps:

@@ -1,28 +1,8 @@
+---
+sidebar_position: 29
+---
+
 # Route Planner Guide
-
-## Table of Contents
-
-<!-- Table of Contents auto-generated with `bin/generate-md-toc.sh` -->
-
-<!-- toc -->
-
-* [Route planner interface](#route-planner-interface)
-  * [Interface methods](#interface-methods)
-* [Available route planners](#available-route-planners)
-  * [HERE API](#here-api)
-    * [TransitDistance](#transitdistance)
-    * [Zip5TransitDistance](#zip5transitdistance)
-    * [Zip3TransitDistance](#zip3transitdistance)
-    * [LatLongTransitDistance](#latlongtransitdistance)
-  * [Bing API](#bing-api)
-  * [Test](#test)
-* [Zip5ToLatLong](#zip5tolatlong)
-* [Chamber](#chamber)
-* [Testing](#testing)
-
-Regenerate with "pre-commit run -a markdown-toc"
-
-<!-- tocstop -->
 
 ## Route planner interface
 
