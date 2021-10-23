@@ -6,7 +6,7 @@ sidebar_position: 1
 
 This page will collect guides and information on programming our external facing APIs such as Prime API, Support API and Orders API.
 
-- [[API Style Guide]]
+- [API Style Guide](api-style-guide)
 - [API Errors](api-errors)
 - [[Guide to Creating an Endpoint]]
 - [[Acceptance Testing Prime API Endpoints]]

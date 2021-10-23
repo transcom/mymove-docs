@@ -303,6 +303,12 @@ module.exports = {
               '/docs/dev/contributing/backend/API-Programming-Guide',
             ],
           },
+          {
+            to: '/docs/api/guides/api-style-guide',
+            from: [
+              '/docs/dev/contributing/backend/API-Style-Guide',
+            ],
+          },
         ],
       }
     ],

@@ -1,6 +1,12 @@
+---
+sidebar_position: 3
+---
+
+# API Style Guide
+
 We really need a comprehensive style guide, but in the meanwhile this page will collect useful bits of style related info.
 
-### Paths
+## Paths
 
 * Use kebab-case for all paths. This is a common convention.
 
@@ -13,9 +19,9 @@ We really need a comprehensive style guide, but in the meanwhile this page will 
       '/mto-shipments/{mtoShipmentID}/addresses/{addressID}':
 
 
-### Parameters
+## Parameters
 
-#### **Case**
+### **Case**
 
 Consistency is important and using mixed cases is confusing. We selected camelCase because it's predominant in the code base and required the least amount of effort to implement. [[Decision Record]](https://github.com/transcom/mymove/blob/master/docs/adr/0044-params-styling.md)
 
@@ -32,7 +38,7 @@ Consistency is important and using mixed cases is confusing. We selected camelCa
       type: string
   ```
 
-#### **Special Parameters**
+### **Special Parameters**
 * All PUT and PATCH updates should have an eTag in the request. This is required to enforce optimistic locking. In the yaml, we mark these as `readOnly: true`.
 
 * All endpoints should properly populate the `produces` and `consumes` properties in the yaml. This is most usually set to `application/json`.
@@ -43,7 +49,7 @@ Consistency is important and using mixed cases is confusing. We selected camelCa
     produces:
       - application/json
   ```
-### Values
+## Values
 
 * Enum values should be ALL_CAPS with underscores. 
 
@@ -53,11 +59,11 @@ Consistency is important and using mixed cases is confusing. We selected camelCa
       - RECEIVING_AGENT
 ```
 
-### Tags
+## Tags
 
 * Use camelCase for the tags. Typically use object names for tags to group all endpoints associated with the object like `paymentRequest`.
 
-#### **Dates**
+### **Dates**
 
 * Use Swagger supported date formats, `date-time` or `date`, depending on whether we need to store an exact timestamp of the event. [[ADR]](https://github.com/transcom/mymove/blob/master/docs/adr/0051-swagger-date-formats.md)
 
@@ -79,7 +85,7 @@ Note that **in the database**, we use the following recommendations. [[Decision 
 
 * Note that `updatedAt` and `createdAt` should always be marked `readOnly: true`. This is because we do not use any values the caller passes in, but instead calculate them ourselves.
 
-#### Convert dates to timestamps when comparing with timestamps
+### Convert dates to timestamps when comparing with timestamps
 
 1. Interpret a date in Pacific time to convert it to a naive timestamp
 
@@ -87,7 +93,7 @@ Note that **in the database**, we use the following recommendations. [[Decision 
     * If you’re calculating if a date is more than 10 days in the future, use end-of-day.
     * If you’re calculating if a date is more than 2 days ago, use beginning-of-day.
 
-#### Serialization
+### Serialization
 
 Use [RFC3339](https://tools.ietf.org/html/rfc3339) unless you have a reason not to. It handles both dates and timestamps. `ISO8601` is roughly equivalent for the purposes of this document; however, it contains many optional features and it is recommended that projects move to `RFC3339` to avoid potential issues resulting from this complexity.
 
