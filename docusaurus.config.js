@@ -28,6 +28,12 @@ module.exports = {
         },
         {
             type: 'doc',
+            docId: 'frontend/index',
+            position: 'left',
+            label: 'Frontend',
+        },
+        {
+            type: 'doc',
             docId: 'dev/index',
             position: 'left',
             label: 'Docs',
