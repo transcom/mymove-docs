@@ -315,6 +315,12 @@ module.exports = {
               '/docs/dev/contributing/backend/Guide-to-Creating-an-Endpoint',
             ],
           },
+          {
+            to: '/docs/api/guides/how-to-deprecate-endpoints',
+            from: [
+              '/docs/dev/versioning/How-to-deprecate-endpoints',
+            ],
+          },
         ],
       }
     ],

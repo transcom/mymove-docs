@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # How to Deprecate an API Endpoint
 This article adheres to the principles of [API evolution](https://apisyouwonthate.com/blog/api-evolution-for-rest-http-apis), with a reduced focused on versioning. In essence, this means that we will strive to make _additive_ changes. We will introduce new functionality into the API and gradually communicate the deprecation and eventual sunsetting of the old functionality. 
 
