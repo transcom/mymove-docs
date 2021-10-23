@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # [WIP] How to run Frontend test coverage reports
 
 By using Create React App, we have built-in coverage report testing for Jest (either Enzyme or React Testing Library). It's generated with tools called [Istanbul](https://istanbul.js.org/) and [lcov](http://ltp.sourceforge.net/coverage/lcov.php), which we also leverage for our Cypress integration tests coverage reports.
