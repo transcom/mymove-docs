@@ -309,6 +309,12 @@ module.exports = {
               '/docs/dev/contributing/backend/API-Style-Guide',
             ],
           },
+          {
+            to: '/docs/api/guides/guide-to-creating-an-endpoint',
+            from: [
+              '/docs/dev/contributing/backend/Guide-to-Creating-an-Endpoint',
+            ],
+          },
         ],
       }
     ],
