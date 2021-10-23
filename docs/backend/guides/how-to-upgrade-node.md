@@ -1,3 +1,9 @@
+---
+sidebar_position: 25
+---
+
+# How to upgrade Node
+
 1. Submit a PR that updates node to the new version in https://github.com/transcom/circleci-docker/. [Here's an example](https://github.com/transcom/circleci-docker/pull/130).
 2. Look for the hash here: https://hub.docker.com/r/milmove/circleci-docker/tags
 3. In the transcom/mymove repo, create a PR to update node. [Here's an example](https://github.com/transcom/mymove/pull/6878) && [this PR](https://github.com/transcom/mymove/pull/6904)
@@ -8,9 +14,9 @@ Things to modify:
 * update `check-node-version` and `prereqs`
 * Do a find and replace to update references of the prior node version with the new node version
 4. Run `make clean build` and verify that the desired version of Node is being used
-5. Get reviews for the 2 PRs to check your work. 
+5. Get reviews for the 2 PRs to check your work.
 6. Merge the PR from step 1
-7. Find the new image hash from the Docker hub 
+7. Find the new image hash from the Docker hub
 8. Update the transcom/mymove PR to use the hash from step 7
 9. Test again to make sure everything works as expected.
 10. Announce in #prac-engineering that you will be updating node and any instructions [An example slack msg](https://ustcdp3.slack.com/archives/CP6PTUPQF/p1624996730029000)

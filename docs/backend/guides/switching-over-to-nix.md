@@ -1,17 +1,23 @@
-As a developer on the milmove project, I would like to not have to maintain to separate sets of local environment setups (our original setup instructions and nix). So to that end, this is to investigate what it would take to fully switch over to nix.
+---
+sidebar_position: 31
+---
+
+# Switching over to Nix
+
+As a developer on the MilMove project, I would like to not have to maintain to separate sets of local environment setups (our original setup instructions and nix). So to that end, this is to investigate what it would take to fully switch over to nix.
 
 [Relevant JIRA ticket](https://dp3.atlassian.net/browse/MB-8725)
 
 ## OS Considerations
 
-`nix` is only available for MacOS and Linux.
+Nix is only available for MacOS and Linux.
 
 * MacOS
   * We already only really have instructions and helpful info for setting this project up on MacOS.
 * Linux
   * Our instructions might work for linux, but they may or may not need a few tweaks for this.
 * Windows
-  * We do not have any instructions for getting this working in Windows as is. Just the fact that our main interface for working on the project is `make` makes it so that we don't immediately support Windows. It _can_ be installed on Windows, but it can be a pain to do so, and we don't point to helpful docs for how to do this. 
+  * We do not have any instructions for getting this working in Windows as is. Just the fact that our main interface for working on the project is `make` makes it so that we don't immediately support Windows. It _can_ be installed on Windows, but it can be a pain to do so, and we don't point to helpful docs for how to do this.
 
 With the above in mind, switching from our current flow to `nix` would not really change our OS support.
 
@@ -49,5 +55,5 @@ With the above in mind, switching from our current flow to `nix` would not reall
     * [Stack Exchange: Finding the Path of an Executable](https://unix.stackexchange.com/a/85250)
 * We need to decide if we are ok with the way it's installed now, or if we want to go through the effort of contributing another installation method.
 * We would need an ADR stating our intention to switch and reasoning behind the switch (this document could easily feed that one).
-* Need to decide if we would make it more of a gradual switch or have a switchover date (or more likely week). 
+* Need to decide if we would make it more of a gradual switch or have a switchover date (or more likely week).
   * A gradual switch could work well in that as people come across issues with their current install, we could point them at the instructions for switching over to `nix`, which should hopefully let them be on their way in under an hour.
