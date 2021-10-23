@@ -1,3 +1,9 @@
+---
+sidebar_position: 30
+---
+
+# Session management
+
 ## Background
 MilMove uses server-side session management because our ATO (Authority to Operate) requires that we be able to revoke individual sessions. This is not possible with JWTs (our previous session implementation) or cookies. We chose Redis because it can automatically delete expired sessions. With Postgres, we would need to run a routine
 periodically to clean up stale sessions.
