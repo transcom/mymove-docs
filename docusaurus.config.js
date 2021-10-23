@@ -297,6 +297,12 @@ module.exports = {
               '/docs/dev/contributing/backend/API-Errors',
             ],
           },
+          {
+            to: '/docs/api/guides/api-programming-guide',
+            from: [
+              '/docs/dev/contributing/backend/API-Programming-Guide',
+            ],
+          },
         ],
       }
     ],
