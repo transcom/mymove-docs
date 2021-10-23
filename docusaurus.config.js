@@ -321,6 +321,12 @@ module.exports = {
               '/docs/dev/versioning/How-to-deprecate-endpoints',
             ],
           },
+          {
+            to: '/docs/api/guides/acceptance-testing-prime-api-endpoints',
+            from: [
+              '/docs/dev/testing/running-tests/Acceptance-Testing-Prime-API-Endpoints',
+            ],
+          },
         ],
       }
     ],

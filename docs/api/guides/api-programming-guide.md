@@ -10,7 +10,7 @@ This page will collect guides and information on programming our external facing
 - [API Errors](api-errors)
 - [Guide to Creating an Endpoint](guide-to-creating-an-endpoint)
 - [How to Deprecate an API Endpoint](how-to-deprecate-endpoints)
-- [[Acceptance Testing Prime API Endpoints]]
+- [Acceptance Testing Prime API Endpoints](../testing/acceptance-testing-prime-api-endpoints)
 - [[Push Notifications to Prime]]
   - [[Acceptance Testing Notifications]]
   - [[How to Add an Event Trigger]]
