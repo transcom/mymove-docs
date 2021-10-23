@@ -333,6 +333,12 @@ module.exports = {
               '/docs/dev/testing/running-tests/End-to-End-Testing-Playing-the-Prime',
             ],
           },
+          {
+            to: '/docs/api/testing/how-to-test-the-prime-api',
+            from: [
+              '/docs/dev/getting-started/How-to-Test-the-Prime-API',
+            ],
+          },
         ],
       }
     ],
