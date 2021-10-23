@@ -34,6 +34,12 @@ module.exports = {
         },
         {
             type: 'doc',
+            docId: 'api/index',
+            position: 'left',
+            label: 'API',
+        },
+        {
+            type: 'doc',
             docId: 'dev/index',
             position: 'left',
             label: 'Docs',
@@ -283,6 +289,12 @@ module.exports = {
             to: '/docs/frontend/setup/run-storybook',
             from: [
               '/docs/dev/tools/run-storybook',
+            ],
+          },
+          {
+            to: '/docs/api/guides/api-errors',
+            from: [
+              '/docs/dev/contributing/backend/API-Errors',
             ],
           },
         ],
