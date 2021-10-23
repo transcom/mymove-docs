@@ -1,7 +1,11 @@
+---
+sidebar_position: 28
+---
+
 # Precommit Hooks
 
-The precommit hooks run automatically when you try to make a commit. They are a set of scripts that validate the commit. 
-If the validation fails, the commit isn't committed. 
+The precommit hooks run automatically when you try to make a commit. They are a set of scripts that validate the commit.
+If the validation fails, the commit isn't committed.
 
 ## Cheatsheet
 
@@ -22,7 +26,7 @@ If they are not installed:
 ## Errors and Solutions
 
 ### 1. Error: Installing environment
-For an error about installing the environment, try ensuring your nodenv is set correctly. 
+For an error about installing the environment, try ensuring your nodenv is set correctly.
 This is what the error looks like, it stalls here for a while….
 ```
 $ pre-commit install-hooks
@@ -45,7 +49,7 @@ Outside mymove folder, set the global version,
 ~/$ nodenv global 12.21.0
 ```
 
-Then inside mymove, 
+Then inside mymove,
 ```
 ~/$ cd mymove
 ~/mymove$ pre-commit install-hooks
@@ -64,7 +68,7 @@ rm -rf ~/.cache/pre-commit && pre-commit run -a
 ```
 
 ### 3. Golang-ci Error: "failed prerequisites"
-This error about failed prerequisites is misleading. if you see a failure in `…/[pkgname].test` it means there’s a test in there that likely isn’t building. 
+This error about failed prerequisites is misleading. if you see a failure in `…/[pkgname].test` it means there’s a test in there that likely isn’t building.
 ```
 level=warning msg="[runner] Can't run linter goanalysis_metalinter: assign: failed prerequisites: inspect@github.com/transcom/mymove/pkg/handlers/ghcapi [github.com/transcom/mymove/pkg/handlers/ghcapi.test]"
 level=error msg="Running error: assign: failed prerequisites: inspect@github.com/transcom/mymove/pkg/handlers/ghcapi [github.com/transcom/mymove/pkg/handlers/ghcapi.test]"
@@ -91,7 +95,7 @@ ESLint: 7.5.0
 ESLint couldn't find the config "react-app" to extend from. Please check that the name of the config is correct.
 ```
 #### Solution
-For this error, run `yarn install`. This will install the dependencies listed in `package.json`. 
+For this error, run `yarn install`. This will install the dependencies listed in `package.json`.
 
 ### 5. Executable ... not found.
 This error says you don't have some tool installed. You might see this with `eslint`, `prettier` and `spectral`.
@@ -102,8 +106,8 @@ prettier.................................................................Failed
 Executable `node_modules/.bin/prettier` not found
 ```
 
-#### Solution 
-Run `yarn install`. This will install the dependencies listed in `package.json`. 
+#### Solution
+Run `yarn install`. This will install the dependencies listed in `package.json`.
 
 ### 6. Module not found in `gen`
 ```
@@ -122,6 +126,6 @@ Try running `make mocks_generate` which should auto generate mocks.
 ### 8. Failed prerequisites without an indication of an error
 ```
 Can't run linter goanalysis_metalinter: assign: failed prerequisites: inspect@github.com/transcom/mymove/cmd/milmove
-``` 
+```
 #### Solution
 This could be due to the build failing. Try `make server_build` to check.
