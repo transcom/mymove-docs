@@ -339,6 +339,12 @@ module.exports = {
               '/docs/dev/getting-started/How-to-Test-the-Prime-API',
             ],
           },
+          {
+            to: '/docs/api/docs/push-notifications-to-prime',
+            from: [
+              '/docs/dev/contributing/backend/Push-Notifications-to-Prime',
+            ],
+          },
         ],
       }
     ],
