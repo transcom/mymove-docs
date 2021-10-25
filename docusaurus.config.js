@@ -45,21 +45,6 @@ module.exports = {
             label: 'Docs',
         },
         {
-            type: 'dropdown',
-            position: 'left',
-            label: 'APIs',
-            items: [
-              {
-                label: 'Prime',
-                to: '/api/prime',
-              },
-              {
-                label: 'Support',
-                to: '/api/support',
-              },
-            ],
-        },
-        {
             type: 'doc',
             docId: 'help/index',
             position: 'left',

@@ -23,6 +23,22 @@ module.exports = {
     'api/index',
     {
       type: 'category',
+      label: 'APIs',
+      items: [
+        {
+          type: 'link',
+          label: 'Prime',
+          href: '/api/prime',
+        },
+        {
+          type: 'link',
+          label: 'Support',
+          href: '/api/support',
+        },
+      ],
+    },
+    {
+      type: 'category',
       label: 'Docs',
       items: [
         {
