@@ -390,6 +390,12 @@ module.exports = {
               '/docs/dev/tools/Postman/setup-postman-to-make-mutual-tls-api-calls',
             ],
           },
+          {
+            to: '/docs/tools/schemaspy/schemaspy',
+            from: [
+              '/docs/dev/tools/SchemaSpy',
+            ],
+          },
         ],
       }
     ],
