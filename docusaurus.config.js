@@ -40,6 +40,12 @@ module.exports = {
         },
         {
             type: 'doc',
+            docId: 'tools/index',
+            position: 'left',
+            label: 'Tools',
+        },
+        {
+            type: 'doc',
             docId: 'dev/index',
             position: 'left',
             label: 'Docs',
