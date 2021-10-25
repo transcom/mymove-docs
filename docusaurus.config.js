@@ -307,7 +307,7 @@ module.exports = {
             ],
           },
           {
-            to: '/docs/api/guides/acceptance-testing-prime-api-endpoints',
+            to: '/docs/api/testing/acceptance-testing-prime-api-endpoints',
             from: [
               '/docs/dev/testing/running-tests/Acceptance-Testing-Prime-API-Endpoints',
             ],
