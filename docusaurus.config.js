@@ -360,6 +360,12 @@ module.exports = {
               '/docs/dev/testing/writing-tests/generate-mocks-with-mockery',
             ],
           },
+          {
+            to: '/docs/tools/postman/setting-up-postman',
+            from: [
+              '/docs/dev/tools/Postman/Setting-Up-Postman',
+            ],
+          },
         ],
       }
     ],
