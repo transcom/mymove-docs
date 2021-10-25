@@ -1,3 +1,8 @@
+---
+sidebar_position: 3
+title: Using eTags and the If-Match header in Postman
+---
+
 # Background
 
 We use [optimistic locking](use-optimistic-locking.md) in MilMove to update records, which means PATCH/PUT requests generally include an If-Match header with the [E-Tag](https://en.wikipedia.org/wiki/HTTP_ETag) value for a given record. Basically, if the record that we are attempting to update has been changed before we were able to update it, we don't want our request to succeed.

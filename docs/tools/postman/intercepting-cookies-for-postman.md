@@ -1,3 +1,9 @@
+---
+sidebar_position: 3
+---
+
+# Intercepting Cookies for Postman
+
 Please follow [these initial setup instructions](https://github.com/transcom/mymove/wiki/Setting-Up-Postman) first!
 
 For these APIs, we need to supply Postman with the appropriate session cookies from a logged-in user. One way to do this is the Interceptor Chrome extension from Postman. It creates a connection between Chrome and Postman that lets Chrome capture the cookies from a browser session and pass them on to your Postman app. We'll use Interceptor in Chrome to capture cookies as we log in to the app, and then switch to Postman to make the request.

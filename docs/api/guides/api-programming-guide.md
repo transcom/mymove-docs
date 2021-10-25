@@ -18,5 +18,5 @@ This page will collect guides and information on programming our external facing
 ## Using Postman
 
 - [Setting Up Postman](../../tools/postman/setting-up-postman)
-- [[setup postman to make mutual tls api calls]]
-- [[Using Etags and the If Match Header in Postman]]
+- [setup postman to make mutual tls api calls](../../tools/postman/setup-postman-to-make-mutual-tls-api-calls)
+- [Using Etags and the If Match Header in Postman](../../tools/postman/using-etags-and-the-if-match-header-in-postman)

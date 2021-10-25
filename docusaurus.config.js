@@ -366,6 +366,30 @@ module.exports = {
               '/docs/dev/tools/Postman/Setting-Up-Postman',
             ],
           },
+          {
+            to: '/docs/tools/postman/creating-a-local-environment-for-postman',
+            from: [
+              '/docs/dev/tools/Postman/Creating-A-Local-Environment-for-Postman',
+            ],
+          },
+          {
+            to: '/docs/tools/postman/intercepting-cookies-for-postman',
+            from: [
+              '/docs/dev/tools/Postman/Intercepting-Cookies-for-Postman',
+            ],
+          },
+          {
+            to: '/docs/tools/postman/using-etags-and-the-if-match-header-in-postman',
+            from: [
+              '/docs/dev/tools/Postman/Using-Etags-and-the-If-Match-Header-in-Postman',
+            ],
+          },
+          {
+            to: '/docs/tools/postman/setup-postman-to-make-mutual-tls-api-calls',
+            from: [
+              '/docs/dev/tools/Postman/setup-postman-to-make-mutual-tls-api-calls',
+            ],
+          },
         ],
       }
     ],

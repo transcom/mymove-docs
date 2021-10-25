@@ -1,3 +1,9 @@
+---
+sidebar_position: 2
+---
+
+# Creating a Local Environment for Postman
+
 Please follow [these initial setup instructions](https://github.com/transcom/mymove/wiki/Setting-Up-Postman) first!
 
 ## Creating an environment
