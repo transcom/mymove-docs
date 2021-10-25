@@ -23,7 +23,7 @@ module.exports = {
     'api/index',
     {
       type: 'category',
-      label: 'APIs',
+      label: 'Swagger Documentation',
       items: [
         {
           type: 'link',
