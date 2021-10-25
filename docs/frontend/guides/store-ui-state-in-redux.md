@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # How To Store UI State in Redux
 
 State that is specific to the UI should be set by dispatching an action and accessed using a selector. Here is an

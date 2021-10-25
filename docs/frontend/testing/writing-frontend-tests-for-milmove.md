@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # Writing Frontend Tests for MilMove
 
 This guide covers how MilMove writes tests using RTL. 
