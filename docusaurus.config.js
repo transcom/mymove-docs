@@ -342,6 +342,18 @@ module.exports = {
               '/docs/dev/contributing/backend/Dockerfile-use,-purpose,-and-documentation',
             ],
           },
+          {
+            to: '/docs/tools/docusaurus/docusaurus',
+            from: [
+              '/docs/dev/tools/docusaurus',
+            ],
+          },
+          {
+            to: '/docs/tools/docusaurus/redocusaurus',
+            from: [
+              '/docs/dev/tools/redocusaurus',
+            ],
+          },
         ],
       }
     ],

@@ -1,6 +1,8 @@
 ---
-title: Redocusaurus
+sidebar_position: 2
 ---
+
+# Redocusaurus
 
 :::tip
 
