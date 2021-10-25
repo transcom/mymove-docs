@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # What is Dependabot
 
 [Dependabot](https://dependabot.com) is used to monitor the repository dependencies and update them with automatic

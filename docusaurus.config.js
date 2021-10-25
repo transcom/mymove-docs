@@ -324,6 +324,18 @@ module.exports = {
               '/docs/dev/contributing/backend/Push-Notifications-to-Prime',
             ],
           },
+          {
+            to: '/docs/tools/dependabot/manage-dependabot',
+            from: [
+              '/docs/dev/versioning/manage-dependabot',
+            ],
+          },
+          {
+            to: '/docs/tools/dependabot/dependency-update-process-with-dependabot',
+            from: [
+              '/docs/dev/versioning/Dependency-Update-Process-With-Dependabot',
+            ],
+          },
         ],
       }
     ],
