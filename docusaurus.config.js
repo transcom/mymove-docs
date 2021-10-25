@@ -396,6 +396,12 @@ module.exports = {
               '/docs/dev/tools/SchemaSpy',
             ],
           },
+          {
+            to: '/docs/tools/telemetry/running-telemetry-locally',
+            from: [
+              '/docs/dev/tools/telemetry/Running-telemetry-locally',
+            ],
+          },
         ],
       }
     ],
