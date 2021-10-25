@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # Writing Tests using React Testing Library and Jest
 
 This guide will cover preferred strategies for testing using React Testing Library (RTL).

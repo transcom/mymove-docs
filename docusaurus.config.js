@@ -163,18 +163,6 @@ module.exports = {
       {
         redirects: [
           {
-            to: '/docs/about/overview-of-milmove',
-            from: [
-              '/docs/about/Overview-of-Milmove',
-            ],
-          },
-          {
-            to: '/docs/about/security/user-management',
-            from: [
-              '/docs/about/security/User-Management',
-            ],
-          },
-          {
             to: '/docs/frontend/testing/frontend',
             from: [
               '/docs/dev/contributing/frontend/frontend',

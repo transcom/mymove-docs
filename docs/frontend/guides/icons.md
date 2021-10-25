@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # Icons
 
 MilMove takes the majority of its icons from [Font Awesome](https://fontawesome.com/), and uses [react-fontawesome](https://github.com/FortAwesome/react-fontawesome) in order to be able to easily render FontAwesome icons in React. We are using the [library implementation described here](https://github.com/FortAwesome/react-fontawesome#build-a-library-to-reference-icons-throughout-your-app-more-conveniently), so there is a `src/icons.js` file that initializes all of the icons, and is included in the app entry point (as well as Storybook and Jest config files).

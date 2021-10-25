@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # How To Call Swagger Endpoints from React
 
 ## 1. Verify the Schema is Defined

@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # Writing Frontend Tests: Enzyme and React Testing Library
 
 We use both Enzyme and React Testing Library (RTL) to create unit/component-level tests. These two libraries work off very different philosophies, but can be used within the same files without conflict. 
