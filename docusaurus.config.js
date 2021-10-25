@@ -354,6 +354,12 @@ module.exports = {
               '/docs/dev/tools/redocusaurus',
             ],
           },
+          {
+            to: '/docs/tools/mockery/generate-mocks-with-mockery',
+            from: [
+              '/docs/dev/testing/writing-tests/generate-mocks-with-mockery',
+            ],
+          },
         ],
       }
     ],

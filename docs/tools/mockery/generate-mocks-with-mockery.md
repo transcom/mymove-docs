@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # How To Generate Mocks with Mockery
 
 [Mockery](https://github.com/vektra/mockery) provides the ability to easily generate mocks for golang interfaces. It removes the boilerplate coding required to use mocks.
