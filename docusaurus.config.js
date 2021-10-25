@@ -336,6 +336,12 @@ module.exports = {
               '/docs/dev/versioning/Dependency-Update-Process-With-Dependabot',
             ],
           },
+          {
+            to: '/docs/tools/dockerfile/dockerfile-use,-purpose,-and-documentation',
+            from: [
+              '/docs/dev/contributing/backend/Dockerfile-use,-purpose,-and-documentation',
+            ],
+          },
         ],
       }
     ],
