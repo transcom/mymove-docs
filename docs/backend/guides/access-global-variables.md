@@ -1,3 +1,7 @@
+---
+sidebar_position: 13
+---
+
 # How to Access a Global Application Variable
 
 ## Overview

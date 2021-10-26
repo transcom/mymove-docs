@@ -1,5 +1,5 @@
 ---
-sidebar_position: 13
+sidebar_position: 12
 ---
 
 # Guide to Static Analysis Security Workflow

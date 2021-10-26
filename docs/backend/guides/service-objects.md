@@ -1,7 +1,7 @@
 ---
-title: Service Objects
+sidebar_position: 1
 ---
-# Guide to Service Objects
+# Backend Service Objects Development Guide
 
 ## What is a Service Object?
 

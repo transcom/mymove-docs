@@ -1,10 +1,14 @@
+---
+sidebar_position: 14
+---
+
 ## Overview
 
 Events are triggered when objects in the db are created, updated or deleted in endpoints.
 
-We trigger events so we can perform other actions that were not specifically requested by the handler, sort of like side effects. 
+We trigger events so we can perform other actions that were not specifically requested by the handler, sort of like side effects.
 
-The primary use case is to send a webhook notification to Prime, if the event is of interest to Prime. 
+The primary use case is to send a webhook notification to Prime, if the event is of interest to Prime.
 
 For more details, see the [Webhooks for Milmove Design Doc](https://docs.google.com/document/d/1tq2jWvuLXEv30Bab2S-nSj9V1bAzLrPk7DZo3xLX9-o/edit#heading=h.5x0d5h95i329).
 
@@ -14,19 +18,19 @@ Read on to understand how to add the event trigger.
 
 ### How do I trigger an event
 
-You trigger an event by inserting a call to TriggerEvent on the SUCCESSFUL completion of the handler's action. 
+You trigger an event by inserting a call to TriggerEvent on the SUCCESSFUL completion of the handler's action.
 
-**Here's an example:** 
+**Here's an example:**
 
-Imagine the TOO hits the "Authorize Payment" button. 
+Imagine the TOO hits the "Authorize Payment" button.
 
-This calls the `ghcapi` endpoint `updatePaymentRequestStatus` and runs the handler. 
+This calls the `ghcapi` endpoint `updatePaymentRequestStatus` and runs the handler.
 
-In the handler, the code updates the Payment Request object in the db with the new status. 
+In the handler, the code updates the Payment Request object in the db with the new status.
 
 If it is able to **successfully** update the object, it must trigger the `PaymentRequest.Update` event.
 
-To do so it makes a call to `event.TriggerEvent` and passes on a bunch of useful information how which endpoint was called, by whom, and what the action was taken. 
+To do so it makes a call to `event.TriggerEvent` and passes on a bunch of useful information how which endpoint was called, by whom, and what the action was taken.
 
 If the actual payment request update failed, we don't trigger the event as there was no successful action taken.
 
@@ -38,8 +42,8 @@ _, err = event.TriggerEvent(event.Event{
     EndpointKey:     event.SupportUpdatePaymentRequestStatusEndpointKey,
                                                             // Endpoint that is being handled
     EventKey:        event.PaymentRequestUpdateEventKey,    // Event that you want to trigger
-    UpdatedObjectID: updatedPaymentRequest.ID,              // ID of the updated logical object 
-    MtoID:           mtoID,                                 // ID of the associated Move 
+    UpdatedObjectID: updatedPaymentRequest.ID,              // ID of the updated logical object
+    MtoID:           mtoID,                                 // ID of the associated Move
     Request:         params.HTTPRequest,                    // Pass on the http.Request
     DBConnection:    h.DB(),                                // Pass on the pop.Connection
     HandlerContext:  h,                                     // Pass on the handlerContext
@@ -54,9 +58,9 @@ The event code is located in `pkg/services/event/event.go`.
 
 ### Which Event Should I trigger?
 
-There are too many tables in our MTO to update the Prime about. To reduce the granularity, we have grouped the tables into the following logical objects or entities. 
+There are too many tables in our MTO to update the Prime about. To reduce the granularity, we have grouped the tables into the following logical objects or entities.
 
-The boxes are the logical objects and the blue highlighted names are the db table names. 
+The boxes are the logical objects and the blue highlighted names are the db table names.
 
 The events are always `<LogicalObject>.<Verb>` events, so if you update any table under PAYMENT REQUESTS, like payment_service_items, the event is `PaymentRequest.Update`.
 
@@ -74,9 +78,9 @@ The MtoID is the UUID of the overall parent Move. (It is called MtoID because we
 
 ### What if my endpoint doesn't exist?
 
-Originally we wrote a script to quickly generate all the current endpoints. But as new endpoints are added, you can manually update the appropriate map with the new endpoint. 
+Originally we wrote a script to quickly generate all the current endpoints. But as new endpoints are added, you can manually update the appropriate map with the new endpoint.
 
-The endpoints are stored in a map in `pkg/services/event/{api}_endpoint.go`. 
+The endpoints are stored in a map in `pkg/services/event/{api}_endpoint.go`.
 There you need to add an entry for your endpoint.
 The key name is defined by the `operationID` in the yaml. Please follow the pattern.
 ```
@@ -84,9 +88,9 @@ The key name is defined by the `operationID` in the yaml. Please follow the patt
 const GhcUpdatePaymentRequestStatusEndpointKey = "Ghc.UpdatePaymentRequestStatus"
 ```
 
-And then add that key into the map. 
+And then add that key into the map.
 ```
-var ghcEndpoints = EndpointMapType{ 
+var ghcEndpoints = EndpointMapType{
 ...
   GhcUpdatePaymentRequestStatusEndpointKey: {
 	APIName:     GhcAPIName,
@@ -94,4 +98,4 @@ var ghcEndpoints = EndpointMapType{
 },
 ```
 
-After that, you have a new endpoint you can pass in with your event trigger. 
+After that, you have a new endpoint you can pass in with your event trigger.

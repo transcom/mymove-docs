@@ -1,6 +1,6 @@
 ---
 title: Adding ShipmentLineItem records to the 400ng table (tariff400ng_items)
-sidebar_position: 4
+sidebar_position: 3
 ---
 
 # Adding `ShipmentLineItem` records to the 400ng table (`tariff400ng_items`)
