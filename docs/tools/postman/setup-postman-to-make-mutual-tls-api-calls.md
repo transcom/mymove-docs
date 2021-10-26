@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # How to Setup Postman to make Mutual TLS API Calls
 
 If you are planning to use [Postman](https://www.getpostman.com/) for testing the api you will need to make the following changes to support Mutual TLS.

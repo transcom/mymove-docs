@@ -1,3 +1,9 @@
+---
+sidebar_position: 1
+---
+
+# Introduction & Basics
+
 SchemaSpy is a tool that generates a visual representation of the database as a webpage you can navigate.
 
 It makes it easier to view and understand the tables and fields and view their descriptions and relationships.

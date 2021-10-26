@@ -1,6 +1,7 @@
 ---
-title: Docusaurus
+sidebar_position: 1
 ---
+
 # Using Docusaurus 
 
 Docusaurus is our documentation framework of choice (and you can see a record of that decision in [this closed PR](https://github.com/transcom/mymove/pull/6869)). One of the main reasons we picked this framework was because of how easy it was to manipulate the documentation without being an experienced software engineer. Here is a general outline of how to work with Docusaurus in a way that should be accessible to all of us on the project, from designers to product managers to engineers. 
