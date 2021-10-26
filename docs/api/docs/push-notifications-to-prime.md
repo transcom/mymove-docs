@@ -1,3 +1,9 @@
+---
+sidebar_position: 2
+---
+
+# Push Notifications to Prime
+
 The push mechanism is a way to notify the Prime of changes as they happen. 
 
 We will be using Web Hooks to implement the push mechanism. 

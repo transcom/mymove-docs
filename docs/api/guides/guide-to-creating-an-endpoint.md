@@ -1,4 +1,9 @@
+---
+sidebar_position: 4
+---
+
 # Creating an Endpoint
+
 ###### These are the various steps that are involved in creating a new endpoint.
 
 Prior to creating an endpoint in the Handler folder, we must first add a new endpoint definition to swagger. We are using Swagger 2.0, which is [OpenAPI](https://swagger.io/specification/v2/), a specification we use to format our RESTful APIs and provide a template for us to communicate the information in our API.

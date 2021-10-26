@@ -1,4 +1,8 @@
-## API Errors
+---
+sidebar_position: 2
+---
+
+# API Errors
 
 Well formatted errors are an important component of education to the user of the API and should be given as much care as the API design. 
 
@@ -10,7 +14,7 @@ The JSON error body should provide a few things for the developer - a useful err
 
 The instance identifier enables the Milmove team to [look up Cloudwatch logs](How-to-Search-AWS-Cloudwatch-Logs-using-Instance-ID.md) that were written when the problem occurred. 
 
-### Default Error
+## Default Error
 The default JSON output representation for the error messages looks like: 
 
 	{   
@@ -20,7 +24,7 @@ The default JSON output representation for the error messages looks like:
 	}
 
 
-### Custom Error
+## Custom Error
 In addition to this default format, specific errors can choose to provide a custom representation that builds on this. A swagger example of how to define these errors is provided in this article on [backend errors](handle-backend-errors.md#defining-error-models-in-swagger).
 
 Validation errors for PUT, PATCH and POST requests need a field breakdown, and will return an `UnprocessableEntity` response. The top level detail can summarize or generalize the validation failures and provide the detailed errors in an additional `invalidFields` object, like so:
@@ -36,7 +40,7 @@ Validation errors for PUT, PATCH and POST requests need a field breakdown, and w
          }
      }
 
-### HTTP status codes
+## HTTP status codes
 
 HTTP defines a bunch of [meaningful status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) that can be returned from an API. Milmove will leverage these to help the API consumers route their responses accordingly. 
 
@@ -76,7 +80,7 @@ An **error response** is a swagger generated type that we use to send errors bac
 mtoshipmentops.NewCreateMTOShipmentNotFound().WithPayload(payload)
 ```
 
-### Error types and Error responses
+## Error types and Error responses
 
 Error types in the code are defined in `pkg/apperror/errors.go`.
 
@@ -109,7 +113,7 @@ Here are the main error types and the responses we send in that case:
 
 Note: There might be new errors that we generate as the code evolves, but it's a good idea to understand these definitions and see if your error fits one of them before defining a new one. This improves consistency and makes the errors easier to understand and process by the user. If you do define a new error, please update this guide.
 
-### Security Guidelines
+## Security Guidelines
 
 In the next section we will cover converting the errors into responses. For each of the error responses, do not provide any information in the error message to help *debug* the issue. The target audience for the error responses is **the client, not the developer**. So we can let them know what they did wrong, but not reveal information about our own systems.
 
@@ -123,7 +127,7 @@ Secure logging of errors into Cloudwatch is what we use for developer informatio
 
 **Filepaths:** Equally there is no reason to reveal a file path to the client. Never provide this information in the error message.
 
-### Constructing Errors and Responses
+## Constructing Errors and Responses
 
 To create an instance of an error type, you'll call the `New` function for that error, and pass in parameters pertaining to that error.
 

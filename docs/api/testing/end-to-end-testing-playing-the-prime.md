@@ -1,6 +1,12 @@
+---
+sidebar_position: 2
+---
+
+# End to End Testing Playing the Prime
+
 This page includes instructions on how to complete basic functions as the Prime when testing the application e2e (e.g. MilMob) with other user roles (Services Counselor, TOO, TIO).
 
-### Setup
+## Setup
 
 * [Install mTLS integrations certificate](https://github.com/transcom/transcom-infrasec-com/blob/master/docs/mtls-certs.md) on your local machine
 
@@ -22,7 +28,7 @@ This page includes instructions on how to complete basic functions as the Prime 
   * If you don't get a 200, check out the [Postman troubleshooting doc](https://github.com/transcom/mymove/wiki/setup-postman-to-make-mutual-tls-api-calls#troubleshooting-postman).
 
 
-### E2E Testing Sequence for 1 HHG Move
+## E2E Testing Sequence for 1 HHG Move
 
 * Customer creates move
 * Services Counselor reviews
@@ -35,7 +41,7 @@ This page includes instructions on how to complete basic functions as the Prime 
 This page covers the bolded sections for Prime.
 
 
-### Prime: Part I
+## Prime: Part I
 A move must go through all previous steps before these actions can be taken, ending with TOO approval.
 
 Each request in the collection should be ran in sequence. You can edit the body as you see fit. There is code in the Tests section of some of the requests that will set variables to reuse, e.g. eTag, mtoShipmentID, etc.
@@ -68,7 +74,7 @@ Each request in the collection should be ran in sequence. You can edit the body 
 
 * Wait for TOO approval
 
-### Prime: Part II
+## Prime: Part II
 Once the service items have been approved, you can create a payment request. The current setup includes two separate payment requests: One with DOSHUT service item, and one with DOFSIT service items.
 
 * Send request `createPaymentRequest1`
