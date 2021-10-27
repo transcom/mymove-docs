@@ -1,7 +1,7 @@
 # Running telemetry locally
 
 Because we are using open telemetry, we can use one telemetry system
-in production (AWS) and another one locally. More information on why open telemetry was chose is available in this [ADR](https://github.com/transcom/mymove/blob/6feaa5b79cfd20276dd670babdbf0b31351a2fb4/docs/adr/0061-use-opentelemetry-for-distributed-tracing.md).
+in production (AWS) and another one locally. More information on why open telemetry was chosen is available in this [ADR](https://github.com/transcom/mymove/blob/6feaa5b79cfd20276dd670babdbf0b31351a2fb4/docs/adr/0061-use-opentelemetry-for-distributed-tracing.md).
 
 Running the elastic search offering locally turns out to be easy.
 
@@ -29,7 +29,7 @@ Running the elastic search offering locally turns out to be easy.
 
   ![Services Dashboard](../../../static/img/telemetry/services-dashboard.png)
 
-  Note: Services are all named unknown_service_milmove_gin and all local transactions besides logging in and logging out are called server-no-tls. This behavior is no ideal and should be looked into. Utilizing local urls such as `officelocal:3000` may be the cause of the lack of semantic naming.
+  Note: Services are all named `unknown_service_milmove_gin` and all local transactions besides logging in and logging out are called `server-no-tls`. This is a known [bug](https://dp3.atlassian.net/browse/MB-9926).
 
 ## Troubleshooting
 
