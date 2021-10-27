@@ -5,6 +5,8 @@ in production (AWS) and another one locally. More information on why open teleme
 
 Running the elastic search offering locally turns out to be easy.
 
+## Setup
+
 1. In one terminal window run `docker-compose -f docker-compose.telemetry.yml up`
 
   You may see an error message like: `ERROR: for apm-server  Container "4aa42b9f5715" is unhealthy` or `ERROR: for apm-server  Container "4aa42b9f5715" is unhealthy` this may be an indication that docker doesn't have enough memory. To resolve this issue open up Docker Desktop. Click the gear icon in the header as shown below:
@@ -28,3 +30,7 @@ Running the elastic search offering locally turns out to be easy.
   ![Services Dashboard](../../../static/img/telemetry/services-dashboard.png)
 
   Note: Services are all named unknown_service_milmove_gin and all local transactions besides logging in and logging out are called server-no-tls. This behavior is no ideal and should be looked into. Utilizing local urls such as `officelocal:3000` may be the cause of the lack of semantic naming.
+
+## Troubleshooting
+
+If you see the following error `context deadline exceeded` this is an indication that it can't reach the telemetry server.
