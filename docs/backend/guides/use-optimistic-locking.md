@@ -1,3 +1,7 @@
+---
+sidebar_position: 19
+---
+
 # What Is Optimistic Locking?
 
 Optimistic locking is a strategy to avoid conflicts when multiple people may be editing a single record. Before committing a change, the system checks to make sure the record hasn't been updated before committing the update. For more information, check out the [Wikipedia page](https://en.wikipedia.org/wiki/Optimistic_concurrency_control) and [this MDN section on avoiding mid-air collisions](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag#avoiding_mid-air_collisions).
