@@ -1,5 +1,5 @@
 ---
-sidebar_position: 11
+sidebar_position: 7
 ---
 
 # Guide to Static Analysis Annotations for Disabled Linters
