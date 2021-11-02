@@ -138,6 +138,18 @@ module.exports = [
     ],
   },
   {
+    to: '/docs/backend/guides/ghc/ghc-pricing-import',
+    from: [
+      '/docs/dev/contributing/database/ghc-pricing-import',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/ghc/ghc-transit-time-import',
+    from: [
+      '/docs/dev/contributing/database/ghc-transit-time-import',
+    ],
+  },
+  {
     to: '/docs/backend/guides/guide-to-static-analysis-annotations-for-disabled-linters',
     from: [
       '/docs/dev/contributing/code-analysis/Guide-to-Static-Analysis-Annotations-for-Disabled-Linters',
@@ -156,143 +168,137 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/backend/guides/how-to-handle-errors',
+    to: '/docs/backend/guides/how-to/add-an-event-trigger',
+    from: [
+      '/docs/dev/contributing/backend/How-to-Add-an-Event-Trigger',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/how-to/handle-errors',
     from: [
       '/docs/dev/contributing/backend/handle-backend-errors',
     ],
   },
   {
-    to: '/docs/backend/guides/manage-dependencies-with-go-mod',
+    to: '/docs/backend/guides/how-to/manage-dependencies-with-go-mod',
     from: [
       '/docs/help/manage-dependencies-with-go-mod',
     ],
   },
   {
-    to: '/docs/backend/guides/manage-docker-locally',
+    to: '/docs/backend/guides/how-to/manage-docker-locally',
     from: [
       '/docs/help/manage-docker-locally',
     ],
   },
   {
-    to: '/docs/backend/guides/revert-a-change',
+    to: '/docs/backend/guides/how-to/manage-golang-with-asdf',
+    from: [
+      '/docs/dev/versioning/Manage-golang-with-asdf',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/how-to/revert-a-change',
     from: [
       '/docs/help/revert-a-change',
     ],
   },
   {
-    to: '/docs/backend/guides/ghc/ghc-pricing-import',
+    to: '/docs/backend/guides/how-to/set-up-a-feature-flag',
     from: [
-      '/docs/dev/contributing/database/ghc-pricing-import',
+      '/docs/dev/contributing/backend/How-to-Set-Up-a-Feature-Flag',
     ],
   },
   {
-    to: '/docs/backend/guides/ghc/ghc-transit-time-import',
+    to: '/docs/backend/guides/how-to/soft-delete',
     from: [
-      '/docs/dev/contributing/database/ghc-transit-time-import',
+      '/docs/dev/contributing/backend/soft-delete',
     ],
   },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/backend/How-to-Set-Up-a-Feature-Flag',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/backend/soft-delete',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/help/troubleshoot-gex-connection',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/versioning/upgrade-go-version',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/versioning/How-to-upgrade-Node',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/database/tariff400ng-yearly-import',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/versioning/Manage-golang-with-asdf',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/help/Troubleshoot-Precommit-Hook-Failures',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/backend/route-planner',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/backend/Session-Management',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/versioning/Switching-Over-to-Nix',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/backend/time',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/database/tspp-data-creation',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/backend/Using-loop-iterator-variables-in-go',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/backend/use-optimistic-locking',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/backend/WIP-Server-side-validation',
-    // ],
-  // },
-  // {
-    // to: '',
-    // from: [
-      // '/docs/dev/contributing/database/Zip-Code-to-Rate-Area-Mappings',
-    // ],
-  // },
+  {
+    to: '/docs/backend/guides/how-to/upgrade-node',
+    from: [
+      '/docs/dev/versioning/How-to-upgrade-Node',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/troubleshoot-gex-connection',
+    from: [
+      '/docs/help/troubleshoot-gex-connection',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/how-to/upgrade-go-version',
+    from: [
+      '/docs/dev/versioning/upgrade-go-version',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/tariff400ng-yearly-import',
+    from: [
+      '/docs/dev/contributing/database/tariff400ng-yearly-import',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/troubleshoot-precommit-hook-failures',
+    from: [
+      '/docs/help/Troubleshoot-Precommit-Hook-Failures',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/route-planner',
+    from: [
+      '/docs/dev/contributing/backend/route-planner',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/session-management',
+    from: [
+      '/docs/dev/contributing/backend/Session-Management',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/switching-over-to-nix',
+    from: [
+      '/docs/dev/versioning/Switching-Over-to-Nix',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/golang-time',
+    from: [
+      '/docs/dev/contributing/backend/golang-time',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/tspp-data-creation',
+    from: [
+      '/docs/dev/contributing/database/tspp-data-creation',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/golang-loops',
+    from: [
+      '/docs/dev/contributing/backend/golang-loops',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/use-optimistic-locking',
+    from: [
+      '/docs/dev/contributing/backend/use-optimistic-locking',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/wip-server-side-validation',
+    from: [
+      '/docs/dev/contributing/backend/WIP-Server-side-validation',
+    ],
+  },
+  {
+    to: '/docs/backend/guides/zip-code-to-rate-area-mappings',
+    from: [
+      '/docs/dev/contributing/database/Zip-Code-to-Rate-Area-Mappings',
+    ],
+  },
   {
     to: '/docs/backend/setup/configure-postico-or-tableplus-to-connect-to-mymove-db',
     from: [
