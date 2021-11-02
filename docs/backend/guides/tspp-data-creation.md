@@ -1,3 +1,7 @@
+---
+sidebar_position: 18
+---
+
 # Turning TDL scores and TSP discounts into transportation service provider performances
 
 This outlines the steps you need to do to join the two data sources we've traditionally gotten - CSVs or text files of best value scores tied to TDLs, exported one code of service at a time, and CSVs or text files of TSP discount rates, organized by the three pieces of data that make up a TDL (origin, destination, and code of service). If anything behaves in a surprising way, double check the schema detailed here against the organization of your input files. No step of this should alter zero rows, for instance.
