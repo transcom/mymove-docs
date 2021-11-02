@@ -1,5 +1,5 @@
 ---
-sidebar_position: 21
+sidebar_position: 6
 ---
 # How to Set Up a Feature Flag
 

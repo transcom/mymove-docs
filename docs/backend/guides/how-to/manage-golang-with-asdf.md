@@ -1,8 +1,9 @@
 ---
-sidebar_position: 27
+title: How to manage Golang with asdf
+sidebar_position: 5
 ---
 
-# Manage Golang with asdf
+# How to manage Golang with `asdf`
 
 This document describes how we are using asdf and some troubleshooting steps
 

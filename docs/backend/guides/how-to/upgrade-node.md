@@ -1,5 +1,5 @@
 ---
-sidebar_position: 25
+sidebar_position: 7
 ---
 
 # How to upgrade Node

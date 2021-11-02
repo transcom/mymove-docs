@@ -1,5 +1,6 @@
 ---
-sidebar_position: 14
+title: How to add an event trigger
+sidebar_position: 1
 ---
 
 ## Overview
