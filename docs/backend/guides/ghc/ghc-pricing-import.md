@@ -1,5 +1,5 @@
 ---
-sidebar_position: 19
+sidebar_position: 6
 ---
 
 # How to run the GHC Pricing Import and Verify Data

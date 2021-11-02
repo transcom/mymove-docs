@@ -1,5 +1,5 @@
 ---
-sidebar_position: 20
+sidebar_position: 7
 ---
 # How to run the GHC Transit Time Import and Verify Data
 
