@@ -1,3 +1,9 @@
+---
+sidebar_position: 20
+---
+
+# Zip code to Rate area mappings
+
 The mymove rate engine uses zip code to rate area associations to calculate a number of values related to billing for a move.
 
 There is no existing, definitive data set of these associations, so mymove has published its own data set as a declaration of the standard being used.
