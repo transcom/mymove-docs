@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Designers's guide to setting up app locally
 
 ## Installing XCode Developer Tools

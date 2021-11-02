@@ -14,7 +14,7 @@ module.exports = {
   projectName: 'mymove-docs',
   themeConfig: {
     navbar: {
-      title: 'MilMove.dev',
+      title: 'MilMove Documentation',
       logo: {
         alt: 'MilMove Logo',
         src: 'img/logo.svg',
@@ -27,6 +27,12 @@ module.exports = {
           label: 'About',
         },
         {
+            type: 'doc',
+            docId: 'frontend/index',
+            position: 'left',
+            label: 'Frontend',
+        },
+        {
           type: 'doc',
           docId: 'backend/index',
           position: 'left',
@@ -34,30 +40,21 @@ module.exports = {
         },
         {
             type: 'doc',
-            docId: 'frontend/index',
+            docId: 'api/index',
             position: 'left',
-            label: 'Frontend',
+            label: 'API',
+        },
+        {
+            type: 'doc',
+            docId: 'tools/index',
+            position: 'left',
+            label: 'Tools',
         },
         {
             type: 'doc',
             docId: 'dev/index',
             position: 'left',
             label: 'Docs',
-        },
-        {
-            type: 'dropdown',
-            position: 'left',
-            label: 'APIs',
-            items: [
-              {
-                label: 'Prime',
-                to: '/api/prime',
-              },
-              {
-                label: 'Support',
-                to: '/api/support',
-              },
-            ],
         },
         {
             type: 'doc',
@@ -82,18 +79,18 @@ module.exports = {
               label: 'About',
               to: '/docs/about',
             },
-            {
-              label: 'Getting Started',
-              to: '/docs',
-            },
-            {
-              label: 'Help',
-              to: '/docs/help',
-            },
-            {
-              label: 'Vault',
-              to: '/docs/vault',
-            },
+            // {
+              // label: 'Getting Started',
+              // to: '/docs',
+            // },
+            // {
+              // label: 'Help',
+              // to: '/docs/help',
+            // },
+            // {
+              // label: 'Vault',
+              // to: '/docs/vault',
+            // },
             {
               label: 'Docusaurus Tutorial',
               to: '/docs/tutorial',
@@ -105,19 +102,19 @@ module.exports = {
           items: [
             {
               label: 'Frontend',
-              to: '/docs/dev/contributing/frontend',
+              to: '/docs/frontend',
             },
             {
               label: 'Backend',
-              to: '/docs/dev/contributing/backend',
+              to: '/docs/backend',
             },
             {
-              label: 'Database',
-              to: '/docs/dev/contributing/database',
+              label: 'API',
+              to: '/docs/api',
             },
             {
-              label: 'Testing',
-              to: '/docs/dev/testing',
+              label: 'Tools',
+              to: '/docs/tools',
             },
           ],
         },
@@ -125,8 +122,12 @@ module.exports = {
           title: 'More',
           items: [
             {
-              label: 'GitHub',
+              label: 'MilMove Documentation GitHub',
               href: 'https://github.com/transcom/mymove-docs',
+            },
+            {
+              label: 'MilMove GitHub',
+              href: 'https://github.com/transcom/mymove',
             },
             {
               label: 'Docusaurus Official Docs',
@@ -177,18 +178,6 @@ module.exports = {
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
-          {
-            to: '/docs/about/overview-of-milmove',
-            from: [
-              '/docs/about/Overview-of-Milmove',
-            ],
-          },
-          {
-            to: '/docs/about/security/user-management',
-            from: [
-              '/docs/about/security/User-Management',
-            ],
-          },
           {
             to: '/docs/frontend/testing/frontend',
             from: [
@@ -289,6 +278,138 @@ module.exports = {
             to: '/docs/frontend/setup/run-storybook',
             from: [
               '/docs/dev/tools/run-storybook',
+            ],
+          },
+          {
+            to: '/docs/api/guides/api-errors',
+            from: [
+              '/docs/dev/contributing/backend/API-Errors',
+            ],
+          },
+          {
+            to: '/docs/api/guides/api-programming-guide',
+            from: [
+              '/docs/dev/contributing/backend/API-Programming-Guide',
+            ],
+          },
+          {
+            to: '/docs/api/guides/api-style-guide',
+            from: [
+              '/docs/dev/contributing/backend/API-Style-Guide',
+            ],
+          },
+          {
+            to: '/docs/api/guides/guide-to-creating-an-endpoint',
+            from: [
+              '/docs/dev/contributing/backend/Guide-to-Creating-an-Endpoint',
+            ],
+          },
+          {
+            to: '/docs/api/guides/how-to-deprecate-endpoints',
+            from: [
+              '/docs/dev/versioning/How-to-deprecate-endpoints',
+            ],
+          },
+          {
+            to: '/docs/api/testing/acceptance-testing-prime-api-endpoints',
+            from: [
+              '/docs/dev/testing/running-tests/Acceptance-Testing-Prime-API-Endpoints',
+            ],
+          },
+          {
+            to: '/docs/api/testing/end-to-end-testing-playing-the-prime',
+            from: [
+              '/docs/dev/testing/running-tests/End-to-End-Testing-Playing-the-Prime',
+            ],
+          },
+          {
+            to: '/docs/api/testing/how-to-test-the-prime-api',
+            from: [
+              '/docs/dev/getting-started/How-to-Test-the-Prime-API',
+            ],
+          },
+          {
+            to: '/docs/api/docs/push-notifications-to-prime',
+            from: [
+              '/docs/dev/contributing/backend/Push-Notifications-to-Prime',
+            ],
+          },
+          {
+            to: '/docs/tools/dependabot/manage-dependabot',
+            from: [
+              '/docs/dev/versioning/manage-dependabot',
+            ],
+          },
+          {
+            to: '/docs/tools/dependabot/dependency-update-process-with-dependabot',
+            from: [
+              '/docs/dev/versioning/Dependency-Update-Process-With-Dependabot',
+            ],
+          },
+          {
+            to: '/docs/tools/dockerfile/dockerfile-use,-purpose,-and-documentation',
+            from: [
+              '/docs/dev/contributing/backend/Dockerfile-use,-purpose,-and-documentation',
+            ],
+          },
+          {
+            to: '/docs/tools/docusaurus/docusaurus',
+            from: [
+              '/docs/dev/tools/docusaurus',
+            ],
+          },
+          {
+            to: '/docs/tools/docusaurus/redocusaurus',
+            from: [
+              '/docs/dev/tools/redocusaurus',
+            ],
+          },
+          {
+            to: '/docs/tools/mockery/generate-mocks-with-mockery',
+            from: [
+              '/docs/dev/testing/writing-tests/generate-mocks-with-mockery',
+            ],
+          },
+          {
+            to: '/docs/tools/postman/setting-up-postman',
+            from: [
+              '/docs/dev/tools/Postman/Setting-Up-Postman',
+            ],
+          },
+          {
+            to: '/docs/tools/postman/creating-a-local-environment-for-postman',
+            from: [
+              '/docs/dev/tools/Postman/Creating-A-Local-Environment-for-Postman',
+            ],
+          },
+          {
+            to: '/docs/tools/postman/intercepting-cookies-for-postman',
+            from: [
+              '/docs/dev/tools/Postman/Intercepting-Cookies-for-Postman',
+            ],
+          },
+          {
+            to: '/docs/tools/postman/using-etags-and-the-if-match-header-in-postman',
+            from: [
+              '/docs/dev/tools/Postman/Using-Etags-and-the-If-Match-Header-in-Postman',
+            ],
+          },
+          {
+            to: '/docs/tools/postman/setup-postman-to-make-mutual-tls-api-calls',
+            from: [
+              '/docs/dev/tools/Postman/setup-postman-to-make-mutual-tls-api-calls',
+            ],
+          },
+          {
+            to: '/docs/tools/schemaspy/schemaspy',
+            from: [
+              '/docs/dev/tools/SchemaSpy',
+            ],
+          },
+          {
+            to: '/docs/tools/telemetry/running-telemetry-locally',
+            from: [
+              '/docs/dev/tools/telemetry/Running-telemetry-locally',
             ],
           },
         ],

@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Front-end / React Guide
 
 ## Table of Contents

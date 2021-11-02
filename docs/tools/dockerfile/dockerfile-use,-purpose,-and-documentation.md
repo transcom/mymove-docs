@@ -1,3 +1,9 @@
+---
+sidebar_position: 1
+---
+
+# Use, Purpose, and Documentation
+
 This document lists all the current Dockerfiles we use, their base images, and what user that image uses. It also notes why that image uses the user account it uses.
 
 NOTE for `gcr.io/distroless/base:latest` based images these by default run with `root` locally. However, we have updated our ECS task definition (See code [here](https://github.com/transcom/mymove/blob/master/cmd/ecs-deploy/task_def.go#L581)) to override that to run with a UID of `1042` and not `root`/`UID:0`.

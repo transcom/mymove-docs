@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # How to view a move or payment request in the office app as a TOO or TIO
 
 ## Background
