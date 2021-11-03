@@ -146,7 +146,7 @@ fields @timestamp, edisProcessed, @message
 
 Some general guidelines for errors:
 
-**1. Don't bury your errors in underscores.**
+### 1. Don't bury your errors in underscores.
 
 If a function or other action generates an error, assign it to a variable and either return it as part of your function's output or handle it in place (`if err != nil`, etc.). There will be the very occasional exception to this - one is within tests, depending on the test's goal. If you find yourself typing that underscore, take a moment to ask yourself why you're choosing that option. On those very rare occasions when it is the correct behavior, please add a comment explaining why.
 
@@ -165,7 +165,7 @@ if err != nil {
 }
 ```
 
-**2. Log at the top level; create and pass along errors below.**
+### 2. Log at the top level; create and pass along errors below.
 
 If you're creating a query (1) that is called by a function (2) that is in turned called by another function (3), create and return errors at levels 1 and 2 (and possibly handle them immediately after creation, if needed), and log them at level 3. Logs should be created at the top level and contain context about what created them. This is more difficult if logs are being created in every function and file that supports the operation you're working on. Here's an example of when to create errors and when to handle them:
 
@@ -214,7 +214,25 @@ func (aq *AwardQueue) attemptShipmentOffer(shipment models.Shipment) (*models.Sh
 
 The error is created and passed along at the lowest level, logged and passed along at the middle level (along with other errors that can happen within that function), and logged again at the highest level before finally halting the progress of the process if an error is present.
 
-**3. Use `fmt.Errorf` and `%w` verb when using external libraries.**
+### 3. Use `fmt.Errorf` instead of `errors.New`
+
+You should avoid using `errors.New` when creating an error in go. Please use `fmt.Errorf` instead.
+
+
+_Current Recommendation:_
+
+```go
+return fmt.Errorf("Some application error message")
+```
+
+_Old Recommendation:_
+
+```go
+return errors.New("Some application error message")
+```
+
+
+### 4. Use `fmt.Errorf` and `%w` verb when wrapping errors.
 
 [`fmt.Errorf() with %w`](https://blog.golang.org/go1.13-errors) provides greater error context and a stack trace, making it especially useful when dealing with the opacity that sometimes comes with external libraries. As of go 1.13 `fmt.Errorf()` provides a new `%w` verb that replaces the need for `errors.Wrap()`. It takes a string with the `%w` in it and the error as parameters: the string and error to provide context and explanation. Keep the string brief and clear, assuming that the fuller cause will be provided by the context `%w` verb brings. It can also add useful context for errors related to internal code if there might otherwise be unhelpful opacity. `fmt.Errorf()` in combination with `%w` also capture stack traces with the additional function of string substitution/formatting for output.
 
@@ -240,7 +258,7 @@ if err != nil {
 
 Using the new `%w` provides access to some new features such as the new `errors.Is` and `errors.As` functions. For more on the changes in go 1.13 see [this official blog post](https://blog.golang.org/go1.13-errors) and [this article](https://medium.com/@felipedutratine/golang-how-to-handle-errors-in-v1-13-fda7f035d027) that go into more depth.
 
-**4. Don't `fmt` errors; log instead.**
+### 5. Don't `fmt` errors; log instead.
 
 `fmt` can provide useful error handling during initial debugging, but we strongly suggest logging instead, from when you write the initial lines of a new function. Using logging creates structured logs instead of the unstructured, human-friendly-only output that `fmt` does. If an `fmt` statement offers usefulness beyond your initial troubleshooting while working, switch it to `fmt.Errorf("text: %w", err)` or `logger.Error()`, perhaps with [Zap](https://github.com/uber-go/zap).
 
@@ -254,7 +272,7 @@ _Do:_
 logger.Error("Blackout dates fetch failed: ", err)
 ```
 
-**5. If some of your errors are predictable, pattern match on them to provide more error detail.**
+### 6. If some of your errors are predictable, pattern match on them to provide more error detail.
 
 Some errors are predictable, such as those from the database that Pop returns to us. This gives you the option to use those predictable errors to give yourself and fellow maintainers of code more detail than you might get otherwise, like so:
 

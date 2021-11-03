@@ -3,20 +3,19 @@ sidebar_position: 4
 ---
 
 # Creating an Endpoint
-
 ###### These are the various steps that are involved in creating a new endpoint.
 
 Prior to creating an endpoint in the Handler folder, we must first add a new endpoint definition to swagger. We are using Swagger 2.0, which is [OpenAPI](https://swagger.io/specification/v2/), a specification we use to format our RESTful APIs and provide a template for us to communicate the information in our API.
 Always start with swagger. This step creates your endpoint definition and generates the files and helper functions you will need to create your endpoint. More specifically, swagger converts JSON user input into generated Go types.
 ## Adding  a new entry into the yaml
-All new definitions will be added in `mymove/swagger-def`. Note that we have broken down our spec into different files and we share definitions between files. 
-Built compiled versions of our API spec will be generated and stored in the swagger folder, which we will not edit directly. Notice that there is a yaml file for each of our APIs. 
-An endpoint definition for the prime will go into the Prime yaml, but you may notice there are some definitions in `mymove/swagger-def/definitions`. 
-This is because some definitions are shared across APIs and we've created a space to add those definitions in one place. 
+All new definitions will be added in `mymove/swagger-def`. Note that we have broken down our spec into different files and we share definitions between files.
+Built compiled versions of our API spec will be generated and stored in the swagger folder, which we will not edit directly. Notice that there is a yaml file for each of our APIs.
+An endpoint definition for the prime will go into the Prime yaml, but you may notice there are some definitions in `mymove/swagger-def/definitions`.
+This is because some definitions are shared across APIs and we've created a space to add those definitions in one place.
 For example, `Uploads.yaml` shares its definition across various APIs, and rather than creating various yaml files for this action, we have created one and added it to the shared `definitions` folder.
 
 For the purposes for adding a new endpoint, make sure that your endpoint is defined in these sections:
-* `tags` - is where we group all of our endpoints by category (i.e. shipment endpoints, agent endpoints, service item endpoints, etc.). 
+* `tags` - is where we group all of our endpoints by category (i.e. shipment endpoints, agent endpoints, service item endpoints, etc.).
          This top level field is where our gen files will divide the endpoints into their own packages. Tag component names are `camelCase`.
 * `paths` - defines our endpoint. Path names use `kebab-case`.
 * `definitions` - defines the shape of the data for our endpoint. Definitions component names are `PascalCase`.
@@ -26,7 +25,7 @@ For the purposes for adding a new endpoint, make sure that your endpoint is defi
 #### Troubleshooting your local swagger state:
 If you are having issues with your local swagger state it is recommended to run `make server_generate`, accept the prompt, and then run `make server_run` again. For more information on troubleshooting, [this](https://ustcdp3.slack.com/archives/CP6PTUPQF/p1632254277386600) explanation will be helpful.
 
-#### Defining a path for your endpoint 
+#### Defining a path for your endpoint
 For more information about URL design and structure checkout: [API Style Guide](https://transcom.github.io/mymove-docs/docs/dev/contributing/backend/API-Style-Guide)
 
 Defining your endpoint path follows this simple convention:
@@ -41,7 +40,7 @@ Defining your endpoint path follows this simple convention:
                 parameters: include parameters associated with this path
                 responses: response codes for this path, and a schema reference and the description if needed.
 
-NOTE: The description item will reference markdown files in `swagger-def/info/`. This change is further described in a recent [PR](https://github.com/transcom/mymove/pull/7435).                
+NOTE: The description item will reference markdown files in `swagger-def/info/`. This change is further described in a recent [PR](https://github.com/transcom/mymove/pull/7435).
 
 An example of the `Moves` path is as follows:
 
@@ -72,7 +71,7 @@ An example of the `Moves` path is as follows:
               $ref: 'responses/PermissionDenied.yaml'
             '500':
               $ref: '#/responses/ServerError'
-        
+
 #### Description Section and the response body
 In your endpoint description make sure that the following fields are included when necessary:
 * required - fields that are required are listed in the description section.
@@ -82,7 +81,7 @@ In your endpoint description make sure that the following fields are included wh
 * eTag - An entity tag is provided so that a browser client or a script can make conditional REST requests using optimistic concurrency control. All eTags must be marked as readOnly.
 
 An example of the ListMove description is as follows:
-        
+
           ListMove:
             description:
                 $ref: 'info/{file_name}.md'
@@ -130,11 +129,11 @@ An example of the ListMove description is as follows:
 For information on error responses, check out: [API Errors Guide](https://transcom.github.io/mymove-docs/docs/dev/contributing/backend/API-Errors#api-errors)
 
 #### Gen files:
-Once you finishing updating the yaml files with the new endpoint information make sure to run your make commands like `make swagger-generate` to autogenerate your swagger files, or simply run `make server_run`, 
+Once you finishing updating the yaml files with the new endpoint information make sure to run your make commands like `make swagger-generate` to autogenerate your swagger files, or simply run `make server_run`,
 which runs your server and other useful make commands in one go.
 
 ## Creating a Handler:
-Now you're ready to add your endpoint to the `handlers` folder. Start building out the service object before creating your handler. 
+Now you're ready to add your endpoint to the `handlers` folder. Start building out the service object before creating your handler.
 For more information about service objects and when to create one: [Service Objects](https://transcom.github.io/mymove-docs/docs/dev/contributing/backend/service-objects).
 
 An important note about service objects: The service layer is where we will store our business logic and connect to the database. Once a service object is created, it will be passed in to the handler `NewPrimeAPIHandler` function in `pkg/handlers/primeapi/api.go`,
@@ -280,3 +279,4 @@ var eventModels = map[KeyType]eventModel{
 
 
 If you'd like to learn more about event triggers, you can find more details [here](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/How-to-Add-an-Event-Trigger.md).
+
