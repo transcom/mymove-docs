@@ -4,6 +4,8 @@ sidebar_position: 1
 
 # Designers's guide to setting up app locally
 
+https://github.com/transcom/mymove/blob/master/docs/adr/0016-Browser-Support.md
+
 ## Installing XCode Developer Tools
 
 XCode is development software from Apple usually used to design and build macOS and iOS applications.  We aren't using it for that purpose but it installs other important things we need.
@@ -62,19 +64,32 @@ For the sake of time let's try to install all of these dependencies at once. Som
 
 `brew install awscli bash chamber jq asdf yarn pre-commit shellcheck postgresql nodenv opensc circleci direnv entr aws-vault watchman`
 
-## Defining your environment variables with the .envrc.local
+## Defining your environment variables with the .envrc.local[#](https://transcom.github.io/mymove-docs/docs/frontend/setup/designers-guide-to-setting-up-app-locally/#defining-your-environment-variables-with-the-envrclocal)
 
 Environment variables define things such as database credentials, security certificates, API keys, and feature flags that can vary between environment (local, experimental, staging, production).
 
-Most developers have AWS credentials that are able to keep these values synced and up to date.  In the scenario you don't have AWS permissions we will need to create a file with these pre-defined values filled in.  This file could become outdated as values change, get added or removed.  We should take care not to share this file publicly eventhough most of the values are not the same secrets we use elsewhere.
+Most developers have AWS credentials that are able to keep these values synced and up to date. In the scenario you don't have AWS permissions we will need to create a file with these pre-defined values filled in. This file could become outdated as values change, get added or removed. We should take care not to share this file publicly eventhough most of the values are not the same secrets we use elsewhere.
 
 Ask another developer with AWS credentials to send you the output of running:
 
-`DISABLE_AWS_VAULT_WRAPPER=1 AWS_REGION=us-gov-west-1 aws-vault exec transcom-gov-dev -- chamber list app-devlocal`
+```
+DISABLE_AWS_VAULT_WRAPPER=1 AWS_REGION=us-gov-west-1 aws-vault exec transcom-gov-dev -- chamber list app-devlocal
+```
 
-We need to create a new file called `.envrc.local` to paste these values into if it doesn't exist.  Note that all files that start with a period are hidden so if somebody has already shared a file with you named `.envrc.local` it may not appear visible in the Finder like you expect.
+The output of the command will look like this:
 
-To create a new file named `.envrc.local` from inside the mymove folder in the Terminal run the command `touch .envrc.local && open -a TextEdit .envrc.local`.  This should open a blank text file in TextEdit and you can paste and save the values.
+| Key                  | Version | LastModified        | User                                                     |
+| -------------------- | ------- | ------------------- | -------------------------------------------------------- |
+| aws_account_id       | 2       | 2020-01-01 12:00:00 | arn:aws-us-gov:sts::{arn_id}:assumed-role/infra/{arn_id} |
+| client_tls_cert      | 1       | 2020-01-01 12:00:00 | arn:aws-us-gov:sts::{arn_id}:assumed-role/infra/{arn_id} |
+| .....                | ....    | .....               | .....                                                    |
+| syncada_sftp_user_id | 1       | 2020-01-01 12:00:00 | arn:aws-us-gov:sts::{arn_id}:assumed-role/infra/{arn_id} |
+
+We need to create a new file called `.envrc.local` to paste these values into if it doesn't exist. Note that all files that start with a period are hidden so if somebody has already shared a file with you named `.envrc.local` it may not appear visible in the Finder like you expect.
+
+To create a new file named `.envrc.local` from inside the mymove folder in the Terminal run the command `touch .envrc.local && open -a TextEdit .envrc.local`. This should open a blank text file in TextEdit and you can paste and save the values.
+
+If you need to view this file again, go to the mymove folder on your Mac machine and use the command `command + shift + . (period)` to see hidden files. 
 
 ## Installing Go using asdf
 
@@ -86,6 +101,24 @@ asdf plugin add golang && asdf install $(cat .tool-versions) && asdf global $(ca
 ```
 
 The current Go version being used on the project is inside the .tool-versions file.
+
+## System Requirements[#](https://transcom.github.io/mymove-docs/docs/frontend/setup/designers-guide-to-setting-up-app-locally/#defining-your-environment-variables-with-the-envrclocal)
+
+**macOS must be version 10.14 or newer**. That is, Mojave, Catalina, or Big Sur. We recommend upgrading to the latest version of macOS.**
+
+`Go` version 1.16.8
+
+`Node` v14.17.0
+
+Here is a list of supported browsers: 
+
+| Browsers       | Supported |
+| -------------- | --------- |
+| Chrome         | Yes       |
+| Firefox        | Yes       |
+| Microsoft Edge | Yes       |
+| Safari         | No        |
+
 
 ## Installing Node using nodenv
 
