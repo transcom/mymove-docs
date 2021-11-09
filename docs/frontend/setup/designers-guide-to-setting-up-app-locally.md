@@ -76,6 +76,23 @@ We need to create a new file called `.envrc.local` to paste these values into if
 
 To create a new file named `.envrc.local` from inside the mymove folder in the Terminal run the command `touch .envrc.local && open -a TextEdit .envrc.local`.  This should open a blank text file in TextEdit and you can paste and save the values.
 
+## System Requirements[#](https://transcom.github.io/mymove-docs/docs/frontend/setup/designers-guide-to-setting-up-app-locally/#defining-your-environment-variables-with-the-envrclocal)
+
+**macOS must be version 10.14 or newer**. That is, Mojave, Catalina, or Big Sur. We recommend upgrading to the latest version of macOS.**
+
+`Go` version 1.16.8
+
+`Node` v14.17.0
+
+| Browsers       | Supported |
+| -------------- | --------- |
+| Chrome         | Yes       |
+| Firefox        | Yes       |
+| Microsoft Edge | Yes       |
+| Safari         | No        |
+
+https://github.com/transcom/mymove/blob/master/docs/adr/0016-Browser-Support.md
+
 ## Installing Go using asdf
 
 asdf is a version manager we used to simplify installing and upgrading dependencies such as Go.
