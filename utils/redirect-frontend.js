@@ -66,9 +66,10 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/frontend/guides/store-data-in-redux',
+    to: '/docs/frontend/guides/how-to-store-api-data-on-the-front-end',
     from: [
       '/docs/dev/contributing/frontend/store-data-in-redux',
+      '/docs/frontend/guides/store-data-in-redux',
     ],
   },
   {
