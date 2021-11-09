@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# How to Store API data on the Front-end
+# How To Store Data in Redux
 
 The specific layout of data within the Redux store should generally be considered an implementation detail and we should strive to avoid coupling any Components to this structure directly. Selectors provide the best way to decouple component data access from store layout.
 
