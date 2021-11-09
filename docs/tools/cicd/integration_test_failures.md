@@ -42,6 +42,8 @@ Clicking on the `Details` link to the right will take you to the CircleCI run fo
 what was shown in the CircleCI section.
 ![Screen Shot 2021-11-09 at 3 03 35 PM](https://user-images.githubusercontent.com/1359520/141004397-09e860e3-d024-43d5-8648-2eadf7f38827.png)
 
+To re-run following [Re-run](#re-run) step under CircleCI.
+
 ## Help
 If the user pushing a commit or performing a merge is unable to troubleshoot the issues being reported ask
 [#prac-engineering](https://ustcdp3.slack.com/archives/CP6PTUPQF), [#prac-infrasec](https://ustcdp3.slack.com/archives/CP496B8DB), and/or [#on-call](https://ustcdp3.slack.com/archives/CP4U2NKRT) for help.
