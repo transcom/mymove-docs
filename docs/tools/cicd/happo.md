@@ -2,6 +2,8 @@
 
 Happo is a UI diff checker tool that helps compare the UI pages from branches to master. When styling changes have been made, Happo notifies that a diff has occured and asks a reviewer to review the Happo changes before allowing the PR to be merged in.
 
+Happo is part of the Static Code Analysis process. To read more about it click [here](https://transcom.github.io/mymove-docs/docs/backend/guides/guide-to-static-analysis-security-workflow)
+
 ## What to do with Happo Errors
 
 When your CI/CD build has begun, you can view the status of the Happo under the CI/CD pipeline
