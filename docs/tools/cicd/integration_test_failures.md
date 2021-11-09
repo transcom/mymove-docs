@@ -41,3 +41,7 @@ notify the user if the pull request is passing the checks or if there are failin
 Clicking on the `Details` link to the right will take you to the CircleCI run for this branch where you will be able to see the details similar to 
 what was shown in the CircleCI section.
 ![Screen Shot 2021-11-09 at 3 03 35 PM](https://user-images.githubusercontent.com/1359520/141004397-09e860e3-d024-43d5-8648-2eadf7f38827.png)
+
+## Help
+If the user pushing a commit or performing a merge is unable to troubleshoot the issues being reported ask
+[#prac-engineering](https://ustcdp3.slack.com/archives/CP6PTUPQF), [#prac-infrasec](https://ustcdp3.slack.com/archives/CP496B8DB), and/or [#on-call](https://ustcdp3.slack.com/archives/CP4U2NKRT) for help.
