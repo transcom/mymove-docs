@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 # GHC Invoicing Packages
@@ -7,17 +7,29 @@ sidebar_position: 1
 High level overview diagrams
 * [Sequence diagram](https://miro.com/app/board/o9J_ls9Gt7E=/?moveToWidget=3074457365163319192&cot=14)
 
+
+:::info
+
 _TODO: this file is to describe specifics about what packages do. The sequence diagram above shows how they interact.
 Word descriptions, diagrams, or anything that makes sense to get into the details of the packages should go here.
 For the most part, I'd expect a paragraph or two. But when needed, can go deeper. Useful PRs are also something to consider.
 I do not expect the filenames to be left in this doc unless a file needs to be called out. But for now, they are here are a
 memory jogger of what these packages are and what to describe. Then the files names can be erased. I do think leaving the
-directory paths on this page is useful.
+directory paths on this page is useful._
 
-In the Bins and CLI tools, leaving the filenames might be useful, because only certain files pertain directly to invoicing._
+_In the Bins and CLI tools, leaving the filenames might be useful, because only certain files pertain directly to invoicing._
+:::
 
 ## Bins
-TODO description!
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
 
 `ghc-pricing-parser` used to read the pricing template and import data into the GHC rate engine. A fake pricing template was created to test with.
 
@@ -32,7 +44,17 @@ mymove/
 ```
 
 ## CLI tools
-TODO description!
+
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
+
 ```
 mymove/
 ├── cmd
@@ -64,7 +86,17 @@ mymove/
 ```
 
 ## [Payment Request](https://github.com/transcom/mymove/tree/master/pkg/payment_request)
-TODO description!
+
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
+
 
 ```
 /mymove/pkg/payment_request
@@ -78,7 +110,17 @@ TODO description!
 ```
 
 ## [Service Param Value Lookups](https://github.com/transcom/mymove/tree/master/pkg/payment_request/service_param_value_lookups)
-TODO description!
+
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
+
 
 [Initial PR to setup service item param lookup framework](https://github.com/transcom/mymove/pull/3401)
 
@@ -152,7 +194,17 @@ TODO description!
 ```
 
 ## DB tools
-TODO description!
+
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
+
 
 ```
 mymove/pkg/services
@@ -165,7 +217,17 @@ mymove/pkg/services
 ```
 
 ## Pre-GHC MilMove FuelPrice
-TODO description!
+
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
+
 
 ```
 mymove/pkg/services
@@ -176,7 +238,17 @@ mymove/pkg/services
 ```
 
 ## [MilMove GHC FuelPrice](https://github.com/transcom/mymove/tree/master/pkg/services/ghcdieselfuelprice)
-TODO description!
+
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
+
 
 ```
 mymove/pkg/services
@@ -190,7 +262,17 @@ mymove/pkg/services
 ```
 
 ## [GHC Import](https://github.com/transcom/mymove/tree/master/pkg/services/ghcimport)
-TODO description!
+
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
+
 
 ```
 mymove/pkg/services
@@ -238,7 +320,17 @@ mymove/pkg/services
 ```
 
 ## [GHC Rate Engine](https://github.com/transcom/mymove/tree/master/pkg/services/ghcrateengine)
-TODO description!
+
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
+
 
 ```
 mymove/pkg/services
@@ -298,7 +390,17 @@ mymove/pkg/services
 ```
 
 ## [Invoice](https://github.com/transcom/mymove/tree/master/pkg/services/invoice)
-TODO description!
+
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
+
 
 ```
 mymove/pkg/services
@@ -323,7 +425,17 @@ mymove/pkg/services
 ```
 
 ## [MTO Shipment Updater](https://github.com/transcom/mymove/blob/master/pkg/services/mto_shipment/mto_shipment_updater.go)
-TODO description!
+
+:::caution TODO: Add description
+
+* Add **description** for this package/section.
+* After description is added, filenames (unless it is useful to leave here) can be removed.
+* Leave directory names in section.
+* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
+are important to invoicing. (E.g., `bin` and `cmd` packages. )
+
+:::
+
 
 [updateShipmentRecord](https://github.com/transcom/mymove/blob/master/pkg/services/mto_shipment/mto_shipment_updater.go#L315) calls [ShipmentRecalculatePaymentRequest](https://github.com/transcom/mymove/blob/master/pkg/services/mto_shipment/mto_shipment_updater.go#L519)
 
