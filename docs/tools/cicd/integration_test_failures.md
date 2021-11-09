@@ -44,7 +44,7 @@ what was shown in the CircleCI section.
 <img width="837" alt="Screen Shot 2021-11-09 at 3 58 19 PM" src="https://user-images.githubusercontent.com/1359520/141012118-5c070f9f-e34a-4e2a-913e-e17949f519f4.png">
 
 
-To re-run following [Re-run](#re-run) step under CircleCI.
+To re-run follow the [Re-run](#re-run) step under CircleCI.
 
 ## Help
 If the user pushing a commit or performing a merge is unable to troubleshoot the issues being reported ask
