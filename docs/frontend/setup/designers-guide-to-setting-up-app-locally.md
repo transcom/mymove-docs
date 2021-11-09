@@ -66,15 +66,28 @@ For the sake of time let's try to install all of these dependencies at once. Som
 
 Environment variables define things such as database credentials, security certificates, API keys, and feature flags that can vary between environment (local, experimental, staging, production).
 
-Most developers have AWS credentials that are able to keep these values synced and up to date.  In the scenario you don't have AWS permissions we will need to create a file with these pre-defined values filled in.  This file could become outdated as values change, get added or removed.  We should take care not to share this file publicly eventhough most of the values are not the same secrets we use elsewhere.
+Most developers have AWS credentials that are able to keep these values synced and up to date. In the scenario you don't have AWS permissions we will need to create a file with these pre-defined values filled in. This file could become outdated as values change, get added or removed. We should take care not to share this file publicly eventhough most of the values are not the same secrets we use elsewhere.
 
 Ask another developer with AWS credentials to send you the output of running:
 
-`DISABLE_AWS_VAULT_WRAPPER=1 AWS_REGION=us-gov-west-1 aws-vault exec transcom-gov-dev -- chamber list app-devlocal`
+```
+DISABLE_AWS_VAULT_WRAPPER=1 AWS_REGION=us-gov-west-1 aws-vault exec transcom-gov-dev -- chamber list app-devlocal
+```
 
-We need to create a new file called `.envrc.local` to paste these values into if it doesn't exist.  Note that all files that start with a period are hidden so if somebody has already shared a file with you named `.envrc.local` it may not appear visible in the Finder like you expect.
+The output of the command will look like this:
 
-To create a new file named `.envrc.local` from inside the mymove folder in the Terminal run the command `touch .envrc.local && open -a TextEdit .envrc.local`.  This should open a blank text file in TextEdit and you can paste and save the values.
+| Key                  | Version | LastModified        | User                                                     |
+| -------------------- | ------- | ------------------- | -------------------------------------------------------- |
+| aws_account_id       | 2       | 2020-01-01 12:00:00 | arn:aws-us-gov:sts::{arn_id}:assumed-role/infra/{arn_id} |
+| client_tls_cert      | 1       | 2020-01-01 12:00:00 | arn:aws-us-gov:sts::{arn_id}:assumed-role/infra/{arn_id} |
+| .....                | ....    | .....               | .....                                                    |
+| syncada_sftp_user_id | 1       | 2020-01-01 12:00:00 | arn:aws-us-gov:sts::{arn_id}:assumed-role/infra/{arn_id} |
+
+We need to create a new file called `.envrc.local` to paste these values into if it doesn't exist. Note that all files that start with a period are hidden so if somebody has already shared a file with you named `.envrc.local` it may not appear visible in the Finder like you expect.
+
+To create a new file named `.envrc.local` from inside the mymove folder in the Terminal run the command `touch .envrc.local && open -a TextEdit .envrc.local`. This should open a blank text file in TextEdit and you can paste and save the values.
+
+If you need to view this file again, go to the mymove folder on your Mac machine and use the command `command + shift + . (period)` to see hidden files. 
 
 ## System Requirements[#](https://transcom.github.io/mymove-docs/docs/frontend/setup/designers-guide-to-setting-up-app-locally/#defining-your-environment-variables-with-the-envrclocal)
 
