@@ -26,7 +26,7 @@ best practices for the MilMove project.
 ## `useQuery` Basics
 
 :::note Official documentation
-[Read the official documentation on this here][docs-rq-query-invalidation].
+[Read the official documentation on this here][docs-rq-usequery-basics].
 [docs-rq-usequery-basics]: https://react-query-v2.tanstack.com/docs/guides/queries
 :::
 
@@ -39,7 +39,7 @@ we create these on a per-page or per-Component basis.
 ## Mutations (Updates)
 
 :::note Official documentation
-[Read the official documentation on this here][docs-rq-query-invalidation].
+[Read the official documentation on this here][docs-rq-mutations-updates].
 [docs-rq-mutations-updates]: https://react-query-v2.tanstack.com/docs/guides/mutations
 :::
 
@@ -68,7 +68,7 @@ updating. Make sure you also fetch new data for related Entities as well.
 ### Query cache
 
 :::note Official documentation
-[Read more about Caching in the official documentation][docs-rq-caching].
+[Read the official documentation on this here][docs-rq-caching].
 [docs-rq-caching]: https://react-query-v2.tanstack.com/docs/guides/caching
 :::
 
