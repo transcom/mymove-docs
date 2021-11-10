@@ -19,7 +19,12 @@ If you have any questions, ask in [#prac-frontend][slack-fe] /
 
 [Read more about React Query in the official Overview
 documentation][docs-rq-overview]. This guide is a brief primer and discusses
-best practices for the MilMove project.
+best practices for the MilMove project. Instead of being comprehensive, this
+documentation strives to be a starting point for the official documentation with
+references to how to find the particular React Query functions within the
+MilMove codebase using the official GitHub search functionality. This search
+functionality can also be achieved locally using command-line tools such as
+`grep` or `ripgrep`.
 
 [docs-rq-overview]: https://react-query-v2.tanstack.com/docs
 
