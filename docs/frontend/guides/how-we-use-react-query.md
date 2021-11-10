@@ -58,10 +58,10 @@ shown on that Component or Page.
 [docs-rq-query-invalidation]: https://react-query-v2.tanstack.com/docs/guides/query-invalidation
 :::
 
-[There are examples in the codebase here][gh-mymove-invalidate-queries]. We use
-query invalidation to fetch new data from the APIs that `useQuery` fetches from.
-Only use this when you want to fetch new data related to the Entity that you're
-updating. Make sure you also fetch new data for related Entities as well.
+[We use query invalidation to fetch new data][gh-mymove-invalidate-queries] from
+the APIs that `useQuery` fetches from.  Only use this when you want to fetch new
+data related to the Entity that you're updating. Make sure you also fetch new
+data for related Entities as well.
 
 [gh-mymove-invalidate-queries]: https://github.com/transcom/mymove/search?l=JavaScript&q=%22invalidateQueries%28%22&type=
 
