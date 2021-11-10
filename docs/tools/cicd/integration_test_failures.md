@@ -14,8 +14,7 @@ Click on the failed indicator to see the details of what is failing.
 ![Screen Shot 2021-11-09 at 2 38 56 PM](https://user-images.githubusercontent.com/1359520/141003369-e26facb8-7f45-4794-acfb-a70f107b879f.png)
 
 These details will show the terminal output that you would see if the tests were running locally.
-<img width="1028" alt="Screen Shot 2021-11-09 at 3 58 47 PM" src="https://user-images.githubusercontent.com/1359520/141011976-2dada386-b769-4d45-aa4f-24c18c87170e.png">
-
+![Screen Shot 2021-11-09 at 3 58 47 PM](https://user-images.githubusercontent.com/1359520/141011976-2dada386-b769-4d45-aa4f-24c18c87170e.png")
 
 Once you see these logs, you are able to look at the error messages and determine next steps to fix the failed test(s).
 
@@ -41,8 +40,7 @@ notify the user if the pull request is passing the checks or if there are failin
 
 Clicking on the `Details` link to the right will take you to the CircleCI run for this branch where you will be able to see the details similar to 
 what was shown in the CircleCI section.
-<img width="837" alt="Screen Shot 2021-11-09 at 3 58 19 PM" src="https://user-images.githubusercontent.com/1359520/141012118-5c070f9f-e34a-4e2a-913e-e17949f519f4.png">
-
+![Screen Shot 2021-11-09 at 3 02 54 PM](https://user-images.githubusercontent.com/1359520/141012118-5c070f9f-e34a-4e2a-913e-e17949f519f4.png)
 
 To re-run follow the [Re-run](#re-run) step under CircleCI.
 
