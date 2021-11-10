@@ -44,7 +44,7 @@ we create these on a per-page or per-Component basis.
 :::
 
 On the MilMove project, [we create Mutations for specific Components or
-Pages][gh-mymove-hooks-queries]. The reason for that is because these Mutations
+Pages][gh-mymove-use-mutation]. The reason for that is because these Mutations
 have callback functions that are specific to user actions. This allows us to do
 specific Component or Page actions on Success or Error related to the data being
 shown on that Component or Page.
