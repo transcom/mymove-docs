@@ -89,12 +89,12 @@ OK: all prereqs found
 
 ## Troubleshooting
 
-### GoLand is looking for GOROOT
+### GOROOT is showing a different version or not working with GoLand
 
-Another issue GoLand users can run into with asdf is with GOROOT. Goland expects GOROOT to be set but it may be unclear what it should be set to. You can easily find the value by running `asdf which go` and then set that appropriately for your shell. Not upgrading versions will require this to change unless you can set GOROOT to the output directory of `asdf which go`, for example
+Another issue GoLand users and others can run into with asdf is with GOROOT. Goland expects GOROOT to be set but it may be unclear what it should be set to. You can easily find the value by running `asdf where golang`. Not upgrading versions will require this to change unless you can set GOROOT to the output directory of `asdf where golang`. For example, you can set this in your `~/.zshrc` (or similar) shell:
 
 ```sh
-export GOROOT=~/.asdf/installs/golang/1.15.10/go
+export GOROOT="$(asdf where golang)/go/"
 ```
 
 ### Missing `asdf.sh` executable
