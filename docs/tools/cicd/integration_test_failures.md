@@ -1,6 +1,6 @@
 # Integration Test Failures
 
-There are two (2) to receive notifications of integration test failures. 
+There are two (2) ways to receive notifications of integration test failures. 
 One is in [MilMove CircleCI dashboard](https://app.circleci.com/pipelines/github/transcom/mymove) 
 and the other is from the [GitHub pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) page.
 
