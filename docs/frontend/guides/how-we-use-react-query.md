@@ -11,8 +11,8 @@ The MilMove project uses **React Query v2** for the Frontend applications.
 If you have any questions, ask in [#prac-frontend][slack-fe] /
 [#prac-engineering][slack-eng] for help.
 
-[slack-eng]: https://ustcdp3.slack.com/archives/CP6PTUPQF
 [slack-fe]: https://ustcdp3.slack.com/archives/CTQQJD3G8
+[slack-eng]: https://ustcdp3.slack.com/archives/CP6PTUPQF
 :::
 
 ## Overview
