@@ -70,7 +70,7 @@ Most developers have AWS credentials that are able to keep these values synced a
 
 For steps on how to setup AWS creds with Chamber click [here](https://dp3.atlassian.net/wiki/spaces/MT/pages/1249542242/0030+How+to+Manage+Secrets+with+Chamber)
 
-## System Requirements[#](https://transcom.github.io/mymove-docs/docs/frontend/setup/designers-guide-to-setting-up-app-locally/#defining-your-environment-variables-with-the-envrclocal)
+## System Requirements
 
 Click [here](https://github.com/transcom/mymove/blob/master/docs/adr/0016-Browser-Support.md) to view list of supported browsers.
 
