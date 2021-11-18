@@ -7,7 +7,7 @@ Running the elastic search offering locally turns out to be easy.
 
 ## Setup
 
-1. In one terminal window run `docker-compose -f docker-compose.telemetry.yml up`
+1. In one terminal window run `make telemetry_docker`
 
   :::danger You may encounter errors
 
@@ -29,15 +29,21 @@ Running the elastic search offering locally turns out to be easy.
 
 1. To start collecting information you must run the mymove app locally. To do this navigate to the mymove repo and run the command `make client_run` to start up the local server. You can then navigate through the app to start collecting data.
 
-1. To view this data, on the Kibana page you can click the `Observability` panel and then navigate to the `APM` -> `Services` section on the left hand navigation bar.
+1. To view this data, on the Kibana page you can click the `Observability` panel and then navigate to the `APM` -> `Services` section on the left hand navigation bar. Then click on the `milmove` service.
 
   ![Services Dashboard](/img/telemetry/services-dashboard.png)
 
-  :::info
+## How to find specific transactions
 
-  Services are all named `unknown_service_milmove_gin` and all local transactions besides logging in and logging out are called `server-no-tls`. This is a known [bug](https://dp3.atlassian.net/browse/MB-9926).
+To find specific transactions you can leverage the search bar and utilize some of the metadata added to each transaction.
 
-  :::
+Here are a list of some of the metadata fields that you can search against and what information is provided in that field:
+
+| Key                       | Description                             | Example                                     |
+|---------------------------|-----------------------------------------|---------------------------------------------|
+| labels.http_route         | Shows the non dynamic url that is hit   | /internal/service_members/{serviceMemberId} |
+| http.response.status_code | Show the corresponding http status code | 200                                         |
+| http.request.method       | Shows the http request method           | PATCH                                       |
 
 ## Troubleshooting
 
