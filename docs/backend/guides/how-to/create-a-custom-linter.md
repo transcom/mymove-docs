@@ -22,6 +22,7 @@ In the `cmd` folder create a folder for your linter called `<linter_name>` and a
 
 In `pkg` folder create another folder for your linter called `<linter_name>` and in it you will 
 have your `linter.go` and `linter_test.go`
+
 ### Analyzer:
 In the `cmd` folder contains the the analysis driver for your linter. The file `main.go` will utilize a package called `singlechecker`,
 which defines the main function for an analysis driver and provides a tool to run a standalone analysis.
@@ -101,7 +102,7 @@ func TestAll(t *testing.T) {
 }
 ```
 
-## Testing linter across files
+## Testing the linter across files
 
 To run your linter across files run this command in your terminal:
 `go run ./cmd/example-linter/main.go -- ./...`
@@ -111,7 +112,7 @@ The `-- ./...` flag tells the linter to run against __all__ files.
 To run the linter tests only:
 `go test ./pkg/example-linter/... -v`
 
-## Running your linter in pre-commit
+## Running the linter in pre-commit
 Depending on the function of your linter, you may want to add it to precommit. You will do this by adding a new definition to precommit:
 ```golang
   - repo: local
