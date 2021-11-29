@@ -100,3 +100,6 @@ var ghcEndpoints = EndpointMapType{
 ```
 
 After that, you have a new endpoint you can pass in with your event trigger.
+
+## Reference
+* [Acceptance testing notifications](https://transcom.github.io/mymove-docs/docs/backend/testing/acceptance-testing-notifications/)
