@@ -34,6 +34,8 @@ The main initialization code for registering telemetry can be found in `pkg/tele
 
 The custom code for collecting database connection stats also lives within the package at `pkg/telemetry/db.go`.
 
+The code for hooking into the Go runtime library for memory stats lives within the package at `pkg/telemetry/runtime.go`
+
 ### Instrumentation
 
 The ecosystem of Open Telemetry comes with many built in and 3rd party libraries for plugging into our existing code with little or no customization.
@@ -50,16 +52,125 @@ router.Use(otelmux.Middleware("auth"))
 
 Similar to the otelmux library the [otelhttp library](https://github.com/trussworks/otelhttp) is designed to wrap HTTP handler functions. It has built in events (read & write) to report the request size, response size, and duration of the http request.  It is more configurable than the otelmux middleware allowing you to filter out certain routes and other controls.
 
-Note: This implementation has been forked to the Trussworks GitHub to address bugfixes.
+```golang
+otelhttp.NewHandler(router, "server-tls", []otelHTTP.Option{otelHTTP.ReadEvents, otelHTTP.WriteEvents})
+```
+
+Note: This implementation has been forked to the Trussworks GitHub to address bug fixes.
 
 #### SQL 
 
+The [XSAM/otelsql](https://github.com/XSAM/otelsql) library wraps the queries to our Postgres database and appends a span to the trace with the statement and duration information.  Query parameters may be hidden to not log sensitive information.  It can also be used to log calls to cursor rows when paging through larger result sets.
+
 #### Go
+
+The [Go runtime instrumentation library](https://github.com/open-telemetry/opentelemetry-go-contrib/tree/main/instrumentation/runtime) primarily provides statistics on memory usage and garbage collection cycles that may degrade performance.
 
 ## Data collection
 
+Data from the Milmove app is sent to the Open Telemetry collector, which processes the trace, metric, and log data and exports it to the services of our choice.  In AWS the collector exports to the Cloudwatch and AWS X-Ray services for storage and analysis.  When run locally the data is exported to the Elastic APM Server running Elasticsearch and Kibana. 
+
 ### Traces
 
+HTTP Requests
+
+Database SQL Statements
+
 ### Metrics
+
+#### HTTP
+HTTP Request Count
+- HTTP Protocol Version
+- Host
+- Scheme
+- Server Name (TLS/MTLS/No-TLS)
+- Status Code
+- Target (URL path)
+
+HTTP Request Content Length
+- HTTP Protocol Version
+- Host
+- Scheme
+- Server Name (TLS/MTLS/No-TLS)
+- Target (URL path)
+
+HTTP Response Content Length
+- HTTP Protocol Version
+- Host
+- Scheme
+- Server Name (TLS/MTLS/No-TLS)
+- Target (URL path)
+
+HTTP Duration
+- HTTP Protocol Version
+- Host
+- Scheme
+- Server Name (TLS/MTLS/No-TLS)
+- Target (URL path)
+
+#### Database Connections
+
+Database Pool Connections
+- Inuse
+- Idle
+- Wait Duration
+
+#### Go Runtime
+
+Copied from https://github.com/open-telemetry/opentelemetry-go-contrib/blob/main/instrumentation/runtime/doc.go
+```
+runtime.go.cgo.calls         -          Number of cgo calls made by the current process
+runtime.go.gc.count          -          Number of completed garbage collection cycles
+runtime.go.gc.pause_ns       (ns)       Amount of nanoseconds in GC stop-the-world pauses
+runtime.go.gc.pause_total_ns (ns)       Cumulative nanoseconds in GC stop-the-world pauses since the program started
+runtime.go.goroutines        -          Number of goroutines that currently exist
+runtime.go.lookups           -          Number of pointer lookups performed by the runtime
+runtime.go.mem.heap_alloc    (bytes)    Bytes of allocated heap objects
+runtime.go.mem.heap_idle     (bytes)    Bytes in idle (unused) spans
+runtime.go.mem.heap_inuse    (bytes)    Bytes in in-use spans
+runtime.go.mem.heap_objects  -          Number of allocated heap objects
+runtime.go.mem.heap_released (bytes)    Bytes of idle spans whose physical memory has been returned to the OS
+runtime.go.mem.heap_sys      (bytes)    Bytes of heap memory obtained from the OS
+runtime.go.mem.live_objects  -          Number of live objects is the number of cumulative Mallocs - Frees
+runtime.go.runtime.uptime               (ms)       Milliseconds since application was initialized
+```
+
+#### AWS Container Metrics
+
+All containers running on AWS ECS can access container level metrics including memory, cpu, network, and storage usage.  In the [AWS otel collector](https://aws-otel.github.io/docs/components/ecs-metrics-receiver) we connect the receiver and exporter to send data from the container through to Cloudwatch.
+
+```
+Task Level Metrics              Container Level               Metrics Unit
+
+ecs.task.memory.usage           container.memory.usage	      Bytes
+ecs.task.memory.usage.max       container.memory.usage.max    Bytes
+ecs.task.memory.usage.limit     container.memory.usage.limit  Bytes
+ecs.task.memory.reserved        container.memory.reserved     Megabytes
+ecs.task.memory.utilized        container.memory.utilized     Megabytes
+		
+ecs.task.cpu.usage.total        container.cpu.usage.total	Nanoseconds
+ecs.task.cpu.usage.kernelmode   container.cpu.usage.kernelmode	Nanoseconds
+ecs.task.cpu.usage.usermode	container.cpu.usage.usermode	Nanoseconds
+ecs.task.cpu.usage.system	container.cpu.usage.system	Nanoseconds
+ecs.task.cpu.usage.vcpu         container.cpu.usage.vcpu	vCPU
+ecs.task.cpu.cores              container.cpu.cores             Count
+ecs.task.cpu.onlines            container.cpu.onlines           Count
+ecs.task.cpu.reserved           container.cpu.reserved          vCPU
+ecs.task.cpu.utilized           container.cpu.utilized          Percent
+		
+ecs.task.network.rate.rx	        container.network.rate.rx	        Bytes/Second
+ecs.task.network.rate.tx	        container.network.rate.tx	        Bytes/Second
+ecs.task.network.io.usage.rx_bytes	container.network.io.usage.rx_bytes	Bytes
+ecs.task.network.io.usage.rx_packets	container.network.io.usage.rx_packets	Count
+ecs.task.network.io.usage.rx_errors	container.network.io.usage.rx_errors	Count
+ecs.task.network.io.usage.rx_dropped	container.network.io.usage.rx_dropped	Count
+ecs.task.network.io.usage.tx_bytes	container.network.io.usage.tx_bytes	Bytes
+ecs.task.network.io.usage.tx_packets	container.network.io.usage.tx_packets	Count
+ecs.task.network.io.usage.tx_errors	container.network.io.usage.tx_errors	Count
+ecs.task.network.io.usage.tx_dropped	container.network.io.usage.tx_dropped	Count
+		
+ecs.task.storage.read_bytes	container.storage.read_bytes	Bytes
+ecs.task.storage.write_bytes	container.storage.write_bytes	Bytes
+```
 
 ### Resources
