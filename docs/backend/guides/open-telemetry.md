@@ -173,4 +173,43 @@ ecs.task.storage.read_bytes	container.storage.read_bytes	Bytes
 ecs.task.storage.write_bytes	container.storage.write_bytes	Bytes
 ```
 
+#### Elasticache (Redis)
+
+The Milmove app uses a Redis cache to store session data for auth purposes.  I omitted some of the credit balance metrics that infra uses but the full documentation is available here [https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html).
+
+- ActiveDefragHits
+- BytesUsedForCache
+- CacheHitRate
+- CacheHits
+- CacheMisses
+- CPUUtilization
+- CurrConnections
+- CurrItems
+- DatabaseMemoryUsagePercentage
+- DBOAveerageTTL
+- EngineCPUUtilization
+- Evictions
+- FreeableMemory
+- GetTypeCmds
+- GetTypeCmdsLatency
+- IsMaster
+- KeyBasedCmds
+- KeyBasedCmdsLatency
+- MasterLinkHealthStatus
+- MemoryFragmentationRatio
+- NetworkBytesIn
+- NetworkBytesOut
+- NetworkPacketsin
+- NetworkPacketsout
+- NewConnections
+- Reclaimed
+- ReplicationBytes
+- ReplicationLag
+- SaveInProgress
+- SetTypeCmds
+- SetTypeCmdsLatency
+- StringBasedCmds
+- StringBasedCmdsLatency
+- SwapUsage
+
 ### Resources
