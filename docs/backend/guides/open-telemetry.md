@@ -105,12 +105,17 @@ net.transport
 
 #### Database SQL Statements
 
-**sql.rows**
-- db.system
+Spans/segments will be added to the current trace when database queries (Select) or executions (Update/Insert) are made within a request.
 
-**sql.conn.query**
+**sql.conn.exec** (Update/Insert statements)
+- db.statement
+
+**sql.conn.query** (Select statements)
 - db.system
 - db.statement
+
+**sql.rows** (When using a rows cursor to iterate through database results)
+- db.system
 
 ### Metrics
 
@@ -249,3 +254,11 @@ The Milmove app uses a Redis cache to store session data for auth purposes.  I o
 - SwapUsage
 
 ### Resources
+
+[Open Telemetry Homepage](https://opentelemetry.io/)
+
+[Open Telemetry for Golang](https://opentelemetry.io/docs/go/)
+
+[AWS Open Telmetry Docs](https://aws-otel.github.io/)
+
+[Elastic Application Performance Monitoring](https://www.elastic.co/observability/application-performance-monitoring)
