@@ -1,5 +1,24 @@
 # How to Create a Custom Go Linter
 
+<!-- Table of Contents auto-generated with `bin/generate-md-toc.sh` -->
+
+<!-- toc -->
+
+* [Setting up your linter](#setting-up-your-linter)
+  * [File structure](#file-structure)
+  * [Analyzer](#analyzer)
+  * [Creating a linter](#creating-a-linter)
+  * [Writing linter tests](#writing-linter-tests)
+* [Testing the linter across files](#testing-the-linter-across-files)
+  * [Utilizing test data](#utilizing-test-data)
+* [Running the linter in pre-commit](#running-the-linter-in-pre-commit)
+* [Additional Resources](#additional-resources)
+
+
+Regenerate with "pre-commit run -a markdown-toc"
+
+<!-- tocstop -->
+
 Creating custom GO linters can be a great way to analyze your 
 project's source code and alert you to bugs, errors, 
 or other issues with your code.
@@ -10,34 +29,35 @@ or other issues with your code.
 Start by setting up the files you'll need for your linter:
 ```golang
 -cmd
-    -linter_name
+    -example_linter_name
         -main.go
 
 -pkg
-    -linter_name
-        -linter.go
-        -linter_test.go
+    -example_linter_name
+        -example_linter.go
+        -example_linter_test.go
 ```
-In the `cmd` folder create a folder for your linter called `<linter_name>` and add an empty file called `main.go`
+In the `cmd` folder create a folder for your linter called `<example_linter_name>` and add an empty file called `main.go`
 
-In `pkg` folder create another folder for your linter called `<linter_name>` and in it you will 
-have your `linter.go` and `linter_test.go`
+In `pkg` folder create another folder for your linter called `<example_linter_name>` and in it you will 
+place your `example_linter.go` and `example_linter_test.go`
 
 ### Analyzer:
-In the `cmd` folder contains the the analysis driver for your linter. The file `main.go` will utilize a package called `singlechecker`,
+The `cmd` folder contains the analysis driver for your linter. The file `main.go` will utilize a package called `singlechecker`,
 which defines the main function for an analysis driver and provides a tool to run a standalone analysis.
 
-The code in `main.go` is very simple:
+The code in `main.go` is:
 
 ```golang
 package main
 
 import (
-	"example.org/linter_name"
 	"golang.org/x/tools/go/analysis/singlechecker"
+
+	examplelinter "github.com/transcom/mymove/pkg/example-linter"
 )
 
-func main() { singlechecker.Main(linter_name.LinterAnalyzer) }
+func main() { singlechecker.Main(examplelinter.LinterAnalyzer) }
 ```
 
 ### Creating a linter
@@ -54,7 +74,7 @@ var LinterAnalyzer = &analysis.Analyzer{
 }
 ```
 
-Note that `Run` expects an interface and runs your linter code. This value can be the function that executes your linter. In this example, we are calling teh function `run`:
+Note that `Run` expects an interface and runs your linter code. This value can be the function that executes your linter. In this example, we are calling the function `run`:
 
 ```golang
 func run(pass *analysis.Pass) (interface{}, error) {
@@ -66,14 +86,16 @@ The linter is actually analyzing an abstract syntax tree, AST, that represents c
 When your linter gets to a position in a file, where it catches an error, bug, or issue, it will flag this for the user.
 Because the linter is analyzing an AST, your code must be able to search through a file and mark which position it is when an issue is caught.
 
-A great resource to use to learn how to write code for analyzing an AST can be found [here](https://disaev.me/p/writing-useful-go-analysis-linter/).
-If you're curious about what an AST looks like for your program, checkout [this](http://goast.yuroyoro.net/) online visualizer.
+There are great [online resources](http://goast.yuroyoro.net/) that you can use to visualize ASTs. 
+While these are great to use to [learn how to write code to search through an AST](https://disaev.me/p/writing-useful-go-analysis-linter/), 
+there may still be differences in what you see when working with your linter. 
+
 
 ### Writing linter tests
-Linter tests also do not look liek your typical go tests. They function with want statements.
+Linter tests also do not look like your typical go tests. They function with want statements.
 
-You will still create tests that test the happy and unhappy paths of your code. However, rather than your typical expect
-statement, you will instead put a want statement as a comment next to where you expect your linter to flag an issue:
+You will still create tests that test the happy and unhappy paths of your code. However, rather than your typical `expect`
+statement, you will instead put a `want` statement as a comment next to where you expect your linter to flag an issue:
 
 ```golang
 package examplelinter
@@ -112,6 +134,24 @@ The `-- ./...` flag tells the linter to run against __all__ files.
 To run the linter tests only:
 `go test ./pkg/example-linter/... -v`
 
+### Utilizing test data
+Your linter's functionality may require you to use test data. In the mymove repo there is a folder called `testdata` for this purpose. You can utilize test data for
+`App Context`, `Handlers`, the `Database`, etc., or you can create your own test data folder, as was done with the `Ato Linter`. To create your own test data, create a file in `testdata/src` called `example_linter_tests`.
+In the new folder you created you can add files with data that you want your linter to run against or check:
+
+```golang
+package example_linter_tests
+
+// Test X is in the struct
+type TestExampleStruct struct {
+	X         *x.Something // Look for the Something type
+	testString string
+}
+
+// Test X is a parameter in a function
+func TestFuncWithPopConnection(x *x.Something) {}
+```
+
 ## Running the linter in pre-commit
 Depending on the function of your linter, you may want to add it to precommit. You will do this by adding a new definition to precommit:
 ```golang
@@ -130,7 +170,7 @@ creating a custom bash script (located in the `script` folder) for running all c
 
 You can checkout this custom bash script at `scripts/pre-commit-go-custom-linter`.
 
-### Additional Resources:
+## Additional Resources:
 * [Debugging custom Go linters](https://dp3.atlassian.net/wiki/spaces/~721089227/pages/1531150353/Debugging+custom+Golang+linters)
 * [Using go/analysis to write a custom linter](https://arslan.io/2019/06/13/using-go-analysis-to-write-a-custom-linter/)
   * Provides more details on the GO/Analysis API
