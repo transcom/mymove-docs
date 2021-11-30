@@ -8,9 +8,10 @@
   * [File structure](#file-structure)
   * [Analyzer](#analyzer)
   * [Creating a linter](#creating-a-linter)
-  * [Writing linter tests](#writing-linter-tests)
-* [Testing the linter across files](#testing-the-linter-across-files)
+* [Testing](#testing)
   * [Utilizing test data](#utilizing-test-data)
+  * [Writing linter tests](#writing-linter-tests)
+  * [Testing the linter across files](#testing-the-linter-across-files)
 * [Running the linter in pre-commit](#running-the-linter-in-pre-commit)
 * [Additional Resources](#additional-resources)
 
@@ -62,8 +63,8 @@ func main() { singlechecker.Main(examplelinter.LinterAnalyzer) }
 
 ### Creating a linter
 The linter will live in the `pkg` folder, in a folder named after your linter. 
-In `linter.go` you will store the linter analyzer that gets referenced in `cmd/linter_name/main.go`. 
-It will contain the name of the liner, documentation about the linter, a call to runthe linter, and requirements:
+In `example_linter.go` you will store the linter analyzer that gets referenced in `cmd/example_linter_name/main.go`. 
+It will contain the name of the liner, documentation about the linter, a call to run the linter, and requirements:
 
 ```golang
 var LinterAnalyzer = &analysis.Analyzer{
@@ -90,6 +91,7 @@ There are great [online resources](http://goast.yuroyoro.net/) that you can use 
 While these are great to use to [learn how to write code to search through an AST](https://disaev.me/p/writing-useful-go-analysis-linter/), 
 there may still be differences in what you see when working with your linter. 
 
+## Testing:
 
 ### Writing linter tests
 Linter tests also do not look like your typical go tests. They function with want statements.
@@ -124,19 +126,9 @@ func TestAll(t *testing.T) {
 }
 ```
 
-## Testing the linter across files
-
-To run your linter across files run this command in your terminal:
-`go run ./cmd/example-linter/main.go -- ./...`
-
-The `-- ./...` flag tells the linter to run against __all__ files.
-
-To run the linter tests only:
-`go test ./pkg/example-linter/... -v`
-
 ### Utilizing test data
 Your linter's functionality may require you to use test data. In the mymove repo there is a folder called `testdata` for this purpose. You can utilize test data for
-`App Context`, `Handlers`, the `Database`, etc., or you can create your own test data folder, as was done with the `Ato Linter`. To create your own test data, create a file in `testdata/src` called `example_linter_tests`.
+`App Context`, `Handlers`, the `Database`, etc., or you can create your own test data folder, as was done with the `Ato Linter`. To create your own test data, create a folder in `testdata/src` called `example_linter_tests`.
 In the new folder you created you can add files with data that you want your linter to run against or check:
 
 ```golang
@@ -148,9 +140,29 @@ type TestExampleStruct struct {
 	testString string
 }
 
+// TestHandler Test y is in struct and raise error if it is.
+type TestExampleStructWithY struct { // want "Please remove y.Something from the struct if not in allowed places. See pkg/example_linter/example_linter.go for valid placements."
+	Y         *y.Something
+	testString string
+}
+
 // Test X is a parameter in a function
 func TestFuncWithPopConnection(x *x.Something) {}
 ```
+
+The testdata will then be passed into the `Run` as a parameter as noted above in the sample linter test: `analysistest.Run(t, testdata, LinterAnalyzer, "example_linter_tests/...")`
+
+### Testing the linter across files
+
+To run your linter across files run this command in your terminal:
+`go run ./cmd/example-linter/main.go -- ./...`
+
+The `-- ./...` flag tells the linter to run against __all__ files.
+
+To run the linter tests only:
+`go test ./pkg/example-linter/... -v`
+
+
 
 ## Running the linter in pre-commit
 Depending on the function of your linter, you may want to add it to precommit. You will do this by adding a new definition to precommit:
