@@ -83,9 +83,16 @@ func run(pass *analysis.Pass) (interface{}, error) {
 }
 ```
 
-The linter is actually analyzing an abstract syntax tree, AST, that represents code in a file. 
-When your linter gets to a position in a file, where it catches an error, bug, or issue, it will flag this for the user.
-Because the linter is analyzing an AST, your code must be able to search through a file and mark which position it is when an issue is caught.
+The linter is analyzing an abstract syntax tree, AST, that represents code in a file. 
+When your linter gets to a position in a file, where it catches an error, bug, or issue, it will flag this for the user. 
+Because the linter is analyzing an AST, your code must be able to search through a file and mark the position where the issue is caught. 
+To do this, you will mark the position in the file with a `.Pos()` method. Then the position of the object will be passed to `pass.Reportf`, where the linter message will be set as a second parameter:
+
+```golang
+    if paramsIncludeYInStruct {
+        pass.Reportf(decl.Pos(), "Please use x.Something instead of y.Something.")
+    }
+```
 
 There are great [online resources](http://goast.yuroyoro.net/) that you can use to visualize ASTs. 
 While these are great to use to [learn how to write code to search through an AST](https://disaev.me/p/writing-useful-go-analysis-linter/), 
@@ -188,3 +195,4 @@ You can checkout this custom bash script at `scripts/pre-commit-go-custom-linter
 * [Using go/analysis to write a custom linter](https://arslan.io/2019/06/13/using-go-analysis-to-write-a-custom-linter/)
   * Provides more details on the GO/Analysis API
 * [AST documentation](https://pkg.go.dev/go/ast)
+* [Custom AppContext Linter in mymove Repo](https://github.com/transcom/mymove/tree/d8d2b3862a28b344a1afdbb1a781d6529f04feb8/pkg/appcontext-linter)
