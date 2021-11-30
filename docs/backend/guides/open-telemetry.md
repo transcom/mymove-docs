@@ -72,9 +72,44 @@ Data from the Milmove app is sent to the Open Telemetry collector, which process
 
 ### Traces
 
-HTTP Requests
+*Common Trace fields*
+- ID
+- Parent ID
+- Trace ID
+- Name
+- Kind
+- Start time
+- End time
+- Status code
+- Status message
 
-Database SQL Statements
+#### HTTP Requests
+
+```
+http.client_ip
+http.flavor
+http.host
+http.method
+http.scheme
+http.server_name
+http.status_code
+http.target
+http.user_agent
+http.wrote_bytes
+net.host_ip
+net.host_port
+net.peer_ip
+net.peer_port
+net.transport
+```
+
+#### Database SQL Statements
+
+```
+sql.rows
+sql.statement
+sql.system
+```
 
 ### Metrics
 
@@ -148,29 +183,29 @@ ecs.task.memory.usage.limit     container.memory.usage.limit  Bytes
 ecs.task.memory.reserved        container.memory.reserved     Megabytes
 ecs.task.memory.utilized        container.memory.utilized     Megabytes
 		
-ecs.task.cpu.usage.total        container.cpu.usage.total	Nanoseconds
+ecs.task.cpu.usage.total        container.cpu.usage.total	    Nanoseconds
 ecs.task.cpu.usage.kernelmode   container.cpu.usage.kernelmode	Nanoseconds
-ecs.task.cpu.usage.usermode	container.cpu.usage.usermode	Nanoseconds
-ecs.task.cpu.usage.system	container.cpu.usage.system	Nanoseconds
-ecs.task.cpu.usage.vcpu         container.cpu.usage.vcpu	vCPU
+ecs.task.cpu.usage.usermode     container.cpu.usage.usermode	Nanoseconds
+ecs.task.cpu.usage.system       container.cpu.usage.system      Nanoseconds
+ecs.task.cpu.usage.vcpu         container.cpu.usage.vcpu        vCPU
 ecs.task.cpu.cores              container.cpu.cores             Count
 ecs.task.cpu.onlines            container.cpu.onlines           Count
 ecs.task.cpu.reserved           container.cpu.reserved          vCPU
 ecs.task.cpu.utilized           container.cpu.utilized          Percent
 		
-ecs.task.network.rate.rx	        container.network.rate.rx	        Bytes/Second
-ecs.task.network.rate.tx	        container.network.rate.tx	        Bytes/Second
-ecs.task.network.io.usage.rx_bytes	container.network.io.usage.rx_bytes	Bytes
-ecs.task.network.io.usage.rx_packets	container.network.io.usage.rx_packets	Count
-ecs.task.network.io.usage.rx_errors	container.network.io.usage.rx_errors	Count
-ecs.task.network.io.usage.rx_dropped	container.network.io.usage.rx_dropped	Count
-ecs.task.network.io.usage.tx_bytes	container.network.io.usage.tx_bytes	Bytes
-ecs.task.network.io.usage.tx_packets	container.network.io.usage.tx_packets	Count
-ecs.task.network.io.usage.tx_errors	container.network.io.usage.tx_errors	Count
-ecs.task.network.io.usage.tx_dropped	container.network.io.usage.tx_dropped	Count
+ecs.task.network.rate.rx	          container.network.rate.rx	            Bytes/Second
+ecs.task.network.rate.tx	          container.network.rate.tx	            Bytes/Second
+ecs.task.network.io.usage.rx_bytes	  container.network.io.usage.rx_bytes	Bytes
+ecs.task.network.io.usage.rx_packets  container.network.io.usage.rx_packets	Count
+ecs.task.network.io.usage.rx_errors	  container.network.io.usage.rx_errors	Count
+ecs.task.network.io.usage.rx_dropped  container.network.io.usage.rx_dropped	Count
+ecs.task.network.io.usage.tx_bytes	  container.network.io.usage.tx_bytes	Bytes
+ecs.task.network.io.usage.tx_packets  container.network.io.usage.tx_packets	Count
+ecs.task.network.io.usage.tx_errors	  container.network.io.usage.tx_errors	Count
+ecs.task.network.io.usage.tx_dropped  container.network.io.usage.tx_dropped	Count
 		
-ecs.task.storage.read_bytes	container.storage.read_bytes	Bytes
-ecs.task.storage.write_bytes	container.storage.write_bytes	Bytes
+ecs.task.storage.read_bytes	  container.storage.read_bytes	Bytes
+ecs.task.storage.write_bytes  container.storage.write_bytes	Bytes
 ```
 
 #### Elasticache (Redis)
