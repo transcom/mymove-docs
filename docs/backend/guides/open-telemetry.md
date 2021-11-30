@@ -105,11 +105,12 @@ net.transport
 
 #### Database SQL Statements
 
-```
-sql.rows
-sql.statement
-sql.system
-```
+**sql.rows**
+- db.system
+
+**sql.conn.query**
+- db.system
+- db.statement
 
 ### Metrics
 
