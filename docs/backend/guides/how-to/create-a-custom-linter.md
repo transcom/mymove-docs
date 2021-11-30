@@ -149,6 +149,7 @@ type TestExampleStructWithY struct { // want "Please remove y.Something from the
 // Test X is a parameter in a function
 func TestFuncWithPopConnection(x *x.Something) {}
 ```
+In the above example, there is a `want` statement that will trigger the linter to flag an unwanted object in the struct.
 
 The testdata will then be passed into the `Run` as a parameter as noted above in the sample linter test: `analysistest.Run(t, testdata, LinterAnalyzer, "example_linter_tests/...")`
 
