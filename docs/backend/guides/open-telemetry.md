@@ -167,7 +167,7 @@ runtime.go.mem.heap_objects  -          Number of allocated heap objects
 runtime.go.mem.heap_released (bytes)    Bytes of idle spans whose physical memory has been returned to the OS
 runtime.go.mem.heap_sys      (bytes)    Bytes of heap memory obtained from the OS
 runtime.go.mem.live_objects  -          Number of live objects is the number of cumulative Mallocs - Frees
-runtime.go.runtime.uptime               (ms)       Milliseconds since application was initialized
+runtime.go.runtime.uptime    (ms)       Milliseconds since application was initialized
 ```
 
 #### AWS Container Metrics
