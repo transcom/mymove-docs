@@ -1,6 +1,6 @@
 # Open Telemetry
 
-The Milmove app has had aspects of logging (Zap), tracing (trace middleware), and monitoring (AWS infra dashboards) previously but there is now an [ADR to use the Open Telemetry library](https://github.com/transcom/mymove/blob/master/docs/adr/0061-use-opentelemetry-for-distributed-tracing.md) to standardize our efforts. While not solely useful just for load testing, it did expose our need for better insight into the performance of the Milmove app and it's services.
+The Milmove app has had aspects of logging (Zap), tracing (trace middleware), and monitoring (AWS infra dashboards) previously, but there is now an [ADR to use the Open Telemetry library](https://github.com/transcom/mymove/blob/master/docs/adr/0061-use-opentelemetry-for-distributed-tracing.md) to standardize our efforts. While not solely useful just for load testing, it did expose our need for better insight into the performance of the Milmove app and it's services.
 
 - [Implementation](#implementation)
   - [Environment configuration](#environment-configuration)
@@ -72,7 +72,9 @@ Data from the Milmove app is sent to the Open Telemetry collector, which process
 
 ### Traces
 
-*Common Trace fields*
+A trace can be thought of as a tree linked structure of one or more spans that represent a segment of time.  A single trace may contain child spans that include the duration of the HTTP API request on the server and span(s) for the database calls within that lifecycle.  [The Open Telemetry specification](https://opentelemetry.io/docs/reference/specification/trace/semantic_conventions/) defines semantic conventions that our libraries primarily follow for span attribute names and values.
+
+**Common Trace fields**
 - ID
 - Parent ID
 - Trace ID
@@ -118,6 +120,8 @@ Spans/segments will be added to the current trace when database queries (Select)
 - db.system
 
 ### Metrics
+
+Open Telemetry defines three primary metric instrument types to be counters, measures, and observers.  Metric events should conform to the [metrics specification](https://opentelemetry.io/docs/reference/specification/overview/#metric-signal), which supports both non-aggregated and pre-aggregated measurements.
 
 #### HTTP
 HTTP Request Count
