@@ -145,6 +145,16 @@ export const Form = ({ errorCallback, ...props }) => {
 };
 ```
 
+### Checkbox
+
+`<Checkbox />` used as a select all checkbox. You will define your own handler. 
+
+
+`<CheckboxField>`  wraps a formik `<Field as={Checkbox}>`. This will give you the default bahavior of a checkbox.
+
+
+
+
 ## Storybook Form Stories
 
 There are a couple sample forms in storybook that show how to setup a form and its actions with the MilMove components.
