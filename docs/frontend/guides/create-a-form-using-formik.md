@@ -147,12 +147,17 @@ export const Form = ({ errorCallback, ...props }) => {
 
 ### Checkbox
 
+![Checkbox UI example](/img/frontend/CheckboxUIView.png)
+
 `<Checkbox />` used as a select all checkbox. You will define your own handler. 
 
+![Checkbox JSX code snippet](/img/frontend/Checkbox_snippet.png)
 
-`<CheckboxField>`  wraps a formik `<Field as={Checkbox}>`. This will give you the default bahavior of a checkbox.
+`<CheckboxField>` wraps a formik `<Field as={Checkbox}>`. This will give you the default behavior of a checkbox.
 
+![CheckboxField JSX code snippet](/img/frontend/CheckboxField_snippet.png)
 
+![Field as Checkbox JSX code snippet](/img/frontend/FieldAsCheckbox_snippet.png)
 
 
 ## Storybook Form Stories
