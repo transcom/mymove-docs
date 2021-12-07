@@ -1,4 +1,11 @@
-# Happo 
+# Happo
+
+:::info More Happo documentation
+There is [more information on Happo][docs-internal-happo] and how it's used in
+our Storybook Testing Frontend Testing section.
+
+[docs-internal-happo]: ../../frontend/testing/frontend.md "More Happo documentation"
+:::
 
 Happo is a UI diff checker tool that helps compare the UI pages from branches to master. When styling changes have been made, Happo notifies that a diff has occured and asks a reviewer to review the Happo changes before allowing the PR to be merged in.
 
@@ -8,7 +15,7 @@ When your CI/CD build has begun, you can view the status of the Happo under the 
 
 ![image](https://user-images.githubusercontent.com/84801109/141024060-32ff4825-b2b5-47e4-a281-682f6371a2d2.png)
 
-If the Happo check has failed, you must review the changes. You will see a list of diffs that will need to be reviewed/resolved before the Happo check can be approved. 
+If the Happo check has failed, you must review the changes. You will see a list of diffs that will need to be reviewed/resolved before the Happo check can be approved.
 
 For example, you may have changed title content like this:
 
