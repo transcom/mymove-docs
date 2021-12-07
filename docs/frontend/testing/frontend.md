@@ -6,45 +6,6 @@ sidebar_position: 1
 
 ## Table of Contents
 
-<!-- toc -->
-
-* [Design + Engineering Process for new components](#design--engineering-process-for-new-components)
-  * [Design delivers component design](#design-delivers-component-design)
-  * [Engineering](#engineering)
-* [Testing](#testing)
-  * [Writing Tests](#writing-tests)
-  * [Unit Test Runners and Libraries](#unit-test-runners-and-libraries)
-  * [Browser Testing](#browser-testing)
-  * [Storybook Testing](#storybook-testing)
-* [Code Style](#code-style)
-  * [Auto-formatting](#auto-formatting)
-  * [Linting](#linting)
-  * [File Layout & Naming](#file-layout--naming)
-  * [Presentation vs. Container components](#presentation-vs-container-components)
-  * [Function Declarations](#function-declarations)
-  * [Ordering imports](#ordering-imports)
-  * [Using Redux](#using-redux)
-  * [Creating Forms](#creating-forms)
-  * [CSS Styling Standards](#css-styling-standards)
-    * [Using Sass and CSS Modules](#using-sass-and-css-modules)
-    * [Classnames](#classnames)
-    * [rem vs. em](#rem-vs-em)
-    * [BEM](#bem)
-    * [USWDS](#uswds)
-* [Tooling](#tooling)
-  * [Sublime Plugins](#sublime-plugins)
-  * [WebStorm](#webstorm)
-  * [VS Code](#vs-code)
-  * [vi](#vi)
-  * [Browser Extensions](#browser-extensions)
-* [Learning](#learning)
-  * [JavaScript Concepts](#javascript-concepts)
-  * [Resources](#resources)
-
-Regenerate with "pre-commit run -a markdown-toc"
-
-<!-- tocstop -->
-
 ## Design + Engineering Process for new components
 
 MilMove has defined a process for taking a new component from concept to design to implementation. This section of the doc will describe this process. We use [Storybook](https://storybook.js.org/) for showing the finished components and you can view all current ones on master by going to our [public storybook site](https://storybook.move.mil/). If you want to see things locally please check out the [How To Run Storybook](https://github.com/transcom/mymove/wiki/run-storybook) document.
