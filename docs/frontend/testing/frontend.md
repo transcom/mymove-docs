@@ -97,6 +97,20 @@ our Continuous Integration and Continuous Delivery tools section.
 
 * We use [Happo](https://happo.io/) for visually testing Storybook components.
 * Happo will run automatically as a required check on open PRs. If Happo catches any visual diffs with existing components, it will fail and require a review. Anyone at Truss _can_ view the report on Happo and approve or reject changes, but this action should be completed by the designer or PM reviewing the PR for acceptance. When someone accepts or rejects a report, their name and the result will be reported back to the Github PR status.
+
+:::caution Storybook Addon Knobs
+The current version of Storybook used by Happo does not support [the library
+`@storybook/addon-knobs`][npm-storybook-addon-knobs] as expected. While it may
+work locally, Happo will not properly render the contents of components that are
+configured using these **Knobs**.
+
+> 👀 Because of this, make sure that you are passing actual JavaScript Object
+> de-structuring when setting your objects for Storybook components rather than
+> the `object()` function provided by the `@storybook/addon-knobs` library
+
+[npm-storybook-addon-knobs]: https://www.npmjs.com/package/@storybook/addon-knobs
+:::
+
 * If changes have been approved, the PR can be merged and no further changes are needed.
 * If changes are rejected, the reviewer should specify what needs to be changed in a PR comment, and the engineer should address requested changes. Happo will run again on each code push.
 * You can also run Happo locally to preview the report before pushing changes up to a PR.
