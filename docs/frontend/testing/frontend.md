@@ -88,6 +88,13 @@ Historically we have leaned on Browser tests to cover testing our app thoroughly
 
 ### Storybook Testing
 
+:::info More Happo documentation
+There is [more information on Happo][docs-internal-happo] and how it's used in
+our Continuous Integration and Continuous Delivery tools section.
+
+[docs-internal-happo]: ../../tools/cicd/happo.md "More Happo documentation"
+:::
+
 * We use [Happo](https://happo.io/) for visually testing Storybook components.
 * Happo will run automatically as a required check on open PRs. If Happo catches any visual diffs with existing components, it will fail and require a review. Anyone at Truss _can_ view the report on Happo and approve or reject changes, but this action should be completed by the designer or PM reviewing the PR for acceptance. When someone accepts or rejects a report, their name and the result will be reported back to the Github PR status.
 * If changes have been approved, the PR can be merged and no further changes are needed.
