@@ -102,9 +102,10 @@ The current version of Storybook used by Happo does not support [the library
 work locally, Happo will not properly render the contents of components that are
 configured using these **Knobs**.
 
-> 👀 Because of this, make sure that you are passing actual JavaScript Object
-> de-structuring when setting your objects for Storybook components rather than
-> the `object()` function provided by the `@storybook/addon-knobs` library
+```js title="Use de-structuring with plain JavaScript Objects rather than Knobs" {2}
+❌ displayInfo={object('displayInfo', ntsReleaseInfo)}
+✅ displayInfo={{ ...ntsReleaseInfo }}
+```
 
 [npm-storybook-addon-knobs]: https://www.npmjs.com/package/@storybook/addon-knobs
 :::
