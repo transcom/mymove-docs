@@ -4,47 +4,6 @@ sidebar_position: 1
 
 # Front-end / React Guide
 
-## Table of Contents
-
-<!-- toc -->
-
-* [Design + Engineering Process for new components](#design--engineering-process-for-new-components)
-  * [Design delivers component design](#design-delivers-component-design)
-  * [Engineering](#engineering)
-* [Testing](#testing)
-  * [Writing Tests](#writing-tests)
-  * [Unit Test Runners and Libraries](#unit-test-runners-and-libraries)
-  * [Browser Testing](#browser-testing)
-  * [Storybook Testing](#storybook-testing)
-* [Code Style](#code-style)
-  * [Auto-formatting](#auto-formatting)
-  * [Linting](#linting)
-  * [File Layout & Naming](#file-layout--naming)
-  * [Presentation vs. Container components](#presentation-vs-container-components)
-  * [Function Declarations](#function-declarations)
-  * [Ordering imports](#ordering-imports)
-  * [Using Redux](#using-redux)
-  * [Creating Forms](#creating-forms)
-  * [CSS Styling Standards](#css-styling-standards)
-    * [Using Sass and CSS Modules](#using-sass-and-css-modules)
-    * [Classnames](#classnames)
-    * [rem vs. em](#rem-vs-em)
-    * [BEM](#bem)
-    * [USWDS](#uswds)
-* [Tooling](#tooling)
-  * [Sublime Plugins](#sublime-plugins)
-  * [WebStorm](#webstorm)
-  * [VS Code](#vs-code)
-  * [vi](#vi)
-  * [Browser Extensions](#browser-extensions)
-* [Learning](#learning)
-  * [JavaScript Concepts](#javascript-concepts)
-  * [Resources](#resources)
-
-Regenerate with "pre-commit run -a markdown-toc"
-
-<!-- tocstop -->
-
 ## Design + Engineering Process for new components
 
 MilMove has defined a process for taking a new component from concept to design to implementation. This section of the doc will describe this process. We use [Storybook](https://storybook.js.org/) for showing the finished components and you can view all current ones on master by going to our [public storybook site](https://storybook.move.mil/). If you want to see things locally please check out the [How To Run Storybook](https://github.com/transcom/mymove/wiki/run-storybook) document.
@@ -127,8 +86,30 @@ Historically we have leaned on Browser tests to cover testing our app thoroughly
 
 ### Storybook Testing
 
+:::info More Happo documentation
+There is [more information on Happo][docs-internal-happo] and how it's used in
+our Continuous Integration and Continuous Delivery tools section.
+
+[docs-internal-happo]: ../../tools/cicd/happo.md "More Happo documentation"
+:::
+
 * We use [Happo](https://happo.io/) for visually testing Storybook components.
 * Happo will run automatically as a required check on open PRs. If Happo catches any visual diffs with existing components, it will fail and require a review. Anyone at Truss _can_ view the report on Happo and approve or reject changes, but this action should be completed by the designer or PM reviewing the PR for acceptance. When someone accepts or rejects a report, their name and the result will be reported back to the Github PR status.
+
+:::caution Storybook Addon Knobs
+The current version of Storybook used by Happo does not support [the library
+`@storybook/addon-knobs`][npm-storybook-addon-knobs] as expected. While it may
+work locally, Happo will not properly render the contents of components that are
+configured using these **Knobs**.
+
+```js title="Use de-structuring with plain JavaScript Objects rather than Knobs" {2}
+❌ displayInfo={object('displayInfo', ntsReleaseInfo)}
+✅ displayInfo={{ ...ntsReleaseInfo }}
+```
+
+[npm-storybook-addon-knobs]: https://www.npmjs.com/package/@storybook/addon-knobs
+:::
+
 * If changes have been approved, the PR can be merged and no further changes are needed.
 * If changes are rejected, the reviewer should specify what needs to be changed in a PR comment, and the engineer should address requested changes. Happo will run again on each code push.
 * You can also run Happo locally to preview the report before pushing changes up to a PR.
