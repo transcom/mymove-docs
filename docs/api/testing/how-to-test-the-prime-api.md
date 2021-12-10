@@ -144,3 +144,6 @@ prime-api payment-requests POST data.json
 ```
 
 Note that this method for accessing the API is not actively being supported and may be less reliable than others (Postman or the Prime API Client CLI).
+
+## References
+* [Acceptance testing payment requests](/docs/backend/testing/acceptance-testing-payment-requests)
