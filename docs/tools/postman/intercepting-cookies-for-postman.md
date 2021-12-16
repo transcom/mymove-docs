@@ -33,9 +33,9 @@ This doc will take you through the following steps:
   - Make sure **Capture Cookies** is toggled **On.**
   - Under **Domains**, add the following domains:
     - `admin.stg.move.mil`
-    - `adminlocal:3000`
+    - `adminlocal`
     - `office.stg.move.mil`
-    - `officelocal:3000`
+    - `officelocal`
 
     <img src="/static/img/postman/postman_interceptor_add_domains.jpg" height="600" alt="Screenshot of Postman Interceptor settings" />
 
@@ -47,7 +47,7 @@ We’ll run through an example with the Admin API.
 
 - In the Admin app, click **Local Sign In** and log in as an admin user.  
 
-- In Postman, make GET request to an Admin endpoint. e.g.  `http://adminlocal:3000/webhook_subscriptions`
+- In Postman, make GET request to an Admin endpoint. e.g. `http://adminlocal:3000/webhook_subscriptions`
 
 - Some people have luck with Interceptor successfully updating all cookies on the first try, and you may get a 200 here! But it’s common to get a `403 Unauthorized` at this point. To fix, we’ll update the `admin_session_token` manually in Postman.
 
