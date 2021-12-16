@@ -19,28 +19,25 @@ This doc will take you through the following steps:
 - [Install Postman](https://www.postman.com/)  
 
 - [Install Postman Interceptor for Chrome](https://chrome.google.com/webstore/detail/postman-interceptor/aicmkgpgakddgnaphhhpliifpcfhicfo?hl=en)
-- Open Postman and [follow these instructions](https://learning.postman.com/docs/sending-requests/capturing-request-data/interceptor/#installing-interceptor) for installing Interceptor. Pasted below: 
-	- Navigate to the Postman app and click the satellite icon in the upper-right corner to **Capture requests and cookies with Postman**. You can then enable those two features in their respective tabs. Under **Requests**, change **Source** to Interceptor. 
+- Open Postman and [follow these instructions](https://learning.postman.com/docs/sending-requests/capturing-request-data/interceptor/#installing-interceptor) for installing Interceptor. Pasted below:
+  - Navigate to the Postman app and click the satellite icon in the upper-right corner to **Capture requests and cookies with Postman**. You can then enable those two features in their respective tabs. Under **Requests**, change **Source** to Interceptor.
 
+  - Select **Install Interceptor Bridge** to download the Bridge, an independent executable that facilitates communication with the Interceptor.
 
+  - If you're on Windows or Linux, Postman will take care of everything for you. If you're on MacOS, you'll be prompted to install NodeJS if it's not already installed on your computer.
 
-	- Select **Install Interceptor Bridge** to download the Bridge, an independent executable that facilitates communication with the Interceptor.  
-
-	- If you're on Windows or Linux, Postman will take care of everything for you. If you're on MacOS, you'll be prompted to install NodeJS if it's not already installed on your computer.  
-
-	- Confirm Interceptor is ready to use by checking that the **Interceptor connected** status is green. You can now capture requests from your browser and cookies from any domain to use in Postman.
+  - Confirm Interceptor is ready to use by checking that the **Interceptor connected** status is green. You can now capture requests from your browser and cookies from any domain to use in Postman.
 
 - Turn on cookie syncing for Milmove domains.
-	- Click again on the satellite icon and click on the **Cookies** tab.
-	- Make sure **Capture Cookies** is toggled **On.**
-	- Under **Domains**, add the following domains:
-		- `admin.stg.move.mil`
-		- `adminlocal:3000` 
-		- `office.stg.move.mil`
-		- `officelocal:3000`
+  - Click again on the satellite icon and click on the **Cookies** tab.
+  - Make sure **Capture Cookies** is toggled **On.**
+  - Under **Domains**, add the following domains:
+    - `admin.stg.move.mil`
+    - `adminlocal:3000`
+    - `office.stg.move.mil`
+    - `officelocal:3000`
 
-<img src="./img/postman/postman_interceptor_add_domains.jpg" width="500" alt="Screenshot of Postman Interceptor settings" />
-
+    <img src="/static/img/postman/postman_interceptor_add_domains.jpg" height="600" alt="Screenshot of Postman Interceptor settings" />
 
 ## Find and transfer the necessary cookies
 
@@ -64,24 +61,22 @@ We’ll run through an example with the Admin API.
 
 - Retry the `GET` request. You should receive a 200!
 
-
 ## Form a working GET and PATCH request in Postman
-
 
 At this point, you’ve already made a successful `GET` request. Now that your session token is updated and Interceptor is working, you should be able to make any `GET` requests without further setup.
 
 To do a `POST`, `PUT`, or `PATCH` request, you'll need to add a new header.  
   
-
 - In Postman, click the `cookies` link in your Request view. You should see three values populated. Click the `masked_gorilla_csrf` cookie, and copy the value.  
 
 - In the Request view, click **Headers.** Add a header for your request with the key `X-CSRF-TOKEN` and value `<masked_gorilla_csrf value you copied>`
 
-<img src="./img/postman/postman_update_csrf_header.jpg" width="500" alt="Screenshot of how to update a header in Postman" />
+<img src="/static/img/postman/postman_update_csrf_header.jpg" height="500" alt="Screenshot of how to update a header in Postman" />
 
 - Add your Request body for your update, and hit Send. Success!
 
 ## Troubleshooting
+
 Can't connect to Postman's request interceptor after install?
 
 - It's possible that `~/.postman/InterceptorBridge/InterceptorBridge` is trying to look for a local install of `Node`. 
