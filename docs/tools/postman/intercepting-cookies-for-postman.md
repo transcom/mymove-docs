@@ -37,7 +37,7 @@ This doc will take you through the following steps:
     - `office.stg.move.mil`
     - `officelocal`
 
-    <img src="/static/img/postman/postman_interceptor_add_domains.jpg" height="600" alt="Screenshot of Postman Interceptor settings" />
+    ![Screenshot of Postman Interceptor settings](/img/postman/postman_interceptor_add_domains.jpg)
 
 ## Find and transfer the necessary cookies
 
@@ -71,7 +71,7 @@ To do a `POST`, `PUT`, or `PATCH` request, you'll need to add a new header.
 
 - In the Request view, click **Headers.** Add a header for your request with the key `X-CSRF-TOKEN` and value `<masked_gorilla_csrf value you copied>`
 
-<img src="/static/img/postman/postman_update_csrf_header.jpg" height="500" alt="Screenshot of how to update a header in Postman" />
+![Screenshot of how to update a header in Postman](/img/postman/postman_update_csrf_header.jpg)
 
 - Add your Request body for your update, and hit Send. Success!
 
