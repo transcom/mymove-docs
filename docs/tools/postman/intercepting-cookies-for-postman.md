@@ -71,7 +71,7 @@ To do a `POST`, `PUT`, or `PATCH` request, you'll need to add a new header.
 
 - In the Request view, click **Headers.** Add a header for your request with the key `X-CSRF-TOKEN` and value `<masked_gorilla_csrf value you copied>`
 
-![Screenshot of Postman Interceptor settings](/img/postman/postman_update_csrf_header.jpg)
+![Screenshot of how to update a header in Postman](/img/postman/postman_update_csrf_header.jpg)
 
 - Add your Request body for your update, and hit Send. Success!
 
