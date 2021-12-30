@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # What is Dependabot
 
-[Dependabot](https://dependabot.com) is used to monitor the repository dependencies and update them with automatic
+[Dependabot](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/about-dependabot-version-updates) is used to monitor the repository dependencies and update them with automatic
 pull requests against the `master` branch in the repo. Engineers then merge the Dependabot pull requests into master, or close with a note on why the update cannot be merged.
 
 # Dependency Updates
