@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # How to Manage Dependabot
 
-[Dependabot](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/about-dependabot-version-updates), now rolled into GitHub security, is used to monitor the repository dependencies as well as security vulnerabilities and update them with automatic
+[Dependabot](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/about-dependabot-version-updates), now rolled into GitHub security, is used to monitor the repository dependencies as well as security vulnerabilities, and update them with automatic
 pull requests against the `master` branch in the repo. The configuration is done via a file named
 `.github/dependabot.yml` in the top level of the repository. Read more about [dependabot configuration](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates) in the
 docs.  Once enabled, [dependabot status](https://github.com/transcom/mymove/network/updates) and [security alerts](https://github.com/transcom/mymove/security/dependabot) can be accessed under the "Insights" and "Security" tabs of the mymove GitHub repo page.
