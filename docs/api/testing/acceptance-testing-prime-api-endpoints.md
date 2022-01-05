@@ -36,14 +36,14 @@ sidebar_position: 1
 
 ### 4. Validate Errors
 * all error fields should be defined in `prime.yaml`
-* error responses should be meaningful and follow our [desired pattern](https://github.com/transcom/mymove/wiki/API-Errors).
+* error responses should be meaningful and follow our [desired pattern](/docs/api/guides/api-errors).
 * errors we like to use:
 1. `401 - Unauthorized`: requester is not properly authorized to make request
 1. `422 - Unprocessable Entity`: validation errors, missing values, invalid values
 1. `409 - Conflict Error`: Cannot process the request due to the current state of the server (for e.g., we cannot change this value once this date is past)
 1. `404 - Not Found`: Requested resource does not exist and the server does not know if it ever existed.
 
-For more detail on how to generate and return errors, [API Errors · transcom/mymove Wiki](https://github.com/transcom/mymove/wiki/API-Errors)
+For more detail on how to generate and return errors, [API Errors](/docs/api/guides/api-errors)
 
 For a working complete list of MTO database field description, [see here](https://docs.google.com/spreadsheets/d/1pQVZdi5ttQ67DIcBAgk9INUH9oVqTDpzL2ciMAJuBV8/edit#gid=0)
 
