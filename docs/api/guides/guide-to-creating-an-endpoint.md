@@ -147,7 +147,8 @@ object to process the request, you would call the appropriate `payload_to_model.
 from the the call to the service object you would call the appropriate `model_to_payload.go` function.
 
 ### Example diagram of how Swagger calls our handler functions:
-[MilMove Swagger call PDF](files/swagger/MilMoveSwaggerCall.pdf)
+* [MilMove Swagger call PDF](/files/swagger/MilMoveSwaggerCall.pdf)
+* [MilMove Swagger call PNG](/img/swagger/MilMoveSwaggerCall.png)
 
 ### Steps to creating a new handler:
 1. **Add a handler for the endpoint.**
@@ -330,7 +331,7 @@ var eventModels = map[KeyType]eventModel{
 
 If you'd like to learn more about event triggers, you can find more details [here](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/How-to-Add-an-Event-Trigger.md).
 
-# References:
+## References:
 * [Acceptance testing payment requests](/docs/backend/testing/acceptance-testing-payment-requests)
 * [How To Call Swagger Endpoints from React](/docs/frontend/guides/access-swagger-endpoints-from-react)
 * [Acceptance Testing Prime API](/docs/api/testing/acceptance-testing-prime-api-endpoints)
