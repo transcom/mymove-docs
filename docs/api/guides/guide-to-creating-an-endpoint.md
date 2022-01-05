@@ -147,8 +147,8 @@ object to process the request, you would call the appropriate `payload_to_model.
 from the the call to the service object you would call the appropriate `model_to_payload.go` function.
 
 ### Example diagram of how Swagger calls our handler functions:
-* [MilMove Swagger call PDF](/files/swagger/MilMoveSwaggerCall.pdf)
-* [MilMove Swagger call PNG](/img/swagger/MilMoveSwaggerCall.png)
+![MilMove Swagger call PNG](/img/swagger/MilMoveSwaggerCall.png)
+* [Link to PDF MilMove Swagger call](/files/swagger/MilMoveSwaggerCall.pdf)
 
 ### Steps to creating a new handler:
 1. **Add a handler for the endpoint.**
