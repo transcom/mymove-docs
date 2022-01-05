@@ -352,3 +352,4 @@ If you'd like to learn more about event triggers, you can find more details [her
 * [MilMove Overview Swagger section](/docs/about/overview-of-milmove/#swagger)
 * [How to Test the Prime API](/docs/api/testing/how-to-test-the-prime-api)
 * [Creating an Endpoint](/docs/api/guides/guide-to-creating-an-endpoint)
+* [Swagger tutorial](https://goswagger.io/tutorial/todo-list.html)
