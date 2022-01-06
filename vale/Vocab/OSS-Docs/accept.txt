@@ -66,3 +66,5 @@ callables
 (?i)Makefile
 (?i)enum
 (?i)subclassing
+(?i)Tricare
+(?i)Enum(s)?
