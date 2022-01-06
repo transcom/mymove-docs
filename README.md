@@ -36,7 +36,7 @@ If you're using the Fish shell, run this command instead:
 bash (curl -s https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press | psub)
 ```
 
-This command will install install Homebrew if you don't already have it, or update it
+This command will install Homebrew if you don't already have it, or update it
 if you already have it. It will also install or update `git` and the GitHub CLI,
 as well as the dependencies that are specific to this project, as defined in
 `fresh-brew.local` and `Brewfile.local`. Finally, it will launch the MilMove docs
@@ -44,7 +44,7 @@ website for you. Read more about the script by visiting the repo:
 https://github.com/trussworks/fresh-brew.
 
 If the script fails, pay attention to any errors or warnings from Homebrew in
-the termnial. Homebrew usually provides detailed instructions for fixing things,
+the terminal. Homebrew usually provides detailed instructions for fixing things,
 so read them carefully and follow their instructions. For example, a common issue
 is missing or outdated Command Line Tools. The message looks like this:
 
@@ -93,7 +93,8 @@ Note: if you're using the Fish shell, you'll need to [complete an extra step](ht
 5. Run `yarn install`
 6. Run `yarn start`
 
-The site should load automatically in your browser at http://localhost:3000/mymove-docs/
+The site should load automatically in your browser at
+[http://localhost:4000/mymove-docs/](http://localhost:4000/mymove-docs/).
 
 ## Deployment
 
