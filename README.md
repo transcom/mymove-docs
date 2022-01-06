@@ -44,7 +44,7 @@ website for you. Read more about the script by visiting the repo:
 https://github.com/trussworks/fresh-brew.
 
 If the script fails, pay attention to any errors or warnings from Homebrew in
-the terminal. Homebrew usually provides detailed instructions for fixing things,
+the termnial. Homebrew usually provides detailed instructions for fixing things,
 so read them carefully and follow their instructions. For example, a common issue
 is missing or outdated Command Line Tools. The message looks like this:
 
