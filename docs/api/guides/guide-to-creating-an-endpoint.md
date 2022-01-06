@@ -132,6 +132,21 @@ For information on error responses, check out: [API Errors Guide](https://transc
 Once you finishing updating the yaml files with the new endpoint information make sure to run your make commands like `make swagger-generate` to autogenerate your swagger files, or simply run `make server_run`,
 which runs your server and other useful make commands in one go.
 
+## Swagger overview
+### Swagger Architecture
+
+Link to a pictorial view of how the Swagger packages map from `yaml` to `Go` files and functions. Highlighting `paths`,
+`tags`, and `operationId`.
+
+* [Link to PDF Swagger architecture](/files/swagger/SwaggerBackendArchitecture.pdf)
+
+![MilMove Swagger architecture PNG](/img/swagger/SwaggerBackendArchitecture.jpg)
+
+### Example diagram of how Swagger calls our handler functions:
+* [Link to PDF MilMove Swagger call](/files/swagger/MilMoveSwaggerCall.pdf)
+
+![MilMove Swagger call PNG](/img/swagger/MilMoveSwaggerCall.png)
+
 ## Creating a Handler:
 Now you're ready to add your endpoint to the `handlers` folder. Start building out the service object before creating your handler.
 For more information about service objects and when to create one: [Service Objects](https://transcom.github.io/mymove-docs/docs/dev/contributing/backend/service-objects).
@@ -139,21 +154,69 @@ For more information about service objects and when to create one: [Service Obje
 An important note about service objects: The service layer is where we will store our business logic and connect to the database. Once a service object is created, it will be passed in to the handler `NewPrimeAPIHandler` function in `pkg/handlers/primeapi/api.go`,
 and the handler will only be aware of the service object interface, while the service object will contain all of the rules and validations as well as accessing object from the database.
 
-Handlers must never hit the database. Ideally, endpoint handlers are for type validations.
+Handlers must never hit the database. Ideally, endpoint handlers are for type validations. 
 
-#### Steps to creating a new handler:
-1. Add a handler for the endpoint
-2. Add payload_to_model converters
-    * this is a good place to check data types and null values.
-3. model_to_payload functions
+Handlers are also where
+we convert from payload (Swagger types) to model (MilMove Go types). Generally, before calling the service
+object to process the request, you would call the appropriate `payload_to_model.go` function. And after returning
+from the the call to the service object you would call the appropriate `model_to_payload.go` function.
+
+
+
+### Steps to creating a new handler:
+1. **Add a handler for the endpoint.**
+   * Update the `api.go` file depending on which API you are updating:
+```
+pkg/handlers/
+	adminapi/api.go
+	ghcapi/api.go
+	internalapi/api.go
+	ordersapi/api.go
+	primeapi/api.go
+	supportapi/api.go
+```
+
+2. **Add payload_to_model converters**
+    * This is a good place to check data types and null values.
+    * Each API has a set of `payload_to_model.go` and `model_to_paylaod.go` files under the `internal` dir:
+```shell
+pkg/handlers/
+	adminapi/internal/payloads
+	ghcapi/internal/payloads
+	internalapi/internal/payloads
+	ordersapi/internal/payloads
+	primeapi/internal/payloads
+	supportapi/internal/payloads
+```    
+3. **model_to_payload functions**
     * Once we have either modified the model or added something to our model, it must be converted back into a payload in order to be returned by the handler.
-4. Create handler type and Handle function
-5. Add tests for the handler
+    * Each API has a set of `payload_to_model.go` and `model_to_paylaod.go` files under the `internal` dir:
+```shell
+pkg/handlers/
+	adminapi/internal/payloads
+	ghcapi/internal/payloads
+	internalapi/internal/payloads
+	ordersapi/internal/payloads
+	primeapi/internal/payloads
+	supportapi/internal/payloads
+```
+4. **Create handler type and Handle function**
+    * Handlers are stored in this area depending on which API you are updating:
+```
+pkg/handlers/
+    adminapi/
+    ghcapi/
+    internalapi/
+    ordersapi/
+    primeapi/
+    supportapi/
+```
+5. **Add tests for the handler**
    	* Add test code
            * Use testdatagen functions [[Understanding Testdatagen Functions]]
     * Add mocks (only if absolutely necessary): [Generating Mocks with mockery](https://transcom.github.io/mymove-docs/docs/dev/testing/writing-tests/generate-mocks-with-mockery)
 
-#### Anatomy of a handler
+### Anatomy of a handler
 
 All handlers should begin by storing the DB, logger, and/or session from the request into the [AppContext](use-stateless-services-with-app-context). This is the easiest way to get all three:
 
@@ -202,7 +265,7 @@ If you also need the session, you can do all three at once:
 appCtx := appcontext.WithSession(appcontext.NewAppContext(h.DB(), logger), session)
 ```
 
-#### Authorization
+### Authorization
 
 You'll notice that many handlers perform authorization within the handler, such as:
 
@@ -232,7 +295,7 @@ if !h.TOOAuthorized(appCtx) {
 }
 ```
 
-#### Connecting the Handler to the Service Object:
+### Connecting the Handler to the Service Object:
 Once you create your handler type and Handle function, it can be added to `api.go`.
 This file is also where you can connect your service object to the handler.
 For example, our ListsMoves Handler will be passed the service object interface as follows:
@@ -253,8 +316,9 @@ type ListMovesHandler struct {
 }
 ```
 
-#### How to handle errors
+### How to handle errors
 For more information on how we handle errors,  check out our detailed [documentation](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/API-Errors.md).
+
 ### Add event key and update event map
 Each API has a corresponding file in `/pkg/services/event/<apiName>_endpoint.go`
 1. Add new `const` to represent event key
@@ -280,3 +344,12 @@ var eventModels = map[KeyType]eventModel{
 
 If you'd like to learn more about event triggers, you can find more details [here](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/How-to-Add-an-Event-Trigger.md).
 
+## References:
+* [Acceptance testing payment requests](/docs/backend/testing/acceptance-testing-payment-requests)
+* [How To Call Swagger Endpoints from React](/docs/frontend/guides/access-swagger-endpoints-from-react)
+* [Acceptance Testing Prime API](/docs/api/testing/acceptance-testing-prime-api-endpoints)
+* [How to Deprecate an API Endpoint](/docs/api/guides/how-to-deprecate-endpoints)
+* [MilMove Overview Swagger section](/docs/about/overview-of-milmove/#swagger)
+* [How to Test the Prime API](/docs/api/testing/how-to-test-the-prime-api)
+* [Creating an Endpoint](/docs/api/guides/guide-to-creating-an-endpoint)
+* [Swagger tutorial](https://goswagger.io/tutorial/todo-list.html)
