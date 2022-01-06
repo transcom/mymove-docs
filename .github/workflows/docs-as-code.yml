@@ -9,8 +9,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
 
-      - name: Vale
-        uses: errata-ai/vale-action@v1
+      - name: Vale Linter
+        uses: errata-ai/vale-action@v1.4.3
         with:
           files: __onlyModified
           onlyAnnotateModifiedLines: true
