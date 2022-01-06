@@ -73,7 +73,7 @@ _, err := TriggerEvent(Event{
 })
 ```
 
-For more information on triggering events, read [How to Add an Event Trigger](https://github.com/transcom/mymove/wiki/How-to-Add-an-Event-Trigger)
+For more information on triggering events, read [How to Add an Event Trigger](/docs/backend/guides/how-to/add-an-event-trigger)
 
 Note: The event package is generic and services all events for all internal and external needs. It will not sanitize or assemble the data for the Prime notifications. It should initially support the expected needs of the notifications and audit records.
 
