@@ -93,7 +93,8 @@ Note: if you're using the Fish shell, you'll need to [complete an extra step](ht
 5. Run `yarn install`
 6. Run `yarn start`
 
-The site should load automatically in your browser at http://localhost:3000/mymove-docs/
+The site should load automatically in your browser at
+[http://localhost:4000/mymove-docs/](http://localhost:4000/mymove-docs/).
 
 ## Deployment
 
