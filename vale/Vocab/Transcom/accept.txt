@@ -1,0 +1,13 @@
+(?i)Tricare
+CAC
+DoD
+Intelink
+MilMove
+MyMove
+Syncada
+Transcom
+adminlocal
+devlocal
+milmovelocal
+officelocal
+primelocal
