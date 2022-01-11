@@ -65,6 +65,7 @@ callables
 (?i)Tricare
 (?i)Enum(s)?
 (?i)Eslint
+(?i)Params
 (?i)PostgreSQL
 (?i)Postgres
 (?i)Validator
@@ -76,8 +77,10 @@ callables
 (?i)mixins
 (?i)psql
 API
+Addon
 CloudWatch
 Dependabot
+Destructuring
 Dockerfile(s)?
 Docusaurus
 Editorconfig
