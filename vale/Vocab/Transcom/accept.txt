@@ -1,3 +1,4 @@
+(?i)Per Diem
 (?i)Tricare
 CAC
 DoD
@@ -8,6 +9,7 @@ Syncada
 Transcom
 adminlocal
 devlocal
+diem
 milmovelocal
 officelocal
 primelocal
