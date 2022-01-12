@@ -127,7 +127,7 @@ Adhere to Airbnb's [JavaScript Style Guide](https://github.com/airbnb/javascript
   * Prefer single quotes for non-JSX code (CLI: `--single-quote` API: `singleQuote: true`)
   * Prefer trailing commas for cleaner PRs and error reduction (CLI: `--trailing-comma true` API: `trailingComma: true`)
   * A `.prettierrc` file is in the project for the above settings.
-  * Make sure to [set up your editor](https://prettier.io/docs/en/editors.html) to format (and possibly autosave) with Prettier with the above configurations. You will need to install Prettier globally for this.
+  * Make sure to [set up your editor](https://prettier.io/docs/en/editors.html) to format (and possibly automatically save) with Prettier with the above configurations. You will need to install Prettier globally for this.
   * We currently pin the prettier dependency to a specific version to avoid frequent formatting churn.
 
 ### Linting
@@ -144,7 +144,7 @@ Adhere to Airbnb's [JavaScript Style Guide](https://github.com/airbnb/javascript
   * `/src/constants` Define constants here instead of using string literals for any values with specific meaning in the context of the application. For example, data that comes back from the API that may be used in UI logic (such as a user role or payment request status).
   * `/src/containers` React Components that are primarily concerned with connecting UI to containers or providers (such as Redux), and sharing behavior or patterns via hooks or higher-order components.
   * `/src/helpers` Miscellaneous utilities that implement logic, data handling, and other common functions used throughout the application. These should not include React-specific code such as JSX, and they should generally be purely functional and well-tested.
-  * `/src/layout` React components used to render common layout elements, such as header, footer, page content, etc. Similar to the components located in /src/components, they should focus on rendering UI rather than application logic or connecting to providers. However, they are designed such that there should only ever be one instance on each page.
+  * `/src/layout` React components used to render common layout elements, such as header, footer, page content, etc. Similar to the components located in `/src/components`, they should focus on rendering UI rather than application logic or connecting to providers. However, they are designed such that there should only ever be one instance on each page.
   * `/src/pages` React components that correspond to actual routes (URLs). These are responsible for assembling the UI components for a page, and hooking them up with the necessary providers such as Redux. Queries should be co-located with page components, since pages are explicitly dependent on them.
   * `/src/stories` Storybook stories for components live here.
   * ***NOTE: The code style recommendations above are strictly enforced in the above directories***
@@ -261,7 +261,7 @@ Has plugins for most out the box, but setting up Prettier is tricky. See [the do
 ### VS Code
 
 * Prettier
-* Path Intellisence
+* Path Intellisense
 
 ### vi
 
@@ -301,7 +301,7 @@ Important JS patterns and features to understand.
 Various resources on React, Redux, etc, for a variety of learning styles.
 
 * _Read_: [React Tutorial](https://reactjs.org/tutorial/tutorial.html) - Official tutorial from React. I (Alexi) personally found this cumbersome. If you stick with it you’ll learn the basics.
-* _Read_: [Modern JavaScript Tutorial](https://javascript.info/) - A site with tutorials covering many modern javascript concepts
+* _Read_: [Modern JavaScript Tutorial](https://javascript.info/) - A site with tutorials covering many modern JavaScript concepts
 * _Watch_: [Getting Started with Redux](https://egghead.io/courses/getting-started-with-redux) - Free 30 video series by the author of Redux.
 * _Watch_: [ReactJS / Redux Tutorial](https://www.youtube.com/playlist?list=PL55RiY5tL51rrC3sh8qLiYHqUV3twEYU_) - ~60 minutes of YouTube videos that will get you up and running with React and Redux. The content is useful, the guy’s voice can be a bit of a challenge.
 * _Watch_: [This video](https://www.youtube.com/watch?list=PLb0IAmt7-GS188xDYE-u1ShQmFFGbrk0v&v=nYkdrAPrdcw) from the introduction of Flux can be useful for some high-level background about the pattern (the MVC bashing is overdone, but otherwise this video is useful.)
