@@ -4,28 +4,6 @@ sidebar_position: 2
 
 # How to Use and Run Storybook
 
-## Table of Contents
-
-<!-- toc -->
-
-* [What is Storybook](#what-is-storybook)
-* [Basics](#basics)
-  * [Option A: Running with tooling installed locally](#option-a-running-with-tooling-installed-locally)
-    * [Dependencies](#dependencies)
-    * [How to run storybook server locally](#how-to-run-storybook-server-locally)
-    * [How to generate static storybook site files](#how-to-generate-static-storybook-site-files)
-  * [Option B: Running in a docker container](#option-b-running-in-a-docker-container)
-* [Adding Stories](#adding-stories)
-  * [Addons](#addons)
-    * [Actions](#actions)
-    * [Knobs](#knobs)
-  * [Testing Stories](#testing-stories)
-  * [Story changes require approval of Design](#story-changes-require-approval-of-design)
-
-Regenerate with "pre-commit run -a markdown-toc"
-
-<!-- tocstop -->
-
 ## What is Storybook
 
 Storybook is a user interface development environment and playground for UI components. The tool enables developers to create components independently and showcase components interactively in an isolated development environment. [Read more here](https://storybook.js.org/docs/basics/introduction/)
