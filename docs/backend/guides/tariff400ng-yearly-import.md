@@ -27,9 +27,13 @@ it up with the spreadsheet in case any zips or service areas have changed.
 
 ## Obtain yearly rates `xlsx` file from USTRANSCOM
 
-1. Visit: [https://www.ustranscom.mil/dp3/hhg.cfm](https://www.ustranscom.mil/dp3/hhg.cfm) (for some reason, I had to load hit this url twice... the first visit redirected to another page).
+1. Visit:
+   [https://www.ustranscom.mil/dp3/hhg.cfm](https://www.ustranscom.mil/dp3/hhg.cfm)
+   (for some reason, I had to load hit this URL twice... the first visit
+   redirected to another page).
 1. Look under “Special Requirements and Rates Team” -> “Domestic” -> “400NG Baseline Rates” and download yearly rate file.
-1. Copy the file to USTC MilMove Google drive: USTC MilMove -> Data -> Rate Engine pre GHC
+1. Copy the file to USTC MilMove Google drive: USTC MilMove -> Data -> Rate
+   Engine pre-GHC
 
 ## Importing `full_packs`, `full_unpacks`, `linehauls`, `service_areas`, and `shorthauls`
 
@@ -194,7 +198,7 @@ Then, you can use GoLand to search and replace using a regex to transform it to 
 `^([0-9]+)\t+\$([0-9]+)\.([0-9]+)\t+\$([0-9]+)\.([0-9]+)\t+([0-9])` to `SELECT update_sit_rates('$1', $2$3, $4$5, $6);`
 * Note that the rates in the document are in dollars, but we store the rates in cents in our `tariff400ng_service_areas` table,
 so make sure you adjust accordingly.
-* Run this sql file with psql by either doing `psql-dev < tariff400ng_fix_service_areas.sql` or (if already in psql)
+* Run this SQL file with `psql` by either doing `psql-dev < tariff400ng_fix_service_areas.sql` or (if already in `psql`)
 `\i tariff400ng_fix_service_areas.sql` .
 
 Spot check the `tariff400ng_service_areas` table to make sure the data is as expected.
