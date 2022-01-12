@@ -103,7 +103,8 @@ mymove/
 :::caution Stuttering
 You might notice that there's a lot of redundancy in this naming scheme. This is commonly referred to as **"stuttering"** and is considered an anti-pattern in most languages and frameworks.
 
-We may at some point try to move away from this convention, but it is preferrable to be consistent with our less-than-ideal naming scheme for now.
+We may at some point try to move away from this convention, but it is preferable
+to be consistent with our less-than-ideal naming scheme for now.
 :::
 
 ### Creating the struct
@@ -429,7 +430,8 @@ type ReweighCreator interface {
 }
 ```
 
-This enables the the Go `mockery` tool to generate the mock type automatically. To trigger the generation, run `make mocks_generate`.
+This enables the Go `mockery` tool to generate the mock type automatically. To
+trigger the generation, run `make mocks_generate`.
 
 When you use the mock type, you need to know two things:
 
