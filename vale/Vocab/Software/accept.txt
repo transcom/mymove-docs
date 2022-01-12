@@ -64,6 +64,7 @@ callables
 (?i)subclassing
 (?i)Tricare
 (?i)Enum(s)?
+(?i)Errcheck
 (?i)Eslint
 (?i)Hostname
 (?i)Params
@@ -76,12 +77,16 @@ callables
 (?i)classname(s)?
 (?i)etag(s)?
 (?i)frontmatter
+(?i)linehaul
 (?i)mixins
+(?i)mux
 (?i)onboarding
 (?i)psql
 (?i)sunsetting
 API
 Addon
+Async
+Bing
 CloudWatch
 Dependabot
 Destructuring
@@ -96,6 +101,7 @@ Golang
 GovCloud
 Happo
 IntelliSense
+Inuse
 Jamstack
 JavaScript
 Jira
@@ -104,10 +110,12 @@ Linux
 Loki
 Makefile
 Middleware
+Niv
 Precommit
 Redoc
 SchemaSpy
 Uber
+Uploader
 Webpack
 Yaml
 YubiKey
@@ -118,6 +126,7 @@ config
 csv
 dev
 env
+gosec
 nullable
 repo
 subcommand(s)?
