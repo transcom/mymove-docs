@@ -1,33 +1,5 @@
 [Pricing Acceptance script](https://github.com/transcom/mymove/blob/master/scripts/pricing-acceptance) is being used to mimick the Prime's use of the Prime API. If this script fails on a step, you will need to run the commands manually. This wiki page is to document the list of commands in order that would normally be run by the Prime.
 
-<!-- toc -->
-
-- [1. Fetch MTOs available to the Prime](#1-fetch-mtos-available-to-the-prime)
-  * [Assuming the MTO was created during the demo, fetch the latest MTO and save it to a file](#assuming-the-mto-was-created-during-the-demo-fetch-the-latest-mto-and-save-it-to-a-file)
-    + [Other variations if needed](#other-variations-if-needed)
-      - [Fetch all MTOs](#fetch-all-mtos)
-      - [To find the latest MTO use a `jq` filter](#to-find-the-latest-mto-use-a-jq-filter)
-      - [To find the MTO by MoveOrderID use a `jq` filter](#to-find-the-mto-by-moveorderid-use-a-jq-filter)
-      - [An additional filter can be added to only return the MTO ID](#an-additional-filter-can-be-added-to-only-return-the-mto-id)
-- [2. Prime to update dates for the shipment](#2-prime-to-update-dates-for-the-shipment)
-  * [For help narrowing down the eTag you can use `jq`](#for-help-narrowing-down-the-etag-you-can-use-jq)
-- [3. Prime to update the weights for the shipment](#3-prime-to-update-the-weights-for-the-shipment)
-  * [For help narrowing down the eTag you can use `jq`](#for-help-narrowing-down-the-etag-you-can-use-jq-1)
-- [4. Prime to update destination address for the shipment](#4-prime-to-update-destination-address-for-the-shipment)
-  * [For help narrowing down the eTag you can use `jq`](#for-help-narrowing-down-the-etag-you-can-use-jq-2)
-- [5. Prime creates a payment request](#5-prime-creates-a-payment-request)
-  * [Create the payload](#create-the-payload)
-  * [Review the payload](#review-the-payload)
-  * [Send the payment request and save the response](#send-the-payment-request-and-save-the-response)
-  * [Get the payment request ID and payment request Number](#get-the-payment-request-id-and-payment-request-number)
-- [6. Prime adds proof of service documents](#6-prime-adds-proof-of-service-documents)
-  * [Store fake upload files to ./tmp/uploads](#store-fake-upload-files-to-tmpuploads)
-- [7. Generate EDI in 858 format for the Payment Request](#7-generate-edi-in-858-format-for-the-payment-request)
-- [8. Update the payment requests status](#8-update-the-payment-requests-status)
-- [References](#references)
-
-<!-- tocstop -->
-
 # 1. Fetch MTOs available to the Prime
 
 ## Assuming the MTO was created during the demo, fetch the latest MTO and save it to a file
@@ -49,7 +21,7 @@ prime-api-client --cac --hostname api.stg.move.mil --port 443 fetch-mto-updates 
 
 #### To find the latest MTO use a `jq` filter
 ```sh
-  prime-api-client --cac --hostname api.stg.move.mil --port 443 fetch-mto-updates | jq 'sort_by(.updatedAt) | .[-1]' 
+  prime-api-client --cac --hostname api.stg.move.mil --port 443 fetch-mto-updates | jq 'sort_by(.updatedAt) | .[-1]'
 ```
 
 #### To find the MTO by MoveOrderID use a `jq` filter
