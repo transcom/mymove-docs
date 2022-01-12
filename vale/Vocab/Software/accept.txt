@@ -77,7 +77,6 @@ callables
 (?i)classname(s)?
 (?i)etag(s)?
 (?i)frontmatter
-(?i)linehaul
 (?i)mixins
 (?i)mux
 (?i)onboarding
@@ -87,6 +86,7 @@ API
 Addon
 Async
 Bing
+Codegen
 CloudWatch
 Dependabot
 Destructuring
@@ -111,9 +111,11 @@ Loki
 Makefile
 Middleware
 Niv
+Postico
 Precommit
 Redoc
 SchemaSpy
+TablePlus
 Uber
 Uploader
 Webpack

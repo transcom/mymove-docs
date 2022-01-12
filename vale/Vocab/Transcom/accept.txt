@@ -1,5 +1,8 @@
 (?i)Per Diem
 (?i)Tricare
+(?i)accessorial(s)?
+(?i)linehaul
+(?i)waterhaul
 CAC
 DoD
 Reiken
