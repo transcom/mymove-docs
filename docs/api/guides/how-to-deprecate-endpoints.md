@@ -3,7 +3,12 @@ sidebar_position: 5
 ---
 
 # How to Deprecate an API Endpoint
-This article adheres to the principles of [API evolution](https://apisyouwonthate.com/blog/api-evolution-for-rest-http-apis), with a reduced focused on versioning. In essence, this means that we will strive to make _additive_ changes. We will introduce new functionality into the API and gradually communicate the deprecation and eventual sunsetting of the old functionality. 
+This article adheres to the principles of [API
+evolution](https://apisyouwonthate.com/blog/api-evolution-for-rest-http-apis),
+with a reduced focused on versioning. In essence, this means that we will strive
+to make _additive_ changes. We will introduce new functionality into the API and
+gradually communicate the deprecation and eventual sunsetting of the old
+functionality.
 
 The following is a suggested outline for how we should execute this process on MilMove.
 
@@ -12,7 +17,7 @@ A version of this process should be followed for many changes we make to an API,
 
 - **Changing the name of an object/changing terminology.**
 	We can make additive changes to an API to add the new terminology without removing the definitions and endpoints that have the old terminology. On the backend, the endpoints with the old terminology can be modified to point at the new handlers until we remove them on the sunset date.
-	
+
 - **Changing the functionality of an existing endpoint**
 	Likewise, it is generally possible to add the new functionality before removing the code that will change.
 
@@ -29,17 +34,18 @@ A version of this process should be followed for many changes we make to an API,
 
 3. Mark the old endpoint as "deprecated." To do this, you should:
 	- Add the key `deprecated: true` to the endpoint definition.
-	- Prefix the endpoint description with `_[Deprecated: sunset on <date>]_` with the planned date for sunsetting the old functionality.
+    - Prefix the endpoint description with `_[Deprecated: sunset on <date>]_`
+      with the planned date for sunsetting the old functionality.
 	- Add a link to the preferred endpoint to use instead, if applicable.
 
 4. Communicate the changes to the team. To do this, you should make a post in #prac-engineering in the USTC slack. This post should contain:
 	- @channel. Everyone needs to be notified.
 	- The sunset date. Make it clear when this functionality will no longer be supported.
-	- Context. Give folks some insight into why this functionality is being removed. 
+	- Context. Give folks some insight into why this functionality is being removed.
 	- Alternatives. Talk about the preferred new endpoint, work-arounds, or recommendations for moving away from the old functionality entirely.
 	- Who to contact with questions.
-        
-	Example: 
+
+	Example:
 	> Hi there, @channel! This is your official announcement:
 	>
 	> The Prime API endpoint `fetchMTOUpdates` is effectively deprecated. We have replaced it with the new endpoint `listMoves`, which notably returns less information. Pair this new endpoint with `getMoveTaskOrder` to retrieve all of the information on a move.
