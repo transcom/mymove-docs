@@ -36,7 +36,8 @@ The HERE API is the currently used 3rd party api for doing route planning in the
 
 #### TransitDistance
 
-Turns the input addresses into `LatLong` data via HERE geocoder endpoint, and then it runs the `LatLongTransitDistance` method to determine the distance.
+Turns the input addresses into `LatLong` data via HERE `geocoder` endpoint, and
+then it runs the `LatLongTransitDistance` method to determine the distance.
 
 #### Zip5TransitDistance
 
@@ -46,7 +47,19 @@ Uses the `Zip5ToLatLong` method to turn the input Zip5s into `LatLong` data and 
 
 `Zip3TransitDistance` is unimplemented and always returns a `NewUnsupportedPostalCodeError`
 
-This method was added to support the requirement that some service item pricing in the rate engine, ie Domestic Linehaul, will use Zip3 based distance calculations. This expectation is documented in the [service item pricing spreadsheet](https://docs.google.com/spreadsheets/d/1NRbxHmvaWV6aXQrxQ2LJhkc5tClAl3Eb1-MRxZ123Tw/edit#gid=0) (Google Docs Link). However, the HERE api uses pre-calculated Zip5 to Latitude and Longitude coordinate map to turn Zip5s into coordinates and then uses the LatLongTransitDistance function to return a distance. Since currently there is no such Zip3 to Latitude and Longitude coordinates map there is no way to do a similar calculation of distance. In talking with product about this we decided if there was not an easy way to implement Zip3 distance in HERE we would only add a stub so that work could continue until a new 3rd party planner, ie Rand McNally, was implemented and could supply a valid Zip3 to Zip3 distance calculation.
+This method was added to support the requirement that some service item pricing
+in the rate engine, i.e. Domestic Linehaul, will use Zip3 based distance
+calculations. This expectation is documented in the [service item pricing
+spreadsheet](https://docs.google.com/spreadsheets/d/1NRbxHmvaWV6aXQrxQ2LJhkc5tClAl3Eb1-MRxZ123Tw/edit#gid=0)
+(Google Docs Link). However, the HERE API uses pre-calculated Zip5 to Latitude
+and Longitude coordinate map to turn Zip5s into coordinates and then uses the
+LatLongTransitDistance function to return a distance. Since currently there is
+no such Zip3 to Latitude and Longitude coordinates map there is no way to do a
+similar calculation of distance. In talking with product about this we decided
+if there was not an easy way to implement Zip3 distance in HERE we would only
+add a stub so that work could continue until a new 3rd party planner, i.e. Rand
+McNally, was implemented and could supply a valid Zip3 to Zip3 distance
+calculation.
 
 #### LatLongTransitDistance
 
