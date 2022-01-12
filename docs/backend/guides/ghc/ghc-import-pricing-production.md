@@ -12,11 +12,11 @@ References to bad links.
 ## Problem
 
 [JIRA MB-1287](https://dp3.atlassian.net/browse/MB-1287)
-We currently have a way to parse and import pricing information for the local dev database, we now need a way to import 
+We currently have a way to parse and import pricing information for the local dev database, we now need a way to import
 pricing information into the production environment.
 
-While the [story](https://dp3.atlassian.net/browse/MB-1287) as written emphasizes Solution 1 as a preferred solution  to achieve a production import, team infra 
-brought up a second option and accompanying considerations that should be weighed. Solution 2 will require some 
+While the [story](https://dp3.atlassian.net/browse/MB-1287) as written emphasizes Solution 1 as a preferred solution  to achieve a production import, team infra
+brought up a second option and accompanying considerations that should be weighed. Solution 2 will require some
 collaboration and knowledge sharing about AWS infrastructure.
 
 ## Proposed Solution (Solution 1: Create a Secure Migration Script)
@@ -27,7 +27,7 @@ collaboration and knowledge sharing about AWS infrastructure.
 
 We’ve decided to proceed with using the secure migration route to get data into production.
 
-In addition, future stories are to be planned to plan on automating more of the process, and incorporating 
+In addition, future stories are to be planned to plan on automating more of the process, and incorporating
 recommendations around creating a ECS scheduled task as an alternative to running a secure migration:
 
 1. Versioning the table: we need a way to roll back the tables, potentially tied to the contract code of the upload.
@@ -40,17 +40,19 @@ recommendations around creating a ECS scheduled task as an alternative to runnin
 Create a Go script that runs a pg-dump and generates a secure migration
 
 Create a pg_dump from a script
-Include a command from within a script to dump the contents of the table for use in 
-the migration. This would be written in Go rather than in pgsql. How this might look 
-can be found in the following examples [Go Playground](https://play.golang.org/p/YxoXuET1XK) 
-and [StackOverflow Example](https://stackoverflow.com/questions/57089144/write-file-from-exec-command)
 
-As reference the pg_dump in the terminal looks like:  
+Include a command from within a script to dump the contents of the table for use
+in the migration. This would be written in Go rather than in psql. How this
+might look can be found in the following examples [Go
+Playground](https://play.golang.org/p/YxoXuET1XK) and [StackOverflow
+Example](https://stackoverflow.com/questions/57089144/write-file-from-exec-command)
+
+As reference the pg_dump in the terminal looks like:
 ```shell
 pg_dump -h localhost -U postgres -W dev_db -t re_* --data-only -T re_services* --data-only > table_name_dump.pgsql
 ```
 
-It includes parameters to dump several tables (`-t -T`) , using a [postgres pattern](https://www.postgresql.org/docs/current/app-psql.html#APP-PSQL-PATTERNS) 
+It includes parameters to dump several tables (`-t -T`) , using a [postgres pattern](https://www.postgresql.org/docs/current/app-psql.html#APP-PSQL-PATTERNS)
 pointing to all tables that start with ‘re_’ and then exclude ‘re_services’, our solution written in Go should include these patterns.
 
 **Pg_dump the golang way (include in the script)**
@@ -80,7 +82,7 @@ If err cmd.Start(); err != nil {
 
 log.Print(“Waiting for command to finish…”)
 
-// Wait for the command to finish.                                                                                                                                                                   
+// Wait for the command to finish.
 If err = cmd.Wait(); err != nil {
     log.Fatal(err)
 }
@@ -88,17 +90,17 @@ If err = cmd.Wait(); err != nil {
 
 **Write script to generate a secure migration**
 
-We’re following the route that involves writing a script, and we can model it after the following lines in the 
-[cac-migration script](https://github.com/transcom/mymove/blob/107872f9f6e7739f6b5d5efe988357b8fbe67192/cmd/milmove/gen_certs_migration.go#L199-L217). 
+We’re following the route that involves writing a script, and we can model it after the following lines in the
+[cac-migration script](https://github.com/transcom/mymove/blob/107872f9f6e7739f6b5d5efe988357b8fbe67192/cmd/milmove/gen_certs_migration.go#L199-L217).
 From within the script, we will prompt the user to upload the migration to s3 as explained in [step 8](https://github.com/transcom/mymove/blob/master/docs/database/migrate-the-database.md#creating-secure-migrations)
 
 ```
 log.Print(“Upload the migration to S3 with:upload-secure-migration <production_migration_file>”)
 ```
-The command gets defined in `cmd/milmove/main.go` and list it 
+The command gets defined in `cmd/milmove/main.go` and list it
 in [Creating a Migration](https://github.com/transcom/mymove/blob/master/docs/database/migrate-the-database.md#creating-a-migration)
 
-### Step 2: 
+### Step 2:
 Run the pricing parser and spot check results. Generate the migration for production.
 
 **Run Importer**
@@ -127,18 +129,29 @@ Run the script defined in step 1, first in Experimental then Production.
 ## Other Options Considered
 
 ### Solution 2: Set up an ECS AWS Scheduled Task
-Build an ECS scheduled task that grabs XLSX data from S3 buckets, parses and runs a pg-dump and loads it async into the DB. This should automate many steps a developer would do by hand, and if designed well, can allow a developer to spot check the results of the parser, run the task locally before data makes it into the production env.
+Build an ECS scheduled task that grabs XLSX data from S3 buckets, parses and
+runs a pg-dump and loads it asynchronously into the DB. This should automate
+many steps a developer would do by hand, and if designed well, can allow a
+developer to spot check the results of the parser, run the task locally before
+data makes it into the Production environment.
 
 [How To Create a ECS Scheduled Task](https://github.com/transcom/mymove/blob/master/docs/how-to/create-an-ecs-scheduled-task.md#how-to-create-an-ecs-scheduled-task)
 
 A scheduled task runs daily, and turns off if there are no actions to take.
-When the data changes (in our case for example, a new xlsx data set gets uploaded) then the scheduled task should run. Our task is to design a way that this process maintains debugging transparency and automation.
+When the data changes (in our case for example, a new `xlsx` data set gets
+uploaded) then the scheduled task should run. Our task is to design a way that
+this process maintains debugging transparency and automation.
 
 Thoughts: it’s supposedly not too difficult to automate some of the steps  and this path does allow for a human eye on the data before its moved into the production database
 
-**cmd/milmove-tasks**: This directory should house two tasks that will 1. Run the ghc pricing parser, and possibly output a text file that displays the results of the import 2. A task to connect and import the data into the database.
+**`cmd/milmove-tasks`**: This directory should house two tasks that will 1. Run
+the GHC pricing parser, and possibly output a text file that displays the
+results of the import 2. A task to connect and import the data into the
+database.
 
-**Makefile**: where we’ll point to the scheduled tasks created in the cmd/milmove-tasks directory. Make sure the target is named similar to the scheduled task function you created.
+**Makefile**: where we’ll point to the scheduled tasks created in the
+`cmd/milmove-tasks` directory. Make sure the target is named similar to the
+scheduled task function you created.
 
 #### Solution 2 Pros and Cons
 
@@ -147,8 +160,12 @@ Thoughts: it’s supposedly not too difficult to automate some of the steps  and
 * This option allows us to separate out some load so we aren’t adding data that devs are downloading for production migrations.
 
 **Cons:**
-* We wont be able to use UUIDs to identify and target errors in the data import, since uuids are not visible in production data, and they are regenerated for all environments (prod uuids are different from dev-local or staging)
-* This solution will take extra work to be designed in a way that allows for transparency around errors present in the xlsx imports, errors in the parser, and anything that can cause a failed database import. 
+* We wont be able to use UUIDs to identify and target errors in the data import,
+  since UUIDs are not visible in production data, and they are regenerated for
+  all environments (prod UUIDs are different from dev-local or staging)
+* This solution will take extra work to be designed in a way that allows for
+  transparency around errors present in the `xlsx` imports, errors in the parser,
+  and anything that can cause a failed database import.
 
 ## Reference
 * [Original GDoc for this work](https://docs.google.com/document/d/1QVwY5uobUpz87WEeAXSnIXG0NE1o4YnFW0Lf7PnMqO0/edit#). This was quickly copied and leaving this here to double-check, if needed.
