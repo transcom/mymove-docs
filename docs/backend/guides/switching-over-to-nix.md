@@ -29,14 +29,16 @@ With the above in mind, switching from our current flow to `nix` would not reall
 * We also have several tools that we don't have version checks for in the repo so it's easy for people to have different versions of things. That will still be possible in the `nix` setup because there's a few packages needed before you can even use the `nix` setup we have like `direnv`, but at least the number will be much smaller, and we could also have that in version control possibly and just handle it slightly differently (e.g. have people use that file to install the first dependencies like `direnv` globally, then have them use the existing `nix` setup.
 * We could use something like `niv` to keep our packages up to date:
   * [NixPkgs - Towards Reproducibility](https://nixos.org/guides/towards-reproducibility-pinning-nixpkgs.html)
-  * [Niv - GitHub Repo](https://github.com/nmattia/niv/)
+  * [`niv` - GitHub Repo](https://github.com/nmattia/niv/)
 * Set up is quicker with `nix` than our current process.
 
 ## Cons
 
 * Nix is something that is new to most people on the project vs `homebrew` which is more ubiquitous, at least among Mac devs.
-* Installation is via a `curl`ing a shell script.
-  * It's something we've talked about being a limitation for full adoption and that we should consider contributing to `nix` by making it possible to install via `homebrew` or some other method.
+* Installation is via executing a `curl` shell script.
+  * It's something we've talked about being a limitation for full adoption and
+    that we should consider contributing to `nix` by making it possible to
+    install via `homebrew` or some other method.
   * [Slack thread with more info](https://trussworks.slack.com/archives/C01KTH6HP7D/p1611793387004800).
 * Packages in `nix` can lag behind their counterparts in `homebrew`. This means that if we do switch, we either have to be ok with being behind, or we need to be willing to make contributions to `nix` to update the packages we care about.
 * Finding the hashes for any given package version can be a pain.
