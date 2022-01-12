@@ -1,17 +1,6 @@
-Here are some potential CAC reader errors and their solutions. 
+Here are some potential CAC reader errors and their solutions.
 
 # CAC Errors
-
-<!-- toc -->
-
-- [TOC](#toc)
-- [1. No matching slot found](#1-no-matching-slot-found)
-- [2. No matching slot found when card IS plugged in](#2-no-matching-slot-found-when-card-is-plugged-in)
-- [3. Cannot sign Adobe PDF documents with CAC](#3-cannot-sign-adobe-pdf-documents-with-cac)
-- [4. Using the prime-api-client results in a cert authority error](#4-using-the-prime-api-client-results-in-a-cert-authority-error)
-- [5. Using the prime-api-client results in a 401 unauthorized](#5-using-the-prime-api-client-results-in-a-401-unauthorized)
-
-<!-- tocstop -->
 
 # 1. No matching slot found
 
@@ -42,8 +31,8 @@ Here are some potential CAC reader errors and their solutions.
    ```
 
 # 2. No matching slot found when card IS plugged in
-   
-   Sometimes you might see that error even if your card is plugged in. 
+
+   Sometimes you might see that error even if your card is plugged in.
    That can happen if you have more than one smartcard-like object plugged in, like a **Yubikey**.
 
    This may show up as the following error too:
@@ -51,9 +40,9 @@ Here are some potential CAC reader errors and their solutions.
    Ensure CAC reader and card inserted: pkcs11: the token has no such object
    ```
 
-   That's because the script defaults to picking one of the slots, and gets confused by the Yubikey, instead of checking all of them to find your CAC. 
+   That's because the script defaults to picking one of the slots, and gets confused by the Yubikey, instead of checking all of them to find your CAC.
 
-   You *should* be able to see the Yubikey slot information when you run this tool. 
+   You *should* be able to see the Yubikey slot information when you run this tool.
    ```
    >  pkcs11-tool --list-token-slots
    Slot 0 (0x0): Generic Smart Card Reader Interface
@@ -66,10 +55,10 @@ Here are some potential CAC reader errors and their solutions.
 
    a) Remove the Yubikey when using the client and your CAC card.
 
-   b) Tell the client to select which token to use. 
-   
-   To select the token in the client you use the `--token-label` argument. 
-   
+   b) Tell the client to select which token to use.
+
+   To select the token in the client you use the `--token-label` argument.
+
    The token label is the one listed in your slot info in the format `LASTNAME.FIRSTNAME.MIDDLE.NUM...` and yes, the three periods are included.
 
    So you need to pass that into the client as follows
@@ -82,12 +71,12 @@ Here are some potential CAC reader errors and their solutions.
 
 # 3. Cannot sign Adobe PDF documents with CAC
 
-   i. In adobe acrobat, go to Preferences > Signatures > Creation and Appearance > More. 
-      
+   i. In adobe acrobat, go to Preferences > Signatures > Creation and Appearance > More.
+
    ii. Set default signing to CAdES-Equivalent and make sure CryptoTokenKit support is enabled.
 
-   iii. Then (again in Preferences > Signatures Dialog) under Identities and Trusted Certificates > More >PKCS#11 Modules. Choose attach module and put in the path to pkcs. 
-      
+   iii. Then (again in Preferences > Signatures Dialog) under Identities and Trusted Certificates > More >PKCS#11 Modules. Choose attach module and put in the path to pkcs.
+
       On my computer it was `/usr/local/lib/opensc-pkcs11.so`
 
    iv. Then Refresh, in the left sidebar you should have a new entry called OpenSC smartcard, with your card listed under that. You can then Log in with your PIN.
