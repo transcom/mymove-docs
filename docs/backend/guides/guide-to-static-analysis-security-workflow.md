@@ -4,16 +4,6 @@ sidebar_position: 8
 
 # Guide to Static Analysis Security Workflow
 
-**Contents**
-
-- [Introduction](#introduction)
-  - [Exceptions](#exceptions)
-- [Processes](#processes)
-  - [What to do if you’ve written code that triggers the linter](#what-to-do-if-youve-written-code-that-triggers-the-linter)
-  - [If you need to disable a rule check the severity level of the linter violation](#if-you-need-to-disable-a-rule-check-the-severity-level-of-the-linter-violation)
-  - [If you need annotation approval](#if-you-need-annotation-approval)
-  - [If you are a trussel in ‘truss-is3’ github group and someone needs an approval](#if-you-are-a-trussel-in-truss-is3-github-group-and-someone-needs-an-approval)
-
 # Introduction
 
 As part of the ATO (Authority to Operate) process ([#wg-ato](https://ustcdp3.slack.com/archives/CP4UNF7H6)) the mymove repository must complete a static analysis assessment of the codebase periodically to identify potential vulnerabilities. Historically, this has been accomplished with the Fortify static analysis tool. However, the Fortify static analysis tool may not be compatible with the latest Go versions.
@@ -26,10 +16,16 @@ In order to meet security and ATO requirements, we must ensure linters are alert
 
 Some eslint rules have been determined to be okay to bypass:
 
-- Rules in the [master spreadsheet](https://docs.google.com/spreadsheets/d/1eH5ZYkKv7_c-p_D_y5G5ULdWgI_Zrwg_xL4WbLNZoqw/edit#gid=0) under Fortify Weakness as ‘N/A’ (highlighted in gray)
-- `'security/detect-object-injection'` is okay in src code (for example, we do not want to disable it in the dangerjs file). It is disabled inside the `src` directory.
+- Rules in the [master
+  spreadsheet](https://docs.google.com/spreadsheets/d/1eH5ZYkKv7_c-p_D_y5G5ULdWgI_Zrwg_xL4WbLNZoqw/edit#gid=0)
+  under Fortify Weakness as ‘N/A’ (highlighted in gray)
+- `'security/detect-object-injection'` is okay in `src/` code (for example, we
+  do not want to disable it in the DangerJS file). It is disabled inside the
+  `src/` directory.
 
-The <code>[eslint-plugin-ato/no-unapproved-annotation.js](https://github.com/transcom/mymove/blob/master/eslint-plugin-ato/no-unapproved-annotation.js)</code> file is where rules are bypassed by the linter.
+The
+[`eslint-plugin-ato/no-unapproved-annotation.js`](https://github.com/transcom/mymove/blob/master/eslint-plugin-ato/no-unapproved-annotation.js)
+file is where rules are bypassed by the linter.
 
 # Processes
 
@@ -49,10 +45,14 @@ Check the severity level of the [master spreadsheet](https://docs.google.com/spr
 
 ## If severity level of a linter occurrence is unknown (i.e. it’s not in [master spreadsheet](https://docs.google.com/spreadsheets/d/1eH5ZYkKv7_c-p_D_y5G5ULdWgI_Zrwg_xL4WbLNZoqw/edit#gid=0))
 
-1. Contact Leo Scott and Erik Reiken, the ISSOs (Information System Security Officer), in #static-code-review and request a review of the linter rule. One of them will add it into the spreadsheet.
+1. Contact Leo Scott and Erik Reiken, the ISSOs (Information System Security
+   Officer), in #static-code-review and request a review of the linter rule. One
+   of them will add it into the spreadsheet.
 2. Depending on the severity level of the eslint, there are two routes:
    1. If the finding is an eslint with N/A severity
-      - Add it to the `approvedBypassableRules` list in the <code>[eslint-plugin-ato/no-unapproved-annotation.js](https://github.com/transcom/mymove/blob/master/eslint-plugin-ato/no-unapproved-annotation.js) </code>file
+      - Add it to the `approvedBypassableRules` list in the
+        [`eslint-plugin-ato/no-unapproved-annotation.js`](https://github.com/transcom/mymove/blob/master/eslint-plugin-ato/no-unapproved-annotation.js)
+        file
    2. If the finding is of severity level CAT I, II, or III
 
       - First choice is for it to be remediated (refactor code so that the rule does not need to be violated)
