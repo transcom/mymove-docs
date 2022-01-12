@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Configure Postico or TablePlus to connect to mymove DB
+# Configure Postico or TablePlus to connect to MyMove DB
 
 If you prefer to use an app to view and update the DB, [Postico](https://eggerapps.at/postico/) and [TablePlus](https://www.tableplus.io/) are popular options.
 
@@ -29,7 +29,7 @@ If you prefer to use an app to view and update the DB, [Postico](https://eggerap
 
 ## TablePlus
 - Cost: $59
-- Free trial limitations: 
+- Free trial limitations:
   - 2 opened tabs
   - 2 opened windows
   - 2 advanced filters at a time
