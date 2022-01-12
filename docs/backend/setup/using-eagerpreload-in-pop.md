@@ -4,20 +4,6 @@ sidebar_position: 6
 
 # Using EagerPreload in Pop
 
-## TOC
-
-<!-- toc -->
-
-- [Introduction](#introduction)
-- [When to Use](#when-to-use)
-- [How to Use](#how-to-use)
-- [EagerPreload Bugs and Workarounds](#eagerpreload-bugs-and-workarounds)
-  * [Foreign keys as pointers](#foreign-keys-as-pointers)
-  * [Foreign keys named differently from the related table](#foreign-keys-named-differently-from-the-related-table)
-  * [Associations with 3+ path elements where the first 2 path elements match](#associations-with-3-path-elements-where-the-first-2-path-elements-match)
-
-<!-- tocstop -->
-
 ## Introduction
 
 We use [Pop](https://github.com/gobuffalo/pop) as our ORM
@@ -50,7 +36,7 @@ lead to subtle bugs in MilMove
 In some cases, associations that loaded with `Eager` are not loading with `EagerPreload` -- this may not cause a
 failure, but rather result in missing data returned from an endpoint, for instance.  For now, we should
 consider using and testing `EagerPreload` on a case-by-case basis until we feel more confident in Pop's
-implementation. 
+implementation.
 
 ## How to Use
 
