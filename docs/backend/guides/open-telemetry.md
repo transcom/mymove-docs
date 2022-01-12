@@ -2,26 +2,20 @@
 
 The Milmove app has had aspects of logging (Zap), tracing (trace middleware), and monitoring (AWS infra dashboards) previously, but there is now an [ADR to use the Open Telemetry library](https://github.com/transcom/mymove/blob/master/docs/adr/0061-use-opentelemetry-for-distributed-tracing.md) to standardize our efforts. While not solely useful just for load testing, it did expose our need for better insight into the performance of the Milmove app and it's services.
 
-- [Implementation](#implementation)
-  - [Environment configuration](#environment-configuration)
-  - [Go package](#go-package)
-  - [Instrumentation](#instrumentation)
-- [Data collection](#data-collection)
-  - [Traces](#traces)
-  - [Metrics](#metrics)
-  - [Resources](#resources)
-
 ## Implementation
 
 ### Environment configuration
-Open Telemetry is configured like many of our features through environment variables.  When the application binary is started in `cmd/milmove/serve.go` the system reads if telemetry is enabled and also for which environment it is running in (locally or AWS/loadtesting).
+Open Telemetry is configured like many of our features through environment
+variables.  When the application binary is started in `cmd/milmove/serve.go` the
+system reads if telemetry is enabled and also for which environment it is
+running in (locally or `loadtesting` on AWS).
 
 **Telemetry environment variables:**
 
 Environment variable | Default value | Notes
 -|-|-
 TELEMETRY_ENABLED | false | Enables telemetry
-TELEMETRY_ENDPOINT | "stdout" | Endoint for where to send traces and metrics, the default would be the console. An http and/or gprc endpoint `host:port` where exports are sent.
+TELEMETRY_ENDPOINT | `stdout` | Endpoint for where to send traces and metrics, the default would be the console. An HTTP and/or GPRC endpoint `host:port` where exports are sent.
 TELEMETRY_USE_XRAY_ID | false | When telemetry is used in a deployed AWS environment this needs to be set to true so that trace IDs are formatted properly. This way the same request can be correlated across the firewall WAF, Load Balancer, and ECS service if needed.
 TELEMETRY_SAMPLING_FRACTION | .5 | Recording every log would bog down the application so we only want to send a representative fraction of all logs.  When developing locally setting to `1` would mean every log is sent.
 TELEMETRY_COLLECT_SECONDS | 30 | The interval in seconds between calls to collect metrics.
@@ -42,7 +36,10 @@ The ecosystem of Open Telemetry comes with many built in and 3rd party libraries
 
 #### Routing
 
-Milmove uses the Gorilla mux router so we can use the existing [otelmux library](https://github.com/open-telemetry/opentelemetry-go-contrib/tree/main/instrumentation/github.com/gorilla/mux/otelmux) middleware for our non-swagger routes.
+Milmove uses the Gorilla Mux router so we can use the existing [Open Telemetry
+Mux library][gh-mux-lib] middleware for our non-swagger routes.
+
+[gh-mux-lib]: https://github.com/open-telemetry/opentelemetry-go-contrib/tree/main/instrumentation/github.com/gorilla/mux/otelmux
 
 ```golang
 router.Use(otelmux.Middleware("auth"))
@@ -50,7 +47,12 @@ router.Use(otelmux.Middleware("auth"))
 
 #### HTTP handler
 
-Similar to the otelmux library the [otelhttp library](https://github.com/trussworks/otelhttp) is designed to wrap HTTP handler functions. It has built in events (read & write) to report the request size, response size, and duration of the http request.  It is more configurable than the otelmux middleware allowing you to filter out certain routes and other controls.
+Similar to the otelmux library the [Open Telemetry HTTP
+library](https://github.com/trussworks/otelhttp) is designed to wrap HTTP
+handler functions. It has built in events (read & write) to report the request
+size, response size, and duration of the HTTP request.  It is more configurable
+than the `otelmux` middleware allowing you to filter out certain routes and other
+controls.
 
 ```golang
 otelhttp.NewHandler(router, "server-tls", []otelHTTP.Option{otelHTTP.ReadEvents, otelHTTP.WriteEvents})
@@ -58,9 +60,13 @@ otelhttp.NewHandler(router, "server-tls", []otelHTTP.Option{otelHTTP.ReadEvents,
 
 Note: This implementation has been forked to the Trussworks GitHub to address bug fixes.
 
-#### SQL 
+#### SQL
 
-The [XSAM/otelsql](https://github.com/XSAM/otelsql) library wraps the queries to our Postgres database and appends a span to the trace with the statement and duration information.  Query parameters may be hidden to not log sensitive information.  It can also be used to log calls to cursor rows when paging through larger result sets.
+The [`XSAM/otelsql`](https://github.com/XSAM/otelsql) library wraps the queries to
+our Postgres database and appends a span to the trace with the statement and
+duration information.  Query parameters may be hidden to not log sensitive
+information.  It can also be used to log calls to cursor rows when paging
+through larger result sets.
 
 #### Go
 
@@ -68,7 +74,7 @@ The [Go runtime instrumentation library](https://github.com/open-telemetry/opent
 
 ## Data collection
 
-Data from the Milmove app is sent to the Open Telemetry collector, which processes the trace, metric, and log data and exports it to the services of our choice.  In AWS the collector exports to the Cloudwatch and AWS X-Ray services for storage and analysis.  When run locally the data is exported to the Elastic APM Server running Elasticsearch and Kibana. 
+Data from the MilMove app is sent to the Open Telemetry collector, which processes the trace, metric, and log data and exports it to the services of our choice.  In AWS the collector exports to the CloudWatch and AWS X-Ray services for storage and analysis.  When run locally the data is exported to the Elastic APM Server running Elasticsearch and Kibana.
 
 ### Traces
 
@@ -182,7 +188,11 @@ runtime.go.runtime.uptime    (ms)       Milliseconds since application was initi
 
 #### AWS Container Metrics
 
-All containers running on AWS ECS can access container level metrics including memory, cpu, network, and storage usage.  In the [AWS otel collector](https://aws-otel.github.io/docs/components/ecs-metrics-receiver) we connect the receiver and exporter to send data from the container through to Cloudwatch.
+All containers running on AWS ECS can access container level metrics including
+memory, CPU, network, and storage usage. In the [AWS OTEL
+collector](https://aws-otel.github.io/docs/components/ecs-metrics-receiver) we
+connect the receiver and exporter to send data from the container through to
+Cloudwatch.
 
 ```
 Task Level Metrics              Container Level               Metrics Unit
@@ -192,7 +202,7 @@ ecs.task.memory.usage.max       container.memory.usage.max    Bytes
 ecs.task.memory.usage.limit     container.memory.usage.limit  Bytes
 ecs.task.memory.reserved        container.memory.reserved     Megabytes
 ecs.task.memory.utilized        container.memory.utilized     Megabytes
-		
+
 ecs.task.cpu.usage.total        container.cpu.usage.total	    Nanoseconds
 ecs.task.cpu.usage.kernelmode   container.cpu.usage.kernelmode	Nanoseconds
 ecs.task.cpu.usage.usermode     container.cpu.usage.usermode	Nanoseconds
@@ -202,7 +212,7 @@ ecs.task.cpu.cores              container.cpu.cores             Count
 ecs.task.cpu.onlines            container.cpu.onlines           Count
 ecs.task.cpu.reserved           container.cpu.reserved          vCPU
 ecs.task.cpu.utilized           container.cpu.utilized          Percent
-		
+
 ecs.task.network.rate.rx	          container.network.rate.rx	            Bytes/Second
 ecs.task.network.rate.tx	          container.network.rate.tx	            Bytes/Second
 ecs.task.network.io.usage.rx_bytes	  container.network.io.usage.rx_bytes	Bytes
@@ -213,7 +223,7 @@ ecs.task.network.io.usage.tx_bytes	  container.network.io.usage.tx_bytes	Bytes
 ecs.task.network.io.usage.tx_packets  container.network.io.usage.tx_packets	Count
 ecs.task.network.io.usage.tx_errors	  container.network.io.usage.tx_errors	Count
 ecs.task.network.io.usage.tx_dropped  container.network.io.usage.tx_dropped	Count
-		
+
 ecs.task.storage.read_bytes	  container.storage.read_bytes	Bytes
 ecs.task.storage.write_bytes  container.storage.write_bytes	Bytes
 ```
@@ -263,6 +273,6 @@ The Milmove app uses a Redis cache to store session data for auth purposes.  I o
 
 [Open Telemetry for Golang](https://opentelemetry.io/docs/go/)
 
-[AWS Open Telmetry Docs](https://aws-otel.github.io/)
+[AWS Open Telemetry Docs](https://aws-otel.github.io/)
 
 [Elastic Application Performance Monitoring](https://www.elastic.co/observability/application-performance-monitoring)
