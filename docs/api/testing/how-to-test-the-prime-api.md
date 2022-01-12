@@ -6,23 +6,11 @@ sidebar_position: 3
 
 > ❗ For the most up-to-date information about the Prime API, please visit https://github.com/transcom/prime_api_deliverable/wiki. The Prime API Deliverable wiki is the client-facing documentation and will be your best resource for understanding how to use this API. This article is a stub that has been kept to preserve some of the old information that might be useful for current MilMove developers.
 
-## Overview
-
-* [Getting Started](#getting-started) - Set up and install instructions for the Prime API using Prime Docker
-  * [Running the Prime Docker](#running-the-prime-docker)
-  * [Accessing Web Applications](#accessing-web-applications)
-* [Testing Locally](#testing-locally) - How to test the Prime API Client using your local server
-* [Testing on Staging or Experimental](#testing-on-staging-or-experimental) - How to test the Prime API Client using the deployed instances of Staging or Experimental env
-  * [DoD Certificates](#dod-certificates)
-  * [Running a Command](#running-a-command)
-* [Tips and Tricks](#tips-and-tricks)
-  * [Using Curl](#using-curl)
-
 ## Getting Started
 
 The docker instructions are useful to external users. Internal users, with the dev environment set up, can skip straight to [Testing Locally](#testing-locally) or [Testing on Staging or Experimental](#testing-on-staging-or-experimental).
 
-Those do not have a local dev environment can use the docker instead. Follow [these instructions](https://github.com/transcom/prime_api_deliverable/wiki/Getting-Started) to set up the Prime API for testing. 
+Those do not have a local dev environment can use the docker instead. Follow [these instructions](https://github.com/transcom/prime_api_deliverable/wiki/Getting-Started) to set up the Prime API for testing.
 
 ### Running the Prime Docker
 
@@ -40,7 +28,7 @@ make docker_compose_down
 
 ### Accessing Web Applications
 
-To access the the MilMove, Office, and Prime local domains during testing, you may also want to modify your `/etc/hosts` file to contain the following: 
+To access the MilMove, Office, and Prime local domains during testing, you may also want to modify your `/etc/hosts` file to contain the following:
 
 ```
   echo "127.0.0.1 primelocal" | sudo tee -a /etc/hosts
@@ -53,7 +41,11 @@ Once you have modified the hosts file, and while the Prime docker container is r
 * [MilMove](http://milmovelocal:4000/)
 * [Office](http://officelocal:4000/)
 
-After the page loads in for either url, on the top right, you should be able to see a link for "Local Sign-In". This will show a list of users you can log in as. On the MilMove side, this will allow you to test as a service member at different stages within a move. Within the Office app, these different users represent different office user roles.
+After the page loads in for either URL, on the top right, you should be able to
+see a link for "Local Sign-In". This will show a list of users you can log in
+as. On the MilMove side, this will allow you to test as a service member at
+different stages within a move. Within the Office app, these different users
+represent different office user roles.
 
 ## Testing Locally
 
@@ -64,8 +56,9 @@ You must have data generated within your database and have the server running.
 
 To interact with the Prime API, we will use a CLI utility called `prime-api-client`. To get command line help:
 
-* `go run ./cmd/prime-api-client --help` to see a list of all subcommands and common arguments/flags
-* `go run ./cmd/prime-api-client <subcommand> --help` to see a list of specific arguments/flags for a subcommand
+* `go run ./cmd/prime-api-client --help` to see a list of all subcommands and
+* common arguments/flags `go run ./cmd/prime-api-client <subcommand> --help` to
+  see a list of specific arguments/flags for a subcommand
 
 To run a command:
 
