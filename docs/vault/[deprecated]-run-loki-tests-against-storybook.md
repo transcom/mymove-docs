@@ -1,23 +1,14 @@
 **This is for historical reference only. We no longer use Loki**
 
-- [How to Run Loki Tests Against Storybook](#how-to-run-loki-tests-against-storybook)
-  * [Running tests locally](#running-tests-locally)
-    + [Prereqs](#prereqs)
-    + [Running Loki Tests](#running-loki-tests)
-    + [If there are expected failures](#if-there-are-expected-failures)
-  * [Running loki update](#running-loki-update)
-    + [Running loki update in docker](#running-loki-update-in-docker)
-  * [Skipping loki tests for a story](#skipping-loki-tests)
-
 # How to Run Loki Tests Against Storybook
 
 MilMove uses [Loki](https://loki.js.org/) for testing stories in storybook to ensure they have not changed. You can run the tests locally for verification using this document.
 
 ## Running tests locally
 
-### Prereqs
+### Pre-requisites
 
-* You will need to be able to run storybook storybook locally. See [How to Run Storybook](run-storybook.md) for details.
+* You will need to be able to run storybook locally. See [How to Run Storybook](run-storybook.md) for details.
 * You will need Docker for Mac running locally as well. You can install the latest stable version from [here](https://download.docker.com/mac/stable/Docker.dmg).
   * Detailed instructions for installation can be found in the [Docker for Mac Documentation](https://docs.docker.com/docker-for-mac/install/)
 
@@ -45,9 +36,9 @@ loki test v0.18.1
 
 ### If there are expected failures
 
-If you are working on a storybook story and have finished making changes to the story or the components used the above command will fail. You should review the results files stored in `.loki/current`, `.loki/reference`, and `.loki/difference` directories. 
+If you are working on a storybook story and have finished making changes to the story or the components used the above command will fail. You should review the results files stored in `.loki/current`, `.loki/reference`, and `.loki/difference` directories.
 
-If the changes are as expected, you will need to start the storybook server locally first (see instructions below for Running loki update), then run the following command to update the reference files. 
+If the changes are as expected, you will need to start the storybook server locally first (see instructions below for Running loki update), then run the following command to update the reference files.
 
 ```sh
 make loki_approve_changes
