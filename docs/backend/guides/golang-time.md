@@ -30,7 +30,13 @@ func TestMyTimeFunc(t *testing.T) {
 
 How do we test the contents of the return here? If we want to assert the time we need a way to know what `time.Now()` was when the function was called.
 
-Instead of directly using the `time` package, we can pass a clock as a dependency and call `.Now()` on that. Then in our tests, we can assert against that clock! The clock can be anything as long as it adheres to the `clock.Clock` interface as defined in the [facebookgo clock package](https://godoc.org/github.com/facebookgo/clock#Clock). We could, for example, make the clock always return the year 0, or the 2019 New Year, or maybe your birthday! In this clock package, there are two clocks.
+Instead of directly using the `time` package, we can pass a clock as a
+dependency and call `.Now()` on that. Then in our tests, we can assert against
+that clock! The clock can be anything as long as it adheres to the `clock.Clock`
+interface as defined in the [`facebookgo/clock`
+package](https://godoc.org/github.com/facebookgo/clock#Clock). We could, for
+example, make the clock always return the year 0, or the 2019 New Year, or maybe
+your birthday! In this clock package, there are two clocks.
 
 * The real clock where `clock.Now()` will call `time.Now()`.
 * A mock clock where `clock.Now()` always returns epoch time.
@@ -92,8 +98,10 @@ func TestMyTimeFunc(t *testing.T) {
 }
 ```
 
-## MilMove Calendar Utils
+## MilMove Calendar Utilities
 
-The MilMove project has a set of date/calendar util to help develop and test. You can find them in the [dates package](https://github.com/transcom/mymove/tree/master/pkg/dates)
+The MilMove project has a set of date/calendar utility to help develop and test.
+You can find them in the [dates
+package](https://github.com/transcom/mymove/tree/master/pkg/dates)
 
 For testing, we also have `TestYear` in the [constants package](https://github.com/transcom/mymove/blob/master/pkg/testdatagen/constants.go), which should be used instead of the current year.
