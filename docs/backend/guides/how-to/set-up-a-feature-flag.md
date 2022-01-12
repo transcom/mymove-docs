@@ -9,13 +9,18 @@ There is a feature flag feature for both frontend and backend.  Here's how to se
 
 ### Overview
 
-The frontend feature flag can be turned on or off through the url.  By appending a querystring `?flag:flagName=false`, the feature will be turned off and appending `?flag:flagName=true` will turn on the feature.  Generally, while working on a feature that is not ready for production, by default we set it to off in production and turn it on in dev, staging, and experimental environments.
+The frontend feature flag can be turned on or off through the URL. By appending
+a query string `?flag:flagName=false`, the feature will be turned off and
+appending `?flag:flagName=true` will turn on the feature. Generally, while
+working on a feature that is not ready for production, by default we set it to
+off in production and turn it on in dev, staging, and experimental environments.
 
 ### How to create a new flag
 
 Go to `shared/featureFlag.js`
 
-Add a key/value to `defaultFlags` and set it to `false`.  The key will be the name you use in the url
+Add a key/value to `defaultFlags` and set it to `false`. The key will be the
+name you use in the URL.
 
 
 `myFeatureFlag` --> `?flag:myFeatureFlag=false`
