@@ -13,7 +13,9 @@ Besides being the home row of the left hand in the qwerty layout it is also a to
 
 ## Why ASDF?
 
-To find out more on why asdf was chosen please read [ADR 0056 - Use asdf to manage golang versoins in development](https://github.com/transcom/mymove/blob/master/docs/adr/0056-use-asdf-to-manage-golang-versions-in-development.md)
+To find out more on why asdf was chosen please read [ADR 0056 - Use asdf to
+manage Golang versions in
+development](https://github.com/transcom/mymove/blob/master/docs/adr/0056-use-asdf-to-manage-golang-versions-in-development.md)
 
 ## Why `asdf global golang <version>`?
 
@@ -23,15 +25,21 @@ We ran into an issue with asdf and pre-commit hooks. During the installation pro
 
 ### Install asdf
 
-Run `brew install asdf` to install asdf, then add it to your shell's rc file. See [Adding to your Shell](https://asdf-vm.com/#/core-manage-asdf?id=add-to-your-shell) from the asdf documentation.
+Run `brew install asdf` to install asdf, then add it to your shell's resource
+file. See [Adding to your
+Shell](https://asdf-vm.com/#/core-manage-asdf?id=add-to-your-shell) from the
+`asdf` documentation.
 
 ### Install golang plugin
 
-Run `asdf plugin add golang` to add the golang plugin. There are other plugins for asdf if you'd like to use it for other projects as well. Also has support for `legacy_version_file` to look for things like `.node-version` instead of just `.tool-versions`.
+Run `asdf plugin add golang` to add the Golang plugin. There are other plugins
+for `asdf` if you'd like to use it for other projects as well. Also has support
+for `legacy_version_file` to look for things like `.node-version` instead of
+just `.tool-versions`.
 
 ### Install the version of golang MilMove is using
 
-Run `asdf install` to install the binary for the currently required version of golang.
+Run `asdf install` to install the binary for the currently required version of Golang.
 
 ### Configure global use of golang version
 
@@ -46,7 +54,7 @@ Then run `asdf global golang 1.15.10`
 
 ### Reload your shell
 
-Reload your shell, open a new shell or source your rc file.
+Reload your shell, open a new shell or source your resource file.
 
 ### Verify install
 
@@ -109,7 +117,9 @@ then run `source ~/.bash_profile` in the terminal to reload.
 
 ### Compile errors because wrong version of go after upgrading
 
-If you are getting can't compile because library was compiled for `old version of go` vs `current version of go`. You probably should exit your shell and open a new one. Also ensure the below are in your shell's rc file.
+If you are getting can't compile because library was compiled for `old version
+of go` vs `current version of go`. You probably should exit your shell and open
+a new one. Also ensure the below are in your shell's resource file.
 
 ```sh
 source /usr/local/opt/asdf/asdf.sh
