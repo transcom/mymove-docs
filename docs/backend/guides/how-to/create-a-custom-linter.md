@@ -1,27 +1,7 @@
 # How to Create a Custom Go Linter
 
-<!-- Table of Contents auto-generated with `bin/generate-md-toc.sh` -->
-
-<!-- toc -->
-
-* [Setting up your linter](#setting-up-your-linter)
-  * [File structure](#file-structure)
-  * [Analyzer](#analyzer)
-  * [Creating a linter](#creating-a-linter)
-* [Testing](#testing)
-  * [Utilizing test data](#utilizing-test-data)
-  * [Writing linter tests](#writing-linter-tests)
-  * [Testing the linter across files](#testing-the-linter-across-files)
-* [Running the linter in pre-commit](#running-the-linter-in-pre-commit)
-* [Additional Resources](#additional-resources)
-
-
-Regenerate with "pre-commit run -a markdown-toc"
-
-<!-- tocstop -->
-
-Creating custom GO linters can be a great way to analyze your 
-project's source code and alert you to bugs, errors, 
+Creating custom GO linters can be a great way to analyze your
+project's source code and alert you to bugs, errors,
 or other issues with your code.
 
 ## Setting up your linter
@@ -40,7 +20,7 @@ Start by setting up the files you'll need for your linter:
 ```
 In the `cmd` folder create a folder for your linter called `<example_linter_name>` and add an empty file called `main.go`
 
-In `pkg` folder create another folder for your linter called `<example_linter_name>` and in it you will 
+In `pkg` folder create another folder for your linter called `<example_linter_name>` and in it you will
 place your `example_linter.go` and `example_linter_test.go`
 
 ### Analyzer:
@@ -62,8 +42,8 @@ func main() { singlechecker.Main(examplelinter.LinterAnalyzer) }
 ```
 
 ### Creating a linter
-The linter will live in the `pkg` folder, in a folder named after your linter. 
-In `example_linter.go` you will store the linter analyzer that gets referenced in `cmd/example_linter_name/main.go`. 
+The linter will live in the `pkg` folder, in a folder named after your linter.
+In `example_linter.go` you will store the linter analyzer that gets referenced in `cmd/example_linter_name/main.go`.
 It will contain the name of the liner, documentation about the linter, a call to run the linter, and requirements:
 
 ```golang
@@ -83,9 +63,9 @@ func run(pass *analysis.Pass) (interface{}, error) {
 }
 ```
 
-The linter is analyzing an abstract syntax tree, AST, that represents code in a file. 
-When your linter gets to a position in a file, where it catches an error, bug, or issue, it will flag this for the user. 
-Because the linter is analyzing an AST, your code must be able to search through a file and mark the position where the issue is caught. 
+The linter is analyzing an abstract syntax tree, AST, that represents code in a file.
+When your linter gets to a position in a file, where it catches an error, bug, or issue, it will flag this for the user.
+Because the linter is analyzing an AST, your code must be able to search through a file and mark the position where the issue is caught.
 To do this, you will mark the position in the file with a `.Pos()` method. Then the position of the object will be passed to `pass.Reportf`, where the linter message will be set as a second parameter:
 
 ```golang
@@ -94,9 +74,9 @@ To do this, you will mark the position in the file with a `.Pos()` method. Then 
     }
 ```
 
-There are great [online resources](http://goast.yuroyoro.net/) that you can use to visualize ASTs. 
-While these are great to use to [learn how to write code to search through an AST](https://disaev.me/p/writing-useful-go-analysis-linter/), 
-there may still be differences in what you see when working with your linter. 
+There are great [online resources](http://goast.yuroyoro.net/) that you can use to visualize ASTs.
+While these are great to use to [learn how to write code to search through an AST](https://disaev.me/p/writing-useful-go-analysis-linter/),
+there may still be differences in what you see when working with your linter.
 
 ## Testing:
 
@@ -158,7 +138,9 @@ func TestFuncWithPopConnection(x *x.Something) {}
 ```
 In the above example, there is a `want` statement that will trigger the linter to flag an unwanted object in the struct.
 
-The testdata will then be passed into the `Run` as a parameter as noted above in the sample linter test: `analysistest.Run(t, testdata, LinterAnalyzer, "example_linter_tests/...")`
+The `testdata` will then be passed into the `Run` as a parameter as noted above
+in the sample linter test: `analysistest.Run(t, testdata, LinterAnalyzer,
+"example_linter_tests/...")`
 
 ### Testing the linter across files
 
@@ -185,7 +167,7 @@ Depending on the function of your linter, you may want to add it to precommit. Y
         language: script
 ```
 
-Note that the `language` key refers to a bash script, that is because we have had the most success with 
+Note that the `language` key refers to a bash script, that is because we have had the most success with
 creating a custom bash script (located in the `script` folder) for running all custom linters in precommit.
 
 You can checkout this custom bash script at `scripts/pre-commit-go-custom-linter`.
