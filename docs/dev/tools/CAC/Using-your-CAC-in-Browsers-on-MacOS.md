@@ -1,17 +1,5 @@
 This document will describe how to setup your browser to allow using your CAC for logging into various DOD sites.
 
-# TOC
-
-<!-- toc -->
-
-- [Step 1 - Import all the DOD Certs](#step-1---import-all-the-dod-certs)
-- [Step 2 - Enable Firefox to use Apple Keychain for certs](#step-2---enable-firefox-to-use-apple-keychain-for-certs)
-- [Step 3 - Add CAC decoding library to Firefox](#step-3---add-cac-decoding-library-to-firefox)
-- [Done](#done)
-- [References](#references)
-
-<!-- tocstop -->
-
 # Step 1 - Import all the DOD Certs
 
 Install all the DOD certs following the directions [here in these external docs](https://militarycac.com/macnotes.htm#DoD_certificates)
