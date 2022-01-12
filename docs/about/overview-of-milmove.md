@@ -61,7 +61,14 @@ Prime is just an internal name for the GHC contractor.
 
 - **Orders API**, which is used by the services to send us *orders*.
 
-  Service members receive *orders* to move, which include information about the destination as well as authorizations for various kinds of storage, conveyance, per diem allowances, and many more details. Currently Orders information is entered into the system manually by office personnel from a PDF. However, the Orders API is receiving that data directly from the services and eventually that data will be used as the source of truth. That process is called "Orders Ingestion". The process of getting that data into the system for use with moves is called "Orders Integration".
+Service members receive *orders* to move, which include information about the
+destination as well as authorizations for various kinds of storage, conveyance,
+per diem allowances, and many more details. Currently Orders information is
+entered into the system manually by office personnel from a PDF. However, the
+Orders API is receiving that data directly from the services and eventually that
+data will be used as the source of truth. That process is called "Orders
+Ingestion". The process of getting that data into the system for use with moves
+is called "Orders Integration".
 
 ## Architecture
 
@@ -75,7 +82,9 @@ Here's a simplified picture of the technologies used.
 
 ### Pop
 
-Pop is an an ORM, which allows us to translate database tables into Go structs. Using pop, we can manipulate Go structs instead of writing SQL statements. The Go structs are called models.
+Pop is an ORM, which allows us to translate database tables into Go structs.
+Using pop, we can manipulate Go structs instead of writing SQL statements. The
+Go structs are called models.
 
 We use Pop to
 
