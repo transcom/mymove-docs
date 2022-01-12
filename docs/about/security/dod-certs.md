@@ -23,7 +23,7 @@ Generate a Certificate Signing Request (CSR) for each certificate you wish to re
 
 ### CSR Config File
 
-The easiest way to do this with OpenSSL is to create a configuration file with the certificate details and feed that to the openssl command. For example, here is the config file I made for the production my.move.mil CSR:
+The easiest way to do this with OpenSSL is to create a configuration file with the certificate details and feed that to the OpenSSL command. For example, here is the config file I made for the production my.move.mil CSR:
 
 ```ini
 [req]
@@ -86,7 +86,7 @@ For our purposes, you want the most recent (i.e., highest numbered) DOD SW-CA.
 
 ### Get Request Numbers
 
-Using either Google Chrome or Microsoft Edge (NOT Internet Explorer) on a NIPR machine, fill in the webform at the desired CA’s website; for DOD SW CA-54, that’s <https://ee-sw-ca-54.csd.disa.mil/ca/ee/ca>. You will need a NIPR account associated with your CAC. On the "2048-bit SSL Server Enrollment Form," you can paste the contents of the CSR file you generated. You will also need to enter the same certificate details, like the CN and alternate names, into the other fields.
+Using either Google Chrome or Microsoft Edge (NOT Internet Explorer) on a NIPR machine, fill in the web form at the desired CA’s website; for DOD SW CA-54, that’s <https://ee-sw-ca-54.csd.disa.mil/ca/ee/ca>. You will need a NIPR account associated with your CAC. On the "2048-bit SSL Server Enrollment Form," you can paste the contents of the CSR file you generated. You will also need to enter the same certificate details, like the CN and alternate names, into the other fields.
 
 For each CSR you submit, you will get a Request Number. Make a note of that, because the PKI RA will need it to approve your request.
 
