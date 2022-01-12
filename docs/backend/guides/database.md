@@ -72,7 +72,15 @@ An RDS instance must be configured with IAM authentication before connecting. Al
 
 ECS tasks such use RDS IAM authentication to securely connect without a username or passwords to rotate. This is accomplished by ECS assigning a role to the container that is allowed to connect to a specific database via IAM.
 
-The MilMove server through the use of environment variables will use reach out to IAM to generate a temporary connection token, almost similar to a password. This token/password is valid for only 15 minutes. To enable IAM authentication ensure these environment variables are present for `app`, `app-client-tls`, and `migration` containers. Here is a snippet of the required environment [variables](https://github.com/transcom/mymove/blob/6426a37eaf0219323aef997deed5a43e0e1a824b/config/app.container-definition.json#L32-L39) for the [app.container-definition.json](https://github.com/transcom/mymove/blob/master/config/app.container-definition.json) that is deployed.
+The MilMove server through the use of environment variables will use reach out
+to IAM to generate a temporary connection token, almost similar to a password.
+This token/password is valid for only 15 minutes. To enable IAM authentication
+ensure these environment variables are present for `app`, `app-client-tls`, and
+`migration` containers. Here is a snippet of the required environment
+[variables](https://github.com/transcom/mymove/blob/6426a37eaf0219323aef997deed5a43e0e1a824b/config/app.container-definition.json#L32-L39)
+for the
+[`app.container-definition.json`](https://github.com/transcom/mymove/blob/master/config/app.container-definition.json)
+that is deployed.
 
 ```json
 {
