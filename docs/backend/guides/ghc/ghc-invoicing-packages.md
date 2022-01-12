@@ -109,7 +109,7 @@ are important to invoicing. (E.g., `bin` and `cmd` packages. )
 ├── service_param_list_valid_test.go
 ```
 
-## [Service Param Value Lookups](https://github.com/transcom/mymove/tree/master/pkg/payment_request/service_param_value_lookups)
+## [Service Parameter Value Lookups](https://github.com/transcom/mymove/tree/master/pkg/payment_request/service_param_value_lookups)
 
 :::caution TODO: Add description
 
@@ -122,7 +122,7 @@ are important to invoicing. (E.g., `bin` and `cmd` packages. )
 :::
 
 
-[Initial PR to setup service item param lookup framework](https://github.com/transcom/mymove/pull/3401)
+[Initial PR to setup service item parameter lookup framework](https://github.com/transcom/mymove/pull/3401)
 
 
 ```
