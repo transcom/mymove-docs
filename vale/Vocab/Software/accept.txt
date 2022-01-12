@@ -102,6 +102,7 @@ Jira
 Kibana
 Linux
 Loki
+Makefile
 Middleware
 Precommit
 Redoc

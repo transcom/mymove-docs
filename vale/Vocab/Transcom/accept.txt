@@ -5,6 +5,7 @@ DoD
 Intelink
 MilMove
 MyMove
+Pricer
 Syncada
 Transcom
 adminlocal
