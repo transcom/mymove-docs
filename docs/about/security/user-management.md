@@ -17,7 +17,7 @@ A person who’s been issued PCS orders who is logged in through the customer-fa
 
 #### Customer
 
-A customer is someone using MilMove to book (or set up) a PCS move from one military installation to another. 
+A customer is someone using MilMove to book (or set up) a PCS move from one military installation to another.
 Most customers are service members on active duty, but a customer can also be a civilian who works for the military, or the relative of a service member who’s setting up a move on their behalf. (Typically a spouse, sometimes a parent.)
 
 A customer can submit a move request on MilMove for an HHG shipment to or from a CONUS destination.
@@ -40,7 +40,7 @@ The users of the office app are USTC employees who administer the moves by appro
 
 #### Service Counselor
 
-A counselor is someone who is an expert at moving in the military. A session with a counselor is provided to customers to ensure that they’re getting all of their entitlements and they’re making realistic choices about their move. 
+A counselor is someone who is an expert at moving in the military. A session with a counselor is provided to customers to ensure that they’re getting all of their entitlements and they’re making realistic choices about their move.
 
 A “service counselor” is a counselor paid for by one or more of the services (Navy, Army, etc.). There’s a counselor role on the Prime side, as well. If the Prime performs counseling, they are paid a move-level service fee. A customer will be offered counseling from one of those two roles, but not both.
 
@@ -53,7 +53,7 @@ In addition:
 * Moves are assigned to counselors based on origin duty station. The exception is Marines, who are assigned to a USMC counselor based on branch of service.
 * All moves must receive either services or Prime counseling.
 
-#### Transportation Ordering Officer (TOO) 
+#### Transportation Ordering Officer (TOO)
 
 A Transportation Ordering Officer (TOO), who sits in a JPPSO office, performs the following jobs:
 * Reviews customer info and orders
@@ -65,7 +65,7 @@ A Transportation Ordering Officer (TOO), who sits in a JPPSO office, performs th
 
 The TOO uses the web interface in Office App to perform these tasks.
 
-#### Transportation Invoicing Officer (TIO) 
+#### Transportation Invoicing Officer (TIO)
 
 A Transportation Invoicing Officer (TIO), who sits in a JPPSO office, conducts the following tasks:
 * Reviews payment requests and accompanying proof of service documentation from the Prime
@@ -92,11 +92,11 @@ Only admins can deactivate users. The instructions are the same for all types of
 ### Bulk Uploading Office Users
 If there are multiple Office Users that need to be added to Milmove, this can be done in the Admin Console.
 - Go to **Admin App > Office Users > Import**
-- You will see a table view of Office Users, and above that table an **Import** button. 
+- You will see a table view of Office Users, and above that table an **Import** button.
 - When **Import** is selected, a pop up screen will show up for the Admin User to import a CSV.
 ![Office User Import Button](/img/users/office-users-import-button.png)
 
-The CSV updated must have the following **required** column titles: 
+The CSV updated must have the following **required** column titles:
 - **email**
 - **firstName**
 - **middleInitials**
@@ -117,14 +117,14 @@ The following content must be filled out for each Office User:
 Validation checks:
 Validators have been added to the Admin console in order to check for errors. If a validator check fails, an error will be thrown and an error message will appear to guide the user in making the appropriate corrections. The following validations are checked:
 - All required fields are present
-- Phone numbers are formatted xxx-xxx-xxxx
-- Roles provided are valid office user roles (i.e. transportation_ordering_officer, transportation_invoicing_officer, contracting_officer, ppm_office_users, services_counselor).
+- Phone numbers are formatted `xxx-xxx-xxxx`
+- - Roles provided are valid office user roles (i.e. transportation_ordering_officer, transportation_invoicing_officer, contracting_officer, ppm_office_users, services_counselor).
 
 NOTE: In order for new Office users to log in to the office app, make sure that each Office User has first created an account with login.gov.
 
 ## Admin User
 
-The admin app is used to administrate *the software* (not to be confused by admins such as the TOO and TIO that administrate *the move*). The users of the office app are select USTC employees and some Truss developers. 
+The admin app is used to administrate *the software* (not to be confused by admins such as the TOO and TIO that administrate *the move*). The users of the office app are select USTC employees and some Truss developers.
 
 ### Available Roles for Admin Users
 
@@ -206,12 +206,12 @@ Note, **using local sign-in does not create session IDs** and store them in the 
 
 Also good to know, we have **more than one table for user information**.
 
-- `users` - This table should contain all users and their login.gov email. Every user that creates an account associated with login.gov ends up with an entry here. There are also columns for each of the session ids in this table. 
+- `users` - This table should contain all users and their login.gov email. Every user that creates an account associated with login.gov ends up with an entry here. There are also columns for each of the session ids in this table.
 
 - `service_members` If a user is a MilMove user, they have an entry here with a foreign key link to their entry in the `user` table.
 
-- `admin_users` If a user is an admin user, they have an entry here with a foreign key link to their entry in the `user` table. There is a role column but it appears to not be used. 
+- `admin_users` If a user is an admin user, they have an entry here with a foreign key link to their entry in the `user` table. There is a role column but it appears to not be used.
 
-- `office_users` If a user is an office user, they have an entry here with a foreign key link to their entry in the `users` table. 
+- `office_users` If a user is an office user, they have an entry here with a foreign key link to their entry in the `users` table.
 
 Note, the `users` table is also linked to a `user_roles` table that seems to link users to their Office-related roles but is not really used for MilMove app or Admin Roles.
