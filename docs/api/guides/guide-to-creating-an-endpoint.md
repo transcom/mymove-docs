@@ -74,11 +74,18 @@ An example of the `Moves` path is as follows:
 
 #### Description Section and the response body
 In your endpoint description make sure that the following fields are included when necessary:
-* required - fields that are required are listed in the description section.
-* x-nullable - this indicates that the value of a particular property may be null. It will also return null if the value doesn't exist otherwise it will be omitted if x-nullable is false.
-* x-omitempty -  this extension is good to add and set it to false if we don't want that field to be omitted if it is empty.
-* readOnly - sometimes you will need specify a readyonly property, for example when the property differs in a GET from a POST or PATCH. Note: readOnly properties are included in responses but not in requests.
-* eTag - An entity tag is provided so that a browser client or a script can make conditional REST requests using optimistic concurrency control. All eTags must be marked as readOnly.
+
+* `required` - fields that are required are listed in the description section.
+* `x-nullable` - this indicates that the value of a particular property may be
+  null. It will also return null if the value doesn't exist otherwise it will be
+  omitted if x-nullable is false. `x-omitempty` -  this extension is good to add
+  and set it to false if we don't want that field to be omitted if it is empty.
+* `readOnly` - sometimes you will need specify a ready-only property, for
+  example when the property differs in a GET from a POST or PATCH. Note:
+  `readOnly` properties are included in responses but not in requests.
+* `eTag` - An entity tag is provided so that a browser client or a script can
+  make conditional REST requests using optimistic concurrency control. All `eTags`
+  must be marked as `readOnly`.
 
 An example of the ListMove description is as follows:
 
@@ -154,12 +161,13 @@ For more information about service objects and when to create one: [Service Obje
 An important note about service objects: The service layer is where we will store our business logic and connect to the database. Once a service object is created, it will be passed in to the handler `NewPrimeAPIHandler` function in `pkg/handlers/primeapi/api.go`,
 and the handler will only be aware of the service object interface, while the service object will contain all of the rules and validations as well as accessing object from the database.
 
-Handlers must never hit the database. Ideally, endpoint handlers are for type validations. 
+Handlers must never hit the database. Ideally, endpoint handlers are for type validations.
 
-Handlers are also where
-we convert from payload (Swagger types) to model (MilMove Go types). Generally, before calling the service
-object to process the request, you would call the appropriate `payload_to_model.go` function. And after returning
-from the the call to the service object you would call the appropriate `model_to_payload.go` function.
+Handlers are also where we convert from payload (Swagger types) to model
+(MilMove Go types). Generally, before calling the service object to process the
+request, you would call the appropriate `payload_to_model.go` function. And
+after returning from the call to the service object you would call the
+appropriate `model_to_payload.go` function.
 
 
 
@@ -187,7 +195,7 @@ pkg/handlers/
 	ordersapi/internal/payloads
 	primeapi/internal/payloads
 	supportapi/internal/payloads
-```    
+```
 3. **model_to_payload functions**
     * Once we have either modified the model or added something to our model, it must be converted back into a payload in order to be returned by the handler.
     * Each API has a set of `payload_to_model.go` and `model_to_paylaod.go` files under the `internal` dir:
@@ -213,7 +221,7 @@ pkg/handlers/
 ```
 5. **Add tests for the handler**
    	* Add test code
-           * Use testdatagen functions [[Understanding Testdatagen Functions]]
+           * Use `testdatagen` functions [[Understanding `Testdatagen` Functions]]
     * Add mocks (only if absolutely necessary): [Generating Mocks with mockery](https://transcom.github.io/mymove-docs/docs/dev/testing/writing-tests/generate-mocks-with-mockery)
 
 ### Anatomy of a handler
