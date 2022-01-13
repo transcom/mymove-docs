@@ -12,7 +12,7 @@ MilMove needs to look up personnel information for several reasons:
 1. Using a member's EDIPI, get the member's SSN, to facilitate PPM payments or support other legacy paperwork that has yet to move to EDIPI for unique identifiers.
 1. Look up a member's work e-mail address, to notify a member who has yet to create an account that they have electronic PCS Orders in MilMove and that they can start the move process.
 
-MilMove uses IWS's "Real-time Broker Service" (RBS). This is an allegedly RESTful webservice. It utilizes XML payloads.
+MilMove uses IWS's "Real-time Broker Service" (RBS). This is an allegedly RESTful web service. It utilizes XML payloads.
 
 ## Protocol
 
