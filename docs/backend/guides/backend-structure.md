@@ -13,7 +13,11 @@ At the lowest level, our server is a Go script. We run a Go command that execute
 
 This command is in `cmd/milmove/serve.go`. This file contains the entire lifecycle of our server. We're not going to change this very often, so although it's nice to know where to find it, you'll rarely have to go into this file during your day-to-day.
 
-Naturally, this command doesn't handle all of our backend logic. We store the bulk of our server code elsewhere, and the `serve.go` file simply references it at the right times. The rest of our backend code is in the `pkg/` folder. There are some, _small_ exceptions, but practically all backend logic should be found in here. `pkg/` is the backend developer's homebase.
+Naturally, this command doesn't handle all of our backend logic. We store the
+bulk of our server code elsewhere, and the `serve.go` file simply references it
+at the right times. The rest of our backend code is in the `pkg/` folder. There
+are some, _small_ exceptions, but practically all backend logic should be found
+in here. `pkg/` is the backend developer's home base.
 
 :::tip Terminology
 
@@ -36,7 +40,8 @@ In the backend, we also use "**handler**" functions to execute the logic for our
 
 So how do you find the handler function for the endpoint you're looking at?
 
-Within `handlers/`, each API file will have its own subpackage. So the `ghc.yaml` API file will have a package called `ghcapi/`. See below:
+Within `handlers/`, each API file will have its own sub-package. So the
+`ghc.yaml` API file will have a package called `ghcapi/`. See below:
 
 ```
 handlers/
@@ -73,7 +78,11 @@ handlers/
 
 Back in the API definition again, this time look for the `operationId:` key. If you look at the example above, you can see we have the value `createMTOShipment` as our operation ID for this endpoint.
 
-Within the `mto_shipment.go` file, we now know we're looking for a struct called `CreateMTOShipmentHandler`. This struct will have an associated `Handle()` function. Almost all of the logic (save for auths, and some validation in the generated Swagger files) for your the action your endpoint represents is executed from this function.
+Within the `mto_shipment.go` file, we now know we're looking for a struct called
+`CreateMTOShipmentHandler`. This struct will have an associated `Handle()`
+function. Almost all of the logic (save for authentications, and some validation
+in the generated Swagger files) for your the action your endpoint represents is
+executed from this function.
 
 Although this function executes the logic for this endpoint's action, it generally calls other functions to complete the bulk of the business logic. In the MilMove codebase, we have a concept of "services." Services are shared business logic that we use across all of our APIs - see below (TODO LINK) for a more in-depth explanation.
 
