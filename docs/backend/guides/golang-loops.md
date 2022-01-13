@@ -79,8 +79,10 @@ for i := range *moveTaskOrders {
 }
 ```
 
-If using that strategy, keep in mind that you may be storing pointers to existing slice elements, so there are some
-garbage collection and concurrency concerns to consider (as noted in this [Stackoverflow answer](https://stackoverflow.com/a/48826629)).
+If using that strategy, keep in mind that you may be storing pointers to
+existing slice elements, so there are some garbage collection and concurrency
+concerns to consider (as noted in this [Stack Overflow
+answer](https://stackoverflow.com/a/48826629)).
 
 A casual observer who hasn't been exposed to this loop behavior may see the fixes above as unnecessary, so regardless
 of which fix you apply, be sure to add a comment to let them know that the fix was done on purpose and should not
