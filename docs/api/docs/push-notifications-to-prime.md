@@ -4,12 +4,12 @@ sidebar_position: 2
 
 # Push Notifications to Prime
 
-The push mechanism is a way to notify the Prime of changes as they happen. 
+The push mechanism is a way to notify the Prime of changes as they happen.
 
-We will be using Web Hooks to implement the push mechanism. 
+We will be using Web Hooks to implement the push mechanism.
 
 > Webhooks are a useful and a resource-light way to implement event reactions. Web hooks provide a mechanism where by a server-side application can notify a client-side application when a new event (that the client-side application might be interested in) has occurred on the server.
-> 
+>
 >Source: https://codeburst.io/what-are-webhooks-b04ec2bf9ca2
 
 
@@ -30,19 +30,23 @@ There are three components of the solution
 
 ![](/img/webhooks/subscribe-notifications.png)
 
-We create a table to hold the subscriptions so we can add, delete and modify their subscriptions. 
+We create a table to hold the subscriptions so we can add, delete and modify their subscriptions.
 
-We need a certificate to send them the notifications, so subscription records should have an id that can be used to find the certificate. 
+We need a certificate to send them the notifications, so subscription records should have an id that can be used to find the certificate.
 
-A subscription consists of Object+verb event code, subscriberID, url to contact and subscription status.
+A subscription consists of `Object+verb event code`, `subscriberID`, `url` to
+contact and `subscription` status.
 
->Subscription endpoints are not MVP. This means that we will not create endpoints for subscribe/delete etc.. With only one suscriber, endpoints for self-service have limited value compared to a typical rest hooks implementation.
+> Subscription endpoints are not MVP. This means that we will not create
+> endpoints for subscribe/delete etc.. With only one subscriber, endpoints for
+> self-service have limited value compared to a typical rest hooks
+> implementation.
 
 ## Generate Notifications
 
 ![](/img/webhooks/generate-notifications.png)
 
-Next, we generate events when they occur in our system, by calling an event package. The event function will collect information that will allow the audit pkg and notifications pkg to assemble the record that they need to store. 
+Next, we generate events when they occur in our system, by calling an event package. The event function will collect information that will allow the audit pkg and notifications pkg to assemble the record that they need to store.
 
 Relevant code is in **[pkg/services/event/event.go](https://github.com/transcom/mymove/blob/master/pkg/services/event/event.go)**
 
@@ -79,11 +83,11 @@ Note: The event package is generic and services all events for all internal and 
 
 ## Event Types
 
-For notifications, we need to break down our MTO into smaller logical objects to be able to send over smaller updates than the full MTO. 
+For notifications, we need to break down our MTO into smaller logical objects to be able to send over smaller updates than the full MTO.
 
 For an effective solution, we had to pick a level of granularity for the events and notification bodies.
 
-We do not want to send the whole MTO on each event, not do we want to send a single address record. Instead we have picked a set of logical objects that match updates that the Prime would like to see. 
+We do not want to send the whole MTO on each event, not do we want to send a single address record. Instead we have picked a set of logical objects that match updates that the Prime would like to see.
 
 ### Logical Objects
 
@@ -100,7 +104,7 @@ What this means is an update to an address on an MTOShipment should result in an
 
 ## Notifications
 
-The notifications code will register a handler with the event package. When an event happens, the event pkg will call each registered handler. 
+The notifications code will register a handler with the event package. When an event happens, the event pkg will call each registered handler.
 
 ```golang
    for i := 0; i < len(registeredEventHandlers); i++ {
@@ -112,9 +116,9 @@ The notifications code will register a handler with the event package. When an e
 ```
 The handler will then assemble the data it needs to store in its record. It can also contain its own logic about whether a notification needs to be sent.
 
-`NotificationEventHandler` function will get the `EventKey`, `MtoID`, `Request` params, and `ObjectID`. 
+`NotificationEventHandler` function will get the `EventKey`, `MtoID`, `Request` params, and `ObjectID`.
 
-It will check that the originator of the action was not the same as the prime, that the MTO is available to prime and if so, create a payload from the logical object. 
+It will check that the originator of the action was not the same as the prime, that the MTO is available to prime and if so, create a payload from the logical object.
 
 It will store a record with all relevant information including the payload in the notifications table.
 
@@ -124,7 +128,8 @@ Relevant code is in **[pkg/services/event/notification.go](https://github.com/tr
 
 ![](/img/webhooks/send-notifications.png)
 
-To send the payload, we use an app called the webhook-client that that will periodically check the webhook_notifications table and send to the Prime. 
+To send the payload, we use an app called the webhook-client that will
+periodically check the webhook_notifications table and send to the Prime.
 
 The app will be asynchronous to the rest of the handling of the event. This is intentional to avoid increasing the time to execute the handler.
 
