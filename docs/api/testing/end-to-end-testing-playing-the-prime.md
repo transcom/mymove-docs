@@ -13,7 +13,7 @@ This page includes instructions on how to complete basic functions as the Prime 
 * [Configure Postman for mTLS API calls](/docs/tools/postman/setup-postman-to-make-mutual-tls-api-calls)
   * Use your mTLS integrations certificate in place of the dev certs
   * Add an entry for each environment, STG and EXP
-  
+
 <img src="https://github.com/transcom/mymove/wiki/images/postman/postman-exp-stg-mtls.png" width="600" alt="sample certificate setup in postman for exp and stg"/>
 
 * Import Prime E2E Testing collection into Postman
@@ -38,7 +38,7 @@ This page includes instructions on how to complete basic functions as the Prime 
 * **Prime Part II - Request payment, upload proof of service docs**
 * TIO handles invoicing
 
-This page covers the bolded sections for Prime.
+This page covers the bold sections for Prime.
 
 
 ## Prime: Part I
@@ -51,7 +51,7 @@ Each request in the collection should be ran in sequence. You can edit the body 
 
 * Edit the collection > Variables > Paste in your value for `moveTaskOrderID`
 
-* Send request `getMoveTaskOrder` 
+* Send request `getMoveTaskOrder`
 	* This will grab the mtoShipmentID and eTag and store them
 
 * Check response for `destinationAddress`. If none is present, include one in the next request.
@@ -60,7 +60,7 @@ Each request in the collection should be ran in sequence. You can edit the body 
   * Include `primeEstimatedWeight`, `primeActualWeight`, `scheduledPickupDate`, `actualPickupDate`
   * If no `deliveryAddress` is present on the shipment, include an address in the following format:
 
-```       
+```
    "destinationAddress": {
         "streetAddress1": "148 S East St",
         "city": "Princeton",
