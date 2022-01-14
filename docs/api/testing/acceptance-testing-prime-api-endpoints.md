@@ -22,16 +22,16 @@ sidebar_position: 1
 
 ### 2. Validate Requests
 * all requests fields should be defined in `prime.yaml`
-* un/required fields should properly denoted  
+* [un]required fields should properly denoted
 * fields that are provided in the response but not valid in the request should be marked `readOnly`
 * `etag` should be marked as `readOnly` in the yaml - It should never be in the request payload
 * all fields should have a meaningful description visible in the Redoc
 
 ### 3. Validate Responses
 * all response fields should be defined in `prime.yaml`
-* un/required fields should properly denoted  
+* [un]required fields should properly denoted
 * fields that are used in the request but not valid in the response should be marked `writeOnly`
-* `pointOfContact` should be marked as `writeOnly` - It's a logged field which should never be in the response. 
+* `pointOfContact` should be marked as `writeOnly` - It's a logged field which should never be in the response.
 * all fields should have a meaningful description visible in the Redoc
 
 ### 4. Validate Errors
