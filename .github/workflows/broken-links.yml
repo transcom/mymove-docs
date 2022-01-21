@@ -1,0 +1,29 @@
+name: Using htmlproofer to report out all Broken Links
+
+on: [push]
+
+jobs:
+  prose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x  # openapi requires node >= 12
+
+      - name: Install yarn
+        run: npm install yarn
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build the Docusaurus app
+        run: yarn build
+
+      - name: Check HTML for Broken Links
+        uses: chabad360/htmlproofer@master
+        with:
+          directory: "./build"
+          arguments: --allow-hash-href --empty-alt-ignore --disable-external --assume-extension --url-swap '^/mymove-docs/:/'
