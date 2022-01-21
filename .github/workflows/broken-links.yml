@@ -3,7 +3,7 @@ name: Using htmlproofer to report out all Broken Links
 on: [push]
 
 jobs:
-  prose:
+  check_broken_links:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
