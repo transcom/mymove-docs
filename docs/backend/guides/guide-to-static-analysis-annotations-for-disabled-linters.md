@@ -4,22 +4,6 @@ sidebar_position: 7
 
 # Guide to Static Analysis Annotations for Disabled Linters
 
-**Contents**
-* [Introduction](#introduction)
-* [Annotations](#annotations)
-* [Life After Annotation](#life-after-annotation)
-* [Front End Annotation Templates](#front-end-annotation-templates)
-    * [security/detect-unsafe-regex](#securitydetect-unsafe-regex)
-    * [no-console](#no-console)
-    * [react/no-array-index-key](#reactno-array-index-key)
-    * [security/detect-object-injection](#securitydetect-object-injection)
-* [Back End Annotation Templates](#back-end-annotations-templates)
-    * [gosec G101](#gosec-g101)
-    * [gosec G307](#gosec-g307)
-    * [gosec G404](#gosec-g404)
-    * [Note on Errcheck](#note-on-errcheck)
-
-
 # Introduction
 
 See [Static Analysis Security Workflow](https://github.com/transcom/mymove/wiki/Guide-to-Static-Analysis-Security-Workflow#introduction)
@@ -27,7 +11,13 @@ See [Static Analysis Security Workflow](https://github.com/transcom/mymove/wiki/
 
 # Annotations
 
-In an ideal world, we would be able to fix all potential vulnerabilities, but sometimes there is no path to mitigation. This is where **annotations** come into play. An **annotation** is a formatted comment block whose purpose is to explain why the vulnerability cannot be remediated. Annotations precede a line of code that is disabling the linter (ex. eslint-disable-next-line, #nosec). Below is the skeleton of an annotation and explanations for what each field covers:
+In an ideal world, we would be able to fix all potential vulnerabilities, but
+sometimes there is no path to mitigation. This is where **annotations** come
+into play. An **annotation** is a formatted comment block whose purpose is to
+explain why the vulnerability cannot be remediated. Annotations precede a line
+of code that is disabling the linter (ex. eslint-disable-next-line, `#nosec`).
+Below is the skeleton of an annotation and explanations for what each field
+covers:
 
 
 ```
