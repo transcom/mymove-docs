@@ -144,7 +144,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} United States Transportation Command. Built with Docusaurus.`,
+      copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`
     },
     prism: {
       theme: lightCodeTheme,
