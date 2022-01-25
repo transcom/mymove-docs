@@ -142,7 +142,7 @@ module.exports = {
             },
             {
               label: 'Docusaurus Official Docs',
-              href: 'https://docusaurus.io/',
+              href: 'https://6130eb5cde15830007fdf57b--docusaurus-2.netlify.app/docs',
             },
           ],
         },
