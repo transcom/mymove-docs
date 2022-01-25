@@ -1,9 +1,16 @@
 ---
+title: Tutorial intro
 sidebar_position: 1
 slug: /tutorial/
 ---
 
-# Tutorial Intro
+:::warning
+This is Docusaurus documentation unrelated to MilMove, but can be found useful
+for understanding Docusaurus as a developer documentation portal. For the source
+of this documentation, see the Docusaurus documentation here.
+
+[💻 Docusaurus tutorial documentation on GitHub](https://github.com/facebook/docusaurus/tree/v2.0.0-beta.5/examples/classic/docs).
+:::
 
 Let's discover **Docusaurus in less than 5 minutes**. And here is an edit from GitHub.
 
