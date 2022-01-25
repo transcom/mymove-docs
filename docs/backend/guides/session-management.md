@@ -9,14 +9,15 @@ MilMove uses server-side session management because our ATO (Authority to Operat
 periodically to clean up stale sessions.
 
 After researching various session management solutions, we chose
-[scs](https://github.com/alexedwards/scs) because it was the easiest to integrate, and it supports various
-stores out of the box. It is the second most popular repo after
-`gorilla/sessions`. We didn't pick `gorilla/sessions` because it suffers
-from memory leak issues, and uses its own `context` instead of the
-`request.Context()` provided by Golang. The maintainers are aware of
-the issues and have opened a GitHub issue to propose [improvements for
-v2](https://github.com/gorilla/sessions/issues/105). However, it doesn't look like any progress has been made over the
-past 2 years, while `scs` has implemented most of those improvements.
+[`scs`](https://github.com/alexedwards/scs) because it was the easiest to
+integrate, and it supports various stores out of the box. It is the second most
+popular repo after `gorilla/sessions`. We didn't pick `gorilla/sessions` because
+it suffers from memory leak issues, and uses its own `context` instead of the
+`request.Context()` provided by Golang. The maintainers are aware of the issues
+and have opened a GitHub issue to propose [improvements for
+v2](https://github.com/gorilla/sessions/issues/105). However, it doesn't look
+like any progress has been made over the past 2 years, while `scs` has
+implemented most of those improvements.
 
 ## Local setup
 Run `make deps` to make sure your local setup is up to date and to pull the Redis image. That should be all you need to be able to sign in and out of the various apps.
