@@ -6,7 +6,9 @@ sidebar_position: 18
 
 This outlines the steps you need to do to join the two data sources we've traditionally gotten - CSVs or text files of best value scores tied to TDLs, exported one code of service at a time, and CSVs or text files of TSP discount rates, organized by the three pieces of data that make up a TDL (origin, destination, and code of service). If anything behaves in a surprising way, double check the schema detailed here against the organization of your input files. No step of this should alter zero rows, for instance.
 
-Before you begin this process, convert discount rate Excel files or txt files to CSVs, if needed. **Verify that values for SVY_SCORE, RATE_SCORE, and BVS are decimal values (should be formatted like `77.3456`).**
+Before you begin this process, convert discount rate Excel files or TXT files to
+CSVs, if needed. **Verify that values for SVY_SCORE, RATE_SCORE, and BVS are
+decimal values (should be formatted like `77.3456`).**
 
 > We will use the `\copy` `psql` command throughout this guide.
 >
@@ -86,8 +88,9 @@ The files you need now will include the linehaul and SIT discounts and may have 
 
 You will need to import **two** files, one for each code of service in the part of the rate cycle that applies to the TDL data you just imported.
 
-* If your TDL data is during the peak part of the rate cycle (May 15th - September 30th), import the **peak** rates.
-* Otherwise, import the **nonpeak** rates.
+* If your TDL data is during the peak part of the rate cycle (May 15th -
+  September 30th), import the **peak** rates.
+* Otherwise, import the **non-peak** rates.
 
 ```sql
 \copy temp_tsp_discount_rates FROM '/add/filename/for/discount/rates/2018 Code D Peak Rates.csv' WITH CSV HEADER;
@@ -118,7 +121,10 @@ CREATE TABLE temp_tdl_scores (
 );
 ```
 
-Use the `\copy` command in psql again to import the TDL scores. Again, you'll need to import **two** files based on whether the dates you are working with are in the peak or nonpeak season. Use your absolute path for where you stored those CSV files.
+Use the `\copy` command in psql again to import the TDL scores. Again, you'll
+need to import **two** files based on whether the dates you are working with are
+in the peak or non-peak season. Use your absolute path for where you stored those
+CSV files.
 
 ```sql
 \copy temp_tdl_scores FROM '/add/filename/for/tdl/scores/TDL Scores - 1Aug2018 PP - PK - Code D.csv' WITH CSV HEADER;
