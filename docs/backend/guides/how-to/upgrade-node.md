@@ -19,5 +19,7 @@ Things to modify:
 7. Find the new image hash from the Docker hub
 8. Update the transcom/mymove PR to use the hash from step 7
 9. Test again to make sure everything works as expected.
-10. Announce in #prac-engineering that you will be updating node and any instructions [An example slack msg](https://ustcdp3.slack.com/archives/CP6PTUPQF/p1624996730029000)
-10. Merge the PR in transcom/mymove
+10. Announce in #prac-engineering that you will be updating node and any
+    instructions [An example slack
+    message](https://ustcdp3.slack.com/archives/CP6PTUPQF/p1624996730029000)
+11. Merge the PR in transcom/mymove
