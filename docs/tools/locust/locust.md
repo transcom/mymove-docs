@@ -12,6 +12,9 @@ There are more [docs on load testing available in confluence](https://dp3.atlass
 The docs there cover things like deploying to AWS, looking at logs in AWS, restoring the AWS database, and locust best
 practices. 
 
+We also have a recording reviewing how to run load tests, working with load tests, etc. It's available in our Google
+Drive: [Load Testing 2022-01-20 Recording](https://drive.google.com/drive/folders/1xaxzAvnyBRfg4ZLVH1mLVvhuTrjfPYjQ).
+
 ## How It Works
 
 Locust allows us to write the logic for our load tests using python code. We define the types of users we want to use in
