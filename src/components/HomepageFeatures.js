@@ -1,7 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './HomepageFeatures.module.css';
-import config from '../../docusaurus.config'
 
 const FeatureList = [
   {
@@ -51,7 +50,6 @@ const FeatureList = [
       <>
         <a href="https://6130eb5cde15830007fdf57b--docusaurus-2.netlify.app/community/resources#community-plugins">
           Here's a list of Community Plugins that work with Docusaurus
-          {config.customFields.versionOfDocusaurus}
         </a>
       </>
     ),

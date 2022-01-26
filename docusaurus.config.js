@@ -20,9 +20,6 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'USTransCom',
   projectName: 'mymove-docs',
-  customFields: {
-    versionOfDocusaurus: '2.0.0-beta.5',
-  },
   themeConfig: {
     navbar: {
       title: 'MilMove Documentation',
