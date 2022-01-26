@@ -10,7 +10,10 @@ organized. Task sets and functions should all be defined in python files in the 
 It is possible for a user class to have more than one task set, but it's important to keep in mind
 is that if a user has more than one task set, they will only ever switch between the task sets if
 you remember to have the task set stop at some point. Otherwise, the user will just stay stuck on
-their first task set until the load tests end. Examples will be included below.
+their first task set until the load tests end. It is also important to note that if a user has more than
+one `TaskSet`, the one they pick is random. The `TaskSets` will have weights that affect how likely each 
+one is to be picked, which can be set as needed to modify the probability of each one being picked.
+An example of a user with multiple `TaskSets` will be included below.
 
 An example `TaskSet` for this project might be:
 
