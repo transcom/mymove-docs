@@ -30,3 +30,9 @@ Brewfile
 pour.sh
 Brewfile.local.lock.json
 Brewfile.lock.json
+
+# IDE config
+.idea
+.vscode
+*.swp
+*.sublime-*
