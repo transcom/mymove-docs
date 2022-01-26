@@ -20,6 +20,9 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'USTransCom',
   projectName: 'mymove-docs',
+  customFields: {
+    versionOfDocusaurus: '2.0.0-beta.5',
+  },
   themeConfig: {
     navbar: {
       title: 'MilMove Documentation',
@@ -139,12 +142,12 @@ module.exports = {
             },
             {
               label: 'Docusaurus Official Docs',
-              href: 'https://docusaurus.io/',
+              href: 'https://6130eb5cde15830007fdf57b--docusaurus-2.netlify.app/docs',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} United States Transportation Command. Built with Docusaurus.`,
+      copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`
     },
     prism: {
       theme: lightCodeTheme,

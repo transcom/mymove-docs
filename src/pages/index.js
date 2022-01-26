@@ -16,7 +16,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs">
+            to="/docs/about">
             Welcome to MilMove 🚚
           </Link>
         </div>
@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description={`${siteConfig.title} - The OSS developer documentation for MyMove`}>
       <HomepageHeader />
       <main>
         <HomepageFeatures />
