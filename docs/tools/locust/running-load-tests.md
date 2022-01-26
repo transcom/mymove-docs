@@ -10,7 +10,7 @@ possible combinations:
 
 * Run `locust` locally against local `mymove` server (i.e. local -> local)
 * Run `locust` locally against load test env `mymove` server (i.e. local -> `loadtest.dp3.us`)
-* Run `locust` from AWS against the load test env `mymove` server (i.e. aws -> `loadtest.dp3.us`)
+* Run `locust` from AWS against the load test env `mymove` server (i.e. AWS -> `loadtest.dp3.us`)
 
 
 ## UI vs Command Line

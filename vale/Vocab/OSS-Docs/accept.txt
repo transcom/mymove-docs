@@ -60,3 +60,9 @@ CloudWatch
 DoD
 Loki
 (?i)mixins
+(?i)Locust
+kwargs
+callables
+(?i)Makefile
+(?i)enum
+(?i)subclassing

@@ -91,7 +91,7 @@ Prime API Workflow Tags
     * This workflow simulates how an HHG move would flow through the PrimeAPI. This workflow
       utilizes both PrimeAPI and SupportAPI tasks.
 * `createMTOShipmentWorkflow`
-    * This work flow tests the PrimeAPI create_mto_shipment endpoint. It creates or selects an
+    * This work flow tests the PrimeAPI `create_mto_shipment` endpoint. It creates or selects an
       existing move, then creates shipments on the selected move.
 
 ## Running Preset Load Tests

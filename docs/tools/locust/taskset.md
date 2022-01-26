@@ -97,15 +97,15 @@ instead of `locust` having each request to an endpoint like `/move-task-orders/{
 group, e.g. `/move-task-orders/1` , `/move-task-orders/2`, etc., `locust` will group them all under
 the same name.
 
-Each of these functions will return a tuple containing the url to use (stored in `moves_path`
+Each of these functions will return a tuple containing the URL to use (stored in `moves_path`
 above), and the keyword arguments (or kwargs, called `request_kwargs` above) to pass to `self.rest`.
 
 The `rest` context manager makes it easier to work with responses by:
 
 * providing a variable you can use (called `resp` above) to mark the load test as a success (by
   calling `resp.success()`) or a failure (`resp.failure("message")` like at the end of the example).
-* automatically parsing the response content into json and failing the load test if it can't be
-  parsed. The parsed json response content can be accessed in `resp.js`.
+* automatically parsing the response content into `json` and failing the load test if it can't be
+  parsed. The parsed `json` response content can be accessed in `resp.js`.
     * In an example earlier, you can see `parse_response_json` being used. The context manager uses
       that internally to populate `resp.js`.
     * This isn't called `resp.json` because that's already a method on the `resp` object.
@@ -301,7 +301,7 @@ The main things to note are:
 * Adding a tag for expected failures: `expectedFailure`
 * Appending `— expected failure` to the `endpoint_name`
     * Note that if it's an endpoint you would not normally have to specify the `endpoint_name` for,
-      e.g. `/moves`, you'll need te specify `endpoint_name=/moves — expected failure`.
+      e.g. `/moves`, you'll need to specify `endpoint_name=/moves — expected failure`.
 * Checking for the bad status code you expect, e.g. `HTTPStatus.UNPROCESSABLE_ENTITY`, a.k.a. `422`
     * Using `resp.success()` if you got the expected bad status code.
     * Using `resp.failure(<reason>)` and `log_response_failure(response=resp)` if you get any other
