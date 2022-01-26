@@ -9,7 +9,8 @@ We use a tool called [locust](https://docs.locust.io/en/stable/) to load test th
 data about responses times, finding breakpoints, and assessing the overall health of the system.
 
 There are more [docs on load testing available in confluence](https://dp3.atlassian.net/wiki/spaces/MT/pages/1439137811/Load+Testing).
-The docs there cover things like looking at logs in AWS, restoring the AWS database, and locust best practices. 
+The docs there cover things like deploying to AWS, looking at logs in AWS, restoring the AWS database, and locust best
+practices. 
 
 ## How It Works
 
