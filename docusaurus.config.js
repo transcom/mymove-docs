@@ -139,12 +139,12 @@ module.exports = {
             },
             {
               label: 'Docusaurus Official Docs',
-              href: 'https://docusaurus.io/',
+              href: 'https://6130eb5cde15830007fdf57b--docusaurus-2.netlify.app/docs',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} United States Transportation Command. Built with Docusaurus.`,
+      copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`
     },
     prism: {
       theme: lightCodeTheme,

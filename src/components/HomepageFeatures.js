@@ -4,46 +4,65 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Uses Markdown for documentation',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        The MilMove Developer Portal uses Markdown for documentation which is
+        already widely used for other kinds of project documentation.
+      </>
+    ),
+    callout: (
+      <>
+        <a href="/mymove-docs/docs/tools/docusaurus/docusaurus"> Read about how
+        to contribute to this documentation in our Tools section.</a>
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Focused on developer experience',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        The MilMove Developer Portal lets contributors focus on documentation.
+        Docusaurus builds and manages the documentation while giving readers
+        the ability to search and integrate other data sources besides
+        Markdown.
+      </>
+    ),
+    callout: (
+      <>
+        <a href="https://github.com/transcom/mymove-docs/actions">
+          Checkout the GitHub Actions that power deployment and integrations
+          for the MilMove Developer Portal
+        </a>
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('../../static/img/undraw_docusaurus_react.svg').default,
+    title: 'Powered by Docusaurus',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Extend or customize your the MilMove Developer Portal layout and
+        integrations by using React. Docusaurus can be extended while reusing
+        the same header and footer.
+      </>
+    ),
+    callout: (
+      <>
+        <a href="https://6130eb5cde15830007fdf57b--docusaurus-2.netlify.app/community/resources#community-plugins">
+          Here's a list of Community Plugins that work with Docusaurus
+        </a>
       </>
     ),
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({title, description, callout}) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} alt={title} />
-      </div>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
         <p>{description}</p>
+        <p>{callout}</p>
       </div>
     </div>
   );

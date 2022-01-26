@@ -1,0 +1,19 @@
+name: Test build Docusaurus source
+
+on: [push]
+
+jobs:
+  test_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Install yarn
+        run: npm install yarn
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build Docusaurus from source
+        run: yarn build
