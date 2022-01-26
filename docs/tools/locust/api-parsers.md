@@ -5,7 +5,17 @@ sidebar_position: 11
 
 Internally, the fake data generator is using an `APIParser` class. It parses an API specification
 (`.yaml`) file using a path or URL using the `prance` library to create a fully-resolved dictionary
-of its Swagger specification. The main methods are:
+of its Swagger specification. 
+
+:::info YAML Parsing Differences
+
+One thing that is important to note is that `prance` is different from the tool we use to lint the `yaml` files in the 
+`mymove` repo, which is `spectral`. They parse the files a bit differently and so there have been times when one will 
+fail think something is valid while the other one breaks. 
+
+:::
+
+The main methods of the `APIParser` class are:
 
 * `get_request_body`: Returns the full Swagger specification of the request body for a given
   endpoint. Requires the `path` and the `method` (`post`, `get`, etc.) to be passed in. Returns an
