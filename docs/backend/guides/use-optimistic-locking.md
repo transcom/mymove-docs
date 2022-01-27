@@ -190,6 +190,7 @@ You should now be able to update the move task order without getting that pesky
 
 # References
 - [Entity Tags on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag)
+- [If-Match header on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match)
 - [Optimistic concurrency control on Wikipedia](https://en.wikipedia.org/wiki/Optimistic_concurrency_control)
 - [Optimistic Locking in a REST API](https://sookocheff.com/post/api/optimistic-locking-in-a-rest-api/)
 - [ADR 0042: Use If-Match / E-tags for optimistic locking ](https://github.com/transcom/mymove/blob/a0eb0fb0d58f06493f26bff553d78fff5fa1aa86/docs/adr/0042-optimistic-locking.md)
