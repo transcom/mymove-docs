@@ -6,6 +6,13 @@ You must first read the article on [How to Use mTLS with CAC](use-mtls-with-cac.
 
 ## Uploading Electronic Orders Locally with [transcom/milmove_orders](https://github.com/transcom/milmove_orders/)
 
+:::warning MilMove Orders Repo Archived
+
+The MilMove Orders repo has been archived so this section is no longer valid for now. Post-MVP there is a plan to have 
+some of that functionality back, but it hasn't been decided if that same repo will be used or something else.
+
+:::
+
 Use the transcom/milmove_orders repo with [sample navy orders data](https://github.com/transcom/milmove_orders/blob/master/testdata/nom_demo_20190404.csv). 
 
 Then run:
