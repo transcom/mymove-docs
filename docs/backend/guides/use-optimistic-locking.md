@@ -8,6 +8,10 @@ Optimistic locking is a strategy to avoid conflicts when multiple people may be 
 
 # How To Use Optimistic Locking (With E-Tags)
 
+ETags (or entity tags) are an HTTP response header. An ETag is an identifier for a specific version of a resource. It lets caches be more efficient and save bandwidth, as a web server does not need to resend a full response if the content was not changed. Additionally, etags help to prevent simultaneous updates of a resource from overwriting each other. See references below for further information and related ADRs on why ETags are used on this project.
+
+ETags are used in conjunction with the If-Match conditional HTTP request header. For GET and HEAD methods, the server will return the requested resource only if it matches one of the listed ETags. For PUT and other non-safe methods, it will only upload the resource in this case. 
+
 *Note: you'll probably want to use this on `PUT` or `PATCH` endpoints only.*
 
 ## Leaning on the query builder
@@ -183,3 +187,10 @@ We'll need to supply the ETag as an argument:
 
 You should now be able to update the move task order without getting that pesky
 `412 Precondition Failed` error.
+
+# References
+- [Entity Tags on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag)
+- [Optimistic concurrency control on Wikipedia](https://en.wikipedia.org/wiki/Optimistic_concurrency_control)
+- [Optimistic Locking in a REST API](https://sookocheff.com/post/api/optimistic-locking-in-a-rest-api/)
+- [ADR 0042: Use If-Match / E-tags for optimistic locking ](https://github.com/transcom/mymove/blob/a0eb0fb0d58f06493f26bff553d78fff5fa1aa86/docs/adr/0042-optimistic-locking.md)
+- [ADR 0049: Do not update child records using parent's E-tag](https://github.com/transcom/mymove/blob/master/docs/adr/0049-etag-for-child-updates.md)
