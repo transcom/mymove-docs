@@ -6,18 +6,18 @@ in buildEnv {
   paths = [
     (import (builtins.fetchGit {
       # Descriptive name to make the store path easier to identify
-      name = "nodejs-14.17.1";
+      name = "nodejs-14.18.3";
       url = "https://github.com/NixOS/nixpkgs/";
       ref = "refs/heads/nixpkgs-unstable";
-      rev = "75916fb375eb571dceebef84263a6cb942372769";
+      rev = "847a715cfa7ed92cff06a780ec684e26388498e1";
     }) {}).nodejs-14_x
 
     (import (builtins.fetchGit {
       # Descriptive name to make the store path easier to identify
-      name = "yarn-1.22.10";
+      name = "yarn-1.22.17";
       url = "https://github.com/NixOS/nixpkgs/";
       ref = "refs/heads/nixpkgs-unstable";
-      rev = "559cf76fa3642106d9f23c9e845baf4d354be682";
+      rev = "c11d08f02390aab49e7c22e6d0ea9b176394d961";
     }) {}).yarn
   ];
 }
