@@ -3,15 +3,37 @@ sidebar_position: 2
 ---
 # Running Load Tests
 
-There are several ways you can run load tests. You can run `locust` locally or use the deployed version (on AWS). You 
+There are several ways you can run load tests. You can run `locust` locally or use the deployed version (on AWS). You
 can also use a local `mymove` server or the one deployed in the load test environment (on `loadtest.dp3.us`). One thing
-to note is that you can't point the deployed `locust` instance at a local `mymove` server. This means you have three 
-possible combinations:
+to note is that you can't point the deployed `locust` instance at a local `mymove` server.
 
-* Run `locust` locally against local `mymove` server (i.e. local -> local)
-* Run `locust` locally against load test env `mymove` server (i.e. local -> `loadtest.dp3.us`)
-* Run `locust` from AWS against the load test env `mymove` server (i.e. AWS -> `loadtest.dp3.us`)
+### Visualization of possible Locust combinations
+```mermaid
+flowchart RL
+    subgraph Environments
+        subgraph Local
+            direction TB
+            l_customer[(Customer App)]
+            l_office[(Office App)]
+            l_prime[(Prime API)]
+        end
 
+        subgraph AWS
+            direction TB
+            lt_customer[(Customer App)]
+            lt_office[(Office App)]
+            lt_prime[(Prime API)]
+        end
+    end
+
+    l_locust([Local Locust instance])
+    aws_locust([AWS-deployed Locust instance])
+
+    l_locust-->Local
+    l_locust-->AWS
+
+    aws_locust-->AWS
+```
 
 ## UI vs Command Line
 
@@ -20,7 +42,7 @@ possible combinations:
 If you run `locust` locally, you have the option of using either, but if you run `locust` from AWS, you will only have
 the option of running with the UI.
 
-The instructions in these docs will cover how to get `locust` started (with or without the UI), but won't cover much 
+The instructions in these docs will cover how to get `locust` started (with or without the UI), but won't cover much
 about the UI since the [locust web interface docs](https://docs.locust.io/en/stable/quickstart.html#locust-s-web-interface)
 cover a decent amount of helpful information.
 
