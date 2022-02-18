@@ -282,7 +282,7 @@ In your tests you should call `Validate` on the payload.  Something
 like ...
 
 
-```
+```go {8,9}
 	handler := ListMovesHandler{HandlerContext: context, MoveTaskOrderFetcher: movetaskorder.NewMoveTaskOrderFetcher()}
 	response := handler.Handle(params)
 
