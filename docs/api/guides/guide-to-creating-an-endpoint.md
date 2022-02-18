@@ -273,6 +273,28 @@ If you also need the session, you can do all three at once:
 appCtx := appcontext.WithSession(appcontext.NewAppContext(h.DB(), logger), session)
 ```
 
+### Validating Response Payload
+
+We need to ensure that the data that is being returned from the
+handler matches what is defined in the swagger definition.
+
+In your tests you should call `Validate` on the payload.  Something
+like ...
+
+
+```
+	handler := ListMovesHandler{HandlerContext: context, MoveTaskOrderFetcher: movetaskorder.NewMoveTaskOrderFetcher()}
+	response := handler.Handle(params)
+
+	suite.IsNotErrResponse(response)
+	listMovesResponse := response.(*movetaskorderops.ListMovesOK)
+	movesList := listMovesResponse.Payload
+
+    // Validate the payload response
+	suite.NoError(movesList.Validate(strfmt.Default))
+
+```
+
 ### Authorization
 
 You'll notice that many handlers perform authorization within the handler, such as:
