@@ -11,14 +11,14 @@ documentation file structure. This may not be relevant since the shift to using
 Docusaurus and may change in the future.
 
 * [How to backup and restore the development
-    database](./Backup-and-Restore-Dev-Database.md)
-* [How to migrate the database](./migrations.md)
-* [How to soft delete](../backend/soft-delete.md)
-* [Using EagerPreload in Pop](../backend/Using-EagerPreload-in-Pop.md)
+    database](/docs/backend/setup/backup-and-restore-dev-database)
+* [How to migrate the database](/docs/backend/setup/database-migrations)
+* [How to soft delete](/docs/backend/guides/how-to/soft-delete)
+* [Using EagerPreload in Pop](/docs/backend/setup/using-eagerpreload-in-pop)
 * [How database cleanup works in Go server
-    tests](./How-database-cleanup-works-in-Go-server-tests.md)
+    tests](/docs/dev/contributing/database/How-database-cleanup-works-in-Go-server-tests)
 * [Understanding `Testdatagen`
-    functions](../../testing/test-data/Understanding-Testdatagen-Functions.md)
+    functions](/docs/backend/testing/understanding-testdatagen-functions)
 
 :::
 
@@ -49,7 +49,7 @@ When looking up objects that have a one-to-many relationship, ORMs such as Pop c
 
 With our new version of Pop, there is a feature called EagerPreload that helps us mitigate the N+1 problem.
 
-[Read this article](Using-EagerPreload-in-Pop.md) to know how to use it properly.
+[Read this article](/docs/backend/setup/using-eagerpreload-in-pop) to know how to use it properly.
 
 #### Excessive Joins (e.g. open-ended *Eager* call)
 
