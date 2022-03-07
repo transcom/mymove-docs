@@ -10,8 +10,8 @@ The fastest way to run end to end tests is with the following command, which wil
 Cypress UI, from which you can choose to run all integration specs (there should be a link in
 the top right that says something like "Run 25 integration specs"), or click on individual ones.
 
-```console
-$ make e2e_test
+```sh
+make e2e_test
 ```
 
 This command truncates most tables in the test DB (which is much faster than destroying it, running it again,
@@ -22,33 +22,33 @@ Sometimes, a new recently-merged migration might prevent the script from running
 In that case, or if something else seems wrong with the test DB, you can set everything
 up from scratch:
 
-```console
-$ make e2e_test_fresh
+```sh
+make e2e_test_fresh
 ```
 
 If you have already run tests in the current database, and you want to keep Cypress open
 to run the tests again, you can empty and refill the test DB with this command:
 
-```console
-$ make db_e2e_up
+```sh
+make db_e2e_up
 ```
 
 ## In Docker
 
 If you instead would like to run all the tests in the terminal, use the following command:
 
-```console
-$ make e2e_test_docker
+```sh
+make e2e_test_docker
 ```
 
 To run just the office tests:
 
-```console
-$ SPEC=cypress/integration/office/**/* make e2e_test_docker
+```sh
+SPECS=cypress/integration/office/**/* make e2e_test_docker
 ```
 
 ## Run Specific Tests in a File
 
-```console
-$ yarn cypress run --spec cypress/integration/path/to/file.jsx
+```sh
+yarn cypress run --spec cypress/integration/path/to/file.jsx
 ```
