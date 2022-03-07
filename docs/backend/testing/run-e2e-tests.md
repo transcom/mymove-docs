@@ -4,6 +4,22 @@ sidebar_position: 5
 
 # How to run end to end (Cypress) tests
 
+Cypress tests run using the client-side code. This guide shows you how to run
+the Cypress test suite either as Docker container, as a command-line tool
+locally, or using the Cypress UI. When running within these tests, make sure you
+build the client locally in order to ensure that the latest client code is what
+Cypress is testing against.
+
+```sh
+make client_build
+```
+
+After completing the previous command, you should be able to run the commands
+before and utilize the same client-side code to test. If you make any changes
+within the `src/` directory, you will need to rebuild the client-side code. The
+same is not true for the back-end work as that work is reloaded every time the
+Cypress tests are started.
+
 ## Using the Cypress UI
 
 The fastest way to run end to end tests is with the following command, which will open the
@@ -16,7 +32,7 @@ make e2e_test
 
 This command truncates most tables in the test DB (which is much faster than destroying it, running it again,
 and running all the migrations), then populates the DB from the data in the
-`/pkg/testdatagen/scenario/e2ebasic.go` script, and then launches Cypress.
+`/pkg/testdatagen/scenario/e2ebasic.go` script, and then launches Cypress UI.
 
 Sometimes, a new recently-merged migration might prevent the script from running.
 In that case, or if something else seems wrong with the test DB, you can set everything
