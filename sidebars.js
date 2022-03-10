@@ -31,6 +31,21 @@ module.exports = {
       items: [
         {
           type: 'link',
+          label: 'Admin',
+          href: '/api/admin',
+        },
+        {
+          type: 'link',
+          label: 'Internal',
+          href: '/api/internal',
+        },
+        {
+          type: 'link',
+          label: 'GHC',
+          href: '/api/ghc',
+        },
+        {
+          type: 'link',
           label: 'Prime',
           href: '/api/prime',
         },
