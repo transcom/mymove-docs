@@ -170,6 +170,18 @@ module.exports = {
       {
         specs: [
           {
+            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/admin.yaml',
+            routePath: '/api/admin',
+          },
+          {
+            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/internal.yaml',
+            routePath: '/api/internal',
+          },
+          {
+            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/ghc.yaml',
+            routePath: '/api/ghc',
+          },
+          {
             specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
             routePath: '/api/prime',
           },
