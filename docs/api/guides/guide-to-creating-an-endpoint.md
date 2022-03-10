@@ -226,6 +226,13 @@ pkg/handlers/
 
 ### Anatomy of a handler
 
+:::warning
+> This message is a placeholder.
+
+This documentation is currently out of date while the proposed AppContext
+changes are made across all handlers
+:::
+
 All handlers should begin by storing the DB, logger, and/or session from the request into the [AppContext](use-stateless-services-with-app-context). This is the easiest way to get all three:
 
 ```go
