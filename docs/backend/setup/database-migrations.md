@@ -7,10 +7,11 @@ sidebar_position: 4
 If you need to change the database schema, you'll need to write a migration. These are the general steps you'll need to follow:
 
 1. [Generate a new migration file](#Creating-Migrations)
-1. [Add the new SQL to the generated file](#writing-migrations)
-1. [Set up your database](#Setup)
-1. [Run the migrations](#Running-Migrations)
-1. Test your new migration
+2. [Add the new SQL to the generated file](#writing-migrations)
+3. [Set up your database](#Setup)
+4. [Run the migrations](#Running-Migrations)
+5. [Delete a migration](#Delete-Migration)
+6. Test your new migration
 
 After your testing, if you find that you need to change your migration, you'll need to reset your DB (`make db_<env>_reset`) and rerun the migrations to make sure your updates are reflected in the local DB instance. 
 
@@ -157,6 +158,15 @@ Migrations are run by the `milmove migrate` command. This allows us to leverage 
 - `make db_deployed_migrations_migrate`
 
 The reason to use a `make` target is because it will correctly set the migration flag variables and target the correct database with environment variables.
+
+## Delete Migrations
+In the event that you need to make an edit to a migration that you have just created prior to merging it into the main branch, 
+you can delete the migration and recreate it after making your edits. To do this, follow these steps:
+
+1. Delete the migration file in the manifest 
+2. Rerun the migrations using: `make db_dev_reset db_dev migrate` 
+3. Recreate the migration file in the manifest 
+4. Rerun the migration
 
 ## Secure Migrations
 
