@@ -7,11 +7,11 @@ sidebar_position: 4
 If you need to change the database schema, you'll need to write a migration. These are the general steps you'll need to follow:
 
 1. [Generate a new migration file](#Creating-Migrations)
-2. [Add the new SQL to the generated file](#writing-migrations)
-3. [Set up your database](#Setup)
-4. [Run the migrations](#Running-Migrations)
-5. [Rollback migrations locally](#Rollback-Migrations-Locally)
-6. Test your new migration
+1. [Add the new SQL to the generated file](#writing-migrations)
+1. [Set up your database](#Setup)
+1. [Run the migrations](#Running-Migrations)
+1. [Rollback migrations locally](#Rollback-Migrations-Locally)
+1. Test your new migration
 
 After your testing, if you find that you need to change your migration, you'll need to reset your DB (`make db_<env>_reset`) and rerun the migrations to make sure your updates are reflected in the local DB instance. 
 
@@ -306,10 +306,10 @@ As a good practice, all of our migrations should create a database state that wo
 Eg: If we need to rename a column, doing a traditional rename would cause the app to fail if the database changes went live before the new application code (pointing to the new column name) went live. Instead, this should be done in [six steps[(https://github.com/ankane/strong_migrations#renaming-a-column), where each step gets deployed separately:
 
 1. Create a new column
-2. Write to both columns
-3. Backfill data from the old column to the new column
-4. Move reads from the old column to the new column
-5. Stop writing to the old column
-6. Drop the old column
+1. Write to both columns
+1. Backfill data from the old column to the new column
+1. Move reads from the old column to the new column
+1. Stop writing to the old column
+1. Drop the old column
 
 Similarly, if a column needs to be dropped, we should deprecate the column in one pull request and then actually remove it in a follow-up pull request. Deprecation can be done by renaming the column to `deprecated_column_name`. This process has an added side affect of helping us keep our migrations reversible, since columns can always be re-added, but getting old data back into those columns is a more difficult process.
