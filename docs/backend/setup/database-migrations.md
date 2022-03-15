@@ -161,7 +161,11 @@ The reason to use a `make` target is because it will correctly set the migration
 
 ## Update Migrations Locally
 In the event that you need to make an edit to a migration that you have just created prior to merging it into the main branch, 
-you can update the migration with your edits and rerun it using: `make db_dev_reset db_dev_migrate` 
+you can update the migration with your edits and rerun it using: 
+
+```sh
+make db_dev_reset db_dev_migrate
+``` 
 
 This command will reset the database and re-add all migrations, including your updated one. Double check that you see 
 the database changes after making your edits and running the `make` commands. 
