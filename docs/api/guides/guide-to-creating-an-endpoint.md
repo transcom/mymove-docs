@@ -227,16 +227,22 @@ pkg/handlers/
 ### Anatomy of a handler
 
 :::warning
-> This message is a placeholder.
-
-This documentation is currently out of date while the proposed AppContext
-changes are made across all handlers
+This documentation is currently in transition while handlers are being
+refactored to use `AuditableAppContextFromRequest` rather than extracting the
+`AppContext` from the request.
 :::
 
 All handlers should begin by storing the DB, logger, and/or session from the request into the [AppContext](use-stateless-services-with-app-context). This is the easiest way to get all three:
 
-```go
+```go title="Old way to get the AppContext"
 appCtx := h.AppContextFromRequest(params.HTTPRequest)
+```
+
+```go title="New way to get the AppContext"
+return h.AuditableAppContextFromRequest(params.HTTPRequest,
+    func(appCtx appcontext.AppContext) middleware.Responder {
+    // contents of handler
+    })
 ```
 
 And then this `appCtx` will be passed in as the first argument to any service object function. For example:
