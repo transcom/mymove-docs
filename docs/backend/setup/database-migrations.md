@@ -164,9 +164,9 @@ In the event that you need to make an edit to a migration that you have just cre
 you can undo the migration and add it back in after making your edits. To do this, follow these steps:
 
 1. In the migrations manifest delete the line with your migration locally.
-2. Rerun the migrations using: `make db_dev_reset db_dev_migrate` 
-3. To add your updated migration again, re-add the file name to the manifest 
-4. Run `make db_dev_migrate`
+1. Rerun the migrations using: `make db_dev_reset db_dev_migrate` 
+1. To add your updated migration again, re-add the file name to the manifest 
+1. Run `make db_dev_migrate`
 
 ## Secure Migrations
 
