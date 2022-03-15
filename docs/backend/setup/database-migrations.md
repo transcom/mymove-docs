@@ -10,7 +10,7 @@ If you need to change the database schema, you'll need to write a migration. The
 1. [Add the new SQL to the generated file](#writing-migrations)
 1. [Set up your database](#Setup)
 1. [Run the migrations](#Running-Migrations)
-1. [Rollback migrations locally](#Rollback-Migrations-Locally)
+1. [Update migrations locally](#Update-Migrations-Locally)
 1. Test your new migration
 
 After your testing, if you find that you need to change your migration, you'll need to reset your DB (`make db_<env>_reset`) and rerun the migrations to make sure your updates are reflected in the local DB instance. 
@@ -159,14 +159,12 @@ Migrations are run by the `milmove migrate` command. This allows us to leverage 
 
 The reason to use a `make` target is because it will correctly set the migration flag variables and target the correct database with environment variables.
 
-## Rollback Migrations Locally
+## Update Migrations Locally
 In the event that you need to make an edit to a migration that you have just created prior to merging it into the main branch, 
-you can undo the migration and add it back in after making your edits. To do this, follow these steps:
+you can update the migration with your edits and rerun it using: `make db_dev_reset db_dev_migrate` 
 
-1. In the migrations manifest delete the line with your migration locally.
-1. Rerun the migrations using: `make db_dev_reset db_dev_migrate` 
-1. To add your updated migration again, re-add the file name to the manifest 
-1. Run `make db_dev_migrate`
+This command will reset the database and re-add all migrations, including your updated one. Double check that you see 
+the database changes after making your edits and running the `make` commands. 
 
 ## Secure Migrations
 
