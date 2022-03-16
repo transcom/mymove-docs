@@ -10,7 +10,7 @@ sidebar_position: 3
 
 The docker instructions are useful to external users. Internal users, with the dev environment set up, can skip straight to [Testing Locally](#testing-locally) or [Testing on Staging or Experimental](#testing-on-staging-or-experimental).
 
-Those do not have a local dev environment can use the docker instead. Follow [these instructions](https://github.com/transcom/prime_api_deliverable/wiki/Getting-Started) to set up the Prime API for testing. 
+Those do not have a local dev environment can use the docker instead. Follow [these instructions](https://github.com/transcom/prime_api_deliverable/wiki/Getting-Started) to set up the Prime API for testing.
 
 ### Running the Prime Docker
 
@@ -28,7 +28,7 @@ make docker_compose_down
 
 ### Accessing Web Applications
 
-To access the the MilMove, Office, and Prime local domains during testing, you may also want to modify your `/etc/hosts` file to contain the following: 
+To access the the MilMove, Office, and Prime local domains during testing, you may also want to modify your `/etc/hosts` file to contain the following:
 
 ```
   echo "127.0.0.1 primelocal" | sudo tee -a /etc/hosts
