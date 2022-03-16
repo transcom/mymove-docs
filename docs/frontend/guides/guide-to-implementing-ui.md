@@ -6,13 +6,6 @@ sidebar_position: 1
 
 This is an attempt to document the process of implementing a web UI based on visual assets, functional requirements, and content specifications. Hopefully the steps below provide a framework for accomplishing work with a high fidelity to the original designs, but they are not a substitute for attention to detail and thorough understanding of HTML and CSS.
 
-## Contents
-
-1. [Start with the markup](#start-with-the-markup)
-2. [Style with CSS (modules)](#style-with-css-modules)
-3. [CSS: less is more](#css-less-is-more)
-4. [Cheatsheet](#cheatsheet)
-
 ## Start with the markup
 
 When implementing a new UI or doing a design pass on existing code, it's usually a good idea to refer to the HTML output before looking at any CSS. HTML syntax may be simple, but it is also meaningful and can make the difference between a web app that is accessible and secure and one that is not. The HTML also defines the structure of the content and design elements on a page, and while CSS can be used to manipulate the visual output to a high degree, it can only go so far.

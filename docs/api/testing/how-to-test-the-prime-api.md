@@ -6,18 +6,6 @@ sidebar_position: 3
 
 > ❗ For the most up-to-date information about the Prime API, please visit https://github.com/transcom/prime_api_deliverable/wiki. The Prime API Deliverable wiki is the client-facing documentation and will be your best resource for understanding how to use this API. This article is a stub that has been kept to preserve some of the old information that might be useful for current MilMove developers.
 
-## Overview
-
-* [Getting Started](#getting-started) - Set up and install instructions for the Prime API using Prime Docker
-  * [Running the Prime Docker](#running-the-prime-docker)
-  * [Accessing Web Applications](#accessing-web-applications)
-* [Testing Locally](#testing-locally) - How to test the Prime API Client using your local server
-* [Testing on Staging or Experimental](#testing-on-staging-or-experimental) - How to test the Prime API Client using the deployed instances of Staging or Experimental env
-  * [DoD Certificates](#dod-certificates)
-  * [Running a Command](#running-a-command)
-* [Tips and Tricks](#tips-and-tricks)
-  * [Using Curl](#using-curl)
-
 ## Getting Started
 
 The docker instructions are useful to external users. Internal users, with the dev environment set up, can skip straight to [Testing Locally](#testing-locally) or [Testing on Staging or Experimental](#testing-on-staging-or-experimental).

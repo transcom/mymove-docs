@@ -4,14 +4,6 @@ sidebar_position: 10
 
 # How to Upgrade Go Version
 
-Upgrading the Go version that we use happens in roughly these steps:
-
- 1. [Updating our Docker Image:](#1-updating-our-docker-image) Update [transcom/circleci-docker](https://github.com/transcom/circleci-docker) to point at an updated Go binary
- 2. [Upgrade Local Go Version:](#2-upgrade-local-go-version) Upgrade local Go version with asdf config `.tool-version`
- 3. [Update `transcom/mymove` Repo:](#3-update-transcommymove-repo) Create a PR for the `transcom/mymove` repo with the updated docker image hash created in step 1
- 4. [Notify Folks:](#notify-folks) Notify everyone that we're updating Go around the time your PR lands
-
-
 ## 1. Updating Our Docker Image
 
 - Grab the download URL and SHA256 checksum for the latest 64-bit Linux Go release from `https://golang.org/dl/`

@@ -4,16 +4,6 @@ sidebar_position: 8
 
 # Guide to Static Analysis Security Workflow
 
-**Contents**
-
-- [Introduction](#introduction)
-  - [Exceptions](#exceptions)
-- [Processes](#processes)
-  - [What to do if you’ve written code that triggers the linter](#what-to-do-if-youve-written-code-that-triggers-the-linter)
-  - [If you need to disable a rule check the severity level of the linter violation](#if-you-need-to-disable-a-rule-check-the-severity-level-of-the-linter-violation)
-  - [If you need annotation approval](#if-you-need-annotation-approval)
-  - [If you are a trussel in ‘truss-is3’ github group and someone needs an approval](#if-you-are-a-trussel-in-truss-is3-github-group-and-someone-needs-an-approval)
-
 # Introduction
 
 As part of the ATO (Authority to Operate) process ([#wg-ato](https://ustcdp3.slack.com/archives/CP4UNF7H6)) the mymove repository must complete a static analysis assessment of the codebase periodically to identify potential vulnerabilities. Historically, this has been accomplished with the Fortify static analysis tool. However, the Fortify static analysis tool may not be compatible with the latest Go versions.

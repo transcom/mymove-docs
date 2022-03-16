@@ -4,14 +4,6 @@ sidebar_position: 20
 
 # WIP server-side validation
 
-## The (grossly over-simplified) layers of the MilMove server
-- [Authentication](#authentication)
-- [Swagger (OpenAPI)](#swagger-openapi)
-- [Handlers](#handlers)
-	- Payload-to-Model conversions (and the reverse)
-- [Service Objects](#service-objects)
-- [Models](#models)
-
 In an ideal world, each of these layers would have a distinct purpose. Because we've never explicitly defined these purposes, learning where to find code while debugging an error, or where to write code when working on a new part of the app, is one of the steepest challenges on MilMove. We can immediately improve the accessibility of the project for new and junior engineers by establishing basic guidelines about what logic belongs in each of the server-side app layers.
 
 I propose that we begin to write these guidelines starting with validation. Once we agree on where we validate each part of the user request, we can use that as a foundation to structure the rest of our codebase. Below is the validation structure I suggest for MilMove.
