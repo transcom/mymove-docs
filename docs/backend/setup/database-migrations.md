@@ -175,8 +175,16 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
 
    Some things to note:
     1. The field names here are pascal case, while in the struct tags, we use the snake case version. 
-    2. Notice how we use `string` for `Name`, while we use `*string` for `Bio`. We have a loose convention around using
-       pointers for optional (nullable) fields, and the concrete type for required fields.
+    2. Notice how we used `string` for `Name`, while we used `*string` for `Bio`. We have a loose convention around
+       using pointers for optional (nullable) fields, and the concrete type for required fields.
+        1. One important thing to note here is that this will affect patch requests if you want the API caller to be 
+           able to make a request without passing in all the non-nullable fields each time. Some options which we use 
+           for existing models:
+            1. Make the field a pointer on the model. This means you will need to have validation somewhere though to
+               ensure that we save a valid value to the DB in the end.
+            2. Follow a pattern similar to the
+               [PPM shipment updater](https://github.com/transcom/mymove/blob/088b87605f19b18b022ff718fcbd5eb8f6962585/pkg/services/ppmshipment/ppm_shipment_updater.go#L44-L49)
+               which merges the new and old shipment _before_ validating the shipment.
     3. We define the plural `type` under the main struct as a slice of the type.
        
 
