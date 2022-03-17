@@ -6,11 +6,11 @@ sidebar_position: 4
 
 If you need to change the database schema, you'll need to write a migration. These are the general steps you'll need to follow:
 
-1. [Generate a new migration file](#Creating-Migrations)
+1. [Generate a new migration file](#creating-Migrations)
 1. [Add the new SQL to the generated file](#writing-migrations)
-1. [Set up your database](#Setup)
-1. [Run the migrations](#Running-Migrations)
-1. [Update migrations locally](#Update-Migrations-Locally)
+1. [Set up your database](#setup)
+1. [Run the migrations](#running-migrations)
+1. [Update migrations locally](#update-migrations-locally)
 1. Test your new migration
 
 After your testing, if you find that you need to change your migration, you'll need to reset your DB (`make db_<env>_reset`) and rerun the migrations to make sure your updates are reflected in the local DB instance. 
