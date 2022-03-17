@@ -182,6 +182,21 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
 
 1. Now you will want to run the migration to test it out with `make db_dev_migrate`.
 
+#### Model/Table Names With Acronyms
+
+If your model/table name has an acronym in it, e.g. `PPMShipment`/`ppm_shipments`, you will need to define a receiver 
+function called `TableName` for the struct that helps `Pop` know what the table name should be. An example is our 
+[`PPMShipment` model's receiver function](https://github.com/transcom/mymove/blob/9c2a281dbd777b77064c1ae563531a3f0c7bf9d0/pkg/models/ppm_shipment.go#L62-L65):
+
+```go
+// TableName overrides the table name used by Pop. By default it tries using the name `ppmshipments`.
+func (p PPMShipment) TableName() string {
+	return "ppm_shipments"
+}
+```
+
+As the comment indicates, `Pop` resolves the name incorrectly because the acronym in the model name throws it off.
+
 ## Running Migrations
 
 Migrations are run by the `milmove migrate` command. This allows us to leverage different authentication methods for migrations in development and in production using the same code. To migrate you should use a command based on your DB:
