@@ -98,56 +98,89 @@ When you are writing the code for your new migration, there are a few things you
 
 ### Adding a new table
 
-If you are creating a new table, first generate a new migration file. When creating the SQL you may write the migration like this:
+This section covers what it's like to add a new table, though some information is helpful when editing existing 
+tables/models as well.
 
-```sql
-create table new_table
-(
-    id uuid
-        constraint new_table_pkey primary key,
-    column1 text not null,
-    column2 text,
-    created_at timestamp not null,
-    updated_at timestamp not null
-);
-```
+For the examples in this section, we'll be adding a new model called `Cat`, with a corresponding table called `cats`.
 
-Then create a new models file in `pkg/models/` named after your new table. For this example, that would be `new_table.go`. The contents will look like:
+:::note Table Name vs Model Name
 
-```go
-package models
+Notice how the model name is singular, while the table name is pluralized. This is a convention of `Pop`, our ORM.
+See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-started) for more info.
 
-import (
-  "time"
+:::
 
-  "github.com/gobuffalo/pop"
-  "github.com/gobuffalo/validate"
-  "github.com/gobuffalo/validate/validators"
-  "github.com/gofrs/uuid"
-)
+1. [Generate a new migration file](#creating-migrations).
+2. Open the generated SQL file and add the logic to create your table.  When creating the SQL you may write the migration like this:
 
-// NewTable represents a new table
-type NewTable struct {
-  ID        uuid.UUID `json:"id" db:"id"`
-  Column1   string    `json:"column1" db:"column1"`
-  Column2   *string   `json:"column2" db:"colunn2"`
-  CreatedAt time.Time `json:"created_at" db:"created_at"`
-  UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
-}
+    ```sql
+    CREATE TABLE cats
+    (
+        id uuid PRIMARY KEY NOT NULL,
+        created_at timestamp NOT NULL,
+        updated_at timestamp NOT NULL,
+        name text NOT NULL,
+        birthday date,
+        gotcha_day date,
+        bio text,
+        weight int
+    );
+    
+    COMMENT on TABLE cats IS 'Store cats and their details.';
+    COMMENT on COLUMN cats.name IS 'The official name of a cat...nicknames might need their own table...';
+    COMMENT on COLUMN cats.birthday IS 'Date the cat was born.';
+    COMMENT on COLUMN cats.gotcha_day IS 'Date the cat was adopted. May be same as birthday.';
+    COMMENT on COLUMN cats.bio IS 'Big text field for owners to tell you everything about their cat.';
+    COMMENT on COLUMN cats.weight IS 'Current weight of the cat, or at least what they weighed the last time they let you weigh them.';
+    ```
 
-// NewTables is not required by pop and may be deleted
-type NewTables []NewTable
+    Some things to note:
 
-// Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
-// This method is not required and may be deleted.
-func (r *NewTable) Validate(tx *pop.Connection) (*validate.Errors, error) {
-  return validate.Validate(
-    &validators.StringIsPresent{Field: r.Column1, Name: "Column1"},
-  ), nil
-}
-```
+    1. The SQL keywords don't need to be capitalized, but it can be nice to differentiate some of them from certain 
+       things like the field names or types.
+    2. We want to add columns for every column other than the `id`, `created_at`, and `updated_at` fields. This makes it
+       easier for future folks to understand what the columns were meant for.
+    3. You might see some migrations use `varchar` instead of `text`. It's the same thing in the end, see
+       [Postgresql Character Types](https://www.postgresqltutorial.com/postgresql-char-varchar-text/) for more info.
+    
+3. Now you can create a new file in `pkg/models/` named after your new model. So for this, we'll have a new file 
+    `pkg/models/cat.go` that will look something like this:
 
-Now you will want to run the migration to test it out with `make db_dev_migrate` before making your PR.
+    ```go
+    package models
+    
+    import (
+        "time"
+    
+        "github.com/gofrs/uuid"
+    
+        "github.com/transcom/mymove/pkg/unit"
+    )
+    
+    // Cat contains all the information relevant to a cat...
+    type Cat struct {
+        ID         uuid.UUID   `json:"id" db:"id"`
+        CreatedAt  time.Time   `json:"created_at" db:"created_at"`
+        UpdatedAt  time.Time   `json:"updated_at" db:"updated_at"`
+        Name       string      `json:"name" db:"name"`
+        Birthday   *time.Time  `json:"birthday" db:"birthday"`
+        GotchaDay  *time.Time  `json:"gotcha_day" db:"gotcha_day"`
+        Bio        *string     `json:"bio" db:"bio"`
+        Weight     *unit.Pound `json:"weight" db:"weight"`
+    }
+    
+    // Cats is a list of Cats
+    type Cats []Cat
+    ```
+
+   Some things to note:
+    1. The field names here are pascal case, while in the struct tags, we use the snake case version. 
+    2. Notice how we use `string` for `Name`, while we use `*string` for `Bio`. We have a loose convention around using
+       pointers for optional (nullable) fields, and the concrete type for required fields.
+    3. We define the plural `type` under the main struct as a slice of the type.
+       
+
+1. Now you will want to run the migration to test it out with `make db_dev_migrate`.
 
 ## Running Migrations
 
