@@ -111,7 +111,7 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
 :::
 
 1. [Generate a new migration file](#creating-migrations).
-2. Open the generated SQL file and add the logic to create your table.  When creating the SQL you may write the migration like this:
+1. Open the generated SQL file and add the logic to create your table.  When creating the SQL you may write the migration like this:
 
     ```sql
     CREATE TABLE cats
@@ -138,12 +138,12 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
 
     1. The SQL keywords don't need to be capitalized, but it can be nice to differentiate some of them from certain 
        things like the field names or types.
-    2. We want to add columns for every column other than the `id`, `created_at`, and `updated_at` fields. This makes it
-       easier for future folks to understand what the columns were meant for.
-    3. You might see some migrations use `varchar` instead of `text`. It's the same thing in the end, see
+    1. We want to add comments for every column other than the `id`, `created_at`, and `updated_at` fields. This makes 
+       it easier for future folks to understand what the columns were meant for.
+    1. You might see some migrations use `varchar` instead of `text`. It's the same thing in the end, see
        [Postgresql Character Types](https://www.postgresqltutorial.com/postgresql-char-varchar-text/) for more info.
     
-3. Now you can create a new file in `pkg/models/` named after your new model. So for this, we'll have a new file 
+1. Now you can create a new file in `pkg/models/` named after your new model. So for this, we'll have a new file 
     `pkg/models/cat.go` that will look something like this:
 
     ```go
@@ -175,25 +175,26 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
 
    Some things to note:
     1. The field names here are pascal case, while in the struct tags, we use the snake case version. 
-    2. Notice how we used `string` for `Name`, while we used `*string` for `Bio`. We have a loose convention around
+    1. Notice how we used `string` for `Name`, while we used `*string` for `Bio`. We have a loose convention around
        using pointers for optional (nullable) fields, and the concrete type for required fields.
         1. One important thing to note here is that this will affect patch requests if you want the API caller to be 
            able to make a request without passing in all the non-nullable fields each time. Some options which we use 
            for existing models:
             1. Make the field a pointer on the model. This means you will need to have validation somewhere though to
                ensure that we save a valid value to the DB in the end.
-            2. Follow a pattern similar to the
+            1. Follow a pattern similar to the
                [PPM shipment updater](https://github.com/transcom/mymove/blob/088b87605f19b18b022ff718fcbd5eb8f6962585/pkg/services/ppmshipment/ppm_shipment_updater.go#L44-L49)
                which merges the new and old shipment _before_ validating the shipment.
-    3. We define the plural `type` under the main struct as a slice of the type.
-       
-
+    1. We define the plural `type` under the main struct as a slice of the type.
+       1. You might see some models that don't follow this pattern, but generally we prefer to follow it so if you are
+          adding a new table it's best to stick with this pattern.
+    
 1. Now you will want to run the migration to test it out with `make db_dev_migrate`.
 
 #### Model/Table Names With Acronyms
 
 If your model/table name has an acronym in it, e.g. `PPMShipment`/`ppm_shipments`, you will need to define a receiver 
-function called `TableName` for the struct that helps `Pop` know what the table name should be. An example is our 
+function called `TableName` for the model struct that helps `Pop` know what the table name should be. An example is our 
 [`PPMShipment` model's receiver function](https://github.com/transcom/mymove/blob/9c2a281dbd777b77064c1ae563531a3f0c7bf9d0/pkg/models/ppm_shipment.go#L62-L65):
 
 ```go
