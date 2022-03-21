@@ -138,9 +138,9 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
 
     1. The SQL keywords don't need to be capitalized, but it can be nice to differentiate some of them from certain 
        things like the field names or types.
-    1. We want to add comments for every column other than the `id`, `created_at`, and `updated_at` fields. This makes 
-       it easier for future folks to understand what the columns were meant for.
-    1. You might see some migrations use `varchar` instead of `text`. It's the same thing in the end, see
+    2. We want to add comments for the table itself and every column other than the `id`, `created_at`, and `updated_at`
+       fields. This makes it easier for future folks to understand what the columns were meant for.
+    3. You might see some migrations use `varchar` instead of `text`. It's the same thing in the end, see
        [Postgresql Character Types](https://www.postgresqltutorial.com/postgresql-char-varchar-text/) for more info.
     
 1. Now you can create a new file in `pkg/models/` named after your new model. So for this, we'll have a new file 
