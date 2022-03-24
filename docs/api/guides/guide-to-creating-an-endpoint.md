@@ -245,6 +245,17 @@ return h.AuditableAppContextFromRequest(params.HTTPRequest,
     })
 ```
 
+The new way of using the `appCtx` is to avoid some latent bugs where the
+codebase was starting transactions but not running SQL inside of the
+transaction due to referencing the incorrect `dbconnection`/`appCtx` from
+"outside" the transaction. With the addition of
+`AuditableAppContextFromRequest`, we now start a transaction and pass that into
+handlers to ensure that all handlers are running inside a transaction.
+
+This is done for multiple reasons, such as audit logging where we run
+`RawQuery` to set local variables that contain the `userID` from the `appCtx`
+Session.
+
 And then this `appCtx` will be passed in as the first argument to any service object function. For example:
 
 ```go
