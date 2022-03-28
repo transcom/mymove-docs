@@ -2,13 +2,38 @@
 
 This guide will illustrate how to debug Go code in the MyMove repo with VSCode with the help of the VSCode Go extension. You can find more information about using the Go extension [here](https://github.com/golang/vscode-go/blob/master/docs/debugging.md).
 
+The launch.json file specifies VSCode's debugging configurations. We'll be setting up VSCode to debug both the local server and any single Go test using the following example launch.json
+
+```
+{
+   "version": "0.2.0",
+   "configurations": [
+      {
+         "name": "Test Current File",
+         "type": "go",
+         "request": "launch",
+         "mode": "test",
+         "program": "${relativeFileDirname}",
+         "showLog": true
+      },
+      {
+         "name": "Debug Server",
+         "type": "go",
+         "request": "attach",
+         "mode": "local",
+         "processId": "milmove_gin"
+      }
+   ]
+}
+```
+
 ## Debugging a Single Test
 
 When working on a feature or addressing a test failure, it can often be convenient to focus on one test at a time. The following steps will configure VSCode to launch and debug a single Go test.
 
 ### Add a launch configuration to your launch.json
 
-The launch.json file specifies VSCode's debugging configurations. Add a "launch" configuration to your launch.json as depicted below. This configuration will automatically debug whichever Go test file you have open for editing in VSCode.
+Add the "launch" configuration from the example launch.json to your configurations. This config will automatically debug whichever Go test file you have open for editing in VSCode.
 
 ```
 {
@@ -45,7 +70,7 @@ You can also attach to a running process like the MilMove backend server.
 
 ### Add an attach configuration to your launch.json
 
-Add an "attach" configuration to your launch.json as shown below. This configuration will identify a process by its process_id (in this case, the milmove backend server) and attach to it.
+Add the "attach" configuration from the example launch.json to your configurations. This config will identify a process by its process_id (in this case, the milmove backend server) and attach to it.
 
 ```
 {
