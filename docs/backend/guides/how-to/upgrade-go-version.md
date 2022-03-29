@@ -22,7 +22,7 @@ Upgrading the Go version that we use happens in roughly these steps:
 
 ## 2. Upgrade Local Go Version
 
-For more details see [[Manage golang with asdf]]
+For more details see [Manage golang with asdf](manage-golang-with-asdf.md)
 
 - Update `.tool-versions` to point to new version of golang
   - If you've done some PATH sorcery to point to a specific Go version (as detailed [here](https://github.com/transcom/mymove#setup-prerequisites)), you'll have to update that as well
@@ -58,20 +58,20 @@ go version go1.16.4 darwin/amd64
     - `scripts/gen-assets`
     - `scripts/gen-server`
     - `scripts/pre-commit-swagger-validate`
-    - `GOVERSION` in `scripts/prereqs`
+    - `scripts/run-e2e-test-docker`
     - `Makefile` the `docker_circleci` task
     - `nix/default.nix` (you will also need to [update the hash](https://ahobson.github.io/nix-package-search))
+    - .go-version
 - If the major/minor version changed (the first or second number, e.g. 1.x.y to 2.x.y or 1.15.x to 1.16.x):
   - [Example PR](https://github.com/transcom/mymove/pull/4990)
   - Update the following files with the new go version:
-    - `go-version` in `.github/workflows/be-linter.yml`
     - `go-version` in `.github/workflows/go-auto-approve.yml`
-    - `VERSION_NUMBER` in `scripts/check-go-version`
     - `go.mod`
 - Rerun the Go formatter on the codebase with `pre-commit run --all-files golangci-lint`
 - Regenerate mocks (in case the signatures have changed that we're mocking): `make mocks_generate`
 - Run `make e2e_test_docker` to test that the `Dockerfile.*local` files work  with the new image.
 - Commit the above changes and any reformatted code and make sure everything builds correctly on CircleCI
+- You may also want to check for an upgrade to the `golangci-lint` version, particularly if doing a major Go version upgrade
 
 ## 4. Notify Folks
 
