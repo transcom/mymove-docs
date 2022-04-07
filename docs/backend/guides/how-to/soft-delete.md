@@ -52,8 +52,8 @@ It is recommended that any use of soft delete be wrapped in a transaction. This 
 
 ```go
 func DeleteExampleModel(db *pop.Connection, exampleModel *ExampleModel) error {
-    return db.Transaction(func(db *pop.Connection)) error {
+    return db.Transaction(func(db *pop.Connection) error {
         return utilities.SoftDestroy(db, exampleModel)
-    }
+    })
 }
 ```
