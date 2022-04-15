@@ -83,3 +83,15 @@ go version go1.16.4 darwin/amd64
 
 - It can be jarring when everything suddenly breaks after pulling from master, so it's a nice courtesy to notify folks in #prac-engineering in slack that the official Go version will be updated shortly and their local Go version should be upgraded as well
 - If `circleci-lint` has changed as well, then in-flight PRs will need to be formatted before they are merged, lest they break master
+
+### Message template
+Below is an example message one can use as a template for their notification to #prac-engineering (credit: Reggie R):
+
+@engineering I just merged a [PR](https://github.com/transcom/mymove/pull/8244) that upgrades the project to [Go 1.17.7](https://go.dev/doc/devel/release#go1.17) (which includes security fixes).  When you pull that, here’s what to do if you’re using asdf:
+
+```
+asdf install
+asdf global golang 1.17.7
+```
+
+You may need to restart your terminal after this if you still see mention of 1.17.5 when building.  If you happen to be using nix instead, you should be prompted to run `./nix/update.sh` after pulling.  If you’re using an IDE, you may need to adjust it to point to 1.17.7 too.  
