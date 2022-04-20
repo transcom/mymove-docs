@@ -6,9 +6,13 @@ sidebar_position: 9
 
 When our tests run, we often need to clear the database between tests so we can have a clean slate.
 
-We were using `TruncateAll()` to delete all records in the database to achieve this. But this is **slow** so as of June 2021, we have a new coding pattern that will use [transactions](https://www.geeksforgeeks.org/postgresql-transactions/) to roll back tests.
+In our old coding pattern, this wasn't enforced so there were lots of dependencies between tests, which is not a good pattern. Tests should be isolated from each other.
 
-Read more for background on this.
+If we did clear the database, we were using `TruncateAll()` to delete all records in the database, which is slow.
+
+For those reasons, as of June 2021, we have a new coding pattern that will use [transactions](https://www.geeksforgeeks.org/postgresql-transactions/) to clear the database between tests and manage database connections in a more optimized fashion.
+
+Read more for [background](#background) on this.
 
 ## How to update a test to the new pattern
 
@@ -69,7 +73,7 @@ func (suite *MTOShipmentServiceSuite) TestMTOShipmentUpdater() {
 You can see these [changes in a PR](https://github.com/transcom/mymove/pull/6650/commits/3baaff02ffa8ca745ffb9c75422a1598180635ec#diff-a9eeef9ef97657c461ec7c76226f6c6f5dd03b4938217e4ed0de9bbbfe161815) if you prefer.
 :::
 
-Or follow the directions:
+Follow these directions
 
 1. The function declaration for the main test needs to be simplified.
 
@@ -105,7 +109,8 @@ Or follow the directions:
 
 3. Remove any calls to `suite.TruncateAll()` in the tests.
 4. Replace `suite.T().Fatalf` with `suite.Fail`.
-5. Run all tests in the package.
+5. Remove `testing` from the imports at the top of the file.
+6. Run all tests in the package.
 
 ## How to update the package to the new pattern
 
@@ -122,8 +127,6 @@ Search for the new option `testingsuite.WithPerTestTransaction()`.
 If it does not exist in the file, you should update the package.
 
 ### **Update the package to use the faster testing setup**
-
-[]()
 
 You need to make two changes to this file.
 
@@ -147,6 +150,36 @@ You need to make two changes to this file.
 
 **Done! The package is now setup for faster tests. Thank you.**
 
+## Troubleshooting
+
+### My tests started failing after making these changes
+
+If you use `Suite.Run`:
+
+* This could be because each subtest is sharing DB setup. Check that you have extracted **all the shared db setup** into a separate function, and call that function at the beginning of each subtest.
+
+    Look at the diff of `pkg/handlers/ghcapi/orders_test.go` in [this example](https://github.com/transcom/mymove/pull/6650/commits/3baaff02ffa8ca745ffb9c75422a1598180635ec#diff-7ed9d49b328573d1e4b4c17ef8455b68ba22cedf910612f033634107ba60688a).
+
+* If the shared setup was already in a separate function, it could just be a matter of calling the setup function at the beginning of each subtest. [Here's an example](https://github.com/transcom/mymove/pull/6650/commits/dc6d5805a104d10463a7fd5382d43a598b6626a8).
+
+* If you've properly extracted the DB setup, it's possible a subtest was depending on the previous subtest. This is not a good pattern, try to unwind that dependency. Each test should pass in isolation from each other.
+
+* Remove any calls to `suite.TruncateAll()` in the tests. Here's an example of [how the models tests were converted to use transactions](https://github.com/transcom/mymove/pull/6650/commits/3378f4c932d35f1cce58888d3a4f617af53df2d1).
+* Replace `suite.T().Fatalf` with `suite.Fail`
+
+### I can't extract the db setup into a function, should I undo everything?
+
+Sometimes, it's too much of refactor to pull out all the setup and figure out how tests depend on each other. This is not a great situation, and this is a reason why tests shouldn't depend on each other.
+
+However, if you still want to keep some of the transactional performance benefits, you can use an alternate `Run` function called `RunWithRollback`. This is a **less ideal pattern** for the following reasons:
+
+* It doesn't actually use the newer txdb transactions
+* You cannot use this if the underlying code under test uses transactions.
+* If someone later changes the underlying code to use transactions, they will have to do the work to fully switch to `suite.Run`, the preferred pattern. This creates a deterrent to using transactions in the codebase, and we don't want to deter that.
+* It doesn't rollback each subtest, it only rolls back after each test, so tests can still depend on each other.
+
+However **if you absolutely must** use `RunWithRollback`, the process is easy. Just change the `suite.Run` calls to `suite.RunWithRollback`.
+
 ## Background
 
 In June 2021, we introduced the [go-txdb](https://github.com/DATA-DOG/go-txdb) tool to allow us to run tests within a transaction, and then roll back the transaction after the test. This allows each test to start with a clean DB state, and is much faster than truncating the DB, which is how we've been resetting the DB all this time. Here is the PR that introduced transactions in tests: <https://github.com/transcom/mymove/pull/6650>
@@ -157,30 +190,6 @@ The original PR was designed in a non-breaking way such that existing tests that
 Before you start running tests in Goland or other editor, make sure to run `make
 server_test_setup` first.
 :::
-
-## suite.Run vs suite.RunWithRollback
-
-We have two ways you can run tests, `suite.Run` and `suite.RunWithRollback`. Each has a use case, so you need to make sure you use the correct one.
-
-### suite.Run
-
-* If the code you are testing is using transactions, this is the one you need to use.
-
-### suite.RunWithRollback
-
-* This can only be used if per test transactions are turned on.
-* This will roll back changes after each test. This means you can reuse data that was set up in the main test in each of the subtests.
-
-## How to fix failing tests after turning on transactions
-
-* If the tests are using `suite.T().Run("some test description", func(t *testing.T)`, replace all instances of `suite.T().Run` with `suite.RunWithRollback` and all instances of `func(t *testing.T)` with `func()`. You'll also need to remove the `testing` package from the `import` statement.
-  * If the tests fail, it's most likely because the code under test uses transactions. In this case, you'll want to use `suite.Run`, and in some cases, that's enough to get the tests to pass.
-  * If not, it could be because each subtest is sharing DB setup. In that case, extract the shared setup into a separate function, and call that function at the beginning of each subtest. Look at the diff of `pkg/handlers/ghcapi/orders_test.go` in [this example](https://github.com/transcom/mymove/pull/6650/commits/ab1e72fbd559b73dc7a9089c0d5d5d12d4f83ba2).
-  * If the shared setup was already in a separate function, it should just be a matter of calling the setup function at the beginning of each subtest. [Here's an example](https://github.com/transcom/mymove/pull/6650/commits/dc6d5805a104d10463a7fd5382d43a598b6626a8).
-* Remove any calls to `suite.TruncateAll()` in the tests. Here's an example of [how the models tests were converted to use transactions](https://github.com/transcom/mymove/pull/6650/commits/ecefc78ef874644f9191d3a70aacb573bed63567).
-* Replace `suite.T().Fatalf` with `suite.Fail`
-
-In a few cases, running inside transactions have exposed that the tests were not actually running in isolation from each other and so the test wasn't actually testing what it thought it was. In those cases you may find latent bugs that need to be fixed or tests that need to be rethought so they really test the right thing.
 
 ### Why data setup has to be repeated within each subtest
 
