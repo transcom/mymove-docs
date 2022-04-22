@@ -165,7 +165,11 @@ If you use `Suite.Run`:
 * If you've properly extracted the DB setup, it's possible a subtest was depending on the previous subtest. This is not a good pattern, try to unwind that dependency. Each test should pass in isolation from each other.
 
 * Remove any calls to `suite.TruncateAll()` in the tests. Here's an example of [how the models tests were converted to use transactions](https://github.com/transcom/mymove/pull/6650/commits/3378f4c932d35f1cce58888d3a4f617af53df2d1).
-* Replace `suite.T().Fatalf` with `suite.Fail`
+* Replace `suite.T().Fatalf` with `suite.Fail`.
+  
+* If the issue is related to appContext, make sure to get the correct appContext inside the subtest using `suite.AppContextForTest()`.
+
+* If you were using `t` from the passed in `t *testing.T`, use `suite.T()` instead.
 
 ### I can't extract the db setup into a function, should I undo everything?
 
