@@ -116,7 +116,7 @@ Follow these directions
 
 Hopefully the package  you are working on has already been updated to use the new pattern.
 
-### **Check if packate has been updated**
+### **Check if package has been updated**
 
 To check, navigate to the file that sets up testing for the package, usually it is located at `<path_to_package>/api_test.go`
 
