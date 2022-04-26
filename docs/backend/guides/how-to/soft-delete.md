@@ -68,7 +68,7 @@ You should fall back to using a normal where clause if using an alias in your qu
 // If a table is given an alias name then the scope may fail to work as intended
 func FindAllServiceMembersWithDocuments(ctx context.Context) {
 	var serviceMembers []models.ServiceMember
-	ctx.DB().Scope(utilities.ExcludeDeletedScope(models.Document{}, models.UserUpload).
+	ctx.DB().Scope(utilities.ExcludeDeletedScope(models.Document{}, models.UserUpload{}).
 		Join("documents docs", "documents.service_member_id = service_members.id").
 		Join("user_uploads uu", "uu.document_id = docs.id").
 		All(&serviceMembers);
