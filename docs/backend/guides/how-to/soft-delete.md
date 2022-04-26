@@ -52,7 +52,7 @@ func FindDocumentsWithUploads(ctx context.Context, uploaderID uuid.UUID) {
 
 :::caution
 
-Unfortunately this will not filter any eager loaded associations so you may need to continue doing that depending on your query.
+Unfortunately this will not filter any eager loaded associations, you will still need to iterate through the results and filter them out or append them separately.
 
 ```go
 // This will not filter the eagerly loaded MTOShipments
