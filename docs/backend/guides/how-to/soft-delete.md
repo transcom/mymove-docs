@@ -27,7 +27,7 @@ type ExampleModel struct {
 If this has not been done, one must [create a migration](migrate-the-database.md) to make these changes.
 
 ## Querying for non-deleted records
-Records that have been soft deleted will still exist in the database so we must filter them out in our database queries if we want to omit deleted data.
+Records that have been soft deleted will still exist in the database, so we must filter them out in our database queries if we want to omit deleted data.
 
 The Pop ORM has a chainable method called [Scope](https://gobuffalo.io/documentation/database/scoping/) that we can use to append the where clause(s) to only include non-deleted records.
 
@@ -38,7 +38,7 @@ func FindShipment(ctx context.Context, shipmentID uuid.UUID) {
 }
 ```
 
-By passing in the model we can also derive the table name if needed to disambiguate from other tables.
+Sometimes you will need to qualify the deleted_at column with the model(s) that you care about to avoid an ambiguous column SQL error.  You can achieve this by passing in the models themsevles to the ExcludeDeletedScope method.  ExcludeDeletedScope will look up the proper table name of the model, using either reflection or the TableName() override specified in the model file.
 
 ```go
 func FindDocumentsWithUploads(ctx context.Context, uploaderID uuid.UUID) {
@@ -49,7 +49,33 @@ func FindDocumentsWithUploads(ctx context.Context, uploaderID uuid.UUID) {
 }
 ```
 
-Unfortunately this will not filter any eager loaded associations so you may need to continue doing that depending on your query.  You should fallback to using a normal where clause if using an alias in your query or writing a RawQuery.
+
+:::caution
+
+Unfortunately this will not filter any eager loaded associations so you may need to continue doing that depending on your query.
+
+```go
+// This will not filter the eagerly loaded MTOShipments
+func FindMoveWithShipments(ctx context.Context, moveID uuid.UUID) {
+	var move models.Move
+	ctx.DB().Scope(utilities.ExcludeDeletedScope(models.MTOShipment{})).Eager(MTOShipments).Find(&move, moveID)
+}
+```
+
+You should fall back to using a normal where clause if using an alias in your query or writing a RawQuery.
+
+```go
+// If a table is given an alias name then the scope may fail to work as intended
+func FindAllServiceMembersWithDocuments(ctx context.Context) {
+	var serviceMembers []models.ServiceMember
+	ctx.DB().Scope(utilities.ExcludeDeletedScope(models.Document{}, models.UserUpload).
+		Join("documents docs", "documents.service_member_id = service_members.id").
+		Join("user_uploads uu", "uu.document_id = docs.id").
+		All(&serviceMembers);
+}
+```
+
+:::
 
 For further details you can find the [ExcludeDeletedScope](https://github.com/transcom/mymove/blob/0002defdbdeebf29c3afdaa1fd939dc457071a3d/pkg/db/utilities/utilities.go#L150) code in the pkg/db/utilities/utilities.go file.
 
