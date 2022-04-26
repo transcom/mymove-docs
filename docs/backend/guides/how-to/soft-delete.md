@@ -26,15 +26,32 @@ type ExampleModel struct {
 
 If this has not been done, one must [create a migration](migrate-the-database.md) to make these changes.
 
-Furthermore, any queries to fetch the model must exclude those that have been 'soft deleted'.
+## Querying for non-deleted records
+Records that have been soft deleted will still exist in the database so we must filter them out in our database queries if we want to omit deleted data.
+
+The Pop ORM has a chainable method called [Scope](https://gobuffalo.io/documentation/database/scoping/) that we can use to append the where clause(s) to only include non-deleted records.
 
 ```go
-func FetchExampleModel(ctx context.Context, db *pop.Connection, session * auth.Session, id uuid.UUID) (ExampleModel, error) {
-    var exampleModel ExampleModel
-    err := db.Q().Where("example_models.deleted_at is null").Eager().Find(&exampleModel, id)
-    ...
+func FindShipment(ctx context.Context, shipmentID uuid.UUID) {
+	var shipments models.MTOShipments
+	ctx.DB().Scope(utilities.ExcludeDeletedScope()).All(&shipments)
 }
 ```
+
+By passing in the model we can also derive the table name if needed to disambiguate from other tables.
+
+```go
+func FindDocumentsWithUploads(ctx context.Context, uploaderID uuid.UUID) {
+	var documents models.Documents
+	ctx.DB().Scope(utilities.ExcludeDeletedScope(models.Document{}, models.UserUpload{})).
+		Join("user_uploads", "user_uploads.document_id = documents.id").
+		All(&documents)
+}
+```
+
+Unfortunately this will not filter any eager loaded associations so you may need to continue doing that depending on your query.  You should fallback to using a normal where clause if using an alias in your query or writing a RawQuery.
+
+For further details you can find the [ExcludeDeletedScope](https://github.com/transcom/mymove/blob/0002defdbdeebf29c3afdaa1fd939dc457071a3d/pkg/db/utilities/utilities.go#L150) code in the pkg/db/utilities/utilities.go file.
 
 ## Using Soft Delete
 
