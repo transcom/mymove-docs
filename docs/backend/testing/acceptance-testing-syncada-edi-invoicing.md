@@ -358,5 +358,5 @@ prime-api-client --insecure support-reviewed-payment-requests --filename payload
 
 Some helpful resources for getting this setup
 
-* [Acceptance Testing Payment Requests](Acceptance-Testing-Payment-Requests.md)
-* [Manually run Prime API for Slice demo](Manually-run-Prime-API-for-Slice-demo.md)
+* [Acceptance Testing Payment Requests](Acceptance-Testing-Payment-Requests)
+* [Manually run Prime API for Slice demo](Manually-run-Prime-API-for-Slice-demo)
