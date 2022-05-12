@@ -32,7 +32,7 @@ Most handler tests require the same boilerplate code and setup steps.
 
 - Set up the context:
   ```golang
-  context := handlers.NewHandlerContext(suite.DB(), suite.TestLogger())
+  context := handlers.NewHandlerConfig(suite.DB(), suite.TestLogger())
   ```
 
 - Set up the handler:

@@ -6,7 +6,7 @@ sidebar_position: 9
 
 ## Overview
 
-In this project, we access application variables (environment variables or other variables we set for the application) by adding them to the handler context.  Through the context we pass the variables to the functions that require them.
+In this project, we access application variables (environment variables or other variables we set for the application) by adding them to the handler config.  Through the context we pass the variables to the functions that require them.
 
 ## Why we do it this way
 
@@ -25,9 +25,9 @@ We use command line flags to get the environment variables. The flags are set in
 
 `loginGovSecretKey := v.GetString(cli.LoginGovSecretKeyFlag))` grabs the `LOGIN_GOV_SECRET_KEY` from the `.envrc`
 
-## Setting up global variables in the Handler Context
+## Setting up global variables in the Handler Config
 
-To add an application variable to the handler context, we create essentially a getter and setter in the handler context.
+To add an application variable to the handler config, we create essentially a getter and setter in the handler config.
 (Ex. `SetUseSecureCookie` and `UseSecureCookie`)
 Follow the pattern in [pkg/handlers/contexts.go](https://github.com/transcom/mymove/blob/master/pkg/handlers/contexts.go)
 
@@ -41,7 +41,7 @@ For example:
 dbEnv := v.GetString(cli.DbEnvFlag)
 isDevOrTest := dbEnv == "development" || dbEnv == "test"
 useSecureCookie := !isDevOrTest
-handlerContext.SetUseSecureCookie(useSecureCookie)
+handlerConfig.SetUseSecureCookie(useSecureCookie)
 ```
 
-In your handler, you should now be able to access the value through the handler context by calling the getter (ex. `h.HandlerContext.UseSecureCookie()`)
+In your handler, you should now be able to access the value through the handler config by calling the getter (ex. `h.HandlerConfig.UseSecureCookie()`)

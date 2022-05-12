@@ -380,7 +380,7 @@ In either case, they will be used in much the same way. Service objects are ofte
 ```go {4}
 // CreateReweighHandler is the handler for the API endpoint to create a reweigh
 type CreateReweighHandler struct {
-	handlers.HandlerContext
+	handlers.HandlerConfig
 	creator services.ReweighCreator // our service object
 }
 ```

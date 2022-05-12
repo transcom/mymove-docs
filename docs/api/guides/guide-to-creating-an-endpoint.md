@@ -7,7 +7,9 @@ sidebar_position: 4
 
 Prior to creating an endpoint in the Handler folder, we must first add a new endpoint definition to swagger. We are using Swagger 2.0, which is [OpenAPI](https://swagger.io/specification/v2/), a specification we use to format our RESTful APIs and provide a template for us to communicate the information in our API.
 Always start with swagger. This step creates your endpoint definition and generates the files and helper functions you will need to create your endpoint. More specifically, swagger converts JSON user input into generated Go types.
-## Adding  a new entry into the yaml
+
+## Adding a new entry into the yaml
+
 All new definitions will be added in `mymove/swagger-def`. Note that we have broken down our spec into different files and we share definitions between files.
 Built compiled versions of our API spec will be generated and stored in the swagger folder, which we will not edit directly. Notice that there is a yaml file for each of our APIs.
 An endpoint definition for the prime will go into the Prime yaml, but you may notice there are some definitions in `mymove/swagger-def/definitions`.
@@ -15,6 +17,7 @@ This is because some definitions are shared across APIs and we've created a spac
 For example, `Uploads.yaml` shares its definition across various APIs, and rather than creating various yaml files for this action, we have created one and added it to the shared `definitions` folder.
 
 For the purposes for adding a new endpoint, make sure that your endpoint is defined in these sections:
+
 * `tags` - is where we group all of our endpoints by category (i.e. shipment endpoints, agent endpoints, service item endpoints, etc.).
          This top level field is where our gen files will divide the endpoints into their own packages. Tag component names are `camelCase`.
 * `paths` - defines our endpoint. Path names use `kebab-case`.
@@ -23,9 +26,11 @@ For the purposes for adding a new endpoint, make sure that your endpoint is defi
 * `parameters` - define what an endpoint needs (e.g. headers). Parameter component names are `camelCase`.
 
 #### Troubleshooting your local swagger state:
+
 If you are having issues with your local swagger state it is recommended to run `make server_generate`, accept the prompt, and then run `make server_run` again. For more information on troubleshooting, [this](https://ustcdp3.slack.com/archives/CP6PTUPQF/p1632254277386600) explanation will be helpful.
 
 #### Defining a path for your endpoint
+
 For more information about URL design and structure checkout: [API Style Guide](https://transcom.github.io/mymove-docs/docs/dev/contributing/backend/API-Style-Guide)
 
 Defining your endpoint path follows this simple convention:
@@ -136,10 +141,12 @@ An example of the ListMove description is as follows:
 For information on error responses, check out: [API Errors Guide](https://transcom.github.io/mymove-docs/docs/dev/contributing/backend/API-Errors#api-errors)
 
 #### Gen files:
+
 Once you finishing updating the yaml files with the new endpoint information make sure to run your make commands like `make swagger-generate` to autogenerate your swagger files, or simply run `make server_run`,
 which runs your server and other useful make commands in one go.
 
 ## Swagger overview
+
 ### Swagger Architecture
 
 Link to a pictorial view of how the Swagger packages map from `yaml` to `Go` files and functions. Highlighting `paths`,
@@ -150,11 +157,13 @@ Link to a pictorial view of how the Swagger packages map from `yaml` to `Go` fil
 ![MilMove Swagger architecture PNG](/img/swagger/SwaggerBackendArchitecture.jpg)
 
 ### Example diagram of how Swagger calls our handler functions:
+
 * [Link to PDF MilMove Swagger call](/files/swagger/MilMoveSwaggerCall.pdf)
 
 ![MilMove Swagger call PNG](/img/swagger/MilMoveSwaggerCall.png)
 
 ## Creating a Handler:
+
 Now you're ready to add your endpoint to the `handlers` folder. Start building out the service object before creating your handler.
 For more information about service objects and when to create one: [Service Objects](https://transcom.github.io/mymove-docs/docs/dev/contributing/backend/service-objects).
 
@@ -169,11 +178,11 @@ request, you would call the appropriate `payload_to_model.go` function. And
 after returning from the call to the service object you would call the
 appropriate `model_to_payload.go` function.
 
-
-
 ### Steps to creating a new handler:
+
 1. **Add a handler for the endpoint.**
    * Update the `api.go` file depending on which API you are updating:
+
 ```
 pkg/handlers/
 	adminapi/api.go
@@ -185,8 +194,10 @@ pkg/handlers/
 ```
 
 2. **Add payload_to_model converters**
+
     * This is a good place to check data types and null values.
     * Each API has a set of `payload_to_model.go` and `model_to_paylaod.go` files under the `internal` dir:
+
 ```shell
 pkg/handlers/
 	adminapi/internal/payloads
@@ -196,9 +207,12 @@ pkg/handlers/
 	primeapi/internal/payloads
 	supportapi/internal/payloads
 ```
+
 3. **model_to_payload functions**
+
     * Once we have either modified the model or added something to our model, it must be converted back into a payload in order to be returned by the handler.
     * Each API has a set of `payload_to_model.go` and `model_to_paylaod.go` files under the `internal` dir:
+
 ```shell
 pkg/handlers/
 	adminapi/internal/payloads
@@ -208,8 +222,11 @@ pkg/handlers/
 	primeapi/internal/payloads
 	supportapi/internal/payloads
 ```
+
 4. **Create handler type and Handle function**
+
     * Handlers are stored in this area depending on which API you are updating:
+
 ```
 pkg/handlers/
     adminapi/
@@ -219,7 +236,9 @@ pkg/handlers/
     primeapi/
     supportapi/
 ```
+
 5. **Add tests for the handler**
+
    	* Add test code
            * Use `testdatagen` functions [[Understanding `Testdatagen` Functions]]
     * Add mocks (only if absolutely necessary): [Generating Mocks with mockery](https://transcom.github.io/mymove-docs/docs/dev/testing/writing-tests/generate-mocks-with-mockery)
@@ -305,9 +324,8 @@ handler matches what is defined in the swagger definition.
 In your tests you should call `Validate` on the payload.  Something
 like ...
 
-
 ```go {8,9}
-	handler := ListMovesHandler{HandlerContext: context, MoveTaskOrderFetcher: movetaskorder.NewMoveTaskOrderFetcher()}
+	handler := ListMovesHandler{HandlerConfig: context, MoveTaskOrderFetcher: movetaskorder.NewMoveTaskOrderFetcher()}
 	response := handler.Handle(params)
 
 	suite.IsNotErrResponse(response)
@@ -365,7 +383,7 @@ Additionally in your file containing the handler make sure to pass in the servic
 
 ```go
 type ListMovesHandler struct {
-	handlers.HandlerContext
+	handlers.HandlerConfig
 	services.MoveTaskOrderFetcher
 }
 ```
@@ -399,6 +417,7 @@ var eventModels = map[KeyType]eventModel{
 If you'd like to learn more about event triggers, you can find more details [here](https://github.com/transcom/mymove-docs/blob/720592c63db4bffe402a801417f7c14772573c28/docs/dev/contributing/backend/How-to-Add-an-Event-Trigger.md).
 
 ## References:
+
 * [Acceptance testing payment requests](/docs/backend/testing/acceptance-testing-payment-requests)
 * [How To Call Swagger Endpoints from React](/docs/frontend/guides/access-swagger-endpoints-from-react)
 * [Acceptance Testing Prime API](/docs/api/testing/acceptance-testing-prime-api-endpoints)

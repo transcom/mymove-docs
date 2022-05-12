@@ -71,19 +71,19 @@ in
 
 Usually we are just hiding a feature from prod, so the flag would be set to `false` there and `true` everywhere else, but use case may vary.
 
-3) Set the flag in the handlerContext
+3) Set the flag in the handlerConfig
 
 ```
-handlerContext.SetFeatureFlag(
+handlerConfig.SetFeatureFlag(
 	handlers.FeatureFlag{Name: cli.MyFeatureFlag, Active: v.GetBool(cli.MyFeatureFlag)},
 )
 ```
 
 This grabs the value that is set as the environment variable and appends it to the feature flag map as a key value pair.
-All handlers have access to the handlerContext, so have access to the flag value.  This boolean value can then be used to turn on or off features.
+All handlers have access to the handlerConfig, so have access to the flag value.  This boolean value can then be used to turn on or off features.
 
 ```
-if h.HandlerContext.GetFeatureFlag(cli.MyFeatureFlag) {
+if h.HandlerConfig.GetFeatureFlag(cli.MyFeatureFlag) {
     do something. . .
 }
 ```

@@ -12,7 +12,6 @@ We will be using Web Hooks to implement the push mechanism.
 >
 >Source: https://codeburst.io/what-are-webhooks-b04ec2bf9ca2
 
-
 For a quick primer on REST hooks and overview of webhooks - this is a great start → https://resthooks.org/docs/
 
 For this to work, all updates to objects that are of interest to the Prime should trigger an event. The notifications code will check the event to see if there is an active subscription to this event and store a notification record and payload to be sent to the Prime.
@@ -22,6 +21,7 @@ It's important to note that since Milmove is a Dod property, the connection to t
 ## Design
 
 There are three components of the solution
+
 * **Subscribe to Notifications** - The prime will subscribe to notifications using a URL that Milmove can send a POST request to.
 * **Generate Notifications** - Updates to the MTO in Milmove will trigger events which will store notifications.
 * **Send Notifications** - A client will read the notifications and send them to Prime.
@@ -51,6 +51,7 @@ Next, we generate events when they occur in our system, by calling an event pack
 Relevant code is in **[pkg/services/event/event.go](https://github.com/transcom/mymove/blob/master/pkg/services/event/event.go)**
 
 Event struct will contain the following parameters
+
 ```golang
 type Event struct {
    EventKey        KeyType                 // Pick from a select list of predefined events (PaymentRequest.Create)
@@ -59,12 +60,13 @@ type Event struct {
    UpdatedObjectID uuid.UUID               // This is the ID of the object itself (PaymentRequest.ID)
    EndpointKey     EndpointKeyType         // Pick from a select list of endpoints
    DBConnection    *pop.Connection         // The pop connection DB
-   HandlerContext  handlers.HandlerContext // The handler context
+   HandlerConfig   handlers.HandlerConfig  // The handler config
    logger          handlers.Logger         // The logger
 }
 ```
 
 Dev would call event trigger code such as
+
 ```golang
 _, err := TriggerEvent(Event{
    EndpointKey:     SupportUpdatePaymentRequestStatusEndpointKey,
@@ -72,7 +74,7 @@ _, err := TriggerEvent(Event{
    UpdatedObjectID: paymentRequestID,
    MtoID:           mtoID,
    Request:         &dummyRequest,
-   HandlerContext:  handler,
+   HandlerConfig:   handler,
    DBConnection:    h.DB(),
 })
 ```
@@ -92,6 +94,7 @@ We do not want to send the whole MTO on each event, not do we want to send a sin
 ### Logical Objects
 
 Logical Objects that the Prime is interested in are:
+
 * Move - Consists of `Move` and `Contractors`
 * Orders - Consists of `Orders`, `Customer`, `Entitlement`, `DutyStation`, and `Address`.
 * MTOShipment - Consists of `MTOShipment`, `Agent` and `Address`.
@@ -114,6 +117,7 @@ The notifications code will register a handler with the event package. When an e
        }
    }
 ```
+
 The handler will then assemble the data it needs to store in its record. It can also contain its own logic about whether a notification needs to be sent.
 
 `NotificationEventHandler` function will get the `EventKey`, `MtoID`, `Request` params, and `ObjectID`.
@@ -132,5 +136,3 @@ To send the payload, we use an app called the webhook-client that will
 periodically check the webhook_notifications table and send to the Prime.
 
 The app will be asynchronous to the rest of the handling of the event. This is intentional to avoid increasing the time to execute the handler.
-
-
