@@ -228,7 +228,7 @@ pkg/handlers/
 
 :::warning
 This documentation is currently in transition while handlers are being
-refactored to use `AuditableAppContextFromRequest` rather than extracting the
+refactored to use `AuditableAppContextFromRequestWithErrors` rather than extracting the
 `AppContext` from the request.
 :::
 
@@ -239,7 +239,7 @@ appCtx := h.AppContextFromRequest(params.HTTPRequest)
 ```
 
 ```go title="New way to get the AppContext"
-return h.AuditableAppContextFromRequest(params.HTTPRequest,
+return h.AuditableAppContextFromRequestWithErrors(params.HTTPRequest,
     func(appCtx appcontext.AppContext) middleware.Responder {
     // contents of handler
     })
@@ -249,7 +249,7 @@ The new way of using the `appCtx` is to avoid some latent bugs where the
 codebase was starting transactions but not running SQL inside of the
 transaction due to referencing the incorrect `dbconnection`/`appCtx` from
 "outside" the transaction. With the addition of
-`AuditableAppContextFromRequest`, we now start a transaction and pass that into
+`AuditableAppContextFromRequestWithErrors`, we now start a transaction and pass that into
 handlers to ensure that all handlers are running inside a transaction.
 
 This is done for multiple reasons, such as audit logging where we run
