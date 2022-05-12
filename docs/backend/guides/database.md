@@ -10,15 +10,12 @@ Below are some helpful links that are a holdover from the GitHub Wiki
 documentation file structure. This may not be relevant since the shift to using
 Docusaurus and may change in the future.
 
-* [How to backup and restore the development
-    database](/docs/backend/setup/backup-and-restore-dev-database)
+* [How to backup and restore the development database](/docs/backend/setup/backup-and-restore-dev-database)
 * [How to migrate the database](/docs/backend/setup/database-migrations)
 * [How to soft delete](/docs/backend/guides/how-to/soft-delete)
 * [Using EagerPreload in Pop](/docs/backend/setup/using-eagerpreload-in-pop)
-* [How database cleanup works in Go server
-    tests](/docs/dev/contributing/database/How-database-cleanup-works-in-Go-server-tests)
-* [Understanding `Testdatagen`
-    functions](/docs/backend/testing/understanding-testdatagen-functions)
+* [How database cleanup works in Go server tests](../testing/interacting-with-the-db-in-go-server-tests.md)
+* [Understanding `Testdatagen` functions](../testing/understanding-testdatagen-functions.md)
 
 :::
 

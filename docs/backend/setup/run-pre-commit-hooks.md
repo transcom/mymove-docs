@@ -71,5 +71,5 @@ Currently, it looks like `pre-commit` only supports Python, Node, and Ruby for s
 
 # Troubleshooting pre-commit issues
 
-[[Troubleshoot Precommit Hook Failures]]
+[Troubleshoot Precommit Hook Failures](../guides/troubleshoot-precommit-hook-failures.md)
 

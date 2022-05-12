@@ -69,7 +69,7 @@ The generation script will do the following:
 - If you have a Yubikey plugged in, you may get an error message (`pkcs11: the token has no such object`) because it is trying to read the Yubikey instead of your CAC. Try removing the Yubikey.
 - Use `opensc-tool -l` to make sure the CAC reader is detected
 - Use `pkcs11-tool --list-token-slots` to make sure your CAC is detected by the reader
-- [[Troubleshoot-CAC-Reader-Issues]]
+- [Troubleshoot-CAC-Reader-Issues](../../../help/Troubleshoot-CAC-Reader-Issues.md)
 
 ## Preparing for Upload
 

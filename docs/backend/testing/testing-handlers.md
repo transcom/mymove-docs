@@ -72,7 +72,7 @@ suite.NotZero(ordersPayload.DateIssued)
 Note that the expected order of arguments to `suite.Equal` is `(expected, actual)`. The payload attributes should always be on the right. This makes it easier to troubleshoot.
 Whenever a value is known, we want to prefer checking explicitly for the value using `suite.Equal`
 or `suite.EqualValues`. 
-Read the [[Testing Best Practices]] for more guidance.
+Read the [Testing Best Practices](testing-best-practices.md) for more guidance.
 
 ## Inspecting the response
 

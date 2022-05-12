@@ -106,7 +106,7 @@ go run ./cmd/prime-api-client --cac --hostname api.exp.move.mil --port 443 <subc
 
 You will be prompted to enter your CAC pin. This will be the same pin you created when picking up your CAC.
 
-If you have trouble, you can [[troubleshoot CAC issues here|Troubleshoot-CAC-Reader-Issues]]
+If you have trouble, you can [troubleshoot CAC issues here](../../help/Troubleshoot-CAC-Reader-Issues.md)
 
 ## Tips and Tricks
 

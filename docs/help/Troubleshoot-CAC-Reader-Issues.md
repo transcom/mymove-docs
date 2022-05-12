@@ -83,7 +83,7 @@ Here are some potential CAC reader errors and their solutions.
 
 # 4. Using the prime-api-client results in a cert authority error
 
-If you are getting certificate authority error like the one below when trying to execute commands against staging using the `prime-api-client` then you need to ensure that you are trusting the DOD Root Certs in your Keychain and have loaded all the DOD certs in your keychain as well. For details on adding them properly see [[Using-your-CAC-in-Browsers-on-MacOS]]
+If you are getting certificate authority error like the one below when trying to execute commands against staging using the `prime-api-client` then you need to ensure that you are trusting the DOD Root Certs in your Keychain and have loaded all the DOD certs in your keychain as well. For details on adding them properly see [Using-your-CAC-in-Browsers-on-MacOS](../dev/tools/CAC/Using-your-CAC-in-Browsers-on-MacOS.md)
 
 ```sh
 2020/09/23 16:13:40 Get operation to https://api.stg.move.mil:443/prime/v1/move-task-orders failed, check if server is running : x509: certificate signed by unknown authority
@@ -91,4 +91,4 @@ If you are getting certificate authority error like the one below when trying to
 
 # 5. Using the prime-api-client results in a 401 unauthorized
 
-If you are getting a 401 or 403 when making prime api calls to staging this means your certificate is not authorized in staging. This will happen when you get a new cac or renewed one as it will have new certs. See [[use-mtls-with-cac]] for details to create the migration for a new cac for the first time or replace your old cac cert
+If you are getting a 401 or 403 when making prime api calls to staging this means your certificate is not authorized in staging. This will happen when you get a new cac or renewed one as it will have new certs. See [Using mTLS with your CAC](../dev/tools/CAC/use-mtls-with-cac.md) for details to create the migration for a new cac for the first time or replace your old cac cert

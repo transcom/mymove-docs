@@ -240,7 +240,7 @@ pkg/handlers/
 5. **Add tests for the handler**
 
    	* Add test code
-           * Use `testdatagen` functions [[Understanding `Testdatagen` Functions]]
+           * Use `testdatagen` functions [Understanding `Testdatagen` Functions](../../backend/testing/understanding-testdatagen-functions.md)
     * Add mocks (only if absolutely necessary): [Generating Mocks with mockery](https://transcom.github.io/mymove-docs/docs/dev/testing/writing-tests/generate-mocks-with-mockery)
 
 ### Anatomy of a handler

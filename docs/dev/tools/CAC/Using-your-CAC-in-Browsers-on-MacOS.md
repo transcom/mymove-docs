@@ -39,8 +39,6 @@ After completing these steps you should have all the DOD certs available to your
 
 # References
 
-* Related [[use-mtls-with-cac]]
-* [[Troubleshoot-CAC-Reader-Issues]]
 * [External DOD Cert import instructions](https://militarycac.com/macnotes.htm)
 * [CAC For Firefox](https://www.ndu.edu/Incoming-Students/Cybersecurity-Compliance/CAC-for-Firefox/)
   * This page is out of date, but the instructions informed me enough to correct them which I documented above
