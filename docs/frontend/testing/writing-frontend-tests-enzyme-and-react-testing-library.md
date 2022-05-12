@@ -52,4 +52,4 @@ Exceptions to this case include:
 [React Testing Library official documentation](https://testing-library.com/docs/react-testing-library/intro/)
 
 ### Enzyme
-For Enzyme resources see our guide on [How To Unit Test React Components](https://github.com/transcom/mymove/wiki/unit-test-react-components)
+For Enzyme resources see our guide on [How To Unit Test React Components](unit-test-react-components.md)

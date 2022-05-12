@@ -496,11 +496,11 @@ select price_cents, escalation_compounded from re_domestic_service_area_prices d
 
 note: edit `re_services.code = 'DDDSIT'` for `DDDSIT` or `DOPSIT`
 
-note: for details about setting up delivery/pickup SIT service items and example ZIP codes for testing each of these scenarios, see [this page](https://github.com/transcom/mymove/wiki/Testing-payment-requests-for-domestic-SIT-service-items).
+note: for details about setting up delivery/pickup SIT service items and example ZIP codes for testing each of these scenarios, see [this page](testing-payment-requests-for-domestic-sit-service-items.md).
 
-If zip3 to same zip3, use the [domestic shorthaul](https://github.com/transcom/mymove/wiki/Acceptance-Testing-Payment-Requests#domestic-short-haul-dsh) calculation.
+If zip3 to same zip3, use the [domestic shorthaul](acceptance-testing-payment-requests.md#domestic-short-haul-dsh) calculation.
 
-If zip3 to different zip3 and > 50 miles, use the [domestic linehaul](https://github.com/transcom/mymove/wiki/Acceptance-Testing-Payment-Requests#domestic-long-haul-dlh) calculation.
+If zip3 to different zip3 and > 50 miles, use the [domestic linehaul](acceptance-testing-notifications.md#domestic-long-haul-dlh) calculation.
 
 If zip3 to different zip3 and <= 50 miles, use the following:
 

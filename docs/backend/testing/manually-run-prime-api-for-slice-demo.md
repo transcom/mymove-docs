@@ -11,7 +11,7 @@
  prime-api-client --cac --hostname api.stg.move.mil --port 443 fetch-mto-updates | jq 'sort_by(.updatedAt) | .[-1]' > demo_mto.json
 ```
 
-If successful, go to [step 2](https://github.com/transcom/mymove/wiki/Manually-run-Prime-API-for-Slice-demo#2-prime-to-update-dates-for-the-shipment).
+If successful, go to [step 2](#2-prime-to-update-dates-for-the-shipment).
 
 ### Other variations if needed
 
@@ -223,4 +223,4 @@ If successful, Prime demo is complete 🎉.
 
 # References
 * [Acceptance Testing Payment Requests](acceptance-testing-payment-requests.md)
-* [Acceptance Testing Prime API Endpoints](https://github.com/transcom/mymove/wiki/Acceptance-Testing-Prime-API-Endpoints)
+* [Acceptance Testing Prime API Endpoints](../../api/testing/end-to-end-testing-playing-the-prime.md)

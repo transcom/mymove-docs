@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Setting up Postman
 
-In addition to using the UI, you can use Postman to hit the [Admin](https://github.com/transcom/mymove/blob/master/swagger/admin.yaml), [Customer](https://github.com/transcom/mymove/blob/master/swagger/internal.yaml), and [Office](https://github.com/transcom/mymove/blob/master/swagger/ghc.yaml) APIs. They require a slightly different setup process from other uses of Postman on the Milmove project (see: [mTLS setup](https://github.com/transcom/mymove/wiki/setup-postman-to-make-mutual-tls-api-calls)). 
+In addition to using the UI, you can use Postman to hit the [Admin](https://github.com/transcom/mymove/blob/master/swagger/admin.yaml), [Customer](https://github.com/transcom/mymove/blob/master/swagger/internal.yaml), and [Office](https://github.com/transcom/mymove/blob/master/swagger/ghc.yaml) APIs. They require a slightly different setup process from other uses of Postman on the Milmove project (see: [mTLS setup](setup-postman-to-make-mutual-tls-api-calls.md)). 
 
 In order to set up Postman, you need to have Postman, local server, and local client running.
 
@@ -69,13 +69,13 @@ Now here comes the fun part, choose your own adventure!
 For these APIs, we need to supply Postman with the appropriate session cookies from a logged-in user.
 You can either create your own environment to hold the cookies, or use a cookie interceptor.
 
-### [Creating an Environment](https://github.com/transcom/mymove/wiki/Creating-A-Local-Environment-for-Postman)
+### [Creating an Environment](creating-a-local-environment-for-postman.md)
 You'll want to make your own environment if: 
 * You're having trouble using the cookie interceptor
 * You want a relatively quick setup
 * You want to configure additional variables to use in your API calls
 
-### [Using a Cookie Interceptor](https://github.com/transcom/mymove/wiki/Intercepting-Cookies-for-Postman)
+### [Using a Cookie Interceptor](intercepting-cookies-for-postman.md)
 You'll want to use the cookie interceptor if: 
 * You're having trouble creating the environment
 * You don't want to have to create a new environment file for each API and have to swap between them
@@ -83,4 +83,4 @@ You'll want to use the cookie interceptor if:
 
 ## Specialized Postman Setup
 If you are planning to use Postman for testing the prime and support APIs, you will need to make the following changes to support Mutual TLS.
-### [How to Setup Postman to make Mutual TLS API Calls](https://github.com/transcom/mymove/wiki/setup-postman-to-make-mutual-tls-api-calls)
+### [How to Setup Postman to make Mutual TLS API Calls](setup-postman-to-make-mutual-tls-api-calls.md)

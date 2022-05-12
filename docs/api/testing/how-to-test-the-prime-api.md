@@ -75,7 +75,7 @@ go run ./cmd/prime-api-client --insecure <subcommand> <additional_flags> | jq
 
 ## Testing on Staging or Experimental
 
-You will first have to complete [these steps](https://github.com/transcom/mymove/wiki/use-mtls-with-cac) to create CAC access.
+You will first have to complete [these steps](../../dev/tools/CAC/use-mtls-with-cac.md) to create CAC access.
 
 Additionally, those changes must be deployed to each environment. Merging to master will deploy to staging. But you need to explicitly deploy to experimental to get access there, otherwise you won't have access.
 

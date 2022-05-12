@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## Design + Engineering Process for new components
 
-MilMove has defined a process for taking a new component from concept to design to implementation. This section of the doc will describe this process. We use [Storybook](https://storybook.js.org/) for showing the finished components and you can view all current ones on master by going to our [public storybook site](https://storybook.move.mil/). If you want to see things locally please check out the [How To Run Storybook](https://github.com/transcom/mymove/wiki/run-storybook) document.
+MilMove has defined a process for taking a new component from concept to design to implementation. This section of the doc will describe this process. We use [Storybook](https://storybook.js.org/) for showing the finished components and you can view all current ones on master by going to our [public storybook site](https://storybook.move.mil/). If you want to see things locally please check out the [How To Run Storybook](../setup/run-storybook.md) document.
 
 ### Design delivers component design
 
@@ -68,7 +68,7 @@ Some additional reading:
 
 ### Unit Test Runners and Libraries
 
-Historically we have leaned on Browser tests to cover testing our app thoroughly. However, we would benefit from adding unit tests, it is highly recommended to add unit tests as we make changes. See [unit test react components](https://github.com/transcom/mymove/wiki/unit-test-react-components) for more detailed info.
+Historically we have leaned on Browser tests to cover testing our app thoroughly. However, we would benefit from adding unit tests, it is highly recommended to add unit tests as we make changes. See [unit test react components](unit-test-react-components.md) for more detailed info.
 
 * Jest - Testing framework
   * Provided by CRA, executes when you run `yarn test`.
@@ -184,7 +184,7 @@ Adhere to Airbnb's [JavaScript Style Guide](https://github.com/airbnb/javascript
 
 ### Creating Forms
 
-MilMove is transitioning to use Formik for rendering forms for data entry. For details please read the [How to create a form using Formik](https://github.com/transcom/mymove/wiki/create-a-form-using-formik) page.
+MilMove is transitioning to use Formik for rendering forms for data entry. For details please read the [How to create a form using Formik](../guides/create-a-form-using-formik.md) page.
 
 ### CSS Styling Standards
 

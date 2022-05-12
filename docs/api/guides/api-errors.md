@@ -147,7 +147,7 @@ Note that the message in the call to `payloads.InternalServerError` is often `ni
 
 You can override the default message in the call if you have a more useful message, but if not, the default message is sufficient.
 
-Here is some example code of how we take the error type and create the appropriate response, according to the [mapping described above]( https://github.com/transcom/mymove/wiki/API-Errors/#error-types-and-error-responses).
+Here is some example code of how we take the error type and create the appropriate response, according to the [mapping described above](#error-types-and-error-responses).
 ```golang
 if err != nil {
     logger.Error("primeapi.CreateMTOShipmentHandler", zap.Error(err))

@@ -14,8 +14,6 @@ This page includes instructions on how to complete basic functions as the Prime 
   * Use your mTLS integrations certificate in place of the dev certs
   * Add an entry for each environment, STG and EXP
 
-<img src="https://github.com/transcom/mymove/wiki/images/postman/postman-exp-stg-mtls.png" width="600" alt="sample certificate setup in postman for exp and stg"/>
-
 * Import Prime E2E Testing collection into Postman
   * Download the [Postman Collection here](https://github.com/transcom/mymove-docs/blob/main/static/files/postman/Prime%20E2E%20Testing.postman_collection.json)
   * Download the [Postman EXP environment config here](https://github.com/transcom/mymove-docs/blob/main/static/files/postman/Prime%20EXP.postman_environment.json)

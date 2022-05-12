@@ -63,7 +63,7 @@ For Destination SIT, the original ZIP comes from the destination address on the 
 # Initial move setup from scratch
 
 Before you can add SIT service items to a move, you have to set up a move and get it ready for the Prime.
-Create an account for a new service member and create a new HHG move with a shipment. The origin duty station's GBLOC must be in the same GBLOC as the office user you look at it with (see [this Wiki page](https://github.com/transcom/mymove/wiki/How-to-view-a-move-or-payment-request-in-the-office-app-as-a-TOO-or-TIO) for more details). Take note of the move locator on the last page.
+Create an account for a new service member and create a new HHG move with a shipment. The origin duty station's GBLOC must be in the same GBLOC as the office user you look at it with (see [this Wiki page](../../frontend/testing/how-to-view-a-move-or-payment-request-in-the-office-app-as-a-too-or-tio.md) for more details). Take note of the move locator on the last page.
 
 For Origin SIT, choose a pickup address with a ZIP that fits your chosen pricing scenario.
 
@@ -255,7 +255,7 @@ Log in as a TIO user in the same GBLOC as your move.
 
 You should be able to see the SIT service items and pricing details.
 
-You can check the pricing calculations using the instructions from [this document](https://github.com/transcom/mymove/wiki/Acceptance-Testing-Payment-Requests).
+You can check the pricing calculations using the instructions from [this document](acceptance-testing-payment-requests.md).
 
 If you want to send an invoice, approve some of the service items and the move, and then wait for the `process_edis` scheduled task to run.
 
@@ -263,7 +263,7 @@ If you want to send an invoice, approve some of the service items and the move, 
 # References
 [SIT pricing discovery](https://docs.google.com/document/d/1jRl91aslMnOMt2zS1tt_XT0lD1I-xvsiKOfprAaFrAs/edit#)
 
-<https://github.com/transcom/mymove/wiki/Acceptance-Testing-Payment-Requests#add-sit-related-service-items>
+[Add SIT related service items](acceptance-testing-payment-requests.md#add-sit-related-service-items)
 - Has example payload and call for dom/origin first day SIT and no explanation
 
 <https://github.com/transcom/mymove/pull/6435>
