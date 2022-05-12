@@ -17,7 +17,7 @@ If you are looking to understand choices made in this project, see the list of
 :::tip Editing Docusaurus
 
 If you are looking to edit or add to this documentation, checkout the page on
-[Using Docusaurus][doc-using-docusaurus].
+[Using Docusaurus](../tools/docusaurus/docusaurus.md)].
 
 :::
 
@@ -32,4 +32,3 @@ in the LICENSE.md file in this repository.
 :::
 
 [gh-adr-readme]: https://github.com/transcom/mymove/tree/master/docs/adr#architectural-decision-log
-[doc-using-docusaurus]: https://transcom.github.io/mymove-docs/docs/dev/tools/docusaurus/

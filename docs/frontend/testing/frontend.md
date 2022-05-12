@@ -265,9 +265,9 @@ Has plugins for most out the box, but setting up Prettier is tricky. See [the do
 
 ### vi
 
-* [vim-prettier](github.com:prettier/vim-prettier)
-* [vim-javascript](pangloss/vim-javascript.git)
-* [editorconfig](editorconfig/editorconfig-vim.git)
+* [vim-prettier](https://github.com:prettier/vim-prettier)
+* [vim-javascript](https://github.com/pangloss/vim-javascript)
+* [editorconfig](https://github.com/editorconfig/editorconfig-vim.git)
 
 ### Browser Extensions
 

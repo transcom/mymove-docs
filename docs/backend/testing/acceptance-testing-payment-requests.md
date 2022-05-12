@@ -718,7 +718,7 @@ When creating a payment request you may get an empty payload. This is usually ca
 
 ## Searching For Errors in Staging
 
-This can be done in CloudWatch using the Log Insights (See [this doc](How-to-Search-Cloudwatch-Logs-using-Instance-ID) for details), or more easily with the [ecs-service-logs tool](https://github.com/trussworks/ecs-service-logs). If you have a `instance` in the error message you can use that as the `milmove_trace_id`
+This can be done in CloudWatch using the Log Insights (See [this doc](https://dp3.atlassian.net/l/c/UKR6fUhk) for details), or more easily with the [ecs-service-logs tool](https://github.com/trussworks/ecs-service-logs). If you have a `instance` in the error message you can use that as the `milmove_trace_id`
 
 
 ```json title="Example error response:"

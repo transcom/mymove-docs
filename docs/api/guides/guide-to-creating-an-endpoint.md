@@ -251,7 +251,7 @@ refactored to use `AuditableAppContextFromRequestWithErrors` rather than extract
 `AppContext` from the request.
 :::
 
-All handlers should begin by storing the DB, logger, and/or session from the request into the [AppContext](use-stateless-services-with-app-context). This is the easiest way to get all three:
+All handlers should begin by storing the DB, logger, and/or session from the request into the [AppContext](../../backend/guides/use-stateless-services-with-app-context.md). This is the easiest way to get all three:
 
 ```go title="Old way to get the AppContext"
 appCtx := h.AppContextFromRequest(params.HTTPRequest)
