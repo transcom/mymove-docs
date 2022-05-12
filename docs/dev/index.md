@@ -17,4 +17,4 @@ Design research for the documentation migration.**
 
 Hi! Here are the MilMove developer docs. For more context on what MilMove is, please [start here](about/Home.md).
 
-To get the basics of how to work on these docs, read our article on [Using Docusaurus](dev/tools/docusaurus.md)
+To get the basics of how to work on these docs, read our article on [Using Docusaurus](../tools/docusaurus)

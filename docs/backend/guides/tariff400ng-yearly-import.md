@@ -258,7 +258,7 @@ will ultimately become our migration:
 
 `pg_dump -t tariff400ng_full_pack_rates -t tariff400ng_full_unpack_rates -t tariff400ng_item_rates -t tariff400ng_linehaul_rates -t tariff400ng_service_areas -t tariff400ng_shorthaul_rates --no-owner --no-tablespaces -h localhost -U postgres -W --data-only dev_db > new_2020_400ng_data.sql`
 
-[Create a new migration](../database/migrate-the-database.md#creating-a-migration) using the usual process and copy this data into it.
+[Create a new migration](../setup/database-migrations.md#creating-a-migration) using the usual process and copy this data into it.
 
 Note that we use the `COPY` mechanism here to insert rows into the database -- this is much faster than `INSERT` on
 large data sets.

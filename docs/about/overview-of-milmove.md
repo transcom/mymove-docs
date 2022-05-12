@@ -25,18 +25,16 @@ There are three websites (React apps) that compose the front end of the system:
 
 - **Office app**, located at `https://office.move.mil`
 
-  This app is used by the [Office users](./security/User-Management.md) to review/approve/reject moves and payments.
+  This app is used by the [Office users](security/user-management.md#office-user) to review/approve/reject moves and payments.
 
 - **Prime UI app**, located as a Prime Simulator Role user within the Office app
     in **non-Production systems**.
 
-  This app is used by [Testers](./security/User-Management.md) to simulate
-  actions of the GHC Prime contractor. The Office user must be granted Prime
-  Simulator Role by an Administrator.
+  This app is used by testers to simulate actions of the GHC Prime contractor. The Office user must be granted Prime Simulator Role by an Administrator.
 
 - **Admin app**, located at `https://admin.move.mil`
 
-  This app is used by [Administrators](./security/User-Management.md) to create new https://office.move.mil users and grant permissions for various office roles.
+  This app is used by [Administrators](security/user-management.md#admin-user) to create new https://office.move.mil users and grant permissions for various office roles.
 
 The links above are for the Production versions of the site. We have multiple
 deployed environments and you can [read more about those

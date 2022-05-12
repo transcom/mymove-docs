@@ -62,7 +62,7 @@ Currently, it looks like `pre-commit` only supports Python, Node, and Ruby for s
 | `go-lint` | Attempts to run a linter against the go source code.
 | `go-vet` | Attempts to examines Go source code and reports suspicious constructs, such as `Printf` calls whose arguments do not align with the format string.
 | `gosec` | Inspects source code for security problems by scanning the Go AST. For more see [here](https://github.com/securego/gosec).
-| `gen-docs` |Attempts to generate table of contents for the [docs/README](docs/README.md) file in doc folder.
+| `gen-docs` |Attempts to generate table of contents for the `README.md` file in `docs/` folder.
 | `gofmt` | Part of `golangci-lint` linter and attempts to format go code
 | `varcheck` | Part of `golangci-lint` linter and used to find unused global variables and constants
 | `typecheck` | Part of `golangci-lint` linter and works like the front-end of a Go compiler, parses and type-checks Go code

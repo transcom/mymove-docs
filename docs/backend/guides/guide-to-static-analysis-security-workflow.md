@@ -6,13 +6,16 @@ sidebar_position: 8
 
 **Contents**
 
+- [Guide to Static Analysis Security Workflow](#guide-to-static-analysis-security-workflow)
 - [Introduction](#introduction)
   - [Exceptions](#exceptions)
 - [Processes](#processes)
   - [What to do if you’ve written code that triggers the linter](#what-to-do-if-youve-written-code-that-triggers-the-linter)
-  - [If you need to disable a rule check the severity level of the linter violation](#if-you-need-to-disable-a-rule-check-the-severity-level-of-the-linter-violation)
+  - [If you need to disable a rule, check the severity level of the linter violation](#if-you-need-to-disable-a-rule-check-the-severity-level-of-the-linter-violation)
+  - [If severity level of a linter occurrence is unknown (i.e. it’s not in master spreadsheet)](#if-severity-level-of-a-linter-occurrence-is-unknown-ie-its-not-in-master-spreadsheet)
+  - [If you need to write an annotation](#if-you-need-to-write-an-annotation)
   - [If you need annotation approval](#if-you-need-annotation-approval)
-  - [If you are a trussel in ‘truss-is3’ github group and someone needs an approval](#if-you-are-a-trussel-in-truss-is3-github-group-and-someone-needs-an-approval)
+  - [If you are a Trussel in ‘truss-IS3’ Github group and someone needs an approval](#if-you-are-a-trussel-in-truss-is3-github-group-and-someone-needs-an-approval)
 
 # Introduction
 
@@ -61,7 +64,7 @@ Check the severity level of the [master spreadsheet](https://docs.google.com/spr
 
 ## If you need to write an annotation
 
-- see [Guide to Static Analysis Annotations for Disabled Linters](Guide-to-Static-Analysis-Annotations-for-Disabled-Linters.md#guide-to-static-analysis-annotations-for-disabled-linters)
+- see [Guide to Static Analysis Annotations for Disabled Linters](guide-to-static-analysis-annotations-for-disabled-linters.md)
 
 - Make sure all disabling code appears immediately below the annotation, or else the linter will give you an error.
 
