@@ -60,12 +60,6 @@ module.exports = {
         },
         {
             type: 'doc',
-            docId: 'dev/index',
-            position: 'left',
-            label: 'Docs',
-        },
-        {
-            type: 'doc',
             docId: 'help/index',
             position: 'left',
             label: 'Help',
@@ -86,22 +80,6 @@ module.exports = {
             {
               label: 'About',
               to: '/docs/about',
-            },
-            // {
-              // label: 'Getting Started',
-              // to: '/docs',
-            // },
-            // {
-              // label: 'Help',
-              // to: '/docs/help',
-            // },
-            // {
-              // label: 'Vault',
-              // to: '/docs/vault',
-            // },
-            {
-              label: 'Docusaurus Tutorial',
-              to: '/docs/tutorial',
             },
           ],
         },
