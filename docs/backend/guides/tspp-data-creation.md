@@ -217,7 +217,7 @@ VALUES
 This will add the new entries to the temporary TDL table,
 forcing them to adhere to any table constraints
 and generating new UUIDs to be consistent across environments.
-For info on why having consistent UUIDs is important [see this document](../../vault/confluence/create-or-deactivate-users.md)]
+For info on why having consistent UUIDs is important [see this document](https://dp3.atlassian.net/l/c/1J6471UU)
 
 We'll now [create a new migration](../setup/database-migrations#creating-migrations) with that data (replace your migration filename):
 
