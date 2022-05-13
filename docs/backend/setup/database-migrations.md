@@ -15,7 +15,7 @@ If you need to change the database schema, you'll need to write a migration. The
 
 After your testing, if you find that you need to change your migration, you'll need to reset your DB (`make db_<env>_reset`) and rerun the migrations to make sure your updates are reflected in the local DB instance. 
 
-Once you have completed your testing, push your changes up for review! You'll need a review from someone in the DB reviewers group, and if it's a secure migration, you'll need to test your changes on Experimental. Read [[these instructions|deploy-to-experimental]] to learn about deploying to Experimental.
+Once you have completed your testing, push your changes up for review! You'll need a review from someone in the DB reviewers group, and if it's a secure migration, you'll need to test your changes on Experimental. Read [these instructions](https://dp3.atlassian.net/l/c/5G1P0dX0) to learn about deploying to Experimental.
 
 <!-- markdownlint-disable MD029 MD038 -->
 

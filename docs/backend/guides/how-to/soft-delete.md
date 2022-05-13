@@ -24,7 +24,7 @@ type ExampleModel struct {
 }
 ```
 
-If this has not been done, one must [create a migration](migrate-the-database.md) to make these changes.
+If this has not been done, one must [create a migration](../../setup/database-migrations.md) to make these changes.
 
 ## Querying for non-deleted records
 

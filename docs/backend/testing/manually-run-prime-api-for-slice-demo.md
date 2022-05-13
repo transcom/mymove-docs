@@ -1,3 +1,5 @@
+# Manually run Prime API for Slice demo 
+
 [Pricing Acceptance script](https://github.com/transcom/mymove/blob/master/scripts/pricing-acceptance) is being used to mimick the Prime's use of the Prime API. If this script fails on a step, you will need to run the commands manually. This wiki page is to document the list of commands in order that would normally be run by the Prime.
 
 # 1. Fetch MTOs available to the Prime
@@ -9,7 +11,7 @@
  prime-api-client --cac --hostname api.stg.move.mil --port 443 fetch-mto-updates | jq 'sort_by(.updatedAt) | .[-1]' > demo_mto.json
 ```
 
-If successful, go to [step 2](https://github.com/transcom/mymove/wiki/Manually-run-Prime-API-for-Slice-demo#2-prime-to-update-dates-for-the-shipment).
+If successful, go to [step 2](#2-prime-to-update-dates-for-the-shipment).
 
 ### Other variations if needed
 
@@ -62,7 +64,7 @@ prime-api-client --cac --hostname api.stg.move.mil --port 443  fetch-mto-updates
   jq 'map(select(.id == "da3f34cc-fb94-4e0b-1c90-ba3333cb7791")) | .[0] | .mtoShipments | map(select(.id == "b4148fad-acc6-4065-b387-90d05a702a24")) | .[0] | .eTag'
 ```
 
-If successful, go to [step 3](https://github.com/transcom/mymove/wiki/Manually-run-Prime-API-for-Slice-demo#3-prime-to-update-the-weights-for-the-shipment).
+If successful, go to [step 3](#3-prime-to-update-the-weights-for-the-shipment).
 
 # 3. Prime to update the weights for the shipment
 The `shipmentID` must be consistent between steps 2, 3, 4, and 5.
@@ -91,7 +93,7 @@ prime-api-client --cac --hostname api.stg.move.mil --port 443 fetch-mto-updates 
   jq 'map(select(.id == "da3f34cc-fb94-4e0b-1c90-ba3333cb7791")) | .[0] | .mtoShipments | map(select(.id == "b4148fad-acc6-4065-b387-90d05a702a24")) | .[0] | .eTag'
 ```
 
-If successful, go to [step 4](https://github.com/transcom/mymove/wiki/Manually-run-Prime-API-for-Slice-demo#4-prime-creates-a-payment-request).
+If successful, go to [step 4](#4-prime-creates-a-payment-request).
 
 # 4. Prime to update destination address for the shipment
 The `shipmentID` must be consistent between steps 2, 3, 4, and 5.
@@ -126,7 +128,7 @@ prime-api-client --cac --hostname api.stg.move.mil --port 443  fetch-mto-updates
   jq 'map(select(.id == "da3f34cc-fb94-4e0b-1c90-ba3333cb7791")) | .[0] | .mtoShipments | map(select(.id == "b4148fad-acc6-4065-b387-90d05a702a24")) | .[0] | .eTag'
 ```
 
-If successful, go to [step 3](https://github.com/transcom/mymove/wiki/Manually-run-Prime-API-for-Slice-demo#3-prime-to-update-the-weights-for-the-shipment).
+If successful, go to [step 3](#3-prime-to-update-the-weights-for-the-shipment).
 
 
 # 5. Prime creates a payment request
@@ -158,7 +160,7 @@ jq .id demo_create_payment_request_response.json
 jq .paymentRequestNumber demo_create_payment_request_response.json
 ```
 
-If successful, go to [step 5](https://github.com/transcom/mymove/wiki/Manually-run-Prime-API-for-Slice-demo#5-prime-adds-proof-of-service-documents).
+If successful, go to [step 5](#5-prime-adds-proof-of-service-documents).
 
 
 # 6. Prime adds proof of service documents
@@ -178,7 +180,7 @@ for proofOfService in "./tmp/uploads/proof_of_service.png" "./tmp/uploads/proof_
 done
 ```
 
-If successful, go to [step 6](https://github.com/transcom/mymove/wiki/Manually-run-Prime-API-for-Slice-demo#6-generate-edi-in-858-format-for-the-payment-request)
+If successful, go to [step 6](#6-generate-edi-in-858-format-for-the-payment-request)
 
 ## Store fake upload files to ./tmp/uploads
 
@@ -220,5 +222,5 @@ If successful, Prime demo is complete 🎉.
 
 
 # References
-* [Acceptance Testing Payment Requests](https://github.com/transcom/mymove/wiki/Acceptance-Testing-Payment-Requests)
-* [Acceptance Testing Prime API Endpoints](https://github.com/transcom/mymove/wiki/Acceptance-Testing-Prime-API-Endpoints)
+* [Acceptance Testing Payment Requests](acceptance-testing-payment-requests.md)
+* [Acceptance Testing Prime API Endpoints](../../api/testing/end-to-end-testing-playing-the-prime.md)

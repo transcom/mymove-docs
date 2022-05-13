@@ -217,9 +217,9 @@ VALUES
 This will add the new entries to the temporary TDL table,
 forcing them to adhere to any table constraints
 and generating new UUIDs to be consistent across environments.
-For info on why having consistent UUIDs is important [[see this document|create-or-deactivate-users]]
+For info on why having consistent UUIDs is important [see this document](https://dp3.atlassian.net/l/c/1J6471UU)
 
-We'll now [[create a new migration|migrate-the-database.md#how-to-migrate-the-database]] with that data (replace your migration filename):
+We'll now [create a new migration](../setup/database-migrations#creating-migrations) with that data (replace your migration filename):
 
 ```bash
 make bin/milmove
@@ -276,7 +276,7 @@ SELECT count(DISTINCT scac) FROM tdl_scores_and_discounts WHERE tsp_id IS NULL;
 
 #### If TSP ID is still null
 
-Note we use GENERATED_UUID4_VAL here to represent a generated UUID, read [[this doc|migrate-the-database#a-note-about-uuid_generate_v4]] for details.
+Note we use GENERATED_UUID4_VAL here to represent a generated UUID, read [this doc](../setup/database-migrations#a-note-about-uuid_generate_v4) for details.
 If this is not 0, add the TSPs:
 
 ```sql
@@ -290,7 +290,7 @@ INSERT INTO temp_tsps (standard_carrier_alpha_code, id, import)
   WHERE tsp_id IS NULL;
 ```
 
-[Generate the migration](../database/migrate-the-database.md#how-to-migrate-the-database) (replacing your migration filename):
+[Generate the migration](../setup/database-migrations#how-to-migrate-the-database) (replacing your migration filename):
 
 ```bash
 make bin/milmove
@@ -320,7 +320,7 @@ The following command will fill the TSPP table with data. Use your data's curren
 >
 > [This document](https://docs.google.com/document/d/12AN1igDt9Acxm9cu1cJA0fiWQIMI3XGs5u_jhCHLo6I) specifies the date ranges for both the performance periods and the rate cycle periods.
 
-Note we use GENERATED_UUID4_VAL here to represent a generated UUID, read [[this doc|migrate-the-database#a-note-about-uuid_generate_v4]] for details.
+Note we use GENERATED_UUID4_VAL here to represent a generated UUID, read [this doc](../setup/database-migrations#a-note-about-uuid_generate_v4) for details.
 
 ```SQL
 INSERT INTO
@@ -522,7 +522,7 @@ DROP TABLE temp_tsp_discount_rates;
 
 You will have to create a secure migration for this data import. Two files will need to be created,
 the file that contains the real data and a local secure migration (dummy file for dev). Follow the
-[[secure migration steps|migrate-the-database#secure-migrations]].
+[secure migration steps](../setup/database-migrations#secure-migrations).
 
 ### How to create the dummy file
 
@@ -531,12 +531,12 @@ are company competition sensitive data and needs to scrubbed.
 
 The file will also need to be reduced. Currently, we are picking 2 TSPs per TDL.
 
-We have a [script](../../scripts/export-obfuscated-tspp-sample) to help with this process. The script will backup the TSPP table, make the appropriate reduction of
+We have a [script](#) to help with this process. The script will backup the TSPP table, make the appropriate reduction of
 data and scrubbing of key columns, output the results, then restore the original TSPP table.  You can run it like so:
 
 ```sh
 ./scripts/export-obfuscated-tspp-sample <filename>
 ```
 
-Complete the [[secure migration steps|migrate-the-database#secure-migrations]] to
+Complete the [secure migration steps](../setup/database-migrations#secure-migrations) to
 submit both migration files.

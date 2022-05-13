@@ -4,8 +4,8 @@ sidebar_position: 3
 
 # How To Unit Test React Components
 
-Unit testing React components has been done with Enzyme, but we now favor a library called [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) (RTL) for unit tests. Please see [this page](https://github.com/transcom/mymove/wiki/Writing-Frontend-Tests:-Enzyme-and-React-Testing-Library) comparing them and outlining a guide for when to use which library. As a general rule of thumb, new components should be tested using RTL.
-You can also look at our page on [Writing Tests Using React Testing Library and Jest](https://github.com/transcom/mymove/wiki/Writing-Tests-Using-React-Testing-Library-and-Jest) for more info.
+Unit testing React components has been done with Enzyme, but we now favor a library called [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) (RTL) for unit tests. Please see [this page](writing-frontend-tests-enzyme-and-react-testing-library.md) comparing them and outlining a guide for when to use which library. As a general rule of thumb, new components should be tested using RTL.
+You can also look at our page on [Writing Tests Using React Testing Library and Jest](writing-tests-using-react-testing-library-and-jest.md) for more info.
 
 Below is a guide to Enzyme written before we introduced RTL:
 

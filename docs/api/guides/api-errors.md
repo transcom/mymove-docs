@@ -12,7 +12,7 @@ The API should always return sensible HTTP status codes.  API errors typically b
 
 The JSON error body should provide a few things for the developer - a useful error **title**, possibly a further detailed **description**, and an **instance** identifier that makes it possible to refer to this particular occurrence of the problem.
 
-The instance identifier enables the Milmove team to [look up Cloudwatch logs](How-to-Search-AWS-Cloudwatch-Logs-using-Instance-ID.md) that were written when the problem occurred.
+The instance identifier enables the Milmove team to [look up Cloudwatch logs](https://dp3.atlassian.net/l/c/UKR6fUhk) that were written when the problem occurred.
 
 ## Default Error
 The default JSON output representation for the error messages looks like:
@@ -25,7 +25,7 @@ The default JSON output representation for the error messages looks like:
 
 
 ## Custom Error
-In addition to this default format, specific errors can choose to provide a custom representation that builds on this. A swagger example of how to define these errors is provided in this article on [backend errors](handle-backend-errors.md#defining-error-models-in-swagger).
+In addition to this default format, specific errors can choose to provide a custom representation that builds on this. A swagger example of how to define these errors is provided in this article on [backend errors](../../backend/guides/how-to/handle-errors.md#defining-error-models-in-swagger).
 
 Validation errors for PUT, PATCH and POST requests need a field breakdown, and will return an `UnprocessableEntity` response. The top level detail can summarize or generalize the validation failures and provide the detailed errors in an additional `invalidFields` object, like so:
 
@@ -147,7 +147,7 @@ Note that the message in the call to `payloads.InternalServerError` is often `ni
 
 You can override the default message in the call if you have a more useful message, but if not, the default message is sufficient.
 
-Here is some example code of how we take the error type and create the appropriate response, according to the [mapping described above]( https://github.com/transcom/mymove/wiki/API-Errors/#error-types-and-error-responses).
+Here is some example code of how we take the error type and create the appropriate response, according to the [mapping described above](#error-types-and-error-responses).
 ```golang
 if err != nil {
     logger.Error("primeapi.CreateMTOShipmentHandler", zap.Error(err))

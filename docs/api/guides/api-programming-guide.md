@@ -12,8 +12,8 @@ This page will collect guides and information on programming our external facing
 - [How to Deprecate an API Endpoint](how-to-deprecate-endpoints)
 - [Acceptance Testing Prime API Endpoints](../testing/acceptance-testing-prime-api-endpoints)
 - [Push Notifications to Prime](../docs/push-notifications-to-prime)
-  - [[Acceptance Testing Notifications]]
-  - [[How to Add an Event Trigger]]
+  - [Acceptance Testing Notifications](../../backend/testing/acceptance-testing-notifications.md)
+  - [How to Add an Event Trigger](../../backend/guides/how-to/add-an-event-trigger.md)
 
 ## Using Postman
 

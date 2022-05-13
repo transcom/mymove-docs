@@ -27,7 +27,7 @@ Upgrading the Go version that we use happens in roughly these steps:
 For more details see [Manage golang with asdf](manage-golang-with-asdf.md)
 
 - Update `.tool-versions` to point to new version of golang
-- Run `asdf install` to install the new version (if you do not yet have it installed, see [How to get up and running](https://github.com/transcom/mymove/wiki/Manage-golang-with-asdf#how-to-get-up-and-running))
+- Run `asdf install` to install the new version (if you do not yet have it installed, see [How to get up and running](manage-golang-with-asdf.md)
 - Run `asdf global golang <version>` to update global version as well
 - `go version` and `asdf which go` to check it worked
 - Add this change to the PR created in the next step

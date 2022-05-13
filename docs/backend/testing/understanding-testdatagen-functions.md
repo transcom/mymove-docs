@@ -130,4 +130,4 @@ officeUser := testdatagen.MakeTOOOfficeUser(suite.DB(), testdatagen.Assertions{
     Stub: true,
 })
 ```
-For more details, read about [[How to write fast tests]].
+For more details, read about [How to write fast tests](how-to-write-fast-tests.md).

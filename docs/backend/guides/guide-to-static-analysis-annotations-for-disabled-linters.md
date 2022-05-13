@@ -6,7 +6,7 @@ sidebar_position: 7
 
 # Introduction
 
-See [Static Analysis Security Workflow](https://github.com/transcom/mymove/wiki/Guide-to-Static-Analysis-Security-Workflow#introduction)
+See [Static Analysis Security Workflow](guide-to-static-analysis-security-workflow.md)
 
 
 # Annotations
@@ -42,7 +42,7 @@ Once you have added your annotation, you will need an ISSO to look over the anno
 
 # **Front end annotation templates**
 
-In this section you will see a list of templates for a given eslint rule. Although we have to have annotations for potential vulnerabilities, there are many [rules that are not potential vulnerabilities and are merely style preferences](https://github.com/transcom/mymove/wiki/Guide-to-Static-Analysis-Security-Workflow#exceptions). Those lint errors do not need annotation. Below is a list of lint rules that need annotations, along with their annotation templates.
+In this section you will see a list of templates for a given eslint rule. Although we have to have annotations for potential vulnerabilities, there are many [rules that are not potential vulnerabilities and are merely style preferences](guide-to-static-analysis-security-workflow.md#exceptions). Those lint errors do not need annotation. Below is a list of lint rules that need annotations, along with their annotation templates.
 
 
 ## security/detect-unsafe-regex

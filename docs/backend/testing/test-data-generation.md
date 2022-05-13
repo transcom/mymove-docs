@@ -69,7 +69,7 @@ Currently available sub-scenarios for each main named scenarios:
   * `misc`: creates misc seed data (see sub-scenario for more info)
 
 ### Data Generation
-The scenarios use our `testdatagen` functions to quickly wire up the data they need. You can find more info on using `testdatagen` functions here: https://github.com/transcom/mymove/wiki/Understanding-Testdatagen-Functions
+The scenarios use our `testdatagen` functions to quickly wire up the data they need. You can find more info on using `testdatagen` functions [here](understanding-testdatagen-functions.md)
 
 ## Updating Scenarios
 If you want to add more data to a given scenario, or tweak it, you can edit the file of the scenario you want as needed.
@@ -178,5 +178,5 @@ go run github.com/transcom/mymove/cmd/generate-test-data --named-scenario="dev_s
 ## Resources
 * [`Dev` DB commands](https://github.com/transcom/mymove#dev-db-commands)
 * [`Test` DB commands](https://github.com/transcom/mymove#test-db-commands)
-* [Running e2e tests](https://github.com/transcom/mymove/wiki/run-e2e-tests)
-* [Testdatagen functions](https://github.com/transcom/mymove/wiki/Understanding-Testdatagen-Functions)
+* [Running e2e tests](run-e2e-tests.md)
+* [Testdatagen functions](understanding-testdatagen-functions.md)

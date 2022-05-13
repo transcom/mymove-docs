@@ -5,7 +5,7 @@ sidebar_position: 7
 # Writing Tests using React Testing Library and Jest
 
 This guide will cover preferred strategies for testing using React Testing Library (RTL).
-[This wiki](https://github.com/transcom/mymove/wiki/Writing-Frontend-Tests-for-MilMove) covers strategies for how MilMove writes tests.
+[This wiki](writing-frontend-tests-for-milmove.md) covers strategies for how MilMove writes tests.
 
 ## Resources
 The React Testing Library documentation is a great resource, specifically; [the queries section](https://testing-library.com/docs/queries/about).
