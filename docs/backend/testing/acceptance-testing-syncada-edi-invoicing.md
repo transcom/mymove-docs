@@ -14,7 +14,7 @@ use.*
 This section will describe the prerequisites for invoicing, that are beyond the scope of documenting here. See the [References](#references) section for links that may help in setting these up.
 
 :::note
-The following commands listed assume you are in the `cmd` directory of the mymove project.
+The following commands listed assume you have built the local tooling required. You may either run `make build_tools` which will build all the tooling for the project. Or to run the commands in this document, run `make bin/prime-api-client bin/generate-payment-request-edi`. This will allow you to run the commands without any prefixes.
 :::
 
 ### Move
