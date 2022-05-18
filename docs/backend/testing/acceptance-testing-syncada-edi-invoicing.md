@@ -83,7 +83,7 @@ prime-api-client --insecure create-payment-request --filename payload.json | jq 
 You will need the payment request number that you can find in the fetch-mto-updates call
 
 ```sh title="Run this command"
-go run generate-payment-request-edi --payment-request-number 5405-6058-1
+generate-payment-request-edi --payment-request-number 5405-6058-1
 ```
 
 ```sh title="Previous command output"
