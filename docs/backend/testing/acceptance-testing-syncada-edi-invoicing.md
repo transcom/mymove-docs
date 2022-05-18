@@ -64,7 +64,7 @@ Save the following to `payload.json`.
 ```
 
 ```sh title="Run this command"
-go run prime-api-client --insecure create-payment-request --filename payload.json | jq '.id,.paymentRequestNumber'
+prime-api-client --insecure create-payment-request --filename payload.json | jq '.id,.paymentRequestNumber'
 ```
 
 ```sh title="Previous command output"
