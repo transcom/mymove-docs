@@ -274,7 +274,7 @@ Save one of the below JSON snippets to `payload.json`
 Run the following command to change the status
 
 ```sh title="Run this command"
-go run prime-api-client --insecure support-reviewed-payment-requests --filename tmp/payloads/process_payment.json|jq .
+prime-api-client --insecure support-reviewed-payment-requests --filename tmp/payloads/process_payment.json|jq .
 ```
 
 ```json title="Example of previous command output"
