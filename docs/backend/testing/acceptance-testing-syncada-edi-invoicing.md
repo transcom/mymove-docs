@@ -335,7 +335,7 @@ the Reviewed status*
 ```
 
 ```sh title="Run this command"
-go run prime-api-client --insecure support-reviewed-payment-requests --filename payload.json | jq .
+prime-api-client --insecure support-reviewed-payment-requests --filename payload.json | jq .
 ```
 
 ```json title="Example of previous command output"
