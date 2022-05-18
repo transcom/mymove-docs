@@ -156,7 +156,7 @@ Save the following to `payload.json`
 Use the Support API endpoint to generate the EDI
 
 ```sh title="Run this command"
-go run prime-api-client --insecure support-get-payment-request-edi --filename payload.json | jq -r .edi
+prime-api-client --insecure support-get-payment-request-edi --filename payload.json | jq -r .edi
 ```
 
 ```sh title="Previous command output"
