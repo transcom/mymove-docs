@@ -13,6 +13,10 @@ use.*
 
 This section will describe the prerequisites for invoicing, that are beyond the scope of documenting here. See the [References](#references) section for links that may help in setting these up.
 
+:::note
+The following commands listed assume you have built the local tooling required. You may either run `make build_tools` which will build all the tooling for the project. Or to run the commands in this document, run `make bin/prime-api-client bin/generate-payment-request-edi`. This will allow you to run the commands without any prefixes.
+:::
+
 ### Move
 
 A move with at least one shipment approved. Also helpful to have Management or Counsiling fees approved.
@@ -79,7 +83,7 @@ prime-api-client --insecure create-payment-request --filename payload.json | jq 
 You will need the payment request number that you can find in the fetch-mto-updates call
 
 ```sh title="Run this command"
-bin/generate-payment-request-edi --payment-request-number 5405-6058-1
+generate-payment-request-edi --payment-request-number 5405-6058-1
 ```
 
 ```sh title="Previous command output"
@@ -152,7 +156,7 @@ Save the following to `payload.json`
 Use the Support API endpoint to generate the EDI
 
 ```sh title="Run this command"
-bin/prime-api-client --insecure support-get-payment-request-edi --filename payload.json | jq -r .edi
+prime-api-client --insecure support-get-payment-request-edi --filename payload.json | jq -r .edi
 ```
 
 ```sh title="Previous command output"
@@ -221,12 +225,57 @@ To update the status of one payment request you can trigger the reviewed payment
 the Reviewed status*
 :::
 
-Save one of the below JSON snippets to `payload.json` and run the following command to change the status
+Save one of the below JSON snippets to `payload.json`
+
+```json title="JSON to update status of all reviewed paymentrequests to SENT_TO_GEX"
+{
+  "body": {
+    "sendToSyncada": false,
+    "deleteFromSyncada": false,
+    "readFromSyncada": false
+  }
+}
+```
+
+```json title="JSON to update status of all reviewed paymentrequests to another one"
+{
+  "body": {
+    "status": "PAID",
+    "sendToSyncada": false,
+    "deleteFromSyncada": false,
+    "readFromSyncada": false
+  }
+}
+```
+
+```json title="JSON to update status of one reviewed paymentrequest to SENT_TO_GEX"
+{
+  "body": {
+    "paymentRequestID": "ce261508-1bd3-4876-b5ca-fb761de43d4d",
+    "sendToSyncada": false,
+    "deleteFromSyncada": false,
+    "readFromSyncada": false
+  }
+}
+```
+
+```json title="JSON to update status of one reviewed paymentrequest to something else"
+{
+  "body": {
+    "paymentRequestID": "ce261508-1bd3-4876-b5ca-fb761de43d4d",
+    "status": "PAID",
+    "sendToSyncada": false,
+    "deleteFromSyncada": false,
+    "readFromSyncada": false
+  }
+}
+```
+
+Run the following command to change the status
 
 ```sh title="Run this command"
 prime-api-client --insecure support-reviewed-payment-requests --filename tmp/payloads/process_payment.json|jq .
 ```
-
 
 ```json title="Example of previous command output"
 [
@@ -257,44 +306,6 @@ prime-api-client --insecure support-reviewed-payment-requests --filename tmp/pay
 ]
 ```
 
-Below are 3 examples of the status update JSON
-
-```json title="JSON to update status of all reviewed paymentrequests to SENT_TO_GEX"
-{
-  "body": {
-    "sendToSyncada": false
-  }
-}
-```
-
-```json title="JSON to update status of all reviewed paymentrequests to another one"
-{
-  "body": {
-    "status": "PAID",
-    "sendToSyncada": false
-  }
-}
-```
-
-```json title="JSON to update status of one reviewed paymentrequest to SENT_TO_GEX"
-{
-  "body": {
-    "paymentRequestID": "ce261508-1bd3-4876-b5ca-fb761de43d4d",
-    "sendToSyncada": false
-  }
-}
-```
-
-```json title="JSON to update status of one reviewed paymentrequest to something else"
-{
-  "body": {
-    "paymentRequestID": "ce261508-1bd3-4876-b5ca-fb761de43d4d",
-    "status": "PAID",
-    "sendToSyncada": false
-  }
-}
-```
-
 ### Generate and send EDI to Syncada
 
 To send to Syncada you will need to make use of the reviewed payment request processor
@@ -316,7 +327,9 @@ the Reviewed status*
 ```json title="Save the following JSON to payload.json"
 {
   "body": {
-    "sendToSyncada": true
+    "sendToSyncada": true,
+    "deleteFromSyncada": false,
+    "readFromSyncada": false
   }
 }
 ```
