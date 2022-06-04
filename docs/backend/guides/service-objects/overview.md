@@ -1,110 +1,86 @@
 ---
 sidebar_position: 1
 ---
-# Backend Service Objects Development Guide
+# Overview
 
 ## What is a Service Object?
 
-The MilMove backend is _loosely_ designed with this [3-layer structure](https://docs.google.com/presentation/d/1kVQzrYWY0AnYyPbiqfuFv8Fh_7IwwIFv3XKRxZI44Hs/edit#slide=id.p):
+The MilMove backend is _loosely_ designed with this
+[3-layer structure](https://docs.google.com/presentation/d/1kVQzrYWY0AnYyPbiqfuFv8Fh_7IwwIFv3XKRxZI44Hs/edit#slide=id.p):
 
-1. **Presentation layer.** Our endpoint handlers that perform type conversions and connect user requests to business logic functions.
-2. **Business logic layer.** Code that implements MilMove's business logic.
-3. **Data access layer.** Code that directly interacts with and manipulates the database.
+1. **Presentation layer.** - Our endpoint handlers that perform type conversions and connect user requests to 
+   business logic functions.
+2. **Business logic layer.** - Code that implements MilMove's business logic.
+3. **Data access layer.** - Code that directly interacts with and manipulates the database.
 
-The `services` package is a combination of the bottom two layers, **business logic** and **data access**. It is located within the `./pkg/services` directory.
+The `services` package is a combination of the bottom two layers, **business logic** and **data access**. It is 
+located within the [`mymove` `./pkg/services`](https://github.com/transcom/mymove/tree/master/pkg/services) directory.
 
-Our "service objects," as we call them (this is MilMove-specific terminology), are the structs/functions within this package that implement our business logic. We organize them by data type, or **model**. For example, all service objects that implement the business logic for shipments will be grouped together in the same sub-package.
+Our "service objects," as we call them (this is MilMove-specific terminology), are the structs/functions within this 
+package that implement our business logic. We have a few different kinds of service objects:
 
-This design pattern was decided in our [Service Object Layer ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0033-service-object-layer.md). Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. We have also developed clear patterns for [creating](#creating-service-objects) and [using](#using-service-objects) this structure.
+- data type: These are the service objects that are tied to a specific model, e.g. logic related to the `Reweigh` 
+  model is in the `pkg/services/reweigh` service.
+- orchestrators: These are service objects that help manage other service objects that are closely related, e.g. the 
+  logic that manages `MTOShipment` and `PPMShipment` service objects lives in `pkg/services/orchestrators/shipment`
+- utility: These are service objects that help us out across the code base, e.g. query tools are in the 
+  `pkg/services/query` service.
 
-### Key features
+Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. We have
+also developed clear patterns for [creating](#creating-service-objects) and [using](#using-service-objects) this 
+structure.
+
+## ADRs
+
+We have two decision records related to service objects:
+
+- [Service Object Layer ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0033-service-object-layer.md) 
+  is the one that began our use of service objects.
+- [Use orchestrator service objects ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0069-use-orchestrator-service-objects.md)
+  is where we defined a new type of service object to help manage interactions between closely related service objects.
+
+## Key features
 
 A well-defined service object is:
 
-- Concerned primarily with one data object (although it may use other service objects to modify additional data objects),
-- Reusable and modular,
-- Not related to or affected by our API design.
+- Reusable and modular
+- Not related to or affected by our API design
 
-Service objects should expose clear and self-explanatory public functions. Niche utilities and business logic should be in private functions within the service object's package.
+Specific types of service objects have additional constraints:
+
+- data type service objects should be:
+  - Concerned primarily with one data object
+    - They may use other service objects to perform actions on other data objects, but you should also consider if 
+      it should use that other service object directly, or if it would be better to use a service object orchestrator.
+- orchestrator service objects should:
+  - Not repeat validation that the service objects they use will have. The main validation that should be done at 
+    this level should be for things that the orchestrator needs in order to function.
+
+Service objects should expose clear and self-explanatory public functions. Niche utilities and business logic should be 
+in private functions within the service object's package.
+
+## Detailed Docs
+
+For ease of reading, the docs on service objects are broken down a bit based on what you're trying to do/understand.
+
+:::caution
+There are several service objects that don't fully match what is stated in these docs. That is usually because the
+patterns outlined in the docs were established after many of these service objects existed, and we didn't go back and
+change existing service objects to match. It has also happened from accidentally following the wrong example for
+what to look at. If you are adding a new service object, follow the patterns outlined here. If you are editing a
+service object and have a bit of extra time, try updating the service object you're changing to follow the patterns
+here.
+:::
+
+* [Structure](./structure)
+* [Getting Started](./getting-started)
+* [Set up service subpackage and interface](./set-up-service-subpackage-and-interface)
+* [Set up validation pattern](./validation)
+
+The stuff below is being converted to the new format outlined in the links above. As it gets covered in the new 
+pages, I'll remove the corresponding sections below. 
 
 ## Creating Service Objects
-
-### Where does it go?
-
-In the `mymove` codebase, navigate to the `./pkg/services` directory. You should see a bunch of sub-directories (these are all Go packages themselves) and then singular Go files at the end. The names of these solo Go files should match that of a directory above.
-
-```text
-mymove/
-├── pkg/
-│   ├── services/
-│   │   ├── ...
-│   │   ├── mto_agent/
-│   │   ├── mto_service_item/   <- a sub-package
-│   │   ├── mto_shipment/
-│   │   ├── ...
-│   │   ├── mto_agent.go
-│   │   ├── mto_service_item.go <- the interface in the services package
-│   │   ├── mto_shipment.go
-│   │   ├── ...
-```
-
-Note that the names here **match our database tables**, but in the singular form.
-
-Each of these sub-packages handles the operations for one particular data model. This helps us keep track of our database interactions and allows for differently-focused teams to speak with the database and APIs using the same validation and functionality.
-
-Now you must either find the sub-package that corresponds to the data model for your new function, or create a new one. Make sure to add the directory _and_ the top-level Go file:
-
-```text {6,9}
-mymove/
-├── pkg/
-│   ├── services/
-│   │   ├── ...
-│   │   ├── mto_shipment/
-│   │   ├── reweigh/
-│   │   ├── ...
-│   │   ├── mto_shipment.go
-│   │   ├── reweigh.go
-│   │   ├── ...
-```
-
-Leave this Go file blank for the time being.
-
-:::info
-If your service involves multiple models or does not easily map to a model entity name, then it might be best to create a new folder that has a relevant name.
-
-However, first consider whether or not the additional models are being updated as a _side-effect_ of another model's update and which model is being exposed as an input or return value. In either of those cases, you can determine which model is the true subject of your service.
-
-Ultimately, you must use your best judgment.
-:::
-
-### Adding a new file
-
-Once you have identified or creating the sub-package for your new service object, navigate into that folder.
-
-We name our files for the main **action** of that particular service object. For example, the file that contains the service to update a shipment is called `mto_shipment_updater.go`. If you are modifying an existing action, open that particular file. Otherwise, you should create a new one.
-
-If you are working from scratch, you will also need to add a service test file so that your tests will run properly. This file is boilerplate and can be copy/pasted from any other `services` sub-package.
-
-Your new sub-package should look like this:
-
-```text
-mymove/
-├── pkg/
-│   ├── services/
-│   │   ├── reweigh/
-│   │   │   ├── reweigh_creator.go  <------ this name can be any action
-│   │   │   ├── reweigh_creator_test.go
-│   │   │   ├── reweigh_service_test.go  <- boilerplate
-│   │   ├── ...
-│   │   ├── reweigh.go
-│   │   ├── ...
-```
-
-:::caution Stuttering
-You might notice that there's a lot of redundancy in this naming scheme. This is commonly referred to as **"stuttering"** and is considered an anti-pattern in most languages and frameworks.
-
-We may at some point try to move away from this convention, but it is preferrable to be consistent with our less-than-ideal naming scheme for now.
-:::
 
 ### Creating the struct
 
@@ -153,7 +129,8 @@ Once you have your bare function signature, you can start to fill in the paramet
 Service objects should be reusable and modular, so keep this in mind while defining your parameters. To start with, they should be the bare minimum needed for someone to call this function. Use your best judgment.
 
 :::info
-You will always need to pass in the `AppContext` as the first argument. This is standard in our codebase. Read more about [AppContext and how to use it](use-stateless-services-with-app-context.md).
+You will always need to pass in the `AppContext` as the first argument. This is standard in our codebase. Read more 
+about [AppContext and how to use it](/docs/backend/guides/use-stateless-services-with-app-context).
 :::
 
 Often, the particular model type you are dealing with is passed in as input as well. This is not a hard rule, but it is a common convention. For our example, we are creating a reweigh and therefore will need information from a `models.Reweigh` type.
