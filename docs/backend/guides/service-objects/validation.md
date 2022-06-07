@@ -35,6 +35,425 @@ explanations and examples.
 
 :::
 
+### `validation.go`
+
+We'll start with creating the `validation.go` and `validation_test.go` files. In `validation.go`, we'll set up our 
+validator types and write the base function that handles running our checks on the data.
+
+```text {7,8}
+mymove/
+├── pkg/
+│   ├── services/
+│   │   ├── ...
+│   │   ├── cat/
+│   │   │   ├── cat_service_test.go
+│   │   │   ├── validation.go       <- new file
+│   │   │   ├── validation_test.go  <- new file
+│   │   ├── ...
+```
+
+#### `validator` interface and the `Validate` function
+
+Now we'll define an interface type that all of our validators will implement. This type will be private to our 
+service package and have one method, `Validate()`:
+
+```go title="pkg/services/cat/validation.go"
+package cat
+
+import (
+	"github.com/transcom/mymove/pkg/appcontext"
+)
+
+// catValidator defines the interface for checking business rules for a cat
+type catValidator interface {
+	Validate(appCtx appcontext.AppContext) error
+}
+```
+
+Based on our general Go standards, we know this function (like many other functions) will take in the `AppContext` 
+as its first argument. Since the action is "validate," it also makes sense that it would return an error. But what 
+else do we need?
+
+The parameters of `Validate()` should include **all model types** that you will need to validate your business rules.
+This will change on a case-by-case basis, but, at a minimum, you will generally include your subject model type.
+
+##### Variations of `Validate` Signature
+
+Since we're creating service objects for creating and updating cats, we know we'll need an argument that is of type 
+`models.Cat`. Unfortunately, we don't have a set standard for how that argument should be used, nor how to handle 
+the updates. We'll talk about a couple of the ways you'll find in existing code, but then pick one to use for the 
+purposes of these docs.
+
+1. Use `base` and `delta` models. Looks something like this (there are variations that flip which comes first, and 
+   what they're called):
+
+   ```go title="pkg/services/cat/validation.go"
+    package cat
+
+    import (
+        "github.com/transcom/mymove/pkg/appcontext"
+        "github.com/transcom/mymove/pkg/models"
+    )
+
+    // catValidator defines the interface for checking business rules for a cat
+    type catValidator interface {
+        // Validate The base Cat is assumed to be required, so that is a value type.
+        // The delta is optional, so it's a pointer type
+        Validate(appCtx appcontext.AppContext, cat models.Cat, delta *models.Cat) error
+    }
+   ```
+   
+   For this pattern, the following explains what `cat` (a.k.a. the `base`) and `delta` would contain for `create` vs 
+   `update`:
+
+   1. `create`: `cat` would contain the information for the new `Cat`, while `delta` would be `nil`.
+    
+   1. `update`: `cat` would contain the original `Cat`, while `delta` would contain the _changes_ requested.
+
+   Pros:
+    
+   * Can easily see in the validation functions what the requested changes are, at least for fields that aren't 
+     being set to `nil`, otherwise have to compare to the original to see if you're changing from a value to `nil`.
+
+   Cons:
+
+   * Not validating the version of the model that would be saved to the database, meaning there's potentially room 
+     for errors to be introduced when the original model gets the requested changes applied.
+
+1. Use `new` and `original` models. Looks something like this:
+
+   ```go title="pkg/services/cat/validation.go"
+   package cat
+
+   import (
+       "github.com/transcom/mymove/pkg/appcontext"
+       "github.com/transcom/mymove/pkg/models"
+   )
+   
+   // catValidator defines the interface for checking business rules for a cat
+   type catValidator interface {
+       // Validate The newCat is assumed to be required, so that is a value type.
+       // The originalCat is optional, so it's a pointer type.
+       Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error
+   }
+   ```
+
+   For this pattern, the following explains what `newCat` (a.k.a. the `base`) and `originalCat` would contain for 
+   `create` vs `update`:
+
+   1. `create`: `newCat` would contain the information for the new `Cat`, while `originalCat` would be `nil`.
+    
+   1. `update`: `newCat` would contain the requested _final_ version of the `Cat`, while `originalCat` would 
+      contain the original version of the cat. The _final_ version of the `Cat` being the version that would be 
+      saved to the database, so the original `Cat` with the requested changes made to it already, in other words, 
+      a merged version of the `Cat`.
+
+   Pros:
+
+    * Validating the version of the model that would be saved to the database, so there's less of a chance for there 
+      to be invalid data saved.
+
+   Cons:
+
+    * Can't easily see what changes are without comparing the `new` and `original` versions.
+
+For the purposes of these docs, we'll use the second pattern shown, using the merged and original versions of the `Cat`.
+
+##### Implementing the `Validate` Interface
+
+Now that we've settled on a signature, we can also add the type that will implement this interface. We will make the 
+type a function type, which will enable us to write our rules using [closures](https://gobyexample.com/closures). We 
+can define this new type in the `validation.go` file, under the validator interface we defined in the previous section.
+
+```go title="pkg/services/cat/validation.go"
+package cat
+
+import (
+    "github.com/transcom/mymove/pkg/appcontext"
+    "github.com/transcom/mymove/pkg/models"
+)
+
+// catValidator defines the interface for checking business rules for a cat
+type catValidator interface {
+    // Validate The newCat is assumed to be required, so that is a value type.
+    // The originalCat is optional, so it's a pointer type.
+    Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error
+}
+
+// catValidatorFunc is an adapter that will convert a function into an implementation of catValidator
+type catValidatorFunc func(appcontext.AppContext, models.Cat, *models.Cat) error
+
+// Validate fulfills the catValidator interface
+func (fn catValidatorFunc) Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+    return fn(appCtx, newCat, originalCat)
+}
+```
+
+Note that all of these function signatures are the exact same. **They must stay the same** so that these types implement
+the `catValidator` interface defined above. Such is the nature of interfaces types. It might feel inconvenient to repeat
+this signature over and over, but at least it forces us to be explicit about our input.
+
+#### Create the `validate<Model>` Function
+
+Now we're going to define the function that will take in the necessary data and the validation functions that we 
+should run, run through all the validation functions, and return an error as appropriate. It will be called from the 
+service objects, meaning it will be the access point for all our validation.
+
+We'll name this function based on what you are validating, so in our case, we'll name it `validateCat`. Its 
+signature will look similar to the signatures we used earlier, with the addition of a new parameter called `checks`:
+
+
+```go title="pkg/services/cat/validation.go"
+package cat
+
+// Previous definitions ommitted to focus on the new part for now
+
+// validateCat runs a cat through the checks that are passed in.
+func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
+	// TODO: Implement validation logic...
+
+	return nil
+}
+```
+
+This `checks` parameter is what is known as a "variadic parameter," making this a
+[variadic function](https://gobyexample.com/variadic-functions). This allows us to pass in however many rules we want,
+granting us flexibility in how we validate services, for example, using different checks depending on who is using it.
+
+Let's start defining the logic for our function by adding code to loop through our validators, calling the 
+`Validate` method on each of them: 
+
+```go title="pkg/services/cat/validation.go"
+package cat
+
+// Previous definitions ommitted to focus on the new part for now
+
+// validateCat runs a cat through the checks that are passed in.
+func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
+	for _, check := range checks {
+		if err := check.Validate(appCtx, newCat, originalCat); err != nil {
+			// TODO: Handle errors
+		}
+	}
+
+	return nil
+}
+```
+
+After we call `Validate()`, we must handle the error that comes back. We have a couple of guidelines for doing this:
+
+* The [Go Buffalo type `validate.Errors`](https://pkg.go.dev/github.com/gobuffalo/validate) (commonly assigned to 
+  `verrs`) should be used to track input errors per field. We do this so the user can get as much information back as
+  possible instead of only seeing one error per request.
+    * Use `Add(fieldName str, Message str)` to add individual errors to this type one at a time.
+    * Use `Append(verrs validate.Errors)` to combine lists of validation errors.
+* All validation errors should be wrapped in a `apperror.InvalidInputError` type when returned.
+* Any other error types are not combined and take immediate precedence over input errors. For example, the error saying
+  that the model should not have been visible to the caller will take precedence over an error about the phone number
+  being mistyped.
+
+In order to follow these guidelines, we need to check the type of the error being returned from the validator. If
+the error is a validation error type, we will combine it with an ongoing list of validation errors and continue
+checking the rest of the validators.
+
+If it is _not_ a validation error, we stop everything and return it right away.
+
+Taking those guidelines into account, we end up with this `validateCat` function:
+
+```go title="pkg/services/cat/validation.go"
+package cat
+
+// Previous definitions ommitted to focus on the new part for now
+
+// validateCat runs a cat through the checks that are passed in.
+func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
+	verrs := validate.NewErrors()
+
+	for _, check := range checks {
+		if err := check.Validate(appCtx, newCat, originalCat); err != nil {
+			switch e := err.(type) {
+			case *validate.Errors:
+				// Accumulate all validation errors
+				verrs.Append(e)
+			default:
+				// Non-validation errors have priority and short-circuit doing any further checks
+				return err
+			}
+		}
+	}
+
+	if verrs.HasAny() {
+		return apperror.NewInvalidInputError(newCat.ID, nil, verrs, "Invalid input found while validating the cat.")
+	}
+
+	return nil
+}
+```
+
+This function is almost entirely boilerplate and can be copied and pasted from one service to another with minimal
+changes.
+
+#### Testing `validation.go`
+
+Since most of the code is boilerplate, we can get by with just a few small tests to make sure things work as 
+expected. Here is a sample of what your tests could look like (or you can even copy these and modify to fit your 
+function signatures):
+
+<details>
+<summary>Sample `validation_test.go`</summary>
+
+```go title="pkg/services/cat/validation_test.go"
+package cat
+
+import (
+	"github.com/gobuffalo/validate/v3"
+	"github.com/gofrs/uuid"
+
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/apperror"
+	"github.com/transcom/mymove/pkg/models"
+)
+
+func (suite CatSuite) TestCatValidatorFuncValidate() {
+	suite.Run("Calling Validate runs validation function with no errors", func() {
+		validator := catValidatorFunc(func(_ appcontext.AppContext, _ models.Cat, _ *models.Cat) error {
+			return nil
+		})
+
+		err := validator.Validate(suite.AppContextForTest(), models.Cat{}, nil)
+
+		suite.NoError(err)
+	})
+
+	suite.Run("Calling Validate runs validation function with errors", func() {
+		validator := catValidatorFunc(func(_ appcontext.AppContext, _ models.Cat, _ *models.Cat) error {
+			verrs := validate.NewErrors()
+
+			verrs.Add("ID", "fake error")
+
+			return verrs
+		})
+
+		err := validator.Validate(suite.AppContextForTest(), models.Cat{}, nil)
+
+		suite.Error(err)
+		suite.Contains(err.Error(), "fake error")
+	})
+}
+
+func (suite CatSuite) TestValidateCat() {
+	suite.Run("Runs validation and returns nil when there are no errors", func() {
+		checkAlwaysReturnNil := catValidatorFunc(func(_ appcontext.AppContext, _ models.Cat, _ *models.Cat) error {
+			return nil
+		})
+
+		err := validateCat(suite.AppContextForTest(), models.Cat{}, nil, []catValidator{checkAlwaysReturnNil}...)
+
+		suite.NoError(err)
+	})
+
+	suite.Run("Runs validation and returns input errors", func() {
+		checkAlwaysReturnValidationErr := catValidatorFunc(func(_ appcontext.AppContext, _ models.Cat, _ *models.Cat) error {
+			verrs := validate.NewErrors()
+
+			verrs.Add("ID", "fake error")
+
+			return verrs
+		})
+
+		err := validateCat(suite.AppContextForTest(), models.Cat{}, nil, []catValidator{checkAlwaysReturnValidationErr}...)
+
+		suite.Error(err)
+		suite.IsType(apperror.InvalidInputError{}, err)
+		suite.Contains(err.Error(), "Invalid input found while validating the cat.")
+	})
+
+	suite.Run("Runs validation and returns other errors", func() {
+		checkAlwaysReturnOtherError := catValidatorFunc(func(_ appcontext.AppContext, _ models.Cat, _ *models.Cat) error {
+			return apperror.NewNotFoundError(uuid.Must(uuid.NewV4()), "Cat not found.")
+		})
+
+		err := validateCat(suite.AppContextForTest(), models.Cat{}, nil, []catValidator{checkAlwaysReturnOtherError}...)
+
+		suite.Error(err)
+		suite.IsType(apperror.NotFoundError{}, err)
+		suite.Contains(err.Error(), "Cat not found.")
+	})
+}
+```
+</details>
+
+#### Final `validation.go`
+
+Just to recap, here is what our final `validation.go` file looks like:
+
+<details>
+<summary>Final `validation.go`</summary>
+
+```go title="pkg/services/cat/validation.go"
+package cat
+
+import (
+	"github.com/gobuffalo/validate/v3"
+
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/apperror"
+	"github.com/transcom/mymove/pkg/models"
+)
+
+// catValidator defines the interface for checking business rules for a cat
+type catValidator interface {
+	// Validate The newCat is assumed to be required, so that is a value type.
+	// The originalCat is optional, so it's a pointer type.
+	Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error
+}
+
+// catValidatorFunc is an adapter that will convert a function into an implementation of catValidator
+type catValidatorFunc func(appcontext.AppContext, models.Cat, *models.Cat) error
+
+// Validate fulfills the catValidator interface
+func (fn catValidatorFunc) Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+	return fn(appCtx, newCat, originalCat)
+}
+
+// validateCat runs a cat through the checks that are passed in.
+func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
+	verrs := validate.NewErrors()
+
+	for _, check := range checks {
+		if err := check.Validate(appCtx, newCat, originalCat); err != nil {
+			switch e := err.(type) {
+			case *validate.Errors:
+				// Accumulate all validation errors
+				verrs.Append(e)
+			default:
+				// Non-validation errors have priority and short-circuit doing any further checks
+				return err
+			}
+		}
+	}
+
+	if verrs.HasAny() {
+		return apperror.NewInvalidInputError(newCat.ID, nil, verrs, "Invalid input found while validating the cat.")
+	}
+
+	return nil
+}
+```
+
+</details>
+
+### `rules.go`
+
+Now we'll create the `rules.go` and `rules_test.go` files. In the `rules.go` file, we'll use the types defined in 
+`validation.go`, so make sure you've done that first. You'll also need to know what your business rules are.
+
+For our example, we'll implement a few of rules:
+
+* `ID` must be blank when creating a `Cat`.
+* Check that `Name` is not empty.
+* Check that, if both `Birthday` and `GotchaDay` are defined, `Birthday` is equal to, or earlier than the `GotchaDay`.
+* Check that, if `Weight` is defined, it is greater than 0.
 
 
 ## Resources

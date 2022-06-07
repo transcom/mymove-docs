@@ -77,8 +77,10 @@ here.
 * [Set up service subpackage and interface](./set-up-service-subpackage-and-interface)
 * [Set up validation pattern](./validation)
 
+:::caution Content below is being moved
 The stuff below is being converted to the new format outlined in the links above. As it gets covered in the new 
 pages, I'll remove the corresponding sections below. 
+:::
 
 ## Creating Service Objects
 

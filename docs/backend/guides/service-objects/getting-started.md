@@ -43,7 +43,8 @@ type Cats []Cat
 
 ## Creating Service Objects
 
-Now that we have our model, we can start creating our new service objects. We'll go through the following steps:
+Now that we have our model, we can start creating our new service objects. We'll be creating a service object to 
+create cats, and one to update cats. We'll go through the following steps:
 
 1. [Set up service subpackage and interface](./set-up-service-subpackage-and-interface)
 2. [Set up validation pattern](./validation)
