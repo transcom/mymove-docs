@@ -614,7 +614,7 @@ package cat
 // Other logic left out for brevity.
 
 // customerChecks are the rules that should run for actions taken by customers
-func customerChecks() []validator {
+func customerChecks() []catValidator {
 	return []catValidator{
 		checkID(),
 		checkName(),
@@ -622,7 +622,7 @@ func customerChecks() []validator {
 }
 
 // officeChecks are the rules that should run for actions taken by office users
-func officeChecks() []validator {
+func officeChecks() []catValidator {
 	return []catValidator{
 		checkID(),
 	}
