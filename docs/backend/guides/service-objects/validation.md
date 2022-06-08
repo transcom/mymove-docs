@@ -84,6 +84,43 @@ Since we're creating service objects for creating and updating cats, we know we'
 the updates. We'll talk about a couple of the ways you'll find in existing code, but then pick one to use for the 
 purposes of these docs.
 
+1. Use `new` and `original` models. Looks something like this:
+
+   ```go title="pkg/services/cat/validation.go"
+   package cat
+
+   import (
+       "github.com/transcom/mymove/pkg/appcontext"
+       "github.com/transcom/mymove/pkg/models"
+   )
+   
+   // catValidator defines the interface for checking business rules for a cat
+   type catValidator interface {
+       // Validate The newCat is assumed to be required, so that is a value type.
+       // The originalCat is optional, so it's a pointer type.
+       Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error
+   }
+   ```
+
+   For this pattern, the following explains what `newCat` (a.k.a. the `base`) and `originalCat` would contain for
+   `create` vs `update`:
+
+    1. `create`: `newCat` would contain the information for the new `Cat`, while `originalCat` would be `nil`.
+
+    1. `update`: `newCat` would contain the requested _final_ version of the `Cat`, while `originalCat` would
+       contain the original version of the cat. The _final_ version of the `Cat` being the version that would be
+       saved to the database, so the original `Cat` with the requested changes made to it already, in other words,
+       a merged version of the `Cat`.
+
+   Pros:
+
+    * Validating the version of the model that would be saved to the database, so there's less of a chance for there
+      to be invalid data saved.
+
+   Cons:
+
+    * Can't easily see what changes are without comparing the `new` and `original` versions.
+
 1. Use `base` and `delta` models. Looks something like this (there are variations that flip which comes first, and 
    what they're called):
 
@@ -120,44 +157,7 @@ purposes of these docs.
    * Not validating the version of the model that would be saved to the database, meaning there's potentially room 
      for errors to be introduced when the original model gets the requested changes applied.
 
-1. Use `new` and `original` models. Looks something like this:
-
-   ```go title="pkg/services/cat/validation.go"
-   package cat
-
-   import (
-       "github.com/transcom/mymove/pkg/appcontext"
-       "github.com/transcom/mymove/pkg/models"
-   )
-   
-   // catValidator defines the interface for checking business rules for a cat
-   type catValidator interface {
-       // Validate The newCat is assumed to be required, so that is a value type.
-       // The originalCat is optional, so it's a pointer type.
-       Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error
-   }
-   ```
-
-   For this pattern, the following explains what `newCat` (a.k.a. the `base`) and `originalCat` would contain for 
-   `create` vs `update`:
-
-   1. `create`: `newCat` would contain the information for the new `Cat`, while `originalCat` would be `nil`.
-    
-   1. `update`: `newCat` would contain the requested _final_ version of the `Cat`, while `originalCat` would 
-      contain the original version of the cat. The _final_ version of the `Cat` being the version that would be 
-      saved to the database, so the original `Cat` with the requested changes made to it already, in other words, 
-      a merged version of the `Cat`.
-
-   Pros:
-
-    * Validating the version of the model that would be saved to the database, so there's less of a chance for there 
-      to be invalid data saved.
-
-   Cons:
-
-    * Can't easily see what changes are without comparing the `new` and `original` versions.
-
-For the purposes of these docs, we'll use the second pattern shown, using the merged and original versions of the `Cat`.
+For the purposes of these docs, we'll use the first pattern shown, using the merged and original versions of the `Cat`.
 
 ##### Implementing the `Validate` Interface
 
