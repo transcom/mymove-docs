@@ -6,74 +6,6 @@ This is being converted, as it gets covered in the new page, I'll remove the cor
 
 ### `rules` functions
 
-Create a `rules.go` file in your service object's sub-package. You will need to use the types defined in 
-`validation.go`, so make sure you complete that step first. 
-
-You will also need a list of business rules to implement - **you didn't skip that step, right?**
-
-For our example, we will implement two different rules:
-
-* Check that an ID value isn't present when creating a reweigh. This can cause unexpected server errors if we don't 
-  catch it.
-* Check if a reweigh is associated with a Prime-available move.
-
-```go title="./pkg/services/reweigh/rules.go"
-package reweigh
-
-import (
-	"github.com/transcom/mymove/pkg/appcontext"
-    "github.com/transcom/mymove/pkg/models"
-)
-
-// checkReweighID checks that the user can't manually set the reweigh's ID
-func checkReweighID() validator {
-	return validatorFunc(func(appCtx appcontext.AppContext, reweigh models.Reweigh, delta *models.Reweigh, shipment *models.MTOShipment) error {
-		//TODO
-	})
-}
-
-// checkPrimeAvailability checks that move associated with the reweigh is available to the Prime contractor
-func checkPrimeAvailability() validator {
-	return validatorFunc(func(appCtx appcontext.AppContext, reweigh models.Reweigh, delta *models.Reweigh, shipment *models.MTOShipment) error {
-		//TODO
-	})
-}
-```
-
-These functions are [**closures**](https://gobyexample.com/closures), which basically means a function within function.
-In this case, the outer function has no parameters and returns the `validator` interface type. 
-
-The _inner_ function, however, must have a signature that is exactly the same as our `validatorFunc` function type so
-that we can use the interface. This means you will have to change all of these rule functions if you ever change that 
-base signature, so keep that in mind as you continue working on validation.
-
-#### `checkReweighID`
-
-Let's add the logic for our `checkReweighID` rule:
-
-```go title="./pkg/services/reweigh/rules.go" {3}
-// checkReweighID checks that the user can't manually set the reweigh's ID
-func checkReweighID() validator {
-	return validatorFunc(func(_ appcontext.AppContext, reweigh models.Reweigh, delta *models.Reweigh, _ *models.MTOShipment) error {
-		verrs := validate.NewErrors()
-        // If there is no delta, then we are creating a new reweigh:
-		if delta == nil {
-			if reweigh.ID != uuid.Nil {
-				verrs.Add("ID", "cannot manually set a new reweigh's UUID")
-			}
-		}
-		return verrs
-	})
-}
-```
-
-Observe that on line 3, we use `_` to mark the input parameters that we don't use in this rule (in this case, `appCtx`
-and `shipment`). Since we need a verbose signature to fit our needs for _all_ of these rules, there is no way we're 
-going to use everything in every single rule. Use `_` to make clear what is relevant and what isn't.
-
-On line 4, we also initialize a `verrs` variable. This is so we can accumulate our invalid input errors. We always 
-return this at the end of our rule function. An empty `verrs` instance will be ignored.
-
 #### `checkPrimeAvailability`
 
 This one is a little different:
@@ -110,43 +42,6 @@ There is a lot of room for interpretation with this, but some general guidelines
 - If it's data that _must_ be retrieved _during_ the service function, it should be in the validator function signature. 
 
 The parameters in the outer functions are like _dependencies_, and the validator function signature is the true input.
-
-### Grouping `rules` functions
-
-Once we have some rules, we'll want to be able to group them according who called the service. The key here is to 
-define functions that will return slices of validator functions, instead of constant slice variables.
-
-```go
-// basicChecks are the rules that should always run for reweigh validation
-func basicChecks() []validator {
-	return []validator{
-		checkReweighID(),
-	}
-}
-
-// primeChecks are the rules that should only run for validating Prime reweigh actions
-func primeChecks(checker services.MoveTaskOrderChecker) []validator {
-	return []validator{
-		checkReweighID(),
-		checkPrimeAvailability(checker),
-	}
-}
-```
-
-It looks like we're calling these functions now, which wouldn't make sense because we don't have all the input. But 
-remember: These are _closures_, so by calling the outer function, we're getting another function that has not been 
-called yet. The returned function is our validator. The validators won't be called until the `validateReweigh()` 
-function is executed.
-
-Note that we _do_ pass in whatever parameters we use in the outer functions at this level. This is where we set those 
-"dependencies."
-
-These grouping functions can be used in multiple places, and are meant for utility. They are not a hard requirement to
-implement the validator pattern, but they are helpful organizational tools. 
-
-In general, you should always have a set of rules for "basic" validation, which is as bare as possible. You'll build up
-more requirements as you go, so it's better to err on the side of fewer checks to start with. You may place these group
-functions in the `validation.go` or the `rules,go` file - whichever makes more sense for your use case.
 
 ### Connecting the service
 

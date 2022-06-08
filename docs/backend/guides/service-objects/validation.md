@@ -448,13 +448,204 @@ func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *m
 Now we'll create the `rules.go` and `rules_test.go` files. In the `rules.go` file, we'll use the types defined in 
 `validation.go`, so make sure you've done that first. You'll also need to know what your business rules are.
 
-For our example, we'll implement a few of rules:
+For our example, here are a few potential rules (for the sake of brevity, we won't actually implement them all):
 
 * `ID` must be blank when creating a `Cat`.
 * Check that `Name` is not empty.
 * Check that, if both `Birthday` and `GotchaDay` are defined, `Birthday` is equal to, or earlier than the `GotchaDay`.
 * Check that, if `Weight` is defined, it is greater than 0.
 
+We'll start by defining the functions for our rules like this:
+
+```go title="pkg/services/cat/rules.go"
+package cat
+
+import (
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/models"
+)
+
+func checkID() catValidator {
+	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+		return nil // TODO: implement validation logic
+	})
+}
+
+func checkName() catValidator {
+	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+		return nil // TODO: implement validation logic
+	})
+}
+
+func checkDates() catValidator {
+	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+		return nil // TODO: implement validation logic
+	})
+}
+
+func checkWeight() catValidator {
+	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+		return nil // TODO: implement validation logic
+	})
+}
+```
+
+These functions are [**closures**](https://gobyexample.com/closures), which uses a function within a function.
+In this case, the outer function has no parameters and returns the `catValidator` interface type.
+
+The _inner_ function, however, must have a signature that is exactly the same as our `catValidatorFunc` function type so
+that we can use the interface. This means you will have to change all of these rule functions if you ever change that
+base signature, so keep that in mind as you continue working on validation.
+
+#### `checkID`
+
+We've defined the function name and signature, so we can write our tests for what we expect to happen (minimized for 
+ease of reading the page): 
+
+<details>
+<summary>Tests for `checkID`</summary>
+
+```go title="pkg/services/cat/rules_test.go"
+package cat
+
+import (
+	"github.com/gobuffalo/validate/v3"
+	"github.com/gofrs/uuid"
+
+	"github.com/transcom/mymove/pkg/models"
+)
+
+func (suite *CatSuite) TestCheckID() {
+	suite.Run("Success", func() {
+		suite.Run("Create Cat without an ID", func() {
+			err := checkID().Validate(suite.AppContextForTest(), models.Cat{}, nil)
+
+			suite.NilOrNoVerrs(err)
+		})
+
+		suite.Run("Update Cat with matching ID", func() {
+			id := uuid.Must(uuid.NewV4())
+
+			err := checkID().Validate(suite.AppContextForTest(), models.Cat{ID: id}, &models.Cat{ID: id})
+
+			suite.NilOrNoVerrs(err)
+		})
+	})
+
+	suite.Run("Failure", func() {
+		suite.Run("Return an error if an ID is defined when creating a Cat", func() {
+			err := checkID().Validate(suite.AppContextForTest(), models.Cat{ID: uuid.Must(uuid.NewV4())}, nil)
+
+			suite.Error(err)
+			suite.IsType(&validate.Errors{}, err)
+			suite.Contains(err.Error(), "ID must not be set when creating a Cat.")
+		})
+
+		suite.Run("Return an error if the IDs don't match", func() {
+			err := checkID().Validate(suite.AppContextForTest(), models.Cat{ID: uuid.Must(uuid.NewV4())}, &models.Cat{ID: uuid.Must(uuid.NewV4())})
+
+			suite.Error(err)
+			suite.IsType(&validate.Errors{}, err)
+			suite.Contains(err.Error(), "ID for new Cat must match original Cat ID.")
+		})
+	})
+}
+```
+
+</details>
+
+Now we can implement the function like so:
+
+```go title="pkg/services/cat/rules.go" {13,14}
+package cat
+
+import (
+	"github.com/gobuffalo/validate/v3"
+
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/models"
+)
+
+// checkID checks that newCat doesn't already have an ID if we're creating a Cat, or that it matches the original Cat
+// for updates.
+func checkID() catValidator {
+	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+		verrs := validate.NewErrors()
+
+		if originalCat == nil {
+			if newCat.ID.IsNil() {
+				return verrs
+			}
+
+			verrs.Add("ID", "ID must not be set when creating a Cat.")
+		} else {
+			if newCat.ID != originalCat.ID {
+				verrs.Add("ID", "ID for new Cat must match original Cat ID.")
+			}
+		}
+
+		return verrs
+	})
+}
+```
+
+You may notice we use `_` for the `appcontext.AppContext` param since we don't need it for this rule. Since we need 
+a verbose signature to fit our needs for _all_ of these rules, there is no way we're going to use everything in 
+every single rule. Use `_` to make clear what is relevant and what isn't.
+
+You can also see that we start the inner function off by initializing `verrs` to hold our validation errors. We 
+always return this at the end of our rule functions.
+
+#### `check<thing>`
+
+Coming soon...
+
+[//]: # (TODO: need an example of a check function that takes advantange of our use of closures. Could use an example of having a string validator service that we use to validate the names...)
+
+#### Grouping `rules` Functions
+
+Once we have some rules, we can start grouping them as needed. For example, we could group them based on which set 
+of users require different rules. The key here is to define functions that will return slices of validator functions,
+instead of constant slice variables.
+
+```go title="pkg/services/cat/rules.go"
+package cat
+
+// Other logic left out for brevity.
+
+// customerChecks are the rules that should run for actions taken by customers
+func customerChecks() []validator {
+	return []catValidator{
+		checkID(),
+		checkName(),
+	}
+}
+
+// officeChecks are the rules that should run for actions taken by office users
+func officeChecks() []validator {
+	return []catValidator{
+		checkID(),
+	}
+}
+```
+
+The power of this pattern is that it lets us easily define that for customers, we want to check the Cat names, but 
+we'll let office users input whatever they want for names. 
+
+You'll notice that we're calling our `check<thing>` functions now, but this isn't triggering validation. These are 
+`closures`, so we're calling the outer function, which is returning our validator. The validators that we get back 
+aren't called until `validateCat` is called.
+
+Note that we _do_ pass in whatever parameters we use in the outer functions at this level. This is where we set those
+"dependencies."
+
+These grouping functions can be used in multiple places, and are meant for utility. They are not a hard requirement to
+implement the validator pattern, but they are helpful organizational tools.
+
+## Recap
+
+So now we've written rules for what validation we expect to happen with our data, and we've set up the validation 
+function that we can call to run through those rules. Now you can move on to setting up the actual service object.
 
 ## Resources
 
@@ -469,5 +660,7 @@ For our example, we'll implement a few of rules:
     * [Variadic Functions](https://golangbot.com/variadic-functions/)
     * [How to use variadic functions in Go](https://www.digitalocean.com/community/tutorials/how-to-use-variadic-functions-in-go)
 * Closures
+    * [What is a closure](https://stackoverflow.com/a/7464475)
+    * [Closures in Go](https://betterprogramming.pub/closures-made-simple-with-golang-69db3017cd7b)
     * [Go by Example: Closures](https://gobyexample.com/closures)
     * [5 useful ways to use closures in Go](https://www.calhoun.io/5-useful-ways-to-use-closures-in-go/)
