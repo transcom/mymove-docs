@@ -3,46 +3,6 @@
 This is being converted, as it gets covered in the new page, I'll remove the corresponding sections below. 
 [New version](/docs/backend/guides/service-objects/validation)
 
-
-### `rules` functions
-
-#### `checkPrimeAvailability`
-
-This one is a little different:
-
-```go title="./pkg/services/reweigh/rules.go" {2,8}
-// checkPrimeAvailability checks that move associated with the reweigh is available to the Prime contractor
-func checkPrimeAvailability(checker services.MoveTaskOrderChecker) validator {
-	return validatorFunc(func(appCtx appcontext.AppContext, reweigh models.Reweigh, _ *models.Reweigh, shipment *models.MTOShipment) error {
-		if shipment == nil {
-			return services.NewNotFoundError(newReweigh.ID, "while looking for Prime-available Shipment")
-		}
-
-		isAvailable, err := checker.MTOAvailableToPrime(appCtx, shipment.MoveTaskOrderID)
-		if !isAvailable || err != nil {
-			return services.NewNotFoundError(
-				reweigh.ID, fmt.Sprintf("while looking for Prime-available Shipment with id: %s", shipment.ID))
-		}
-		return nil
-	})
-}
-```
-
-We pass in a parameter to the top function, `checkPrimeAvailability`! This is the true power of closures, and it's cool
-because it means we were able to pass in a new parameter without changing the signature for all of the other rule
-functions. The parameter `checker` is a service that we need for this function in particular to validate the 
-Prime-availability rule.
-
-**So what goes in the validator signature and what goes in the input of the outer function?**
-
-There is a lot of room for interpretation with this, but some general guidelines are:
-
-- If it's a dependency that can be set up before the service function is called, pass it in as the input of the outer 
-  function.
-- If it's data that _must_ be retrieved _during_ the service function, it should be in the validator function signature. 
-
-The parameters in the outer functions are like _dependencies_, and the validator function signature is the true input.
-
 ### Connecting the service
 
 Once you have finished creating the `validateModel` function and defining your rules, you are ready to connect your 

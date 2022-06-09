@@ -596,11 +596,264 @@ every single rule. Use `_` to make clear what is relevant and what isn't.
 You can also see that we start the inner function off by initializing `verrs` to hold our validation errors. We 
 always return this at the end of our rule functions.
 
-#### `check<thing>`
+#### `checkName`
 
-Coming soon...
+For this one, we'll take advantage of the fact that we're using `closures`.
 
-[//]: # (TODO: need an example of a check function that takes advantange of our use of closures. Could use an example of having a string validator service that we use to validate the names...)
+Let's pretend that we have a service that we use to check strings to make sure they don't have invalid characters (e.
+g. strings that could be used run malicious code). Imagine the service interface looks like this:
+
+```go  title="pkg/services/string_checker.go"
+package services
+
+import (
+	"github.com/transcom/mymove/pkg/appcontext"
+)
+
+// StringChecker validates a string of text to make sure it is safe
+//go:generate mockery --name StringChecker --disable-version-string
+type StringChecker interface {
+	Validate(appCtx appcontext.AppContext, text string) error
+}
+```
+
+We haven't covered what a service object interface is supposed to look like, but the important points to know for 
+now are:
+
+* To use this type, we would use `services.StringChecker`
+* To mock it out in tests (which we'll see in a bit), you use `mocks.StringChecker{}`
+* To use it in our service, we'll define a parameter like this: `stringChecker services.StringChecker`
+    * We then use it like this: `err := stringChecker(appCtx, "my string to check")`
+
+We'll see all this in practice next.
+
+Now let's say we want to run every name that gets input through our string checker to make sure that users aren't 
+passing in bad characters or strings. We can do this by updating our definition of `checkName` to look like this:
+
+```go title="pkg/services/cat/rules.go" {9}
+package cat
+
+import (
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/models"
+	"github.com/transcom/mymove/pkg/services"
+)
+
+func checkName(stringChecker services.StringChecker) catValidator {
+	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+		return nil // TODO: implement validation logic
+	})
+}
+
+// other check functions ommitted to focus on checkName
+```
+
+Note how we added `stringChecker services.StringChecker` as a parameter to `checkName`, the outer function. Since 
+we're using `closures` though, we'll be able to use this `StringChecker` service in the inner function, without 
+having to change the signature of the inner function (and by extension every other validation function).
+
+With our newly updated function signature, we're ready to write our tests!
+
+<details>
+<summary>Tests for `checkID`</summary>
+
+```go title="pkg/services/cat/rules_test.go"
+package cat
+
+import (
+	"errors"
+	"fmt"
+	
+	"github.com/gobuffalo/validate/v3"
+	"github.com/gofrs/uuid"
+	"github.com/stretchr/testify/mock"
+
+	"github.com/transcom/mymove/pkg/models"
+	"github.com/transcom/mymove/pkg/services/mocks"
+)
+
+// TestCheckID tests ommitted for clarity
+
+func (suite *CatSuite) TestCheckName() {
+	getMockStringChecker := func(err error) mocks.StringChecker {
+		stringChecker := mocks.StringChecker{}
+
+		stringChecker.On("Validate",
+			mock.AnythingOfType("*appcontext.appContext"),
+			mock.AnythingOfType("string"),
+		).Return(err)
+
+		return stringChecker
+	}
+
+	suite.Run("Success", func() {
+		newName := "Luna"
+		oldName := "Whiskers"
+
+		suite.Run("Create Cat", func() {
+			stringChecker := getMockStringChecker(nil)
+
+			err := checkName(&stringChecker).Validate(
+				suite.AppContextForTest(),
+				models.Cat{Name: newName},
+				nil,
+			)
+
+			suite.NilOrNoVerrs(err)
+
+			stringChecker.AssertExpectations(suite.T())
+		})
+
+		suite.Run("Update Cat", func() {
+			stringChecker := getMockStringChecker(nil)
+
+			err := checkName(&stringChecker).Validate(
+				suite.AppContextForTest(),
+				models.Cat{Name: newName},
+				&models.Cat{
+					ID:   uuid.Must(uuid.NewV4()),
+					Name: oldName,
+				},
+			)
+
+			suite.NilOrNoVerrs(err)
+
+			stringChecker.AssertExpectations(suite.T())
+		})
+
+		suite.Run("Update with no name change", func() {
+			stringChecker := getMockStringChecker(nil)
+
+			err := checkName(&stringChecker).Validate(
+				suite.AppContextForTest(),
+				models.Cat{Name: oldName},
+				&models.Cat{
+					ID:   uuid.Must(uuid.NewV4()),
+					Name: oldName,
+				},
+			)
+
+			suite.NilOrNoVerrs(err)
+		})
+	})
+
+	suite.Run("Failure", func() {
+		blankNameError := errors.New("Cat name must be defined.")
+		stringCheckError := errors.New("Invalid characters found in string.")
+		invalidName := "<hacked>"
+
+		invalidCases := map[string]struct {
+			newCatName  string
+			originalCat *models.Cat
+			expectedErr error
+		}{
+			"creating with no name": {
+				"",
+				nil,
+				blankNameError,
+			},
+			"creating with name": {
+				invalidName,
+				nil,
+				stringCheckError,
+			},
+			"updating with invalid name": {
+				"",
+				&models.Cat{
+					ID:   uuid.Must(uuid.NewV4()),
+					Name: "Whiskers",
+				},
+				blankNameError,
+			},
+		}
+
+		for tc, testData := range invalidCases {
+			tc := tc
+			testData := testData
+
+			suite.Run(fmt.Sprintf("Return error for an invalid name when %v", tc), func() {
+				stringChecker := getMockStringChecker(stringCheckError)
+
+				err := checkName(&stringChecker).Validate(
+					suite.AppContextForTest(),
+					models.Cat{Name: testData.newCatName},
+					testData.originalCat,
+				)
+
+				suite.Error(err)
+				suite.IsType(&validate.Errors{}, err)
+				suite.Contains(err.Error(), testData.expectedErr.Error())
+
+				if testData.newCatName != "" {
+					stringChecker.AssertExpectations(suite.T())
+				}
+			})
+		}
+	})
+}
+```
+
+We'll go into more detail on how we're using the mocks later, but the main thing to get from this for now is that we 
+want to ensure:
+
+* A cat has a name. This means either a new name is set, or the new name matches the old name.
+* A new name has no invalid characters.
+
+</details>
+
+Now we can implement our `checkName` function:
+
+```go title="pkg/services/cat/rules.go"
+package cat
+
+import (
+	"github.com/gobuffalo/validate/v3"
+
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/models"
+	"github.com/transcom/mymove/pkg/services"
+)
+
+func checkName(stringChecker services.StringChecker) catValidator {
+	return catValidatorFunc(func(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+		verrs := validate.NewErrors()
+
+		if newCat.Name == "" {
+			verrs.Add("Name", "Cat name must be defined.")
+
+			return verrs
+		}
+
+		if originalCat != nil && newCat.Name == originalCat.Name {
+			return verrs
+		}
+
+		err := stringChecker.Validate(appCtx, newCat.Name)
+
+		if err != nil {
+			verrs.Add("Name", "Invalid characters found in string.")
+		}
+
+		return verrs
+	})
+}
+
+// other check functions ommitted to focus on checkName
+```
+
+As stated earlier, we're able to pass in the `services.StringChecker` in to the outer function and then use it in 
+the inner function. 
+
+This then leads to a question: What should go in the validator signature (inner function) and what goes in the 
+signature of the outer function?
+
+There is a lot of room for interpretation with this, but some general guidelines are:
+
+- If it's a dependency that can be set up before the service function is called, pass it in as the input of the outer
+  function.
+- If it's data that _must_ be retrieved _during_ the service function, it should be in the validator function signature.
+
+The parameters in the outer functions are like _dependencies_, and the validator function signature is the true input.
 
 #### Grouping `rules` Functions
 
