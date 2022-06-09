@@ -758,12 +758,12 @@ func (suite *CatSuite) TestCheckName() {
 				stringCheckError,
 			},
 			"updating with invalid name": {
-				"",
+				invalidName,
 				&models.Cat{
 					ID:   uuid.Must(uuid.NewV4()),
 					Name: "Whiskers",
 				},
-				blankNameError,
+				stringCheckError,
 			},
 		}
 
