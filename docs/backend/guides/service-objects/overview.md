@@ -86,9 +86,11 @@ pages, I'll remove the corresponding sections below.
 
 ### Creating the struct
 
-Now that you have your directory and files set up, you can start to add the code within. Open up the Go file corresponding to your action.
+Now that you have your directory and files set up, you can start to add the code within. Open up the Go file 
+corresponding to your action.
 
-Every service object has a base struct type, and all of its actions will be methods on that struct. This struct should be private to the sub-package.
+Every service object has a base struct type, and all of its actions will be methods on that struct. This struct 
+should be private to the sub-package.
 
 ```go title="./pkg/services/reweigh/reweigh_creator.go"
 package reweigh
@@ -98,7 +100,8 @@ type reweighCreator struct {
 }
 ```
 
-This struct should contain all the required fields for your new service. You may not know what these are yet, which is okay. Commonly, you'll see validator functions or other services that facilitate the business logic:
+This struct should contain all the required fields for your new service. You may not know what these are yet, which 
+is okay. Commonly, you'll see validator functions or other services that facilitate the business logic:
 
 ```go
 type reweighUpdater struct {
@@ -107,15 +110,18 @@ type reweighUpdater struct {
 }
 ```
 
-You should think of these fields as _dependencies_ for your new service object. The more you have, the more work the caller will have to do to set up this service. This can get inconvenient very quickly.
+You should think of these fields as _dependencies_ for your new service object. The more you have, the more work the 
+caller will have to do to set up this service. This can get inconvenient very quickly.
 
 Typically, these dependencies will be interfaces, which makes it easier to mock them in tests.
 
 ### Creating the function
 
-Once you have a struct defined, you can start working on the main function for your service. This will be a method on the previously defined struct.
+Once you have a struct defined, you can start working on the main function for your service. This will be a method on 
+the previously defined struct.
 
-We follow a similar naming convention where the function is the active form of your action verb + the name of the object.
+We follow a similar naming convention where the function is the active form of your action verb + the name of the 
+object.
 
 ```go title="./pkg/services/reweigh/reweigh_creator.go"
 // CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.
@@ -126,38 +132,68 @@ func (f *reweighCreator) CreateReweigh() {
 
 Once you have your bare function signature, you can start to fill in the parameters and return values.
 
-#### Parameters
+[//]: # (#### Parameters)
 
-Service objects should be reusable and modular, so keep this in mind while defining your parameters. To start with, they should be the bare minimum needed for someone to call this function. Use your best judgment.
+[//]: # ()
+[//]: # (Service objects should be reusable and modular, so keep this in mind while defining your parameters. To start with, )
 
-:::info
-You will always need to pass in the `AppContext` as the first argument. This is standard in our codebase. Read more 
-about [AppContext and how to use it](/docs/backend/guides/use-stateless-services-with-app-context).
-:::
+[//]: # (they should be the bare minimum needed for someone to call this function. Use your best judgment.)
 
-Often, the particular model type you are dealing with is passed in as input as well. This is not a hard rule, but it is a common convention. For our example, we are creating a reweigh and therefore will need information from a `models.Reweigh` type.
+[//]: # ()
+[//]: # (:::info)
 
-```go title="./pkg/services/reweigh/reweigh_creator.go"
-// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.
-func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *models.Reweigh) {
-    // no code yet
-}
-```
+[//]: # (You will always need to pass in the `AppContext` as the first argument. This is standard in our codebase. Read more )
 
-#### Return values
+[//]: # (about [AppContext and how to use it]&#40;/docs/backend/guides/use-stateless-services-with-app-context&#41;.)
 
-Service objects should return as many return values as appropriate, and this will always include possible errors. A common convention is to return the pointer of the subject model type and a possible error.
+[//]: # (:::)
 
-```go title="./pkg/services/reweigh/reweigh_creator.go"
-// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.
-func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error) {
-    return nil, nil // so the compiler stays happy
-}
-```
+[//]: # ()
+[//]: # (Often, the particular model type you are dealing with is passed in as input as well. This is not a hard rule, but it is)
+
+[//]: # (a common convention. For our example, we are creating a reweigh and therefore will need information from a )
+
+[//]: # (`models.Reweigh` type.)
+
+[//]: # ()
+[//]: # (```go title="./pkg/services/reweigh/reweigh_creator.go")
+
+[//]: # (// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.)
+
+[//]: # (func &#40;f *reweighCreator&#41; CreateReweigh&#40;appCtx appcontext.AppContext, reweigh *models.Reweigh&#41; {)
+
+[//]: # (    // no code yet)
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (#### Return values)
+
+[//]: # ()
+[//]: # (Service objects should return as many return values as appropriate, and this will always include possible errors. A )
+
+[//]: # (common convention is to return the pointer of the subject model type and a possible error.)
+
+[//]: # ()
+[//]: # (```go title="./pkg/services/reweigh/reweigh_creator.go")
+
+[//]: # (// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.)
+
+[//]: # (func &#40;f *reweighCreator&#41; CreateReweigh&#40;appCtx appcontext.AppContext, reweigh *models.Reweigh&#41; &#40;*models.Reweigh, error&#41; {)
+
+[//]: # (    return nil, nil // so the compiler stays happy)
+
+[//]: # (})
+
+[//]: # (```)
 
 #### Implementation
 
-Once you have defined the signature for your function, you can start to fill out the logic of your action. **This is going to be highly context-dependent.** Keep in mind that the following guidance may not be directly useful for your particular situation.
+Once you have defined the signature for your function, you can start to fill out the logic of your action. **This is 
+going to be highly context-dependent.** Keep in mind that the following guidance may not be directly useful for your 
+particular situation.
 
 For creating a new model record, we generally need to:
 
@@ -166,8 +202,8 @@ For creating a new model record, we generally need to:
 3. Make the change to the database.
 4. Return the successfully created object.
 
-We're going to skip Step #2 for now, since that goes into our [validator pattern](./validation). We also might not know our 
-business rules just yet. We will be implementing #1, 3, and 4.
+We're going to skip Step #2 for now, since that goes into our [validator pattern](./validation). We also might not know
+our business rules just yet. We will be implementing #1, 3, and 4.
 
 **Step #1** involves a query on the database using our ORM, [Pop](https://gobuffalo.io/en/docs/db/getting-started).
 
@@ -182,7 +218,9 @@ if err != nil {
 }
 ```
 
-**Step #3** (remember: we're skipping Step #2) also leverages [Pop](https://gobuffalo.io/en/docs/db/mutations/) to create the new reweigh record on the database. First, we want to create a **transaction** so that we can rollback this operation (or any calling operations) if something goes wrong.
+**Step #3** (remember: we're skipping Step #2) also leverages [Pop](https://gobuffalo.io/en/docs/db/mutations/) to
+create the new reweigh record on the database. First, we want to create a **transaction** so that we can rollback 
+this operation (or any calling operations) if something goes wrong.
 
 ```go
 txErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
@@ -245,7 +283,8 @@ func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *mo
 ```
 
 :::info
-Now that the function is filled out, you'll want to refactor it by extracting each logical step into a separate, smaller, and well-named private function. We should strive to keep all functions as small as possible for readability.
+Now that the function is filled out, you'll want to refactor it by extracting each logical step into a separate, 
+smaller, and well-named private function. We should strive to keep all functions as small as possible for readability.
 
 [ApproveOrRejectServiceItem](https://github.com/transcom/mymove/blob/master/pkg/services/mto_service_item/mto_service_item_updater.go#L44-L123) is a good example of a function that performs a lot of actions, and each one is encapsulated in a separate function.
 :::
@@ -253,36 +292,55 @@ Now that the function is filled out, you'll want to refactor it by extracting ea
 
 ### Creating the interface
 
-Now we get to go back to our top-level Go file (`reweigh.go`, in this example).
+[//]: # (Now we get to go back to our top-level Go file &#40;`reweigh.go`, in this example&#41;.)
 
-Our pattern for service objects involves creating an interface type in the `services` package proper that is implemented by your new service object. One reason for this is import cycles. Another is to keep this functionality grouped together in `services` without having to put all our code in one huge pile. Finally, interfaces are the only objects in Go that can be effectively mocked, so this is advantageous for our testing.
+[//]: # ()
+[//]: # (The main thing to remember for an interface is that **it must match your function signature _exactly_**. Any deviation)
 
-The main thing to remember for an interface is that **it must match your function signature _exactly_**. Any deviation will break the relationship between these two types (the struct and the interface).
+[//]: # (will break the relationship between these two types &#40;the struct and the interface&#41;.)
 
-:::tip Interfaces vs Structs
-If you are new to Go and are still a little wobbly on the concept of "interfaces" vs "structs" remember:
+[//]: # ()
+[//]: # (:::tip Interfaces vs Structs)
 
-- **Interface** types define _functions_. They are concerned with _verbs_.
-- **Struct** types define _objects_. They are concerned with _nouns_.
-:::
+[//]: # (If you are new to Go and are still a little wobbly on the concept of "interfaces" vs "structs" remember:)
 
-Using the function signature we defined above, we can complete our interface right away.
+[//]: # ()
+[//]: # (- **Interface** types define _functions_. They are concerned with _verbs_.)
 
-```go title="./pkg/services/reweigh.go"
-package services
+[//]: # (- **Struct** types define _objects_. They are concerned with _nouns_.)
 
-import (
-	"github.com/transcom/mymove/pkg/appcontext"
-	"github.com/transcom/mymove/pkg/models"
-)
+[//]: # (:::)
 
-// ReweighCreator creates a reweigh
-type ReweighCreator interface {
-	CreateReweigh(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error)
-}
-```
+[//]: # ()
+[//]: # (Using the function signature we defined above, we can complete our interface right away.)
 
-Once you have defined this interface, we can go back to our service object's file and add a function that returns an instance of the interface.
+[//]: # ()
+[//]: # (```go title="./pkg/services/reweigh.go")
+
+[//]: # (package services)
+
+[//]: # ()
+[//]: # (import &#40;)
+
+[//]: # (	"github.com/transcom/mymove/pkg/appcontext")
+
+[//]: # (	"github.com/transcom/mymove/pkg/models")
+
+[//]: # (&#41;)
+
+[//]: # ()
+[//]: # (// ReweighCreator creates a reweigh)
+
+[//]: # (type ReweighCreator interface {)
+
+[//]: # (	CreateReweigh&#40;appCtx appcontext.AppContext, reweigh *models.Reweigh&#41; &#40;*models.Reweigh, error&#41;)
+
+[//]: # (})
+
+[//]: # (```)
+
+Once you have defined this interface, we can go back to our service object's file and add a function that returns an 
+instance of the interface.
 
 ```go title="./pkg/services/reweigh/reweigh_creator.go"
 // NewReweighCreator creates a new struct with the service dependencies and returns the interface type
@@ -291,7 +349,9 @@ func NewReweighCreator() services.ReweighCreator {
 }
 ```
 
-This function lets us keep our struct and dependencies private to this sub-package and helps us standardize the way folks use our service. By abstracting implementation and returning an interface, we are creating boundaries between functionality and implementation that allow our codebase to be more flexible.
+This function lets us keep our struct and dependencies private to this sub-package and helps us standardize the way 
+folks use our service. By abstracting implementation and returning an interface, we are creating boundaries between 
+functionality and implementation that allow our codebase to be more flexible.
 
 ### Example file
 
@@ -353,9 +413,11 @@ func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *mo
 
 ## Using Service Objects
 
-Service objects are often used in other services, but they're most commonly used by our handler functions. Handlers are the **presentation layer** of our backend, and they correspond to API endpoints.
+Service objects are often used in other services, but they're most commonly used by our handler functions. Handlers are
+the **presentation layer** of our backend, and they correspond to API endpoints.
 
-In either case, they will be used in much the same way. Service objects are often (although not necessarily) defined as a dependency in a struct:
+In either case, they will be used in much the same way. Service objects are often (although not necessarily) defined as
+a dependency in a struct:
 
 ```go {4}
 // CreateReweighHandler is the handler for the API endpoint to create a reweigh
@@ -375,7 +437,8 @@ sampleAPI.MtoShipmentCreateReweighHandler = CreateReweighHandler{
 }
 ```
 
-And finally, once the service object is instantiated, it will be used by calling the function defined in the interface type:
+And finally, once the service object is instantiated, it will be used by calling the function defined in the interface 
+type:
 
 ```go
 // Call the service object using the creator set in our handler struct (h, defined above)
@@ -390,26 +453,46 @@ createdReweigh, err := h.creator.CreateReweigh(appCtx, newReweigh)
 
 ## Testing Service Objects
 
-Testing the service object you wrote will be a typical exercise in writing unit tests in Go. Look at examples for guidance here.
+[//]: # (Testing the service object you wrote will be a typical exercise in writing unit tests in Go. Look at examples for )
 
-When service objects are dependencies, we want to be able to mock those out in our unit tests. To generate the mock types, add this line to your top-level Go file in the `services` package:
+[//]: # (guidance here.)
 
-```go title="./pkg/services/reweigh.go" {9}
-package services
+[//]: # ()
+[//]: # (When service objects are dependencies, we want to be able to mock those out in our unit tests. To generate the mock )
 
-import (
-	"github.com/transcom/mymove/pkg/appcontext"
-	"github.com/transcom/mymove/pkg/models"
-)
+[//]: # (types, add this line to your top-level Go file in the `services` package:)
 
-// ReweighCreator creates a reweigh
-//go:generate mockery --name ReweighCreator --disable-version-string
-type ReweighCreator interface {
-	CreateReweighCheck(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error)
-}
-```
+[//]: # ()
+[//]: # (```go title="./pkg/services/reweigh.go" {9})
 
-This enables the the Go `mockery` tool to generate the mock type automatically. To trigger the generation, run `make mocks_generate`.
+[//]: # (package services)
+
+[//]: # ()
+[//]: # (import &#40;)
+
+[//]: # (	"github.com/transcom/mymove/pkg/appcontext")
+
+[//]: # (	"github.com/transcom/mymove/pkg/models")
+
+[//]: # (&#41;)
+
+[//]: # ()
+[//]: # (// ReweighCreator creates a reweigh)
+
+[//]: # (//go:generate mockery --name ReweighCreator --disable-version-string)
+
+[//]: # (type ReweighCreator interface {)
+
+[//]: # (	CreateReweighCheck&#40;appCtx appcontext.AppContext, reweigh *models.Reweigh&#41; &#40;*models.Reweigh, error&#41;)
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (This enables the the Go `mockery` tool to generate the mock type automatically. To trigger the generation, run )
+
+[//]: # (`make mocks_generate`.)
 
 When you use the mock type, you need to know two things:
 
@@ -417,7 +500,9 @@ When you use the mock type, you need to know two things:
 2. What you expect to receive as output.
 
 :::danger Pointers in Mocks
-These should be defined as exactly as possible to preserve the integrity of your test. If you have to include pointer input, you must _always_ use copies of the pointer and **_never, ever use that specific pointer again_**. Otherwise, you could unknowingly change the input you expect and your test would be compromised.
+These should be defined as exactly as possible to preserve the integrity of your test. If you have to include pointer 
+input, you must _always_ use copies of the pointer and **_never, ever use that specific pointer again_**. Otherwise, 
+you could unknowingly change the input you expect and your test would be compromised.
 
 **If you are unsure about the inputs/returns for a mock, you should not use a mock.**
 :::
@@ -436,7 +521,8 @@ updater.On("UpdateReweigh",
 Note that this calls the generated mock function, _not_ the original.
 
 :::tip More mocking
-Use `MockedInterface.On()` to mock a method. Use `MockedInterface.AssertExpectations()` to validate expectations, such as parameter type and number of times the method was called.
+Use `MockedInterface.On()` to mock a method. Use `MockedInterface.AssertExpectations()` to validate expectations, such
+as parameter type and number of times the method was called.
 
 See [testify's docs](https://godoc.org/github.com/stretchr/testify/mock#Call.On) for more information.
 :::

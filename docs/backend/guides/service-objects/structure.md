@@ -12,7 +12,10 @@ All types of service objects should be in the
 structure within there will vary based on the type of service object you're working with.
 
 Our service objects are composed of an interface that is defined in the `services` package as well as a subpackage 
-that contains the implementation logic, validation logic, and tests.
+that contains the implementation logic, validation logic, and tests. This pattern is useful to avoid import cycles. 
+It also keeps a given service's functionality grouped together in a subpackage with `services` without having to put 
+all our code in one huge pile. Finally, interfaces are the only objects in Go that can be effectively mocked, so 
+this is advantageous for our testing.
 
 :::caution Stuttering
 You might notice that there's a lot of redundancy in our naming scheme. This is commonly referred to as 
@@ -133,8 +136,10 @@ In the example above, we have a few files that should be common across service o
 * The `shipment_service_test.go` file is boilerplate for setting up the testing suite for the package and should be 
   named something like `<service_object_name>_service_test.go`
 
+### Service Object Naming
+
 The rest of the files are implementing service objects. There should be a file that implements a service object and 
 the corresponding file containing the tests. So in the example above, we have a shipment creator service object 
 defined in `shipment_creator.go` and the corresponding tests in `shipment_creator_test.go`. We name these files 
 based on the main **action** that the service object will perform so in this example, it **creates** shipments, so 
-it's a **creator**.
+it's a **creator**. These names will also be reflected in the interfaces we define for the service objects.
