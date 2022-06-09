@@ -78,7 +78,7 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/backend/guides/service-objects',
+    to: '/docs/backend/guides/service-objects/overview',
     from: [
       '/docs/dev/contributing/backend/service-objects',
     ],

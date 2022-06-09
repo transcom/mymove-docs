@@ -331,7 +331,7 @@ Additional resources:
 Service Objects are an architectural design pattern we use to encapsulate business logic. Service objects allow for 
 better unit testing, re-usability, and organization of code in the MilMove project. For more information on service 
 objects, including how we use them and how to write them, please see the 
-[documentation](/docs/backend/guides/service-objects/service-objects).
+[documentation](/docs/backend/guides/service-objects/overview).
 
 ## Testing
 

@@ -166,7 +166,8 @@ For creating a new model record, we generally need to:
 3. Make the change to the database.
 4. Return the successfully created object.
 
-We're going to skip Step #2 for now, since that goes into our [validator pattern](service-validation). We also might not know our business rules just yet. We will be implementing #1, 3, and 4.
+We're going to skip Step #2 for now, since that goes into our [validator pattern](./validation). We also might not know our 
+business rules just yet. We will be implementing #1, 3, and 4.
 
 **Step #1** involves a query on the database using our ORM, [Pop](https://gobuffalo.io/en/docs/db/getting-started).
 

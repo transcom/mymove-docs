@@ -20,7 +20,7 @@ func MyFunction(appCtx appcontext.AppContext) {
 ```
 
 Search the `mymove` codebase for `appCtx appcontext.AppContext` for more usage examples. We also have examples here in 
-[Service Objects](/docs/backend/guides/service-objects/service-objects#naming-and-defining-public-service-object-functions)
+[Service Objects](/docs/backend/guides/service-objects/validation)
 and [Guide to Creating an Endpoint](/docs/api/guides/guide-to-creating-an-endpoint#steps-to-creating-a-new-handler).
 
 ## Testing with AppContext
