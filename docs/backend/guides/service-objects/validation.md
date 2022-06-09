@@ -451,7 +451,7 @@ Now we'll create the `rules.go` and `rules_test.go` files. In the `rules.go` fil
 For our example, here are a few potential rules (for the sake of brevity, we won't actually implement them all):
 
 * `ID` must be blank when creating a `Cat`.
-* Check that `Name` is not empty.
+* Check that `Name` is not empty and doesn't contain invalid characters.
 * Check that, if both `Birthday` and `GotchaDay` are defined, `Birthday` is equal to, or earlier than the `GotchaDay`.
 * Check that, if `Weight` is defined, it is greater than 0.
 
@@ -472,18 +472,6 @@ func checkID() catValidator {
 }
 
 func checkName() catValidator {
-	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
-		return nil // TODO: implement validation logic
-	})
-}
-
-func checkDates() catValidator {
-	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
-		return nil // TODO: implement validation logic
-	})
-}
-
-func checkWeight() catValidator {
 	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
 		return nil // TODO: implement validation logic
 	})
@@ -600,8 +588,8 @@ always return this at the end of our rule functions.
 
 For this one, we'll take advantage of the fact that we're using `closures`.
 
-Let's pretend that we have a service that we use to check strings to make sure they don't have invalid characters (e.
-g. strings that could be used run malicious code). Imagine the service interface looks like this:
+Let's pretend that we have a service that we use to check strings to make sure they don't have invalid characters 
+(e.g. strings that could be used run malicious code). Imagine the service interface looks like this:
 
 ```go  title="pkg/services/string_checker.go"
 package services
@@ -617,11 +605,10 @@ type StringChecker interface {
 }
 ```
 
-We haven't covered what a service object interface is supposed to look like, but the important points to know for 
-now are:
+We haven't covered how you're supposed to use service objects, but the important points to know for now are:
 
-* To use this type, we would use `services.StringChecker`
-* To mock it out in tests (which we'll see in a bit), you use `mocks.StringChecker{}`
+* To define something as using this service object's type, we would use `services.StringChecker`
+* To mock it out in tests, you use `mocks.StringChecker{}`
 * To use it in our service, we'll define a parameter like this: `stringChecker services.StringChecker`
     * We then use it like this: `err := stringChecker(appCtx, "my string to check")`
 
@@ -649,8 +636,8 @@ func checkName(stringChecker services.StringChecker) catValidator {
 ```
 
 Note how we added `stringChecker services.StringChecker` as a parameter to `checkName`, the outer function. Since 
-we're using `closures` though, we'll be able to use this `StringChecker` service in the inner function, without 
-having to change the signature of the inner function (and by extension every other validation function).
+we're using `closures`, we'll be able to use this `StringChecker` service in the inner function, without having to 
+change the signature of the inner function (and by extension every other validation function).
 
 With our newly updated function signature, we're ready to write our tests!
 
@@ -831,7 +818,7 @@ func checkName(stringChecker services.StringChecker) catValidator {
 		err := stringChecker.Validate(appCtx, newCat.Name)
 
 		if err != nil {
-			verrs.Add("Name", "Invalid characters found in string.")
+			verrs.Add("Name", err.Error())
 		}
 
 		return verrs
@@ -890,10 +877,93 @@ You'll notice that we're calling our `check<thing>` functions now, but this isn'
 aren't called until `validateCat` is called.
 
 Note that we _do_ pass in whatever parameters we use in the outer functions at this level. This is where we set those
-"dependencies."
+"dependencies".
 
 These grouping functions can be used in multiple places, and are meant for utility. They are not a hard requirement to
 implement the validator pattern, but they are helpful organizational tools.
+
+#### Final `rules.go`
+
+
+Here is the final rules file that we have:
+
+<details>
+<summary>Final `rules.go` file</summary>
+
+```go title="pkg/services/cat/rules.go"
+package cat
+
+import (
+	"github.com/gobuffalo/validate/v3"
+
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/models"
+	"github.com/transcom/mymove/pkg/services"
+)
+
+// checkID checks that newCat doesn't already have an ID if we're creating a Cat, or that it matches the original Cat
+// for updates.
+func checkID() catValidator {
+	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+		verrs := validate.NewErrors()
+
+		if originalCat == nil {
+			if newCat.ID.IsNil() {
+				return verrs
+			}
+
+			verrs.Add("ID", "ID must not be set when creating a Cat.")
+		} else {
+			if newCat.ID != originalCat.ID {
+				verrs.Add("ID", "ID for new Cat must match original Cat ID.")
+			}
+		}
+
+		return verrs
+	})
+}
+
+func checkName(stringChecker services.StringChecker) catValidator {
+	return catValidatorFunc(func(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+		verrs := validate.NewErrors()
+
+		if newCat.Name == "" {
+			verrs.Add("Name", "Cat name must be defined.")
+
+			return verrs
+		}
+
+		if originalCat != nil && newCat.Name == originalCat.Name {
+			return verrs
+		}
+
+		err := stringChecker.Validate(appCtx, newCat.Name)
+
+		if err != nil {
+			verrs.Add("Name", err.Error())
+		}
+
+		return verrs
+	})
+}
+
+// customerChecks are the rules that should run for actions taken by customers
+func customerChecks(stringChecker services.StringChecker) []catValidator {
+	return []catValidator{
+		checkID(),
+		checkName(stringChecker),
+	}
+}
+
+// officeChecks are the rules that should run for actions taken by office users
+func officeChecks() []catValidator {
+	return []catValidator{
+		checkID(),
+	}
+}
+```
+
+</details>
 
 ## Recap
 
