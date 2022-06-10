@@ -5,41 +5,6 @@ This is being converted, as it gets covered in the new page, I'll remove the cor
 
 ### Connecting the service
 
-Once you have finished creating the `validateModel` function and defining your rules, you are ready to connect your 
-service object to the validation. First, go to your service object's struct and add a field for the validators:
-
-```go title="./pkg/services/reweigh/reweigh_creator.go"
-type reweighCreator struct {
-    checks []validator // a slice of validator functions
-}
-```
-
-Now we're going to set the validators in the `New<ServiceObject>` function. To start with, we'll set the basic set of
-checks:
-
-```go title="./pkg/services/reweigh/reweigh_creator.go" {3}
-// NewReweighCreator creates a new struct with the service dependencies and returns the interface type
-func NewReweighCreator() services.ReweighCreator {
-    return &reweighCreator{basicChecks()}
-}
-```
-
-We don't allow the user to pass in the checks so that way we can dictate how our service is validated across the entire
-app. To allow the caller to use the Prime validator functions instead, we'll make a new `New<ServiceObject>` function 
-to handle it:
-
-```go title="./pkg/services/reweigh/reweigh_creator.go"
-// NewPrimeReweighCreator creates a new ReweighCreator with Prime-specific validation
-func NewPrimeReweighCreator(checker services.MoveTaskOrderChecker) services.ReweighCreator {
-    return &reweighCreator{primeChecks(checker)}
-}
-```
-
-Using this strategy, we can add however many `New<Validation><ServiceObject>` functions as we need to. They will all 
-return the same service interface with different validators. This way we don't have to muddle with our interface 
-definition, which is great because every modification to an interface has to be reproduced with every struct that 
-implements that interface. Creating new initializer functions is the least invasive way to change up our validation.
-
 Finally, we have to call the `validateModel` function in our service method: 
 
 ```go title="./pkg/services/reweigh/reweigh_creator.go"

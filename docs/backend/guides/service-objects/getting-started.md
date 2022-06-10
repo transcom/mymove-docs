@@ -48,4 +48,4 @@ create cats, and one to update cats. We'll go through the following steps:
 
 1. [Set up service subpackage and interface](./set-up-service-subpackage-and-interface)
 2. [Set up validation pattern](./validation)
-3. [Create our service object] 
+3. [Implement the service objects](./implementation) 
