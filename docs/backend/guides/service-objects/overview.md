@@ -87,20 +87,6 @@ pages, I'll remove the corresponding sections below.
 
 #### Implementation
 
-Once you have defined the signature for your function, you can start to fill out the logic of your action. **This is 
-going to be highly context-dependent.** Keep in mind that the following guidance may not be directly useful for your 
-particular situation.
-
-For creating a new model record, we generally need to:
-
-1. Find any related objects in the database. For a reweigh, we'll need to verify that the shipment exists.
-2. Validate the input data against our business rules.
-3. Make the change to the database.
-4. Return the successfully created object.
-
-We're going to skip Step #2 for now, since that goes into our [validator pattern](./validation). We also might not know
-our business rules just yet. We will be implementing #1, 3, and 4.
-
 **Step #1** involves a query on the database using our ORM, [Pop](https://gobuffalo.io/en/docs/db/getting-started).
 
 ```go
@@ -114,75 +100,12 @@ if err != nil {
 }
 ```
 
-**Step #3** (remember: we're skipping Step #2) also leverages [Pop](https://gobuffalo.io/en/docs/db/mutations/) to
-create the new reweigh record on the database. First, we want to create a **transaction** so that we can rollback 
-this operation (or any calling operations) if something goes wrong.
-
-```go
-txErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
-    // Our database modification will go in here
-    // We also only need to return an error because our reweigh is a pointer and will be updated by the Pop method
-    return nil
-})
-if txErr != nil {
-    return nil, txErr
-}
-```
-
-Now lets fill in the creation code, making sure to use the transaction context:
-
-```go
-verrs, err := txnCtx.DB().ValidateAndCreate(reweigh)
-// Check for validation errors encountered before Pop created the reweigh
-if verrs != nil && verrs.HasAny() {
-    // Return our standard InvalidInputError type
-    return services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
-} else if err != nil {
-    // If the error is something else (this is unexpected), we create a QueryError
-    return services.NewQueryError("Reweigh", err, "")
-}
-```
-
-For **Step #4**, we simply return our new reweigh! Putting all of the above code together, we'll get:
-
-```go title="./pkg/services/reweigh/reweigh_creator.go"
-// CreateReweigh creates a new reweigh for a shipment. It is a method on the reweighCreator struct.
-func (f *reweighCreator) CreateReweigh(appCtx appcontext.AppContext, reweigh *models.Reweigh) (*models.Reweigh, error) {
-    // Set up an empty model to receive any data found by Pop
-    mtoShipment := &models.MTOShipment{}
-    // Find the shipment using the ShipmentID provided in our reweigh input
-    err := appCtx.DB().Find(mtoShipment, reweigh.ShipmentID)
-    if err != nil {
-        // Return our standard NotFoundError type if there's an error
-        return nil, services.NewNotFoundError(reweigh.ShipmentID, "while looking for MTOShipment")
-    }
-
-    txErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
-        verrs, err := txnCtx.DB().ValidateAndCreate(reweigh)
-        // Check for validation errors encountered before Pop created the reweigh
-        if verrs != nil && verrs.HasAny() {
-            // Return our standard InvalidInputError type
-            return services.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the reweigh.")
-        } else if err != nil {
-            // If the error is something else (this is unexpected), we create a QueryError
-            return services.NewQueryError("Reweigh", err, "")
-        }
-        return nil
-    })
-    if txErr != nil {
-        return nil, txErr
-    }
-
-    // highlight-next-line
-    return reweigh, nil
-}
-```
-
 :::info
 Now that the function is filled out, you'll want to refactor it by extracting each logical step into a separate, 
 smaller, and well-named private function. We should strive to keep all functions as small as possible for readability.
 
-[ApproveOrRejectServiceItem](https://github.com/transcom/mymove/blob/master/pkg/services/mto_service_item/mto_service_item_updater.go#L44-L123) is a good example of a function that performs a lot of actions, and each one is encapsulated in a separate function.
+[ApproveOrRejectServiceItem](https://github.com/transcom/mymove/blob/master/pkg/services/mto_service_item/mto_service_item_updater.go#L44-L123)
+is a good example of a function that performs a lot of actions, and each one is encapsulated in a separate function.
 :::
 
 ## Using Service Objects

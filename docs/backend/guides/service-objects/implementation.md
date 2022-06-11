@@ -79,7 +79,7 @@ type catCreator struct {
 }
 
 // CreateCat creates a cat
-func (c *catCreator) CreateCat(appCtx appcontext.AppContext, cat *models.Cat) (*models.Cat, error) {
+func (c *catCreator) CreateCat(appCtx appcontext.AppContext, cat models.Cat) (*models.Cat, error) {
 	return nil, nil  // TODO: implement logic
 }
 ```
@@ -125,7 +125,7 @@ func NewOfficeCatCreator() services.CatCreator {
 }
 
 // CreateCat creates a cat
-func (c *catCreator) CreateCat(appCtx appcontext.AppContext, cat *models.Cat) (*models.Cat, error) {
+func (c *catCreator) CreateCat(appCtx appcontext.AppContext, cat models.Cat) (*models.Cat, error) {
 	return nil, nil // TODO: implement logic
 }
 ```
@@ -144,3 +144,333 @@ implements that interface. Creating new initializer functions is the least invas
 These functions also let us keep our `struct` and dependencies private to this subpackage and helps us standardize 
 the way folks use our service. By abstracting implementation and returning an interface, we are creating boundaries 
 between functionality and implementation that allow our codebase to be more flexible.
+
+### Implementing the Creator
+
+Now that everything is set up and wired up, we can focus on the implementation details. **This is going to be highly 
+context-dependent.** Keep in mind that the following guidance may m.
+
+For creating a new model record, we generally need to:
+
+1. Find any related objects in the database.
+    1. Immediately we have a step that isn't applicable to the example model we're working with. Our `Cat` isn't 
+       tied to anything else. But, if you were working with say, creating a shipment, you'd need to find the move. 
+       We'll see an example of finding data we need when we work on the `Cat` updater though.
+1. Validate the input data against our business rules.
+1. Start a transaction and make the change to the database.
+1. Return the successfully created object.
+
+#### Tests for the Creator
+
+Knowing the general actions we'll take, we can write some tests for our creator, so we know we've set it up correctly.
+
+Test cases we'll want:
+
+* Validation error with the input data
+* Error with creating the `Cat`
+* Successfully creating a `Cat`
+
+<details>
+<summary>Tests for `CreateCat`</summary>
+
+```go title="pkg/services/cat/cat_creator_test.go"
+package cat
+
+import (
+	"github.com/gofrs/uuid"
+	"github.com/transcom/mymove/pkg/apperror"
+	"github.com/transcom/mymove/pkg/models"
+)
+
+func (suite CatSuite) TestCreateCat() {
+	// Only going to use one of our creators since the only difference between them is the rules they use for
+	// validation. Since the rules have their own tests and aren't the focus of these tests, no point in testing them.
+
+	suite.Run("Returns an InvalidInputError if there's an issue with the input data", func() {
+		badCat := models.Cat{
+			ID: uuid.Must(uuid.NewV4()),
+		}
+
+		creator := NewOfficeCatCreator()
+
+		newCat, err := creator.CreateCat(suite.AppContextForTest(), badCat)
+
+		suite.Nil(newCat)
+
+		if suite.Error(err) {
+			suite.IsType(apperror.InvalidInputError{}, err)
+			suite.Equal(err.Error(), "Invalid input found while validating the cat.")
+		}
+	})
+
+	suite.Run("Returns a transaction error if one is raised", func() {
+		// Easiest way to trigger this is by trying to store a cat with the same ID. We'll also need to skip the
+		// validation for the first one so we'll create it directly
+		cat := models.Cat{
+			Name: "Fluffy",
+		}
+
+		appCtx := suite.AppContextForTest()
+
+		verrs, err := appCtx.DB().ValidateAndCreate(&cat)
+
+		suite.NoVerrs(verrs)
+		suite.Nil(err)
+		suite.NotNil(cat.ID)
+
+		creator := catCreator{}
+
+		newCat, createErr := creator.CreateCat(appCtx, cat)
+
+		suite.Nil(newCat)
+
+		if suite.Error(createErr) {
+			suite.IsType(apperror.QueryError{}, createErr)
+		}
+	})
+
+	suite.Run("Can successfully create a cat", func() {
+		cat := models.Cat{
+			Name: "Fluffy",
+		}
+
+		creator := NewOfficeCatCreator()
+
+		newCat, err := creator.CreateCat(suite.AppContextForTest(), cat)
+
+		suite.Nil(err)
+
+		if suite.NotNil(newCat) {
+			suite.NotNil(newCat.ID)
+		}
+	})
+}
+```
+
+</details>
+
+If we run those tests, they should all fail, but soon we'll get them passing!
+
+#### Validating Creator Input
+
+We can finally use the `validateCat` function we wrote in the 
+[validation section](validation#create-the-validatemodel-function):
+
+```go title="pkg/services/cat/cat_creator.go"
+package cat
+
+import (
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/models"
+	"github.com/transcom/mymove/pkg/services"
+)
+
+// catCreator is the concrete struct implementing the services.CatCreator interface
+type catCreator struct {
+	checks []catValidator
+}
+
+// NewCustomerCatCreator creates a new catCreator struct with the checks it needs for a customer and the service
+// dependencies the checks need.
+func NewCustomerCatCreator(stringChecker services.StringChecker) services.CatCreator {
+	return &catCreator{
+		checks: customerChecks(stringChecker),
+	}
+}
+
+// NewOfficeCatCreator creates a new catCreator struct with the checks it needs for an office user
+func NewOfficeCatCreator() services.CatCreator {
+	return &catCreator{
+		checks: officeChecks(),
+	}
+}
+
+// CreateCat creates a cat
+func (c *catCreator) CreateCat(appCtx appcontext.AppContext, cat models.Cat) (*models.Cat, error) {
+    // highlight-start
+	err := validateCat(appCtx, cat, nil, c.checks...)
+
+	if err != nil {
+		return nil, err
+	}
+    // highlight-end
+
+	return nil, nil  // TODO: Finish implementing logic
+}
+```
+
+You can see that we pass the `appCtx` and `cat` along to `validateCat` for the first two args. We then pass `nil` 
+for the third arg since we're creating a `Cat` so there is no pre-existing `Cat`. 
+
+The final bit is to pass the checks that we want to use. Notice how we use `c.checks...` to pass the checks. This is 
+because the `checks` will contain the correct checks based on how the `catCreator` was initialized (
+`NewCustomerCatCreator` vs `NewOfficeCatCreator`), and the `...` part is because it's a variadic function (more info in 
+[validation resources](validation#resources)).
+
+The final bit for this part is to check for errors and return early if we have any.
+
+#### Creating the Cat
+
+Next we'll start a transaction so that we can roll back the operation if there are issues. Within the transaction, 
+we'll use [Pop](https://gobuffalo.io/en/docs/db/mutations/) to create the `Cat`.
+
+```go title="pkg/services/cat/cat_creator.go"
+package cat
+
+import (
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/models"
+	"github.com/transcom/mymove/pkg/services"
+)
+
+// Omitting the other parts for ease of reading
+
+// CreateCat creates a cat
+func (c *catCreator) CreateCat(appCtx appcontext.AppContext, cat models.Cat) (*models.Cat, error) {
+	err := validateCat(appCtx, cat, nil, c.checks...)
+
+	if err != nil {
+		return nil, err
+	}
+
+    // highlight-start
+	txnErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
+		// TODO: Implement creation logic
+		return nil
+	})
+
+	if txnErr != nil {
+		return nil, txnErr
+	}
+    // highlight-end
+    
+    return nil, nil  // TODO: Finish implementing logic
+}
+```
+
+Here we can see we start a transaction which can return an error, so we need to catch that, check it, and if not 
+`nil`, return it.
+
+Within the transaction, it's important to use the `txnCtx` version of `appcontext.AppContext`. This ensures that if 
+we are within a larger transaction (e.g. an orchestrator service object is calling several service objects that 
+create/update data), we can see the other changes that have been made as part of the transaction and vice versa.
+
+Now we fill in the creation logic:
+
+```go title="pkg/services/cat/cat_creator.go"
+package cat
+
+import (
+	"github.com/gofrs/uuid"
+
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/apperror"
+	"github.com/transcom/mymove/pkg/models"
+	"github.com/transcom/mymove/pkg/services"
+)
+
+// Omitting the other parts for ease of reading
+
+// CreateCat creates a cat
+func (c *catCreator) CreateCat(appCtx appcontext.AppContext, cat models.Cat) (*models.Cat, error) {
+	err := validateCat(appCtx, cat, nil, c.checks...)
+
+	if err != nil {
+		return nil, err
+	}
+
+	txnErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
+	    // highlight-start
+		// This will make the changes directly (if successful) using the pointer so we can just use `cat` later on.
+		verrs, err := txnCtx.DB().ValidateAndCreate(&cat)
+
+		// Check validation errors.
+		if verrs != nil && verrs.HasAny() {
+			return apperror.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the Cat.")
+		} else if err != nil {
+			// If the error is something else (this is unexpected), we create a QueryError
+			return apperror.NewQueryError("Cat", err, "")
+		}
+		
+		return nil
+        // highlight-end
+	})
+
+	if txnErr != nil {
+		return nil, txnErr
+	}
+    
+    return nil, nil  // TODO: Finish implementing logic
+}
+```
+
+We use `txnCtx.DB().ValidateAndCreate` to actually create the `Cat`, and check the validation errors and regular 
+error that we can get back. We have a pattern of converting unexpected (non-validation) errors into a 
+`apperror.QueryError` type, but we don't want to override the error msg, hence the third arg being an empty string.
+
+#### Final `cat_creator.go`
+
+The last thing to do is return a pointer to the newly created `Cat`, which gives us this final version:
+
+```go title="pkg/services/cat/cat_creator.go"
+package cat
+
+import (
+	"github.com/gofrs/uuid"
+
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/apperror"
+	"github.com/transcom/mymove/pkg/models"
+	"github.com/transcom/mymove/pkg/services"
+)
+
+// catCreator is the concrete struct implementing the services.CatCreator interface
+type catCreator struct {
+	checks []catValidator
+}
+
+// NewCustomerCatCreator creates a new catCreator struct with the checks it needs for a customer and the service
+// dependencies the checks need.
+func NewCustomerCatCreator(stringChecker services.StringChecker) services.CatCreator {
+	return &catCreator{
+		checks: customerChecks(stringChecker),
+	}
+}
+
+// NewOfficeCatCreator creates a new catCreator struct with the checks it needs for an office user
+func NewOfficeCatCreator() services.CatCreator {
+	return &catCreator{
+		checks: officeChecks(),
+	}
+}
+
+// CreateCat creates a cat
+func (c *catCreator) CreateCat(appCtx appcontext.AppContext, cat models.Cat) (*models.Cat, error) {
+	err := validateCat(appCtx, cat, nil, c.checks...)
+
+	if err != nil {
+		return nil, err
+	}
+
+	txnErr := appCtx.NewTransaction(func(txnCtx appcontext.AppContext) error {
+		// This will make the changes directly (if successful) using the pointer so we can just use `cat` later on.
+		verrs, err := txnCtx.DB().ValidateAndCreate(&cat)
+
+		// Check validation errors.
+		if verrs != nil && verrs.HasAny() {
+			return apperror.NewInvalidInputError(uuid.Nil, err, verrs, "Invalid input found while creating the Cat.")
+		} else if err != nil {
+			// If the error is something else (this is unexpected), we create a QueryError
+			return apperror.NewQueryError("Cat", err, "")
+		}
+
+		return nil
+	})
+
+	if txnErr != nil {
+		return nil, txnErr
+	}
+
+	return &cat, nil
+}
+```

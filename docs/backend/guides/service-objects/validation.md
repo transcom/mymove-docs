@@ -206,7 +206,7 @@ signature will look similar to the signatures we used earlier, with the addition
 ```go title="pkg/services/cat/validation.go"
 package cat
 
-// Previous definitions ommitted to focus on the new part for now
+// Previous definitions omitted to focus on the new part for now
 
 // validateCat runs a cat through the checks that are passed in.
 func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
@@ -226,7 +226,7 @@ Let's start defining the logic for our function by adding code to loop through o
 ```go title="pkg/services/cat/validation.go"
 package cat
 
-// Previous definitions ommitted to focus on the new part for now
+// Previous definitions omitted to focus on the new part for now
 
 // validateCat runs a cat through the checks that are passed in.
 func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
@@ -263,7 +263,7 @@ Taking those guidelines into account, we end up with this `validateCat` function
 ```go title="pkg/services/cat/validation.go"
 package cat
 
-// Previous definitions ommitted to focus on the new part for now
+// Previous definitions omitted to focus on the new part for now
 
 // validateCat runs a cat through the checks that are passed in.
 func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
@@ -632,7 +632,7 @@ func checkName(stringChecker services.StringChecker) catValidator {
 	})
 }
 
-// other check functions ommitted to focus on checkName
+// other check functions omitted to focus on checkName
 ```
 
 Note how we added `stringChecker services.StringChecker` as a parameter to `checkName`, the outer function. Since 
@@ -659,7 +659,7 @@ import (
 	"github.com/transcom/mymove/pkg/services/mocks"
 )
 
-// TestCheckID tests ommitted for clarity
+// TestCheckID tests omitted for clarity
 
 func (suite *CatSuite) TestCheckName() {
 	getMockStringChecker := func(err error) mocks.StringChecker {
@@ -825,7 +825,7 @@ func checkName(stringChecker services.StringChecker) catValidator {
 	})
 }
 
-// other check functions ommitted to focus on checkName
+// other check functions omitted to focus on checkName
 ```
 
 As stated earlier, we're able to pass in the `services.StringChecker` in to the outer function and then use it in 

@@ -123,12 +123,12 @@ import (
 
 // CatCreator Interface for the service object that creates a cat
 type CatCreator interface {
-	CreateCat(appCtx appcontext.AppContext, cat *models.Cat) (*models.Cat, error)
+	CreateCat(appCtx appcontext.AppContext, cat models.Cat) (*models.Cat, error)
 }
 
 // CatUpdater Interface for the service object that updates a cat
 type CatUpdater interface {
-	UpdateCat(appCtx appcontext.AppContext, cat *models.Cat, eTag string) (*models.Cat, error)
+	UpdateCat(appCtx appcontext.AppContext, cat models.Cat, eTag string) (*models.Cat, error)
 }
 ```
 
@@ -151,13 +151,13 @@ import (
 // CatCreator Interface for the service object that creates a cat
 //go:generate mockery --name CatCreator --disable-version-string
 type CatCreator interface {
-	CreateCat(appCtx appcontext.AppContext, cat *models.Cat) (*models.Cat, error)
+	CreateCat(appCtx appcontext.AppContext, cat models.Cat) (*models.Cat, error)
 }
 
 // CatUpdater Interface for the service object that updates a cat
 //go:generate mockery --name CatUpdater --disable-version-string
 type CatUpdater interface {
-	UpdateCat(appCtx appcontext.AppContext, cat *models.Cat, eTag string) (*models.Cat, error)
+	UpdateCat(appCtx appcontext.AppContext, cat models.Cat, eTag string) (*models.Cat, error)
 }
 ```
 
