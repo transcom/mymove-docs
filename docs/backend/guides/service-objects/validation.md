@@ -45,8 +45,8 @@ mymove/
 ├── pkg/
 │   ├── services/
 │   │   ├── ...
-│   │   ├── cat/
-│   │   │   ├── cat_service_test.go
+│   │   ├── pet/
+│   │   │   ├── pet_service_test.go
 │   │   │   ├── validation.go       <- new file
 │   │   │   ├── validation_test.go  <- new file
 │   │   ├── ...
@@ -57,15 +57,15 @@ mymove/
 Now we'll define an interface type that all of our validators will implement. This type will be private to our 
 service package and have one method, `Validate()`:
 
-```go title="pkg/services/cat/validation.go"
-package cat
+```go title="pkg/services/pet/validation.go"
+package pet
 
 import (
 	"github.com/transcom/mymove/pkg/appcontext"
 )
 
-// catValidator defines the interface for checking business rules for a cat
-type catValidator interface {
+// petValidator defines the interface for checking business rules for a pet
+type petValidator interface {
 	Validate(appCtx appcontext.AppContext) error
 }
 ```
@@ -79,38 +79,38 @@ This will change on a case-by-case basis, but, at a minimum, you will generally 
 
 ##### Variations of `Validate` Signature
 
-Since we're creating service objects for creating and updating cats, we know we'll need an argument that is of type 
-`models.Cat`. Unfortunately, we don't have a set standard for how that argument should be used, nor how to handle 
+Since we're creating service objects for creating and updating pets, we know we'll need an argument that is of type 
+`models.Pet`. Unfortunately, we don't have a set standard for how that argument should be used, nor how to handle 
 the updates. We'll talk about a couple of the ways you'll find in existing code, but then pick one to use for the 
 purposes of these docs.
 
 1. Use `new` and `original` models. Looks something like this:
 
-   ```go title="pkg/services/cat/validation.go"
-   package cat
+   ```go title="pkg/services/pet/validation.go"
+   package pet
 
    import (
        "github.com/transcom/mymove/pkg/appcontext"
        "github.com/transcom/mymove/pkg/models"
    )
    
-   // catValidator defines the interface for checking business rules for a cat
-   type catValidator interface {
-       // Validate The newCat is assumed to be required, so that is a value type.
-       // The originalCat is optional, so it's a pointer type.
-       Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error
+   // petValidator defines the interface for checking business rules for a pet
+   type petValidator interface {
+       // Validate The newPet is assumed to be required, so that is a value type.
+       // The originalPet is optional, so it's a pointer type.
+       Validate(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error
    }
    ```
 
-   For this pattern, the following explains what `newCat` (a.k.a. the `base`) and `originalCat` would contain for
+   For this pattern, the following explains what `newPet` (a.k.a. the `base`) and `originalPet` would contain for
    `create` vs `update`:
 
-    1. `create`: `newCat` would contain the information for the new `Cat`, while `originalCat` would be `nil`.
+    1. `create`: `newPet` would contain the information for the new `Pet`, while `originalPet` would be `nil`.
 
-    1. `update`: `newCat` would contain the requested _final_ version of the `Cat`, while `originalCat` would
-       contain the original version of the cat. The _final_ version of the `Cat` being the version that would be
-       saved to the database, so the original `Cat` with the requested changes made to it already, in other words,
-       a merged version of the `Cat`.
+    1. `update`: `newPet` would contain the requested _final_ version of the `Pet`, while `originalPet` would
+       contain the original version of the pet. The _final_ version of the `Pet` is the version that would be
+       saved to the database, meaning the original `Pet` with the requested changes made to it already, in other words,
+       a merged version of the `Pet`.
 
    Pros:
 
@@ -124,28 +124,28 @@ purposes of these docs.
 1. Use `base` and `delta` models. Looks something like this (there are variations that flip which comes first, and 
    what they're called):
 
-   ```go title="pkg/services/cat/validation.go"
-    package cat
+   ```go title="pkg/services/pet/validation.go"
+    package pet
 
     import (
         "github.com/transcom/mymove/pkg/appcontext"
         "github.com/transcom/mymove/pkg/models"
     )
 
-    // catValidator defines the interface for checking business rules for a cat
-    type catValidator interface {
-        // Validate The base Cat is assumed to be required, so that is a value type.
+    // petValidator defines the interface for checking business rules for a pet
+    type petValidator interface {
+        // Validate The base Pet is assumed to be required, so that is a value type.
         // The delta is optional, so it's a pointer type
-        Validate(appCtx appcontext.AppContext, cat models.Cat, delta *models.Cat) error
+        Validate(appCtx appcontext.AppContext, pet models.Pet, delta *models.Pet) error
     }
    ```
    
-   For this pattern, the following explains what `cat` (a.k.a. the `base`) and `delta` would contain for `create` vs 
+   For this pattern, the following explains what `pet` (a.k.a. the `base`) and `delta` would contain for `create` vs 
    `update`:
 
-   1. `create`: `cat` would contain the information for the new `Cat`, while `delta` would be `nil`.
+   1. `create`: `pet` would contain the information for the new `Pet`, while `delta` would be `nil`.
     
-   1. `update`: `cat` would contain the original `Cat`, while `delta` would contain the _changes_ requested.
+   1. `update`: `pet` would contain the original `Pet`, while `delta` would contain the _changes_ requested.
 
    Pros:
     
@@ -157,7 +157,7 @@ purposes of these docs.
    * Not validating the version of the model that would be saved to the database, meaning there's potentially room 
      for errors to be introduced when the original model gets the requested changes applied.
 
-For the purposes of these docs, we'll use the first pattern shown, using the merged and original versions of the `Cat`.
+For the purposes of these docs, we'll use the first pattern shown, using the merged and original versions of the `Pet`.
 
 ##### Implementing the `Validate` Interface
 
@@ -165,32 +165,32 @@ Now that we've settled on a signature, we can also add the type that will implem
 type a function type, which will enable us to write our rules using [closures](https://gobyexample.com/closures). We 
 can define this new type in the `validation.go` file, under the validator interface we defined in the previous section.
 
-```go title="pkg/services/cat/validation.go"
-package cat
+```go title="pkg/services/pet/validation.go"
+package pet
 
 import (
     "github.com/transcom/mymove/pkg/appcontext"
     "github.com/transcom/mymove/pkg/models"
 )
 
-// catValidator defines the interface for checking business rules for a cat
-type catValidator interface {
-    // Validate The newCat is assumed to be required, so that is a value type.
-    // The originalCat is optional, so it's a pointer type.
-    Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error
+// petValidator defines the interface for checking business rules for a pet
+type petValidator interface {
+    // Validate The newPet is assumed to be required, so that is a value type.
+    // The originalPet is optional, so it's a pointer type.
+    Validate(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error
 }
 
-// catValidatorFunc is an adapter that will convert a function into an implementation of catValidator
-type catValidatorFunc func(appcontext.AppContext, models.Cat, *models.Cat) error
+// petValidatorFunc is an adapter that will convert a function into an implementation of petValidator
+type petValidatorFunc func(appcontext.AppContext, models.Pet, *models.Pet) error
 
-// Validate fulfills the catValidator interface
-func (fn catValidatorFunc) Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
-    return fn(appCtx, newCat, originalCat)
+// Validate fulfills the petValidator interface
+func (fn petValidatorFunc) Validate(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
+    return fn(appCtx, newPet, originalPet)
 }
 ```
 
 Note that all of these function signatures are the exact same. **They must stay the same** so that these types implement
-the `catValidator` interface defined above. Such is the nature of interfaces types. It might feel inconvenient to repeat
+the `petValidator` interface defined above. Such is the nature of interfaces types. It might feel inconvenient to repeat
 this signature over and over, but at least it forces us to be explicit about our input.
 
 #### Create the `validate<Model>` Function
@@ -199,17 +199,17 @@ Now we're going to define the function that will take in the necessary data and 
 should run, run through all the validation functions, and return an error as appropriate. It will be called from the 
 service objects, meaning it will be the access point for all our validation.
 
-We'll name this function based on what you are validating, so in our case, we'll name it `validateCat`. Its 
+We'll name this function based on what you are validating, so in our case, we'll name it `validatePet`. Its 
 signature will look similar to the signatures we used earlier, with the addition of a new parameter called `checks`:
 
 
-```go title="pkg/services/cat/validation.go"
-package cat
+```go title="pkg/services/pet/validation.go"
+package pet
 
 // Previous definitions omitted to focus on the new part for now
 
-// validateCat runs a cat through the checks that are passed in.
-func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
+// validatePet runs a pet through the checks that are passed in.
+func validatePet(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet, checks ...petValidator) error {
 	// TODO: Implement validation logic...
 
 	return nil
@@ -223,15 +223,15 @@ granting us flexibility in how we validate services, for example, using differen
 Let's start defining the logic for our function by adding code to loop through our validators, calling the 
 `Validate` method on each of them: 
 
-```go title="pkg/services/cat/validation.go"
-package cat
+```go title="pkg/services/pet/validation.go"
+package pet
 
 // Previous definitions omitted to focus on the new part for now
 
-// validateCat runs a cat through the checks that are passed in.
-func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
+// validatePet runs a pet through the checks that are passed in.
+func validatePet(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet, checks ...petValidator) error {
 	for _, check := range checks {
-		if err := check.Validate(appCtx, newCat, originalCat); err != nil {
+		if err := check.Validate(appCtx, newPet, originalPet); err != nil {
 			// TODO: Handle errors
 		}
 	}
@@ -258,19 +258,19 @@ checking the rest of the validators.
 
 If it is _not_ a validation error, we stop everything and return it right away.
 
-Taking those guidelines into account, we end up with this `validateCat` function:
+Taking those guidelines into account, we end up with this `validatePet` function:
 
-```go title="pkg/services/cat/validation.go"
-package cat
+```go title="pkg/services/pet/validation.go"
+package pet
 
 // Previous definitions omitted to focus on the new part for now
 
-// validateCat runs a cat through the checks that are passed in.
-func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
+// validatePet runs a pet through the checks that are passed in.
+func validatePet(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet, checks ...petValidator) error {
 	verrs := validate.NewErrors()
 
 	for _, check := range checks {
-		if err := check.Validate(appCtx, newCat, originalCat); err != nil {
+		if err := check.Validate(appCtx, newPet, originalPet); err != nil {
 			switch e := err.(type) {
 			case *validate.Errors:
 				// Accumulate all validation errors
@@ -283,7 +283,7 @@ func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *m
 	}
 
 	if verrs.HasAny() {
-		return apperror.NewInvalidInputError(newCat.ID, nil, verrs, "Invalid input found while validating the cat.")
+		return apperror.NewInvalidInputError(newPet.ID, nil, verrs, "Invalid input found while validating the pet.")
 	}
 
 	return nil
@@ -302,8 +302,8 @@ function signatures):
 <details>
 <summary>Sample `validation_test.go`</summary>
 
-```go title="pkg/services/cat/validation_test.go"
-package cat
+```go title="pkg/services/pet/validation_test.go"
+package pet
 
 import (
 	"github.com/gobuffalo/validate/v3"
@@ -314,19 +314,19 @@ import (
 	"github.com/transcom/mymove/pkg/models"
 )
 
-func (suite CatSuite) TestCatValidatorFuncValidate() {
+func (suite PetSuite) TestPetValidatorFuncValidate() {
 	suite.Run("Calling Validate runs validation function with no errors", func() {
-		validator := catValidatorFunc(func(_ appcontext.AppContext, _ models.Cat, _ *models.Cat) error {
+		validator := petValidatorFunc(func(_ appcontext.AppContext, _ models.Pet, _ *models.Pet) error {
 			return nil
 		})
 
-		err := validator.Validate(suite.AppContextForTest(), models.Cat{}, nil)
+		err := validator.Validate(suite.AppContextForTest(), models.Pet{}, nil)
 
 		suite.NoError(err)
 	})
 
 	suite.Run("Calling Validate runs validation function with errors", func() {
-		validator := catValidatorFunc(func(_ appcontext.AppContext, _ models.Cat, _ *models.Cat) error {
+		validator := petValidatorFunc(func(_ appcontext.AppContext, _ models.Pet, _ *models.Pet) error {
 			verrs := validate.NewErrors()
 
 			verrs.Add("ID", "fake error")
@@ -334,26 +334,26 @@ func (suite CatSuite) TestCatValidatorFuncValidate() {
 			return verrs
 		})
 
-		err := validator.Validate(suite.AppContextForTest(), models.Cat{}, nil)
+		err := validator.Validate(suite.AppContextForTest(), models.Pet{}, nil)
 
 		suite.Error(err)
 		suite.Contains(err.Error(), "fake error")
 	})
 }
 
-func (suite CatSuite) TestValidateCat() {
+func (suite PetSuite) TestValidatePet() {
 	suite.Run("Runs validation and returns nil when there are no errors", func() {
-		checkAlwaysReturnNil := catValidatorFunc(func(_ appcontext.AppContext, _ models.Cat, _ *models.Cat) error {
+		checkAlwaysReturnNil := petValidatorFunc(func(_ appcontext.AppContext, _ models.Pet, _ *models.Pet) error {
 			return nil
 		})
 
-		err := validateCat(suite.AppContextForTest(), models.Cat{}, nil, []catValidator{checkAlwaysReturnNil}...)
+		err := validatePet(suite.AppContextForTest(), models.Pet{}, nil, []petValidator{checkAlwaysReturnNil}...)
 
 		suite.NoError(err)
 	})
 
 	suite.Run("Runs validation and returns input errors", func() {
-		checkAlwaysReturnValidationErr := catValidatorFunc(func(_ appcontext.AppContext, _ models.Cat, _ *models.Cat) error {
+		checkAlwaysReturnValidationErr := petValidatorFunc(func(_ appcontext.AppContext, _ models.Pet, _ *models.Pet) error {
 			verrs := validate.NewErrors()
 
 			verrs.Add("ID", "fake error")
@@ -361,23 +361,23 @@ func (suite CatSuite) TestValidateCat() {
 			return verrs
 		})
 
-		err := validateCat(suite.AppContextForTest(), models.Cat{}, nil, []catValidator{checkAlwaysReturnValidationErr}...)
+		err := validatePet(suite.AppContextForTest(), models.Pet{}, nil, []petValidator{checkAlwaysReturnValidationErr}...)
 
 		suite.Error(err)
 		suite.IsType(apperror.InvalidInputError{}, err)
-		suite.Contains(err.Error(), "Invalid input found while validating the cat.")
+		suite.Contains(err.Error(), "Invalid input found while validating the pet.")
 	})
 
 	suite.Run("Runs validation and returns other errors", func() {
-		checkAlwaysReturnOtherError := catValidatorFunc(func(_ appcontext.AppContext, _ models.Cat, _ *models.Cat) error {
-			return apperror.NewNotFoundError(uuid.Must(uuid.NewV4()), "Cat not found.")
+		checkAlwaysReturnOtherError := petValidatorFunc(func(_ appcontext.AppContext, _ models.Pet, _ *models.Pet) error {
+			return apperror.NewNotFoundError(uuid.Must(uuid.NewV4()), "Pet not found.")
 		})
 
-		err := validateCat(suite.AppContextForTest(), models.Cat{}, nil, []catValidator{checkAlwaysReturnOtherError}...)
+		err := validatePet(suite.AppContextForTest(), models.Pet{}, nil, []petValidator{checkAlwaysReturnOtherError}...)
 
 		suite.Error(err)
 		suite.IsType(apperror.NotFoundError{}, err)
-		suite.Contains(err.Error(), "Cat not found.")
+		suite.Contains(err.Error(), "Pet not found.")
 	})
 }
 ```
@@ -390,8 +390,8 @@ Just to recap, here is what our final `validation.go` file looks like:
 <details>
 <summary>Final `validation.go`</summary>
 
-```go title="pkg/services/cat/validation.go"
-package cat
+```go title="pkg/services/pet/validation.go"
+package pet
 
 import (
 	"github.com/gobuffalo/validate/v3"
@@ -401,27 +401,27 @@ import (
 	"github.com/transcom/mymove/pkg/models"
 )
 
-// catValidator defines the interface for checking business rules for a cat
-type catValidator interface {
-	// Validate The newCat is assumed to be required, so that is a value type.
-	// The originalCat is optional, so it's a pointer type.
-	Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error
+// petValidator defines the interface for checking business rules for a pet
+type petValidator interface {
+	// Validate The newPet is assumed to be required, so that is a value type.
+	// The originalPet is optional, so it's a pointer type.
+	Validate(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error
 }
 
-// catValidatorFunc is an adapter that will convert a function into an implementation of catValidator
-type catValidatorFunc func(appcontext.AppContext, models.Cat, *models.Cat) error
+// petValidatorFunc is an adapter that will convert a function into an implementation of petValidator
+type petValidatorFunc func(appcontext.AppContext, models.Pet, *models.Pet) error
 
-// Validate fulfills the catValidator interface
-func (fn catValidatorFunc) Validate(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
-	return fn(appCtx, newCat, originalCat)
+// Validate fulfills the petValidator interface
+func (fn petValidatorFunc) Validate(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
+	return fn(appCtx, newPet, originalPet)
 }
 
-// validateCat runs a cat through the checks that are passed in.
-func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat, checks ...catValidator) error {
+// validatePet runs a pet through the checks that are passed in.
+func validatePet(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet, checks ...petValidator) error {
 	verrs := validate.NewErrors()
 
 	for _, check := range checks {
-		if err := check.Validate(appCtx, newCat, originalCat); err != nil {
+		if err := check.Validate(appCtx, newPet, originalPet); err != nil {
 			switch e := err.(type) {
 			case *validate.Errors:
 				// Accumulate all validation errors
@@ -434,7 +434,7 @@ func validateCat(appCtx appcontext.AppContext, newCat models.Cat, originalCat *m
 	}
 
 	if verrs.HasAny() {
-		return apperror.NewInvalidInputError(newCat.ID, nil, verrs, "Invalid input found while validating the cat.")
+		return apperror.NewInvalidInputError(newPet.ID, nil, verrs, "Invalid input found while validating the pet.")
 	}
 
 	return nil
@@ -450,38 +450,45 @@ Now we'll create the `rules.go` and `rules_test.go` files. In the `rules.go` fil
 
 For our example, here are a few potential rules (for the sake of brevity, we won't actually implement them all):
 
-* `ID` must be blank when creating a `Cat`.
+* `ID` must be blank when creating a `Pet`.
+* Check that `Type` isn't an empty string.
 * Check that `Name` is not empty and doesn't contain invalid characters.
 * Check that, if both `Birthday` and `GotchaDay` are defined, `Birthday` is equal to, or earlier than the `GotchaDay`.
 * Check that, if `Weight` is defined, it is greater than 0.
 
 We'll start by defining the functions for our rules like this:
 
-```go title="pkg/services/cat/rules.go"
-package cat
+```go title="pkg/services/pet/rules.go"
+package pet
 
 import (
 	"github.com/transcom/mymove/pkg/appcontext"
 	"github.com/transcom/mymove/pkg/models"
 )
 
-func checkID() catValidator {
-	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+func checkID() petValidator {
+	return petValidatorFunc(func(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
 		return nil // TODO: implement validation logic
 	})
 }
 
-func checkName() catValidator {
-	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+func checkType() petValidator {
+	return petValidatorFunc(func(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
+		return nil // TODO: implement validation logic
+	})
+}
+
+func checkName() petValidator {
+	return petValidatorFunc(func(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
 		return nil // TODO: implement validation logic
 	})
 }
 ```
 
 These functions are [**closures**](https://gobyexample.com/closures), which uses a function within a function.
-In this case, the outer function has no parameters and returns the `catValidator` interface type.
+In this case, the outer function has no parameters and returns the `petValidator` interface type.
 
-The _inner_ function, however, must have a signature that is exactly the same as our `catValidatorFunc` function type so
+The _inner_ function, however, must have a signature that is exactly the same as our `petValidatorFunc` function type so
 that we can use the interface. This means you will have to change all of these rule functions if you ever change that
 base signature, so keep that in mind as you continue working on validation.
 
@@ -493,8 +500,8 @@ ease of reading the page):
 <details>
 <summary>Tests for `checkID`</summary>
 
-```go title="pkg/services/cat/rules_test.go"
-package cat
+```go title="pkg/services/pet/rules_test.go"
+package pet
 
 import (
 	"github.com/gobuffalo/validate/v3"
@@ -503,38 +510,38 @@ import (
 	"github.com/transcom/mymove/pkg/models"
 )
 
-func (suite *CatSuite) TestCheckID() {
+func (suite *PetSuite) TestCheckID() {
 	suite.Run("Success", func() {
-		suite.Run("Create Cat without an ID", func() {
-			err := checkID().Validate(suite.AppContextForTest(), models.Cat{}, nil)
+		suite.Run("Create Pet without an ID", func() {
+			err := checkID().Validate(suite.AppContextForTest(), models.Pet{}, nil)
 
 			suite.NilOrNoVerrs(err)
 		})
 
-		suite.Run("Update Cat with matching ID", func() {
+		suite.Run("Update Pet with matching ID", func() {
 			id := uuid.Must(uuid.NewV4())
 
-			err := checkID().Validate(suite.AppContextForTest(), models.Cat{ID: id}, &models.Cat{ID: id})
+			err := checkID().Validate(suite.AppContextForTest(), models.Pet{ID: id}, &models.Pet{ID: id})
 
 			suite.NilOrNoVerrs(err)
 		})
 	})
 
 	suite.Run("Failure", func() {
-		suite.Run("Return an error if an ID is defined when creating a Cat", func() {
-			err := checkID().Validate(suite.AppContextForTest(), models.Cat{ID: uuid.Must(uuid.NewV4())}, nil)
+		suite.Run("Return an error if an ID is defined when creating a Pet", func() {
+			err := checkID().Validate(suite.AppContextForTest(), models.Pet{ID: uuid.Must(uuid.NewV4())}, nil)
 
 			suite.Error(err)
 			suite.IsType(&validate.Errors{}, err)
-			suite.Contains(err.Error(), "ID must not be set when creating a Cat.")
+			suite.Contains(err.Error(), "ID must not be set when creating a Pet.")
 		})
 
 		suite.Run("Return an error if the IDs don't match", func() {
-			err := checkID().Validate(suite.AppContextForTest(), models.Cat{ID: uuid.Must(uuid.NewV4())}, &models.Cat{ID: uuid.Must(uuid.NewV4())})
+			err := checkID().Validate(suite.AppContextForTest(), models.Pet{ID: uuid.Must(uuid.NewV4())}, &models.Pet{ID: uuid.Must(uuid.NewV4())})
 
 			suite.Error(err)
 			suite.IsType(&validate.Errors{}, err)
-			suite.Contains(err.Error(), "ID for new Cat must match original Cat ID.")
+			suite.Contains(err.Error(), "ID for new Pet must match original Pet ID.")
 		})
 	})
 }
@@ -544,8 +551,8 @@ func (suite *CatSuite) TestCheckID() {
 
 Now we can implement the function like so:
 
-```go title="pkg/services/cat/rules.go" {13,14}
-package cat
+```go title="pkg/services/pet/rules.go" {13,14}
+package pet
 
 import (
 	"github.com/gobuffalo/validate/v3"
@@ -554,21 +561,21 @@ import (
 	"github.com/transcom/mymove/pkg/models"
 )
 
-// checkID checks that newCat doesn't already have an ID if we're creating a Cat, or that it matches the original Cat
+// checkID checks that newPet doesn't already have an ID if we're creating a Pet, or that it matches the original Pet
 // for updates.
-func checkID() catValidator {
-	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+func checkID() petValidator {
+	return petValidatorFunc(func(_ appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
 		verrs := validate.NewErrors()
 
-		if originalCat == nil {
-			if newCat.ID.IsNil() {
+		if originalPet == nil {
+			if newPet.ID.IsNil() {
 				return verrs
 			}
 
-			verrs.Add("ID", "ID must not be set when creating a Cat.")
+			verrs.Add("ID", "ID must not be set when creating a Pet.")
 		} else {
-			if newCat.ID != originalCat.ID {
-				verrs.Add("ID", "ID for new Cat must match original Cat ID.")
+			if newPet.ID != originalPet.ID {
+				verrs.Add("ID", "ID for new Pet must match original Pet ID.")
 			}
 		}
 
@@ -583,6 +590,108 @@ every single rule. Use `_` to make clear what is relevant and what isn't.
 
 You can also see that we start the inner function off by initializing `verrs` to hold our validation errors. We 
 always return this at the end of our rule functions.
+
+#### `checkType`
+
+Based on our business rules, we want to make sure that `Pet.Type` is always set. We set up the model and table such 
+that only a few values are valid, but the way the model works, it still allows a blank string to be set, so we want 
+to check for that. Our tests for this one will look like this (minimized for ease of reading the page):
+
+<details>
+<summary>Tests for `checkType`</summary>
+
+```go title="pkg/services/pet/rules_test.go"
+package pet
+
+import (
+	"github.com/gobuffalo/validate/v3"
+	"github.com/gofrs/uuid"
+
+	"github.com/transcom/mymove/pkg/models"
+)
+
+// TestCheckID tests omitted for clarity
+
+func (suite *PetSuite) TestCheckType() {
+	suite.Run("Success", func() {
+		suite.Run("Create Pet", func() {
+			err := checkType().Validate(
+				suite.AppContextForTest(),
+				models.Pet{
+					Type: models.PetTypeCat,
+					Name: "Fluffy",
+				},
+				nil,
+			)
+
+			suite.NilOrNoVerrs(err)
+		})
+
+		suite.Run("Update Pet", func() {
+			err := checkType().Validate(
+				suite.AppContextForTest(),
+				models.Pet{
+					Type: models.PetTypeDog,
+				},
+				&models.Pet{
+					ID:   uuid.Must(uuid.NewV4()),
+					Type: models.PetTypeCat,
+					Name: "Fluffy",
+				},
+			)
+
+			suite.NilOrNoVerrs(err)
+		})
+	})
+
+	suite.Run("Failure", func() {
+		suite.Run("Return an error for an empty pet type", func() {
+			err := checkType().Validate(
+				suite.AppContextForTest(),
+				models.Pet{
+					Name: "Fluffy",
+				},
+				nil,
+			)
+
+			suite.Error(err)
+			suite.IsType(&validate.Errors{}, err)
+			suite.Contains(err.Error(), "Type of pet must be specified.")
+		})
+	})
+}
+```
+
+</details>
+
+Now we can implement the function like so:
+
+```go title="pkg/services/pet/rules.go" {13,14}
+package pet
+
+import (
+	"github.com/gobuffalo/validate/v3"
+
+	"github.com/transcom/mymove/pkg/appcontext"
+	"github.com/transcom/mymove/pkg/models"
+)
+
+
+// other check functions omitted to focus on checkType
+
+// checkType checks that newPet.Type is not an empty string.
+func checkType() petValidator {
+	return petValidatorFunc(func(_ appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
+		verrs := validate.NewErrors()
+
+		if newPet.Type == "" {
+			verrs.Add("Type", "Type of pet must be specified.")
+		}
+
+		return verrs
+	})
+}
+```
 
 #### `checkName`
 
@@ -617,8 +726,8 @@ We'll see all this in practice next.
 Now let's say we want to run every name that gets input through our string checker to make sure that users aren't 
 passing in bad characters or strings. We can do this by updating our definition of `checkName` to look like this:
 
-```go title="pkg/services/cat/rules.go" {9}
-package cat
+```go title="pkg/services/pet/rules.go" {9}
+package pet
 
 import (
 	"github.com/transcom/mymove/pkg/appcontext"
@@ -626,13 +735,15 @@ import (
 	"github.com/transcom/mymove/pkg/services"
 )
 
-func checkName(stringChecker services.StringChecker) catValidator {
-	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+// other check functions omitted to focus on checkName
+
+// checkName checks that a name has been input or that one is already set, and runs the string through a string checker
+// service.
+func checkName(stringChecker services.StringChecker) petValidator {
+	return petValidatorFunc(func(_ appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
 		return nil // TODO: implement validation logic
 	})
 }
-
-// other check functions omitted to focus on checkName
 ```
 
 Note how we added `stringChecker services.StringChecker` as a parameter to `checkName`, the outer function. Since 
@@ -644,8 +755,8 @@ With our newly updated function signature, we're ready to write our tests!
 <details>
 <summary>Tests for `checkID`</summary>
 
-```go title="pkg/services/cat/rules_test.go"
-package cat
+```go title="pkg/services/pet/rules_test.go"
+package pet
 
 import (
 	"errors"
@@ -659,9 +770,9 @@ import (
 	"github.com/transcom/mymove/pkg/services/mocks"
 )
 
-// TestCheckID tests omitted for clarity
+// TestCheckID and TestCheckType tests omitted for clarity
 
-func (suite *CatSuite) TestCheckName() {
+func (suite *PetSuite) TestCheckName() {
 	getMockStringChecker := func(err error) mocks.StringChecker {
 		stringChecker := mocks.StringChecker{}
 
@@ -677,12 +788,12 @@ func (suite *CatSuite) TestCheckName() {
 		newName := "Luna"
 		oldName := "Whiskers"
 
-		suite.Run("Create Cat", func() {
+		suite.Run("Create Pet", func() {
 			stringChecker := getMockStringChecker(nil)
 
 			err := checkName(&stringChecker).Validate(
 				suite.AppContextForTest(),
-				models.Cat{Name: newName},
+				models.Pet{Name: newName},
 				nil,
 			)
 
@@ -691,14 +802,19 @@ func (suite *CatSuite) TestCheckName() {
 			stringChecker.AssertExpectations(suite.T())
 		})
 
-		suite.Run("Update Cat", func() {
+		suite.Run("Update Pet", func() {
+			petID := uuid.Must(uuid.NewV4())
+
 			stringChecker := getMockStringChecker(nil)
 
 			err := checkName(&stringChecker).Validate(
 				suite.AppContextForTest(),
-				models.Cat{Name: newName},
-				&models.Cat{
-					ID:   uuid.Must(uuid.NewV4()),
+				models.Pet{
+					ID:   petID,
+					Name: newName,
+				},
+				&models.Pet{
+					ID:   petID,
 					Name: oldName,
 				},
 			)
@@ -709,13 +825,18 @@ func (suite *CatSuite) TestCheckName() {
 		})
 
 		suite.Run("Update with no name change", func() {
+			petID := uuid.Must(uuid.NewV4())
+
 			stringChecker := getMockStringChecker(nil)
 
 			err := checkName(&stringChecker).Validate(
 				suite.AppContextForTest(),
-				models.Cat{Name: oldName},
-				&models.Cat{
-					ID:   uuid.Must(uuid.NewV4()),
+				models.Pet{
+					ID:   petID,
+					Name: oldName,
+				},
+				&models.Pet{
+					ID:   petID,
 					Name: oldName,
 				},
 			)
@@ -725,13 +846,13 @@ func (suite *CatSuite) TestCheckName() {
 	})
 
 	suite.Run("Failure", func() {
-		blankNameError := errors.New("Cat name must be defined.")
+		blankNameError := errors.New("Pet name must be defined.")
 		stringCheckError := errors.New("Invalid characters found in string.")
 		invalidName := "<hacked>"
 
 		invalidCases := map[string]struct {
-			newCatName  string
-			originalCat *models.Cat
+			newPetName  string
+			originalPet *models.Pet
 			expectedErr error
 		}{
 			"creating with no name": {
@@ -746,7 +867,7 @@ func (suite *CatSuite) TestCheckName() {
 			},
 			"updating with invalid name": {
 				invalidName,
-				&models.Cat{
+				&models.Pet{
 					ID:   uuid.Must(uuid.NewV4()),
 					Name: "Whiskers",
 				},
@@ -761,17 +882,23 @@ func (suite *CatSuite) TestCheckName() {
 			suite.Run(fmt.Sprintf("Return error for an invalid name when %v", tc), func() {
 				stringChecker := getMockStringChecker(stringCheckError)
 
+				newPet := models.Pet{Name: testData.newPetName}
+
+				if testData.originalPet != nil {
+					newPet.ID = testData.originalPet.ID
+				}
+
 				err := checkName(&stringChecker).Validate(
 					suite.AppContextForTest(),
-					models.Cat{Name: testData.newCatName},
-					testData.originalCat,
+					newPet,
+					testData.originalPet,
 				)
 
 				suite.Error(err)
 				suite.IsType(&validate.Errors{}, err)
 				suite.Contains(err.Error(), testData.expectedErr.Error())
 
-				if testData.newCatName != "" {
+				if testData.newPetName != "" {
 					stringChecker.AssertExpectations(suite.T())
 				}
 			})
@@ -783,15 +910,15 @@ func (suite *CatSuite) TestCheckName() {
 We'll go into more detail on how we're using the mocks later, but the main thing to get from this for now is that we 
 want to ensure:
 
-* A cat has a name. This means either a new name is set, or the new name matches the old name.
+* A pet has a name. This means either a new name is set, or the new name matches the old name.
 * A new name has no invalid characters.
 
 </details>
 
 Now we can implement our `checkName` function:
 
-```go title="pkg/services/cat/rules.go"
-package cat
+```go title="pkg/services/pet/rules.go"
+package pet
 
 import (
 	"github.com/gobuffalo/validate/v3"
@@ -801,21 +928,25 @@ import (
 	"github.com/transcom/mymove/pkg/services"
 )
 
-func checkName(stringChecker services.StringChecker) catValidator {
-	return catValidatorFunc(func(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+// other check functions omitted to focus on checkName
+
+// checkName checks that a name has been input or that one is already set, and runs the string through a string checker
+// service.
+func checkName(stringChecker services.StringChecker) petValidator {
+	return petValidatorFunc(func(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
 		verrs := validate.NewErrors()
 
-		if newCat.Name == "" {
-			verrs.Add("Name", "Cat name must be defined.")
+		if newPet.Name == "" {
+			verrs.Add("Name", "Pet name must be defined.")
 
 			return verrs
 		}
 
-		if originalCat != nil && newCat.Name == originalCat.Name {
+		if originalPet != nil && newPet.Name == originalPet.Name {
 			return verrs
 		}
 
-		err := stringChecker.Validate(appCtx, newCat.Name)
+		err := stringChecker.Validate(appCtx, newPet.Name)
 
 		if err != nil {
 			verrs.Add("Name", err.Error())
@@ -824,8 +955,6 @@ func checkName(stringChecker services.StringChecker) catValidator {
 		return verrs
 	})
 }
-
-// other check functions omitted to focus on checkName
 ```
 
 As stated earlier, we're able to pass in the `services.StringChecker` in to the outer function and then use it in 
@@ -848,33 +977,35 @@ Once we have some rules, we can start grouping them as needed. For example, we c
 of users require different rules. The key here is to define functions that will return slices of validator functions,
 instead of constant slice variables.
 
-```go title="pkg/services/cat/rules.go"
-package cat
+```go title="pkg/services/pet/rules.go"
+package pet
 
 // Other logic left out for brevity.
 
 // customerChecks are the rules that should run for actions taken by customers
-func customerChecks() []catValidator {
-	return []catValidator{
+func customerChecks(stringChecker services.StringChecker) []petValidator {
+	return []petValidator{
 		checkID(),
-		checkName(),
+		checkType(),
+		checkName(stringChecker),
 	}
 }
 
 // officeChecks are the rules that should run for actions taken by office users
-func officeChecks() []catValidator {
-	return []catValidator{
+func officeChecks() []petValidator {
+	return []petValidator{
 		checkID(),
+		checkType(),
 	}
 }
 ```
 
-The power of this pattern is that it lets us easily define that for customers, we want to check the Cat names, but 
+The power of this pattern is that it lets us easily define that for customers, we want to check the Pet names, but 
 we'll let office users input whatever they want for names. 
 
 You'll notice that we're calling our `check<thing>` functions now, but this isn't triggering validation. These are 
 `closures`, so we're calling the outer function, which is returning our validator. The validators that we get back 
-aren't called until `validateCat` is called.
+aren't called until `validatePet` is called.
 
 Note that we _do_ pass in whatever parameters we use in the outer functions at this level. This is where we set those
 "dependencies".
@@ -890,8 +1021,8 @@ Here is the final rules file that we have:
 <details>
 <summary>Final `rules.go` file</summary>
 
-```go title="pkg/services/cat/rules.go"
-package cat
+```go title="pkg/services/pet/rules.go"
+package pet
 
 import (
 	"github.com/gobuffalo/validate/v3"
@@ -901,21 +1032,21 @@ import (
 	"github.com/transcom/mymove/pkg/services"
 )
 
-// checkID checks that newCat doesn't already have an ID if we're creating a Cat, or that it matches the original Cat
+// checkID checks that newPet doesn't already have an ID if we're creating a Pet, or that it matches the original Pet
 // for updates.
-func checkID() catValidator {
-	return catValidatorFunc(func(_ appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+func checkID() petValidator {
+	return petValidatorFunc(func(_ appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
 		verrs := validate.NewErrors()
 
-		if originalCat == nil {
-			if newCat.ID.IsNil() {
+		if originalPet == nil {
+			if newPet.ID.IsNil() {
 				return verrs
 			}
 
-			verrs.Add("ID", "ID must not be set when creating a Cat.")
+			verrs.Add("ID", "ID must not be set when creating a Pet.")
 		} else {
-			if newCat.ID != originalCat.ID {
-				verrs.Add("ID", "ID for new Cat must match original Cat ID.")
+			if newPet.ID != originalPet.ID {
+				verrs.Add("ID", "ID for new Pet must match original Pet ID.")
 			}
 		}
 
@@ -923,21 +1054,36 @@ func checkID() catValidator {
 	})
 }
 
-func checkName(stringChecker services.StringChecker) catValidator {
-	return catValidatorFunc(func(appCtx appcontext.AppContext, newCat models.Cat, originalCat *models.Cat) error {
+// checkType checks that newPet.Type is not an empty string.
+func checkType() petValidator {
+	return petValidatorFunc(func(_ appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
 		verrs := validate.NewErrors()
 
-		if newCat.Name == "" {
-			verrs.Add("Name", "Cat name must be defined.")
+		if newPet.Type == "" {
+			verrs.Add("Type", "Type of pet must be specified.")
+		}
+
+		return verrs
+	})
+}
+
+// checkName checks that a name has been input or that one is already set, and runs the string through a string checker
+// service.
+func checkName(stringChecker services.StringChecker) petValidator {
+	return petValidatorFunc(func(appCtx appcontext.AppContext, newPet models.Pet, originalPet *models.Pet) error {
+		verrs := validate.NewErrors()
+
+		if newPet.Name == "" {
+			verrs.Add("Name", "Pet name must be defined.")
 
 			return verrs
 		}
 
-		if originalCat != nil && newCat.Name == originalCat.Name {
+		if originalPet != nil && newPet.Name == originalPet.Name {
 			return verrs
 		}
 
-		err := stringChecker.Validate(appCtx, newCat.Name)
+		err := stringChecker.Validate(appCtx, newPet.Name)
 
 		if err != nil {
 			verrs.Add("Name", err.Error())
@@ -948,17 +1094,19 @@ func checkName(stringChecker services.StringChecker) catValidator {
 }
 
 // customerChecks are the rules that should run for actions taken by customers
-func customerChecks(stringChecker services.StringChecker) []catValidator {
-	return []catValidator{
+func customerChecks(stringChecker services.StringChecker) []petValidator {
+	return []petValidator{
 		checkID(),
+		checkType(),
 		checkName(stringChecker),
 	}
 }
 
 // officeChecks are the rules that should run for actions taken by office users
-func officeChecks() []catValidator {
-	return []catValidator{
+func officeChecks() []petValidator {
+	return []petValidator{
 		checkID(),
+		checkType(),
 	}
 }
 ```

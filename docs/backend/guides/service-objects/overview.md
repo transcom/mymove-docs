@@ -72,8 +72,8 @@ service object and have a bit of extra time, try updating the service object you
 here.
 :::
 
+* [Getting Started](./getting-started) 
 * [Structure](./structure)
-* [Getting Started](./getting-started)
 * [Set up service subpackage and interface](./set-up-service-subpackage-and-interface)
 * [Set up validation pattern](./validation)
 

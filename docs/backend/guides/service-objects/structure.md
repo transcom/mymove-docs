@@ -1,11 +1,10 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 # Structure
 
 This page will primarily cover how service objects are structured and a general overview of what each file is. 
-Details for actually working with the different files will be covered in the detailed guides on working with service 
-objects.
+Details for actually working with the different files will be covered in the next pages.
 
 All types of service objects should be in the
 [`mymove` `./pkg/services`](https://github.com/transcom/mymove/tree/master/pkg/services) directory, but their 
@@ -31,27 +30,25 @@ Data and utility service objects follow the same structure pattern, with just na
 covered together at first.
 
 In the `mymove` `./pkg/services` directory you should see several subdirectories (`Go` subpackages) and singular 
-`Go` files at the end. The names of these solo `Go` files should match that of a directory above.
+`Go` files at the end. The names of these solo `Go` files should match that of a directory above. So for our example 
+of having service objects for our `Pet` model, we'd have a subpackage `pet` and a corresponding `pet.go` file.
 
-```text {7,11}
+```text {5,8}
 mymove/
 ├── pkg/
 │   ├── services/
 │   │   ├── ...
-│   │   ├── mto_agent/
-│   │   ├── mto_service_item/
-│   │   ├── mto_shipment/       <- a subpackage
+│   │   ├── pet/       <- a subpackage for the set of service objects related to the `Pet` model
+│   │   │   ├── ...
 │   │   ├── ...
-│   │   ├── mto_agent.go
-│   │   ├── mto_service_item.go
-│   │   ├── mto_shipment.go     <- the interface in the services package
+│   │   ├── pet.go     <- the interface in the services package for the `Pet` data service objects
 │   │   ├── ...
 ```
 
 ### Data Service Objects High Level Structure
 
-The names of the file + subpackage should match the database table name, but in singular form. E.g. `mto_shipment` 
-service object for the `mto_shipments` table.
+The names of the file + subpackage should match the database table name, but in singular form. E.g. `pet` service 
+object for the `pet` table.
 
 Each of these subpackages handles the operations for one particular data model. This helps us keep track of our
 database interactions and allows for different parts of the codebase to interact with models while re-using the same 
@@ -70,76 +67,96 @@ Orchestrator service objects are similar overall to the other types of service o
 and naming are slightly different. 
 
 We have an `orchestrators` subpackage inside `services` that holds the subpackages for each orchestrator. This helps 
-us separate out the `orchestrators` from the other more "regular" service objects (i.e. pre-existing service object 
+us separate out the `orchestrators` from the other more "common" service objects (i.e. pre-existing service object 
 types that existed before `orchestrators` were added). 
 
-As for the corresponding interface in the `services` package, we use a standalone file with the orchestrator name 
-followed by `_orchestrator` to identify it more easily as an orchestrator.
-
-```text {6,7,11}
+```text {5}
 mymove/
 ├── pkg/
 │   ├── services/
 │   │   ├── ...
-│   │   ├── office_user/
-│   │   ├── orchestrators/            <- all orchestrators subpackage
-│   │   │   ├── shipment              <- subpackage for a single orchestrator
-│   │   ├── order/
-│   │   ├── ...
-│   │   ├── reweight.go
-│   │   ├── shipment_orchestrator.go  <- the interface in the services package for a single orchestrator
-│   │   ├── sit_extension.go
+│   │   ├── orchestrators/            <- subpackage that contains each of the orchestrator subpackages
+│   │   │   ├── ...
 │   │   ├── ...
 ```
 
-So in our example above, we have an orchestrator service object called `shipment` that lives in the `orchestrators` 
-subpackage. It has a corresponding interface file called `shipment_orchestrator` in the `services` package.
+As for the corresponding interface in the `services` package, we use a standalone file with the orchestrator name 
+followed by `_orchestrator` to identify it more easily as an orchestrator.
 
-Each of the orchestrator subpackages should contain the logic for orchestrating (a.k.a. composing) service objects, 
-e.g. the `shipment` service object contains the logic for calling the `mto_shipment` and `ppm_shipment` service 
-objects as needed because they are very closely related. This makes it easier to re-use the logic as needed, e.g. 
-allowing both the internal and ghc APIs to interact with shipments similarly.  
+So for our example, we have a regular set of data-type service objects for our `Pet` model, but we'll also have 
+orchestrators for pets that will handle calling the `Cat` service objects as needed. The pet orchestrator will look 
+like this:
+
+```text {8,9,17}
+mymove/
+├── pkg/
+│   ├── services/
+│   │   ├── ...
+│   │   ├── cat/                      <- subpackage for `Cat` data service objects 
+│   │   │   ├── ...
+│   │   ├── ...
+│   │   ├── orchestrators/            <- subpackage that contains each of the orchestrator subpackages
+│   │   │   ├── pet/                  <- subpackage a set of orchestrators related to pets
+│   │   │   │   ├── ...               <- implementation of orchestrator service objects
+│   │   │   ├── ...
+│   │   ├── pet/                      <- subpackage for `Pet` data service objects
+│   │   │   ├── ...
+│   │   ├── ...
+│   │   ├── cat.go
+│   │   ├── pet.go
+│   │   ├── pet_orchestrator.go       <- the interface in the services package for a single set of orchestrators
+│   │   ├── ...
+```
+
+So in our example above, we have an orchestrator service subpackage called `pet` that lives in the `orchestrators` 
+subpackage. This subpackage will contain all the implementation files for the `orchestrator`. It has a corresponding 
+interface file called `pet_orchestrator.go` in the `services` package.
+
+Note that the `services/orchestrators/pet/` set of service objects is separate and different from the 
+`services/pet/` service objects. The `services/pet/` service objects are for the `Pet` model data service objects, 
+while the `orchestrators` service objects will be the ones that orchestrate the `Pet` and `Cat` service objects. 
+This makes it easier to re-use the logic as needed, e.g. allowing both the internal and ghc APIs to interact with 
+pets similarly.  
 
 ## Service Object Subpackage Structure
 
-Below is the expected structure of a subpackage. For this diagram, we're using the `shipment` orchestrator, but other 
+Below is the expected structure of a subpackage. For this diagram, we're using the `pet`, but other 
 types should be similar. The only difference will be naming. 
 
 In the sections below we'll get into naming a bit, but the difference to know is that when we say something should be 
 named `<service_object_name>_whatever`, the `service_object_name` will be the full name for data and util type service
-objects, e.g. `mto_shipment_whatever`, while for orchestrator type service objects, the `service_object_name` will 
-be shortened a bit so instead of `shipment_orchestrator_whatever`, it will be `shipment_whatever`. This helps cut 
-down a bit on the **stuttering**, at least with respect to the word `orchestrator`.
+objects, e.g. `pet_whatever`, while for orchestrator type service objects, the `service_object_name` will be 
+shortened a bit so instead of `pet_orchestrator_whatever`, it will be `pet_whatever`. This helps cut down a bit on 
+the **stuttering**, at least with respect to the word `orchestrator`.
 
 ```text
 mymove/
 ├── pkg/
 │   ├── services/
-│   │   ├── orchestrators/
-│   │   │   ├── shipment                        <- subpackage for a service object
-│   │   │   │   ├── rules.go                    <- contains functions that check data to ensure it is valid
-│   │   │   │   ├── rules_test.go               <- tests for rules.go
-│   │   │   │   ├── shipment_creator.go         <- service object, `ShipmentCreator`, that handles creating shipments
-│   │   │   │   ├── shipment_creator_test.go    <- tests for `ShipmentCreator` service object
-│   │   │   │   ├── shipment_service_test.go    <- boilerplate testing suite setup
-│   │   │   │   ├── shipment_updater.go         <- service object, `ShipmentUpdater`, that handles updating shipments
-│   │   │   │   ├── shipment_updater_test.go    <- tests for `ShipmentUpdater` service object
-│   │   │   │   ├── validation.go               <- boilerplate for validating data; uses functions defined in rules.go
-│   │   │   │   ├── validation_test.go          <- tests for boilerplate
+│   │   ├── pet                             <- subpackage for a set of service objects
+│   │   │   ├── pet_creator.go              <- service object, `PetCreator`, that handles creating pets
+│   │   │   ├── pet_creator_test.go         <- tests for `PetCreator` service object
+│   │   │   ├── pet_service_test.go         <- boilerplate testing suite setup
+│   │   │   ├── pet_updater.go              <- service object, `PetUpdater`, that handles updating pets
+│   │   │   ├── pet_updater_test.go         <- tests for `PetUpdater` service object
+│   │   │   ├── rules.go                    <- contains functions that check data to ensure it is valid
+│   │   │   ├── rules_test.go               <- tests for rules.go
+│   │   │   ├── validation.go               <- boilerplate for validating data; uses functions defined in rules.go
+│   │   │   ├── validation_test.go          <- tests for boilerplate
 │   │   ├── ...
 ```
 
 In the example above, we have a few files that should be common across service objects:
 
-* The `rules.go`, `validation.go`, and their test files are related to data validation. For more info on these files 
-  and how they tie into the service objects, you can read [Service Validation](/docs/backend/guides/service-objects/validation).
-* The `shipment_service_test.go` file is boilerplate for setting up the testing suite for the package and should be 
+* The `rules.go`, `validation.go`, and their test files are related to data validation. We will go more in depth on 
+  these files in a later section: [Service Validation](/docs/backend/guides/service-objects/validation).
+* The `pet_service_test.go` file is boilerplate for setting up the testing suite for the package and should be 
   named something like `<service_object_name>_service_test.go`
 
 ### Service Object Naming
 
 The rest of the files are implementing service objects. There should be a file that implements a service object and 
-the corresponding file containing the tests. So in the example above, we have a shipment creator service object 
-defined in `shipment_creator.go` and the corresponding tests in `shipment_creator_test.go`. We name these files 
-based on the main **action** that the service object will perform so in this example, it **creates** shipments, so 
-it's a **creator**. These names will also be reflected in the interfaces we define for the service objects.
+the corresponding file containing the tests. So in the example above, we have a cat creator service object defined 
+in `cat_creator.go` and the corresponding tests in `cat_creator_test.go`. We name these files based on the main 
+**action** that the service object will perform so in this example, it **creates** pets, so it's a **creator**. 
+These names will also be reflected in the interfaces we define for the service objects.
