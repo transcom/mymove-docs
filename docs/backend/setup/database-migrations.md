@@ -302,9 +302,47 @@ Things to note:
   * So for example, if you want access to the name of the pet, and you have an instance of a `Cat`, `originalCat`, 
     then you could access the name using `originalCat.Pet.Name`
   * This field doesn't have a corresponding field on the table or in the migration. It is something that is entirely 
-    for ease of access and something which `Pop` (our ORM) understands. 
+    for ease of access and something which `Pop` (our ORM) understands. Note that this field being here doesn't mean 
+    the data is automatically loaded whenever you fetch a `cat` row from the database; your query will need to do 
+    the necessary joins to get the related record back.
   * In the `struct` tags, we define that this field belongs to the `pets` table and that the `fk_id` (foreign key ID)
     is the `pet_id` field on the `cats` table.
+
+We'll also want to update our `Pet` model to point back at our `Cat` model:
+
+```go title="pkg/models/pet.go" {24}
+package models
+
+import (
+    "time"
+
+    "github.com/gofrs/uuid"
+
+    "github.com/transcom/mymove/pkg/unit"
+)
+
+// PetType omitted for brevity
+
+// Pet contains all the information relevant to a pet...
+type Pet struct {
+    ID        uuid.UUID   `json:"id" db:"id"`
+    CreatedAt time.Time   `json:"created_at" db:"created_at"`
+    UpdatedAt time.Time   `json:"updated_at" db:"updated_at"`
+    Type      PetType     `json:"type" db:"type"`
+    Name      string      `json:"name" db:"name"`
+    Birthday  *time.Time  `json:"birthday" db:"birthday"`
+    GotchaDay *time.Time  `json:"gotcha_day" db:"gotcha_day"`
+    Bio       *string     `json:"bio" db:"bio"`
+    Weight    *unit.Pound `json:"weight" db:"weight"`
+    Cat       *Cat        `has_one:"cats" fk_id:"pet_id"`
+}
+
+// Pets is a list of Pets
+type Pets []Pet
+```
+
+Note that this is similar to the `Pet` field on the `Cat` model in that it is purely a nice feature that `Pop` lets 
+us use to more easily go across relationships.
 
 #### Model/Table Names With Acronyms
 

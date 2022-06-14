@@ -52,15 +52,16 @@ const (
 
 // Pet contains all the information relevant to a pet...
 type Pet struct {
-    ID        uuid.UUID   `json:"id" db:"id"`
-    CreatedAt time.Time   `json:"created_at" db:"created_at"`
-    UpdatedAt time.Time   `json:"updated_at" db:"updated_at"`
-    Type      PetType     `json:"type" db:"type"`
-    Name      string      `json:"name" db:"name"`
-    Birthday  *time.Time  `json:"birthday" db:"birthday"`
-    GotchaDay *time.Time  `json:"gotcha_day" db:"gotcha_day"`
-    Bio       *string     `json:"bio" db:"bio"`
-    Weight    *unit.Pound `json:"weight" db:"weight"`
+	ID        uuid.UUID   `json:"id" db:"id"`
+	CreatedAt time.Time   `json:"created_at" db:"created_at"`
+	UpdatedAt time.Time   `json:"updated_at" db:"updated_at"`
+	Type      PetType     `json:"type" db:"type"`
+	Name      string      `json:"name" db:"name"`
+	Birthday  *time.Time  `json:"birthday" db:"birthday"`
+	GotchaDay *time.Time  `json:"gotcha_day" db:"gotcha_day"`
+	Bio       *string     `json:"bio" db:"bio"`
+	Weight    *unit.Pound `json:"weight" db:"weight"`
+	Cat       *Cat        `has_one:"cats" fk_id:"pet_id"`
 }
 
 // Pets is a list of Pets
