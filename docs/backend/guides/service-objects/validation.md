@@ -533,7 +533,7 @@ func (suite *PetSuite) TestCheckID() {
 
 			suite.Error(err)
 			suite.IsType(&validate.Errors{}, err)
-			suite.Contains(err.Error(), "ID must not be set when creating a Pet.")
+			suite.Contains(err.Error(), "when creating a Pet ID must not be set")
 		})
 
 		suite.Run("Return an error if the IDs don't match", func() {
@@ -541,7 +541,7 @@ func (suite *PetSuite) TestCheckID() {
 
 			suite.Error(err)
 			suite.IsType(&validate.Errors{}, err)
-			suite.Contains(err.Error(), "ID for new Pet must match original Pet ID.")
+			suite.Contains(err.Error(), "new Pet ID must match original Pet ID")
 		})
 	})
 }
@@ -572,10 +572,10 @@ func checkID() petValidator {
 				return verrs
 			}
 
-			verrs.Add("ID", "ID must not be set when creating a Pet.")
+			verrs.Add("ID", "when creating a Pet ID must not be set")
 		} else {
 			if newPet.ID != originalPet.ID {
-				verrs.Add("ID", "ID for new Pet must match original Pet ID.")
+				verrs.Add("ID", "new Pet ID must match original Pet ID")
 			}
 		}
 
@@ -656,7 +656,7 @@ func (suite *PetSuite) TestCheckType() {
 
 			suite.Error(err)
 			suite.IsType(&validate.Errors{}, err)
-			suite.Contains(err.Error(), "Type of pet must be specified.")
+			suite.Contains(err.Error(), "type of pet must be specified")
 		})
 	})
 }
@@ -685,7 +685,7 @@ func checkType() petValidator {
 		verrs := validate.NewErrors()
 
 		if newPet.Type == "" {
-			verrs.Add("Type", "Type of pet must be specified.")
+			verrs.Add("Type", "type of pet must be specified")
 		}
 
 		return verrs
@@ -717,7 +717,10 @@ type StringChecker interface {
 We haven't covered how you're supposed to use service objects, but the important points to know for now are:
 
 * To define something as using this service object's type, we would use `services.StringChecker`
-* To mock it out in tests, you use `mocks.StringChecker{}`
+* To mock it out in tests, you can use`mocks.NewStringChecker(suite.T())`
+    * This will give you a pointer to the mock and set it up so that when the test is cleaning up, it will assert 
+      any expectations you set up actually happened (i.e. if you said it will be called with xyz, it will verify it 
+      was called with that).  
 * To use it in our service, we'll define a parameter like this: `stringChecker services.StringChecker`
     * We then use it like this: `err := stringChecker(appCtx, "my string to check")`
 
@@ -755,6 +758,12 @@ With our newly updated function signature, we're ready to write our tests!
 <details>
 <summary>Tests for `checkID`</summary>
 
+We'll go into more detail on how we're using the mocks later, but the main thing to get from this for now is that we
+want to ensure:
+
+* A pet has a name. This means either a new name is set, or the new name matches the old name.
+* A new name has no invalid characters.
+
 ```go title="pkg/services/pet/rules_test.go"
 package pet
 
@@ -773,13 +782,15 @@ import (
 // TestCheckID and TestCheckType tests omitted for clarity
 
 func (suite *PetSuite) TestCheckName() {
-	getMockStringChecker := func(err error) mocks.StringChecker {
-		stringChecker := mocks.StringChecker{}
+	getMockStringChecker := func(willBeUsed bool, err error) *mocks.StringChecker {
+		stringChecker := mocks.NewStringChecker(suite.T())
 
-		stringChecker.On("Validate",
-			mock.AnythingOfType("*appcontext.appContext"),
-			mock.AnythingOfType("string"),
-		).Return(err)
+		if willBeUsed {
+			stringChecker.On("Validate",
+				mock.AnythingOfType("*appcontext.appContext"),
+				mock.AnythingOfType("string"),
+			).Return(err)
+		}
 
 		return stringChecker
 	}
@@ -789,25 +800,23 @@ func (suite *PetSuite) TestCheckName() {
 		oldName := "Whiskers"
 
 		suite.Run("Create Pet", func() {
-			stringChecker := getMockStringChecker(nil)
+			stringChecker := getMockStringChecker(true, nil)
 
-			err := checkName(&stringChecker).Validate(
+			err := checkName(stringChecker).Validate(
 				suite.AppContextForTest(),
 				models.Pet{Name: newName},
 				nil,
 			)
 
 			suite.NilOrNoVerrs(err)
-
-			stringChecker.AssertExpectations(suite.T())
 		})
 
 		suite.Run("Update Pet", func() {
 			petID := uuid.Must(uuid.NewV4())
 
-			stringChecker := getMockStringChecker(nil)
+			stringChecker := getMockStringChecker(true, nil)
 
-			err := checkName(&stringChecker).Validate(
+			err := checkName(stringChecker).Validate(
 				suite.AppContextForTest(),
 				models.Pet{
 					ID:   petID,
@@ -820,16 +829,14 @@ func (suite *PetSuite) TestCheckName() {
 			)
 
 			suite.NilOrNoVerrs(err)
-
-			stringChecker.AssertExpectations(suite.T())
 		})
 
 		suite.Run("Update with no name change", func() {
 			petID := uuid.Must(uuid.NewV4())
 
-			stringChecker := getMockStringChecker(nil)
+			stringChecker := getMockStringChecker(false, nil)
 
-			err := checkName(&stringChecker).Validate(
+			err := checkName(stringChecker).Validate(
 				suite.AppContextForTest(),
 				models.Pet{
 					ID:   petID,
@@ -846,8 +853,8 @@ func (suite *PetSuite) TestCheckName() {
 	})
 
 	suite.Run("Failure", func() {
-		blankNameError := errors.New("Pet name must be defined.")
-		stringCheckError := errors.New("Invalid characters found in string.")
+		blankNameError := errors.New("pet name must be defined")
+		stringCheckError := errors.New("invalid characters found in string")
 		invalidName := "<hacked>"
 
 		invalidCases := map[string]struct {
@@ -860,7 +867,7 @@ func (suite *PetSuite) TestCheckName() {
 				nil,
 				blankNameError,
 			},
-			"creating with name": {
+			"creating with invalid name": {
 				invalidName,
 				nil,
 				stringCheckError,
@@ -880,7 +887,7 @@ func (suite *PetSuite) TestCheckName() {
 			testData := testData
 
 			suite.Run(fmt.Sprintf("Return error for an invalid name when %v", tc), func() {
-				stringChecker := getMockStringChecker(stringCheckError)
+				stringChecker := getMockStringChecker(testData.newPetName != "", stringCheckError)
 
 				newPet := models.Pet{Name: testData.newPetName}
 
@@ -888,7 +895,7 @@ func (suite *PetSuite) TestCheckName() {
 					newPet.ID = testData.originalPet.ID
 				}
 
-				err := checkName(&stringChecker).Validate(
+				err := checkName(stringChecker).Validate(
 					suite.AppContextForTest(),
 					newPet,
 					testData.originalPet,
@@ -897,21 +904,11 @@ func (suite *PetSuite) TestCheckName() {
 				suite.Error(err)
 				suite.IsType(&validate.Errors{}, err)
 				suite.Contains(err.Error(), testData.expectedErr.Error())
-
-				if testData.newPetName != "" {
-					stringChecker.AssertExpectations(suite.T())
-				}
 			})
 		}
 	})
 }
 ```
-
-We'll go into more detail on how we're using the mocks later, but the main thing to get from this for now is that we 
-want to ensure:
-
-* A pet has a name. This means either a new name is set, or the new name matches the old name.
-* A new name has no invalid characters.
 
 </details>
 
@@ -937,7 +934,7 @@ func checkName(stringChecker services.StringChecker) petValidator {
 		verrs := validate.NewErrors()
 
 		if newPet.Name == "" {
-			verrs.Add("Name", "Pet name must be defined.")
+			verrs.Add("Name", "pet name must be defined")
 
 			return verrs
 		}
