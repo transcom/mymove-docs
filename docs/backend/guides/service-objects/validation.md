@@ -1115,6 +1115,20 @@ func officeChecks() []petValidator {
 So now we've written rules for what validation we expect to happen with our data, and we've set up the validation 
 function that we can call to run through those rules. Now you can move on to setting up the actual service object.
 
+## Examples
+
+## Examples
+
+* Shipment Orchestrator
+    * https://github.com/transcom/mymove/blob/master/pkg/services/orchestrators/shipment/rules.go
+    * https://github.com/transcom/mymove/blob/master/pkg/services/orchestrators/shipment/validation.go
+* PPMShipments
+    * https://github.com/transcom/mymove/blob/master/pkg/services/ppmshipment/rules.go
+    * https://github.com/transcom/mymove/blob/master/pkg/services/ppmshipment/validation.go
+* Reweighs
+    * https://github.com/transcom/mymove/blob/master/pkg/services/reweigh/rules.go
+    * https://github.com/transcom/mymove/blob/master/pkg/services/reweigh/validation.go
+
 ## Resources
 
 * Interfaces
