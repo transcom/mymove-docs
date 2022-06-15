@@ -79,45 +79,6 @@ The stuff below is being converted to the new format outlined in the links above
 pages, I'll remove the corresponding sections below. 
 :::
 
-## Using Service Objects
-
-Service objects are often used in other services, but they're most commonly used by our handler functions. Handlers are
-the **presentation layer** of our backend, and they correspond to API endpoints.
-
-In either case, they will be used in much the same way. Service objects are often (although not necessarily) defined as
-a dependency in a struct:
-
-```go {4}
-// CreateReweighHandler is the handler for the API endpoint to create a reweigh
-type CreateReweighHandler struct {
-	handlers.HandlerConfig
-	creator services.ReweighCreator // our service object
-}
-```
-
-When that struct is being instantiated, they are created using their `New<MyServiceObject>` function:
-
-```go {4}
-// Create an instance of CreateReweighHandler and assign it to our generated Swagger Go code
-sampleAPI.MtoShipmentCreateReweighHandler = CreateReweighHandler{
-    ctx,
-    reweigh.NewReweighCreator(), // instantiating our service object
-}
-```
-
-And finally, once the service object is instantiated, it will be used by calling the function defined in the interface 
-type:
-
-```go
-// Call the service object using the creator set in our handler struct (h, defined above)
-createdReweigh, err := h.creator.CreateReweigh(appCtx, newReweigh)
-```
-
-### Examples
-
-- [CreateUpload](https://github.com/transcom/mymove/blob/master/pkg/services/upload/upload_creator.go)
-- [CreateExcessWeightUpload](https://github.com/transcom/mymove/blob/master/pkg/services/move/excess_weight_uploader.go) - calls `CreateUpload`
-
 
 ## Testing Service Objects
 
@@ -198,4 +159,3 @@ See [testify's docs](https://godoc.org/github.com/stretchr/testify/mock#Call.On)
 ## Resources
 
 * [3 Layer Application Structure](https://docs.google.com/presentation/d/1kVQzrYWY0AnYyPbiqfuFv8Fh_7IwwIFv3XKRxZI44Hs/edit#slide=id.p)
-* [Go by Example: Interfaces](https://gobyexample.com/interfaces)

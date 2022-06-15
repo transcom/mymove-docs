@@ -106,7 +106,8 @@ the `Pet` too. The orchestrators will serve to make sure things are called when 
 
 We'll go through the following:
 
-1. [Learn about service object file structure](./structure)
-1. [Set up service subpackage and interface](./set-up-service-subpackage-and-interface)
-1. [Set up validation pattern](./validation)
-1. [Implement the service objects](./implementation) 
+1. [Learn about service object file structure](structure)
+2. [Set up service subpackage and interface](set-up-service-subpackage-and-interface)
+3. [Set up validation pattern](validation)
+4. [Implement the service objects](implementation) 
+5. [Using service objects](usage)
