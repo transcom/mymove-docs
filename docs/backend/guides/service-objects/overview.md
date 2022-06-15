@@ -72,40 +72,11 @@ service object and have a bit of extra time, try updating the service object you
 here.
 :::
 
-* [Getting Started](./getting-started) 
-* [Structure](./structure)
-* [Set up service subpackage and interface](./set-up-service-subpackage-and-interface)
-* [Set up validation pattern](./validation)
+* [Getting Started](./getting-started)
 
 :::caution Content below is being moved
 The stuff below is being converted to the new format outlined in the links above. As it gets covered in the new 
 pages, I'll remove the corresponding sections below. 
-:::
-
-## Creating Service Objects
-
-
-#### Implementation
-
-**Step #1** involves a query on the database using our ORM, [Pop](https://gobuffalo.io/en/docs/db/getting-started).
-
-```go
-// Set up an empty model to receive any data found by Pop
-mtoShipment := &models.MTOShipment{}
-// Find the shipment using the ShipmentID provided in our reweigh input
-err := appCtx.DB().Find(mtoShipment, reweigh.ShipmentID)
-if err != nil {
-    // Return our standard NotFoundError type if there's an error
-    return nil, services.NewNotFoundError(reweigh.ShipmentID, "while looking for MTOShipment")
-}
-```
-
-:::info
-Now that the function is filled out, you'll want to refactor it by extracting each logical step into a separate, 
-smaller, and well-named private function. We should strive to keep all functions as small as possible for readability.
-
-[ApproveOrRejectServiceItem](https://github.com/transcom/mymove/blob/master/pkg/services/mto_service_item/mto_service_item_updater.go#L44-L123)
-is a good example of a function that performs a lot of actions, and each one is encapsulated in a separate function.
 :::
 
 ## Using Service Objects
