@@ -17,3 +17,9 @@ jobs:
 
       - name: Build Docusaurus from source
         run: yarn build
+
+      - name: Save build
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: docusaurus-build
+          path: build/
