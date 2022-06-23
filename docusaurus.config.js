@@ -5,9 +5,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 // help, but shouldn't be relied on indefinitely as they are client-side only
 // and they increase the build time for the project.
 const FrontendPages = require('./utils/redirect-frontend');
-const BackendPages  = require('./utils/redirect-backend');
-const ToolsPages    = require('./utils/redirect-tools');
-const APIPages      = require('./utils/redirect-api');
+const BackendPages = require('./utils/redirect-backend');
+const ToolsPages = require('./utils/redirect-tools');
+const APIPages = require('./utils/redirect-api');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
@@ -35,10 +35,16 @@ module.exports = {
           label: 'About',
         },
         {
-            type: 'doc',
-            docId: 'frontend/index',
-            position: 'left',
-            label: 'Frontend',
+          type: 'doc',
+          docId: '/adrs',
+          position: 'left',
+          label: 'ADRs',
+        },
+        {
+          type: 'doc',
+          docId: 'frontend/index',
+          position: 'left',
+          label: 'Frontend',
         },
         {
           type: 'doc',
@@ -47,22 +53,22 @@ module.exports = {
           label: 'Backend',
         },
         {
-            type: 'doc',
-            docId: 'api/index',
-            position: 'left',
-            label: 'API',
+          type: 'doc',
+          docId: 'api/index',
+          position: 'left',
+          label: 'API',
         },
         {
-            type: 'doc',
-            docId: 'tools/index',
-            position: 'left',
-            label: 'Tools',
+          type: 'doc',
+          docId: 'tools/index',
+          position: 'left',
+          label: 'Tools',
         },
         {
-            type: 'doc',
-            docId: 'help/index',
-            position: 'left',
-            label: 'Help',
+          type: 'doc',
+          docId: 'help/index',
+          position: 'left',
+          label: 'Help',
         },
         {
           href: 'https://github.com/transcom/mymove',
