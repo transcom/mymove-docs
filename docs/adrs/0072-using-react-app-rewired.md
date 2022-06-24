@@ -1,5 +1,5 @@
 ---
-title: 00XX Using React-App-Rewired
+title: 0072 Using React-App-Rewired
 description: |
   Decision outcome: Dynamically patch the configurations
 ---
