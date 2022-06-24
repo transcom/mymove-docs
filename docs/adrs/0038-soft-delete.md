@@ -1,7 +1,7 @@
 ---
 title: 0038 Use Soft Delete Instead of Hard Delete
 description: |
-    Decision outcome:
+    Decision outcome: Introduce soft deletion into the system
 ---
 # Use Soft Delete Instead of Hard Delete
 

@@ -2,7 +2,7 @@
 title: |
     0034 Working With Mocks: Generation and Assertion
 description: |
-    Decision outcome:
+    Decision outcome: Use Mockery and Testify
 ---
 # *Working With Mocks: Generation and Assertion*
 

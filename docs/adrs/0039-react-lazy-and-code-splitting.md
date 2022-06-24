@@ -1,7 +1,7 @@
 ---
 title: 0039 Use React Lazy for code splitting
 description: |
-    Decision outcome:
+    Decision outcome: Use React Lazy
 ---
 # Use React Lazy for code splitting
 

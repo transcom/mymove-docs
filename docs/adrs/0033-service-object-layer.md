@@ -1,7 +1,9 @@
 ---
 title: 0033 Service Object Layer
 description: |
-    Decision outcome:
+    Decision outcome: Adopt service object layer, an architectural pattern for
+    writing code that allows for encapsulation of logic, code re-usability,
+    ultimately keeping our handler code much less complex and more lightweight.
 ---
 # *Service Object Layer*
 
@@ -36,7 +38,7 @@ This, in turn, lead to a search for a Dependency Injection framework for golang 
 
 ## Decision Outcome
 
-Adopt service object layer, an architectural pattern for writing code that allows for encapsulation of logic, code reusability, ultimately keeping our handler code much less complex and more lightweight.
+Adopt service object layer, an architectural pattern for writing code that allows for encapsulation of logic, code re-usability, ultimately keeping our handler code much less complex and more lightweight.
 
 Resources:
 

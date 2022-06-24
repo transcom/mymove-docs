@@ -1,9 +1,9 @@
 ---
-title: 0035 Use Query Builder for for Admin Interface
+title: 0035 Use Query Builder for Admin Interface
 description: |
-    Decision outcome:
+    Decision outcome: Write a generic query builder
 ---
-# Use Query Builder for for Admin Interface
+# Use Query Builder for Admin Interface
 
 **User Story:**
 
@@ -29,7 +29,7 @@ and the possibilities become exponential.
 
 Along with being inflexible,
 the current model fetching models are inconsistent across the codebase.
-Filters, sorting, or joins are ad hoc based on handler or feature needs.
+Filters, sorting, or joins are ad-hoc based on handler or feature needs.
 This causes issues with maintenance, performance consistency, and security scoping.
 
 This ADR will mostly focus on filtering data,

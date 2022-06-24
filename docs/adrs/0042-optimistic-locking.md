@@ -1,7 +1,7 @@
 ---
 title: 0042 Use If-Match / E-tags for optimistic locking
 description: |
-    Decision outcome:
+    Decision outcome: Use E-tags for optimistic locking
 ---
 # Use If-Match / E-tags for optimistic locking
 

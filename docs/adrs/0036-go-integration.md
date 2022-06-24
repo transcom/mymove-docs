@@ -1,7 +1,8 @@
 ---
 title: 0036 Use Separate Integration Package for Go Integration Tests
 description: |
-    Decision outcome:
+    Decision outcome: Move integration tests to separate package and flag the
+    suite with testing.Short
 ---
 # Use Separate Integration Package for Go Integration Tests
 

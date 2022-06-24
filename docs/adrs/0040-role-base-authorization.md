@@ -1,7 +1,7 @@
 ---
 title: 0040 Add Role-Based Authorization
 description: |
-    Decision outcome:
+    Decision outcome: Implement Role-Based Access Control in Middleware
 ---
 # Add Role-Based Authorization
 

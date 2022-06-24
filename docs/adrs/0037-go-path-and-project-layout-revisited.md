@@ -1,7 +1,7 @@
 ---
 title: 0037 Put mymove outside of standard GOPATH
 description: |
-    Decision outcome:
+    Decision outcome: Move repository outside of $GOPATH and explicitly set GO111MODULE=auto.
 ---
 # Put mymove outside of standard GOPATH
 
