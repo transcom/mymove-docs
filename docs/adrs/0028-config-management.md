@@ -11,7 +11,7 @@ description: |
 
 ## Context and Problem Statement
 
-Our webserver (`github.com/transcom/mymove/cmd/webserver`) currently supports config variables defined as flags or environment variables (via `github.com/namsral/flag`), but our use of config throughout the application is not managed in a cohesive way.  While the use of [direnv](https://direnv.net/) and `.envrc` provides some basic external validation of the environment variables, we have a need to bring config parsing and validation logic into the application itself.  Beyond whether a config variable is set or not, we need to validate the values of these variables.  For example:
+Our webserver (`https://github.com/transcom/mymove/cmd/webserver`) currently supports config variables defined as flags or environment variables (via `https://github.com/namsral/flag`), but our use of config throughout the application is not managed in a cohesive way.  While the use of [direnv](https://direnv.net/) and `.envrc` provides some basic external validation of the environment variables, we have a need to bring config parsing and validation logic into the application itself.  Beyond whether a config variable is set or not, we need to validate the values of these variables.  For example:
 
 * is a port in the range from `8000 - 8999`,
 * is the hostname valid,
@@ -40,8 +40,8 @@ The use of a more robust config framework with standard patterns will enable the
 
 * Built-in flag package
 * Viper & pflag
-* github.com/namsral/flag
-* github.com/jessevdk/go-flags
+* https://github.com/namsral/flag
+* https://github.com/jessevdk/go-flags
 
 ## Decision Outcome
 
@@ -120,9 +120,9 @@ func main() {
 }
 ```
 
-### github.com/namsral/flag
+### https://github.com/namsral/flag
 
-[flag](github.com/namsral/flag) is a drop-in replacement for Go's flag package that adds support for environment variables.  Currently used by our webserver (`github.com/transcom/mymove/cmd/webserver`).
+[flag](https://github.com/namsral/flag) is a drop-in replacement for Go's flag package that adds support for environment variables.  Currently used by our webserver (`https://github.com/transcom/mymove/cmd/webserver`).
 
 * Bad, not maintained (the last code update was December 28, 2016).
 * Good, supports bool, (u)int, (u)int64, (u)float64, time.Duration, and string (drop in replacement for built-in flag package)
@@ -132,7 +132,7 @@ func main() {
 * Bad, cannot mark variables as required.
 * Bad, invalid values cause panic (making custom sanity checks impossible)
 
-### github.com/jessevdk/go-flags
+### https://github.com/jessevdk/go-flags
 
 [go-flags](https://github.com/jessevdk/go-flags) enhances the functionality of the builtin `flag` package with support for many useful features.  You define your config as a single struct using fields and [struct tags](https://medium.com/golangspec/tags-in-golang-3e5db0b8ef3e).  Currently used by [truss-aws-tools](https://github.com/trussworks/truss-aws-tools).
 

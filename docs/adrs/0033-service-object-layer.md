@@ -9,11 +9,11 @@ description: |
 objects when it comes to how they should interact with each other when they're closely related. While it doesn't
 supersede this one, it may be helpful to read after reading this one.
 
-Currently the web service is built as two layers, Web Handlers ([pkg/handlers](https://github.com/transcom/mymove/tree/master/pkg/handlers)) which implement interfaces based on the swagger definitions of the services provided by the server and Model Objects ([pkg/models]((https://github.com/transcom/mymove/tree/master/pkg/models))) which marshal object representations of data in and out of the database.
+Currently the web service is built as two layers, Web Handlers ([pkg/handlers](https://github.com/transcom/mymove/tree/master/pkg/handlers)) which implement interfaces based on the swagger definitions of the services provided by the server and Model Objects ([pkg/models](https://github.com/transcom/mymove/tree/master/pkg/models)) which marshal object representations of data in and out of the database.
 
 We are currently coming across a number of issues which suggest that we have reached the limits of what such a naive, two-layer design can easily support, viz:
 
-It is not clear where Authorization code should live, i.e. code which enforces that logged in users only see and can access the data pertinent to them. Currently this is in the models (see [ADR 0024](https://github.com/transcom/mymove/blob/master/docs/adr/0024-model-authorization-and-handler-design.md)) but that means that models cannot be used for tools applications with different authorization controls, e.g. bulk loaders or admin interfaces.
+It is not clear where Authorization code should live, i.e. code which enforces that logged in users only see and can access the data pertinent to them. Currently this is in the models (see [ADR 0024](./0024-model-authorization-and-handler-design.md)) but that means that models cannot be used for tools applications with different authorization controls, e.g. bulk loaders or admin interfaces.
 Furthermore, there is no place for code which touches multiple models, but is used by more than one handler, e.g. enforcing coherent state for multiple object relating to the same move (aka 'state machines') or making sure invoices line items are consistent between the GBL and the invoice.
 There is little or no encapsulation in the layers, so details of pop (database ORM) usage are in the handlers and equally swagger details appear in the model code. These examples and others show how painful our experiences with testing and refactoring could be.
 
