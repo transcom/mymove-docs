@@ -10,7 +10,7 @@ The intention for this wiki is to share our collective knowledge on best practic
 :::info Architectural Decision Records
 
 If you are looking to understand choices made in this project, see the list of
-[ADRs in the MilMove repository][gh-adr-readme].
+[ADRs in the MilMove project](../adrs/).
 
 :::
 
