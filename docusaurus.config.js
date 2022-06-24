@@ -87,6 +87,10 @@ module.exports = {
               label: 'About',
               to: '/docs/about',
             },
+            {
+              label: 'Architecture Decision Records',
+              to: '/docs/adrs',
+            },
           ],
         },
         {
