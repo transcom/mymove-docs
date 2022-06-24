@@ -18,7 +18,7 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/tools/docusaurus/docusaurus',
+    to: '/docs/tools/docusaurus/',
     from: [
       '/docs/dev/tools/docusaurus',
     ],
@@ -66,7 +66,7 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/tools/schemaspy/schemaspy',
+    to: '/docs/tools/schemaspy/',
     from: [
       '/docs/dev/tools/SchemaSpy',
     ],

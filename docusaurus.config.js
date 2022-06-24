@@ -148,24 +148,24 @@ module.exports = {
       {
         specs: [
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/admin.yaml',
-            routePath: '/api/admin',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/admin.yaml',
+            route: '/api/admin',
           },
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/internal.yaml',
-            routePath: '/api/internal',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/internal.yaml',
+            route: '/api/internal',
           },
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/ghc.yaml',
-            routePath: '/api/ghc',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/ghc.yaml',
+            route: '/api/ghc',
           },
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
-            routePath: '/api/prime',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
+            route: '/api/prime',
           },
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
-            routePath: '/api/support',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
+            route: '/api/support',
           },
         ],
       }
