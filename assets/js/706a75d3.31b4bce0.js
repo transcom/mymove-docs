@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmymove_docs=self.webpackChunkmymove_docs||[]).push([[8928],{93297:function(e){e.exports=JSON.parse('{"specUrl":"https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml","type":"url","content":"https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml"}')}}]);
