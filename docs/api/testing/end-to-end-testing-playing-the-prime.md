@@ -8,7 +8,7 @@ This page includes instructions on how to complete basic functions as the Prime 
 
 ## Setup
 
-* [Install mTLS integrations certificate](https://github.com/transcom/transcom-infrasec-com/blob/master/docs/mtls-certs.md) on your local machine
+* [Install mTLS integrations certificate](https://dp3.atlassian.net/wiki/spaces/MT/pages/1321598984/mTLS+Integrations+Certificate) on your local machine
 
 * [Configure Postman for mTLS API calls](/docs/tools/postman/setup-postman-to-make-mutual-tls-api-calls)
   * Use your mTLS integrations certificate in place of the dev certs
