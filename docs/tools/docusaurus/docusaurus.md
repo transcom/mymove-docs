@@ -38,12 +38,14 @@ mymove-docs/
 ├── docs/  <- All of our docs should go in this directory
 │   ├── about/
 │   │   ├── ^ These docs give context on MilMove.
-│   ├── dev/
-│   │   ├── ^ These docs are relevant for developing or using the MilMove app.
+│   ├── api/
+│   │   ├── ^ These docs are about the MilMove internal or external APIs.
+│   ├── backend/
+│   │   ├── ^ These docs are about the backend, which is a Golang server.
+│   ├── frontend/
+│   │   ├── ^ These docs are about the React frontend.
 │   ├── help/
 │   │   ├── ^ HALP! These docs should help folks resolve common issues encountered in the system.
-│   ├── tutorial/
-│   │   ├── ^ This folder preserves the original Docusaurus Tutorial. Do NOT add any docs here.
 │   ├── vault/
 │   │   ├── ^ This folder is the place to store experimental, archived, or deprecated docs.
 ```

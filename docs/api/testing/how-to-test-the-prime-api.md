@@ -75,7 +75,7 @@ go run ./cmd/prime-api-client --insecure <subcommand> <additional_flags> | jq
 
 ## Testing on Staging or Experimental
 
-You will first have to complete [these steps](https://github.com/transcom/mymove/wiki/use-mtls-with-cac) to create CAC access.
+You will first have to complete [these steps](https://dp3.atlassian.net/l/c/use2NV2M) to create CAC access.
 
 Additionally, those changes must be deployed to each environment. Merging to master will deploy to staging. But you need to explicitly deploy to experimental to get access there, otherwise you won't have access.
 
@@ -106,7 +106,7 @@ go run ./cmd/prime-api-client --cac --hostname api.exp.move.mil --port 443 <subc
 
 You will be prompted to enter your CAC pin. This will be the same pin you created when picking up your CAC.
 
-If you have trouble, you can [[troubleshoot CAC issues here|Troubleshoot-CAC-Reader-Issues]]
+If you have trouble, you can [troubleshoot CAC issues here](https://dp3.atlassian.net/l/c/hPM2fRq5)
 
 ## Tips and Tricks
 

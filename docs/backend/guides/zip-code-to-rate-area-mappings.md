@@ -14,11 +14,11 @@ This data set will evolve over time, but should be used when
 * An external party wants to know what zip code to rate area associations mymove is currently using.
 
 ### Zip Code to Rate Area Mappings
-* #### [Zip3 to Rate Area Mappings](/transcom/mymove/blob/master/pkg/services/ghcimport/fixtures/tariff400ng_zip3s_fixture.csv "Zip3 to Rate Area Associations")
+* #### [Zip3 to Rate Area Mappings](#zip-code-to-rate-area-mappings) "Zip3 to Rate Area Associations")
   * **Note:** Some `zip3s` span multiple `rate_areas`. This happens specifically in larger states: CA, TX, and FL. In the case that a `zip3` spans multiple `rate_areas`, the `zip3's` `rate_area` value will be `ZIP` in the data set. A more specific `zip5` will be used to determine the `rate_area` in these cases.
 
 
-* #### [Zip5 to Rate Area Mappings](/transcom/mymove/blob/master/pkg/services/ghcimport/fixtures/tariff400ng_zip5_rate_areas_fixture.csv "Zip5 to Rate Area Associations")
+* #### [Zip5 to Rate Area Mappings](#zip-code-to-rate-area-mappings) "Zip5 to Rate Area Associations")
 
 
 

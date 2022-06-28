@@ -4,7 +4,7 @@ sidebar_position: 8
 
 # React forms using Formik
 
-**See also:** [[Create a Form Using Formik]]
+**See also:** [Create a Form Using Formik](create-a-form-using-formik.md)
 
 On the frontend MyMove is migrating from creating forms using the [redux-form](https://redux-form.com/) library in favor of [Formik](https://formik.org/). One major reason for the change is the desire to remove storing frequent state changes in the global redux store, when most form components can manage this locally. Using this pattern will ideally lead to more performant and self contained code.
 

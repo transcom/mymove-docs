@@ -47,7 +47,7 @@ _, err = event.TriggerEvent(event.Event{
     MtoID:           mtoID,                                 // ID of the associated Move
     Request:         params.HTTPRequest,                    // Pass on the http.Request
     DBConnection:    h.DB(),                                // Pass on the pop.Connection
-    HandlerContext:  h,                                     // Pass on the handlerContext
+    HandlerConfig:   h,                                     // Pass on the handlerConfig
 })
 // If the event trigger fails, just log the error.
 if err != nil {
@@ -73,7 +73,7 @@ The events are always `<LogicalObject>.<Verb>` events, so if you update any tabl
 
 When you call the `TriggerEvent`, you have to pass in the UpdatedObjectID. The updated object is again, the logical object that got updated. If you updated payment_service_items, your UpdatedObjectID is the UUID of the associated Payment Request.
 
-###  What is the MtoID?
+### What is the MtoID?
 
 The MtoID is the UUID of the overall parent Move. (It is called MtoID because we recently consolidated the Move and MTO tables so in our DB they are the same, but Prime understands Move Task Order)
 

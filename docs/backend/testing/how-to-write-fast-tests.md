@@ -38,7 +38,7 @@ suite.T().Run("When office user is not TOO, response should be 403", func(t *tes
     }
 
     handler := ListMoveOrdersHandler{
-      handlers.NewHandlerContext(suite.DB(), suite.TestLogger()),
+      handlers.NewHandlerConfig(suite.DB(), suite.TestLogger()),
       moveOrderFetcher,
     }
     response := handler.Handle(params)
@@ -64,7 +64,7 @@ suite.T().Run("failed fetch of payment requests", func(t *testing.T) {
     }
 
     handler := ListPaymentRequestsHandler{
-      handlers.NewHandlerContext(suite.DB(), suite.TestLogger()),
+      handlers.NewHandlerConfig(suite.DB(), suite.TestLogger()),
       paymentRequestListFetcher,
     }
     response := handler.Handle(params)

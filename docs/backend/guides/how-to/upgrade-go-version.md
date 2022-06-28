@@ -22,11 +22,12 @@ Upgrading the Go version that we use happens in roughly these steps:
 
 ## 2. Upgrade Local Go Version
 
-For more details see [[Manage golang with asdf]]
+### asdf
+
+For more details see [Manage golang with asdf](manage-golang-with-asdf.md)
 
 - Update `.tool-versions` to point to new version of golang
-  - If you've done some PATH sorcery to point to a specific Go version (as detailed [here](https://github.com/transcom/mymove#setup-prerequisites)), you'll have to update that as well
-- Run `asdf install` to install the new version (if you do not yet have it installed, see [How to get up and running](https://github.com/transcom/mymove/wiki/Manage-golang-with-asdf#how-to-get-up-and-running))
+- Run `asdf install` to install the new version (if you do not yet have it installed, see [How to get up and running](manage-golang-with-asdf.md)
 - Run `asdf global golang <version>` to update global version as well
 - `go version` and `asdf which go` to check it worked
 - Add this change to the PR created in the next step
@@ -38,6 +39,11 @@ go version go1.16.4 darwin/amd64
 ❯ asdf which go
 /Users/john/.asdf/installs/golang/1.16.4/go/bin/go
 ```
+
+### nix
+
+- Update `nix/default.nix` (you will also need to [update the hash](https://ahobson.github.io/nix-package-search))
+- Run `./nix/update.sh`
 
 ## 3. Update `transcom/mymove` Repo
 
@@ -58,22 +64,41 @@ go version go1.16.4 darwin/amd64
     - `scripts/gen-assets`
     - `scripts/gen-server`
     - `scripts/pre-commit-swagger-validate`
-    - `GOVERSION` in `scripts/prereqs`
+    - `scripts/run-e2e-test-docker`
     - `Makefile` the `docker_circleci` task
-    - `nix/default.nix` (you will also need to [update the hash](https://ahobson.github.io/nix-package-search))
+    - `.go-version`
+    - `README.md` (there's a path in the nix section that references a go version number)
 - If the major/minor version changed (the first or second number, e.g. 1.x.y to 2.x.y or 1.15.x to 1.16.x):
   - [Example PR](https://github.com/transcom/mymove/pull/4990)
   - Update the following files with the new go version:
-    - `go-version` in `.github/workflows/be-linter.yml`
     - `go-version` in `.github/workflows/go-auto-approve.yml`
-    - `VERSION_NUMBER` in `scripts/check-go-version`
     - `go.mod`
 - Rerun the Go formatter on the codebase with `pre-commit run --all-files golangci-lint`
 - Regenerate mocks (in case the signatures have changed that we're mocking): `make mocks_generate`
 - Run `make e2e_test_docker` to test that the `Dockerfile.*local` files work  with the new image.
 - Commit the above changes and any reformatted code and make sure everything builds correctly on CircleCI
+- You may also want to check for an upgrade to the `golangci-lint` version ([example](https://github.com/transcom/mymove/pull/8327/files#r835384615)), particularly if doing a major Go version upgrade
 
 ## 4. Notify Folks
 
 - It can be jarring when everything suddenly breaks after pulling from master, so it's a nice courtesy to notify folks in #prac-engineering in slack that the official Go version will be updated shortly and their local Go version should be upgraded as well
 - If `circleci-lint` has changed as well, then in-flight PRs will need to be formatted before they are merged, lest they break master
+
+### Message template
+Below is an example message one can use as a template for their notification to #prac-engineering (credit: Reggie R):
+
+```
+@engineering I just merged a [PR](https://github.com/transcom/mymove/pull/8244) 
+that upgrades the project to [Go 1.17.7](https://go.dev/doc/devel/release#go1.17) (which includes security fixes). 
+When you pull that, here’s what to do if you’re using asdf:
+
+
+`asdf install`
+`asdf global golang 1.17.7`
+
+
+You may need to restart your terminal after this if you still see mention of 1.17.5 when building.  
+If you happen to be using nix instead, you should be prompted to run `./nix/update.sh` after pulling.  
+If you’re using an IDE, you may need to adjust it to point to 1.17.7 too.  
+
+```

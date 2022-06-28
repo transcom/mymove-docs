@@ -75,7 +75,7 @@ High level overview diagrams
 * [GHC Fuel Surcharge Pricer](https://docs.google.com/document/d/19vlZsZDPqrWnk6GWv7xfZ_GLLGvRfMllWw7ihHTWTnQ/edit#heading=h.v28rizfh9b9b)
 * [SIT Pricing Notes](https://docs.google.com/document/d/1jRl91aslMnOMt2zS1tt_XT0lD1I-xvsiKOfprAaFrAs/edit#heading=h.od9n7nbhtjs5)
 * [Pricing Service Items Design](https://docs.google.com/document/d/1KBQWC1bSUC6S69w-1fcdDpPId4tEiTZDQZfTTBNieVU/edit#heading=h.f6ntcg9hwkij)
-* [[noodling] Reweighs: Invoicing engineer](https://miro.com/app/board/o9J_l3lkp8s=/)
+* [(noodling) Reweighs: Invoicing engineer](https://miro.com/app/board/o9J_l3lkp8s=/)
 * [Payment Request Uploader Design](https://miro.com/app/board/o9J_kuh516s=/?moveToWidget=3074457347367317910&cot=14) and [GH pull request](https://github.com/transcom/mymove/pull/3775) for the refactor.
 * [SIT Pricing Distance Flow Design](https://miro.com/app/board/o9J_lZAfvO0=/?moveToWidget=3074457353115567897&cot=14)
 * [Design how data will be imported into production](https://docs.google.com/document/d/1QVwY5uobUpz87WEeAXSnIXG0NE1o4YnFW0Lf7PnMqO0/edit#heading=h.8wmuqkn9o6rd)

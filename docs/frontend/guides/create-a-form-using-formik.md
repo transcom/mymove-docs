@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # How to Create a Form using Formik
 
-**See also:** [[React forms using Formik]]
+**See also:** [React forms using Formik](react-forms-using-formik.md)
 
 ## Introduction
 

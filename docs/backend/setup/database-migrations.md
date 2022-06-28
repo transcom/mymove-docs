@@ -6,15 +6,16 @@ sidebar_position: 4
 
 If you need to change the database schema, you'll need to write a migration. These are the general steps you'll need to follow:
 
-1. [Generate a new migration file](#Creating-Migrations)
+1. [Generate a new migration file](#creating-Migrations)
 1. [Add the new SQL to the generated file](#writing-migrations)
-1. [Set up your database](#Setup)
-1. [Run the migrations](#Running-Migrations)
+1. [Set up your database](#setup)
+1. [Run the migrations](#running-migrations)
+1. [Update migrations locally](#update-migrations-locally)
 1. Test your new migration
 
 After your testing, if you find that you need to change your migration, you'll need to reset your DB (`make db_<env>_reset`) and rerun the migrations to make sure your updates are reflected in the local DB instance. 
 
-Once you have completed your testing, push your changes up for review! You'll need a review from someone in the DB reviewers group, and if it's a secure migration, you'll need to test your changes on Experimental. Read [[these instructions|deploy-to-experimental]] to learn about deploying to Experimental.
+Once you have completed your testing, push your changes up for review! You'll need a review from someone in the DB reviewers group, and if it's a secure migration, you'll need to test your changes on Experimental. Read [these instructions](https://dp3.atlassian.net/l/c/5G1P0dX0) to learn about deploying to Experimental.
 
 <!-- markdownlint-disable MD029 MD038 -->
 
@@ -97,56 +98,113 @@ When you are writing the code for your new migration, there are a few things you
 
 ### Adding a new table
 
-If you are creating a new table, first generate a new migration file. When creating the SQL you may write the migration like this:
+This section covers what it's like to add a new table, though some information is helpful when editing existing 
+tables/models as well.
 
-```sql
-create table new_table
-(
-    id uuid
-        constraint new_table_pkey primary key,
-    column1 text not null,
-    column2 text,
-    created_at timestamp not null,
-    updated_at timestamp not null
-);
-```
+For the examples in this section, we'll be adding a new model called `Cat`, with a corresponding table called `cats`.
 
-Then create a new models file in `pkg/models/` named after your new table. For this example, that would be `new_table.go`. The contents will look like:
+:::note Table Name vs Model Name
+
+Notice how the model name is singular, while the table name is pluralized. This is a convention of `Pop`, our ORM.
+See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-started) for more info.
+
+:::
+
+1. [Generate a new migration file](#creating-migrations).
+1. Open the generated SQL file and add the logic to create your table.  When creating the SQL you may write the migration like this:
+
+    ```sql
+    CREATE TABLE cats
+    (
+        id uuid PRIMARY KEY NOT NULL,
+        created_at timestamp NOT NULL,
+        updated_at timestamp NOT NULL,
+        name text NOT NULL,
+        birthday date,
+        gotcha_day date,
+        bio text,
+        weight int
+    );
+    
+    COMMENT on TABLE cats IS 'Store cats and their details.';
+    COMMENT on COLUMN cats.name IS 'The official name of a cat...nicknames might need their own table...';
+    COMMENT on COLUMN cats.birthday IS 'Date the cat was born.';
+    COMMENT on COLUMN cats.gotcha_day IS 'Date the cat was adopted. May be same as birthday.';
+    COMMENT on COLUMN cats.bio IS 'Big text field for owners to tell you everything about their cat.';
+    COMMENT on COLUMN cats.weight IS 'Current weight of the cat, or at least what they weighed the last time they let you weigh them.';
+    ```
+
+    Some things to note:
+
+    1. The SQL keywords don't need to be capitalized, but it can be nice to differentiate some of them from certain 
+       things like the field names or types.
+    2. We want to add comments for the table itself and every column other than the `id`, `created_at`, and `updated_at`
+       fields. This makes it easier for future folks to understand what the columns were meant for.
+    3. You might see some migrations use `varchar` instead of `text`. It's the same thing in the end, see
+       [Postgresql Character Types](https://www.postgresqltutorial.com/postgresql-char-varchar-text/) for more info.
+    
+1. Now you can create a new file in `pkg/models/` named after your new model. So for this, we'll have a new file 
+    `pkg/models/cat.go` that will look something like this:
+
+    ```go
+    package models
+    
+    import (
+        "time"
+    
+        "github.com/gofrs/uuid"
+    
+        "github.com/transcom/mymove/pkg/unit"
+    )
+    
+    // Cat contains all the information relevant to a cat...
+    type Cat struct {
+        ID         uuid.UUID   `json:"id" db:"id"`
+        CreatedAt  time.Time   `json:"created_at" db:"created_at"`
+        UpdatedAt  time.Time   `json:"updated_at" db:"updated_at"`
+        Name       string      `json:"name" db:"name"`
+        Birthday   *time.Time  `json:"birthday" db:"birthday"`
+        GotchaDay  *time.Time  `json:"gotcha_day" db:"gotcha_day"`
+        Bio        *string     `json:"bio" db:"bio"`
+        Weight     *unit.Pound `json:"weight" db:"weight"`
+    }
+    
+    // Cats is a list of Cats
+    type Cats []Cat
+    ```
+
+   Some things to note:
+    1. The field names here are pascal case, while in the struct tags, we use the snake case version. 
+    1. Notice how we used `string` for `Name`, while we used `*string` for `Bio`. We have a loose convention around
+       using pointers for optional (nullable) fields, and the concrete type for required fields.
+        1. One important thing to note here is that this will affect patch requests if you want the API caller to be 
+           able to make a request without passing in all the non-nullable fields each time. Some options which we use 
+           for existing models:
+            1. Make the field a pointer on the model. This means you will need to have validation somewhere though to
+               ensure that we save a valid value to the DB in the end.
+            1. Follow a pattern similar to the
+               [PPM shipment updater](https://github.com/transcom/mymove/blob/088b87605f19b18b022ff718fcbd5eb8f6962585/pkg/services/ppmshipment/ppm_shipment_updater.go#L44-L49)
+               which merges the new and old shipment _before_ validating the shipment.
+    1. We define the plural `type` under the main struct as a slice of the type.
+       1. You might see some models that don't follow this pattern, but generally we prefer to follow it so if you are
+          adding a new table it's best to stick with this pattern.
+    
+1. Now you will want to run the migration to test it out with `make db_dev_migrate`.
+
+#### Model/Table Names With Acronyms
+
+If your model/table name has an acronym in it, e.g. `PPMShipment`/`ppm_shipments`, you will need to define a receiver 
+function called `TableName` for the model struct that helps `Pop` know what the table name should be. An example is our 
+[`PPMShipment` model's receiver function](https://github.com/transcom/mymove/blob/9c2a281dbd777b77064c1ae563531a3f0c7bf9d0/pkg/models/ppm_shipment.go#L62-L65):
 
 ```go
-package models
-
-import (
-  "time"
-
-  "github.com/gobuffalo/pop"
-  "github.com/gobuffalo/validate"
-  "github.com/gobuffalo/validate/validators"
-  "github.com/gofrs/uuid"
-)
-
-// NewTable represents a new table
-type NewTable struct {
-  ID        uuid.UUID `json:"id" db:"id"`
-  Column1   string    `json:"column1" db:"column1"`
-  Column2   *string   `json:"column2" db:"colunn2"`
-  CreatedAt time.Time `json:"created_at" db:"created_at"`
-  UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
-}
-
-// NewTables is not required by pop and may be deleted
-type NewTables []NewTable
-
-// Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
-// This method is not required and may be deleted.
-func (r *NewTable) Validate(tx *pop.Connection) (*validate.Errors, error) {
-  return validate.Validate(
-    &validators.StringIsPresent{Field: r.Column1, Name: "Column1"},
-  ), nil
+// TableName overrides the table name used by Pop. By default it tries using the name `ppmshipments`.
+func (p PPMShipment) TableName() string {
+	return "ppm_shipments"
 }
 ```
 
-Now you will want to run the migration to test it out with `make db_dev_migrate` before making your PR.
+As the comment indicates, `Pop` resolves the name incorrectly because the acronym in the model name throws it off.
 
 ## Running Migrations
 
@@ -157,6 +215,17 @@ Migrations are run by the `milmove migrate` command. This allows us to leverage 
 - `make db_deployed_migrations_migrate`
 
 The reason to use a `make` target is because it will correctly set the migration flag variables and target the correct database with environment variables.
+
+## Update Migrations Locally
+In the event that you need to make an edit to a migration that you have just created prior to merging it into the main branch, 
+you can update the migration with your edits and rerun it using: 
+
+```sh
+make db_dev_reset db_dev_migrate
+``` 
+
+This command will reset the database and re-add all migrations, including your updated one. Double check that you see 
+the database changes after making your edits and running the `make` commands. 
 
 ## Secure Migrations
 
@@ -296,10 +365,10 @@ As a good practice, all of our migrations should create a database state that wo
 Eg: If we need to rename a column, doing a traditional rename would cause the app to fail if the database changes went live before the new application code (pointing to the new column name) went live. Instead, this should be done in [six steps[(https://github.com/ankane/strong_migrations#renaming-a-column), where each step gets deployed separately:
 
 1. Create a new column
-2. Write to both columns
-3. Backfill data from the old column to the new column
-4. Move reads from the old column to the new column
-5. Stop writing to the old column
-6. Drop the old column
+1. Write to both columns
+1. Backfill data from the old column to the new column
+1. Move reads from the old column to the new column
+1. Stop writing to the old column
+1. Drop the old column
 
 Similarly, if a column needs to be dropped, we should deprecate the column in one pull request and then actually remove it in a follow-up pull request. Deprecation can be done by renaming the column to `deprecated_column_name`. This process has an added side affect of helping us keep our migrations reversible, since columns can always be re-added, but getting old data back into those columns is a more difficult process.

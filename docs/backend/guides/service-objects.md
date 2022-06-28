@@ -153,7 +153,7 @@ Once you have your bare function signature, you can start to fill in the paramet
 Service objects should be reusable and modular, so keep this in mind while defining your parameters. To start with, they should be the bare minimum needed for someone to call this function. Use your best judgment.
 
 :::info
-You will always need to pass in the `AppContext` as the first argument. This is standard in our codebase. Read more about [AppContext and how to use it](use-stateless-services-with-app-context).
+You will always need to pass in the `AppContext` as the first argument. This is standard in our codebase. Read more about [AppContext and how to use it](use-stateless-services-with-app-context.md).
 :::
 
 Often, the particular model type you are dealing with is passed in as input as well. This is not a hard rule, but it is a common convention. For our example, we are creating a reweigh and therefore will need information from a `models.Reweigh` type.
@@ -380,7 +380,7 @@ In either case, they will be used in much the same way. Service objects are ofte
 ```go {4}
 // CreateReweighHandler is the handler for the API endpoint to create a reweigh
 type CreateReweighHandler struct {
-	handlers.HandlerContext
+	handlers.HandlerConfig
 	creator services.ReweighCreator // our service object
 }
 ```

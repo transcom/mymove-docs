@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Feature flags in the app
 
-To add a new feature flag, see [[How to Set Up a Feature Flag]].
+To add a new feature flag, see [How to Set Up a Feature Flag](how-to/set-up-a-feature-flag.md).
 
 Here are the feature flags being used in the app:
 

@@ -5,7 +5,7 @@ sidebar_position: 5
 # Writing Frontend Tests for MilMove
 
 This guide covers how MilMove writes tests using RTL. 
-Perhaps you have stumbled across this guide, but are looking for generic strategies. That is covered in [this wiki](https://github.com/transcom/mymove/wiki/Writing-Tests-Using-React-Testing-Library-and-Jest).
+Perhaps you have stumbled across this guide, but are looking for generic strategies. That is covered in [this wiki](writing-tests-using-react-testing-library-and-jest.md).
 
 ## Common Mocks
 

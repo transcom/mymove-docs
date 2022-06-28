@@ -5,9 +5,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 // help, but shouldn't be relied on indefinitely as they are client-side only
 // and they increase the build time for the project.
 const FrontendPages = require('./utils/redirect-frontend');
-const BackendPages  = require('./utils/redirect-backend');
-const ToolsPages    = require('./utils/redirect-tools');
-const APIPages      = require('./utils/redirect-api');
+const BackendPages = require('./utils/redirect-backend');
+const ToolsPages = require('./utils/redirect-tools');
+const APIPages = require('./utils/redirect-api');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
@@ -15,8 +15,8 @@ module.exports = {
   tagline: '',
   url: 'https://transcom.github.io',
   baseUrl: '/mymove-docs/',
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'USTransCom',
   projectName: 'mymove-docs',
@@ -35,10 +35,16 @@ module.exports = {
           label: 'About',
         },
         {
-            type: 'doc',
-            docId: 'frontend/index',
-            position: 'left',
-            label: 'Frontend',
+          type: 'doc',
+          docId: '/adrs',
+          position: 'left',
+          label: 'ADRs',
+        },
+        {
+          type: 'doc',
+          docId: 'frontend/index',
+          position: 'left',
+          label: 'Frontend',
         },
         {
           type: 'doc',
@@ -47,28 +53,22 @@ module.exports = {
           label: 'Backend',
         },
         {
-            type: 'doc',
-            docId: 'api/index',
-            position: 'left',
-            label: 'API',
+          type: 'doc',
+          docId: 'api/index',
+          position: 'left',
+          label: 'API',
         },
         {
-            type: 'doc',
-            docId: 'tools/index',
-            position: 'left',
-            label: 'Tools',
+          type: 'doc',
+          docId: 'tools/index',
+          position: 'left',
+          label: 'Tools',
         },
         {
-            type: 'doc',
-            docId: 'dev/index',
-            position: 'left',
-            label: 'Docs',
-        },
-        {
-            type: 'doc',
-            docId: 'help/index',
-            position: 'left',
-            label: 'Help',
+          type: 'doc',
+          docId: 'help/index',
+          position: 'left',
+          label: 'Help',
         },
         {
           href: 'https://github.com/transcom/mymove',
@@ -86,22 +86,6 @@ module.exports = {
             {
               label: 'About',
               to: '/docs/about',
-            },
-            // {
-              // label: 'Getting Started',
-              // to: '/docs',
-            // },
-            // {
-              // label: 'Help',
-              // to: '/docs/help',
-            // },
-            // {
-              // label: 'Vault',
-              // to: '/docs/vault',
-            // },
-            {
-              label: 'Docusaurus Tutorial',
-              to: '/docs/tutorial',
             },
           ],
         },
@@ -170,12 +154,24 @@ module.exports = {
       {
         specs: [
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
-            routePath: '/api/prime',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/admin.yaml',
+            route: '/api/admin',
           },
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
-            routePath: '/api/support',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/internal.yaml',
+            route: '/api/internal',
+          },
+          {
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/ghc.yaml',
+            route: '/api/ghc',
+          },
+          {
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
+            route: '/api/prime',
+          },
+          {
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
+            route: '/api/support',
           },
         ],
       }
