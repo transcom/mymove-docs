@@ -18,7 +18,7 @@ const githubChecks = () => {
 };
 
 const fileChecks = () => {
-  const allFiles = danger.git.modified.files.concat(danger.git.created_files);
+  const allFiles = danger.git.modified_files.concat(danger.git.created_files);
 
   const legacyFiles = danger.git.fileMatch('docs/dev/**/*', 'docs/vault/**/*');
 
