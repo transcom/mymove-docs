@@ -1,5 +1,7 @@
 import { danger, warn, fail } from 'danger';
 
+const shouldRun = !danger.github || (danger.github && danger.github.pr.user.type !== 'Bot');
+
 const jiraIssue = require('danger-plugin-jira-issue').default;
 
 const githubChecks = () => {
@@ -37,3 +39,8 @@ const fileChecks = () => {
     warn(`${message} - <i>${idea}</i>`);
   }
 };
+
+if (!shouldRun) {
+  githubChecks()
+  fileChecks()
+}
