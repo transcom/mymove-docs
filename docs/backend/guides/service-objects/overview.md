@@ -89,8 +89,6 @@ in private functions within the service object's package.
 
 ## Detailed Docs
 
-For ease of reading, the docs on service objects are broken down a bit based on what you're trying to do/understand.
-
 :::caution
 There are several service objects that don't fully match what is stated in these docs. That is usually because the
 patterns outlined in the docs were established after many of these service objects existed, and we didn't go back and
@@ -100,7 +98,17 @@ service object and have a bit of extra time, try updating the service object you
 here.
 :::
 
-* [Getting Started](./getting-started)
+The detailed docs are written in a tutorial style, with each page introducing the different concepts needed to 
+understand, create, and work with service objects. Because of that, each page builds on what was previously 
+covered/created so if this is your first time working on service objects, it is recommended to follow along with the 
+tutorial.
+
+That said, the pages are also broken down based on what you're trying to do/understand, so if you are already familiar 
+with service objects and are looking for a refresher or details, you can jump directly to the section you are interested
+in.
+
+Regardless of which you're doing, the best starting point is the [Getting Started](getting-started) page because it 
+will outline the models being used for creating the docs and will make it easier to understand the rest of the pages.
 
 ## Resources
 
