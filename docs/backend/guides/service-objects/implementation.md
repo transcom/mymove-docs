@@ -519,7 +519,7 @@ func NewOfficePetUpdater() services.PetUpdater {
 	}
 }
 
-// UpdatePet creates a pet
+// UpdatePet updates an existing pet
 func (u *petUpdater) UpdatePet(appCtx appcontext.AppContext, pet models.Pet, eTag string) (*models.Pet, error) {
 	return nil, nil // TODO: implement logic
 }

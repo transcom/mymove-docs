@@ -1117,8 +1117,6 @@ function that we can call to run through those rules. Now you can move on to set
 
 ## Examples
 
-## Examples
-
 * Shipment Orchestrator
     * https://github.com/transcom/mymove/blob/master/pkg/services/orchestrators/shipment/rules.go
     * https://github.com/transcom/mymove/blob/master/pkg/services/orchestrators/shipment/validation.go

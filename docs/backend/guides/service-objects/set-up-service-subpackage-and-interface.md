@@ -57,7 +57,8 @@ package services
 
 // PetCreator Interface for the service object that creates a pet
 type PetCreator interface {
-	CreatePet() (
+	CreatePet() ()
+}
 
 // PetUpdater Interface for the service object that updates a pet
 type PetUpdater interface {
