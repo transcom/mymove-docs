@@ -1,13 +1,13 @@
-const lightCodeTheme = require('prism-react-renderer/themes/github');
+const lightCodeTheme = require('prism-react-renderer/themes/oceanicNext');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 // These Redirect lists for recently migated pages. These Redirects are here to
 // help, but shouldn't be relied on indefinitely as they are client-side only
 // and they increase the build time for the project.
 const FrontendPages = require('./utils/redirect-frontend');
-const BackendPages  = require('./utils/redirect-backend');
-const ToolsPages    = require('./utils/redirect-tools');
-const APIPages      = require('./utils/redirect-api');
+const BackendPages = require('./utils/redirect-backend');
+const ToolsPages = require('./utils/redirect-tools');
+const APIPages = require('./utils/redirect-api');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
@@ -35,10 +35,16 @@ module.exports = {
           label: 'About',
         },
         {
-            type: 'doc',
-            docId: 'frontend/index',
-            position: 'left',
-            label: 'Frontend',
+          type: 'doc',
+          docId: '/adrs',
+          position: 'left',
+          label: 'ADRs',
+        },
+        {
+          type: 'doc',
+          docId: 'frontend/index',
+          position: 'left',
+          label: 'Frontend',
         },
         {
           type: 'doc',
@@ -47,22 +53,22 @@ module.exports = {
           label: 'Backend',
         },
         {
-            type: 'doc',
-            docId: 'api/index',
-            position: 'left',
-            label: 'API',
+          type: 'doc',
+          docId: 'api/index',
+          position: 'left',
+          label: 'API',
         },
         {
-            type: 'doc',
-            docId: 'tools/index',
-            position: 'left',
-            label: 'Tools',
+          type: 'doc',
+          docId: 'tools/index',
+          position: 'left',
+          label: 'Tools',
         },
         {
-            type: 'doc',
-            docId: 'help/index',
-            position: 'left',
-            label: 'Help',
+          type: 'doc',
+          docId: 'help/index',
+          position: 'left',
+          label: 'Help',
         },
         {
           href: 'https://github.com/transcom/mymove',
@@ -78,8 +84,12 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'About',
+              label: 'About MilMove',
               to: '/docs/about',
+            },
+            {
+              label: 'Architecture Decision Records',
+              to: '/docs/adrs',
             },
           ],
         },
@@ -148,24 +158,24 @@ module.exports = {
       {
         specs: [
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/admin.yaml',
-            routePath: '/api/admin',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/admin.yaml',
+            route: '/api/admin',
           },
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/internal.yaml',
-            routePath: '/api/internal',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/internal.yaml',
+            route: '/api/internal',
           },
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/ghc.yaml',
-            routePath: '/api/ghc',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/ghc.yaml',
+            route: '/api/ghc',
           },
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
-            routePath: '/api/prime',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
+            route: '/api/prime',
           },
           {
-            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
-            routePath: '/api/support',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
+            route: '/api/support',
           },
         ],
       }

@@ -67,3 +67,5 @@ callables
 (?i)enum
 (?i)subclassing
 subtest
+(?i)polyfill(s)?
+(?i)toolchain(s)?
