@@ -1,5 +1,5 @@
 ---
-title: Template
+title: '📄 ADR Template'
 ---
 
 # *[short title of solved problem and solution]*
@@ -19,7 +19,7 @@ title: Template
 ## Decision Outcome
 
 * Chosen Alternative: *[alternative 1]*
-* *[justification. e.g., only alternative, which meets KO criterion decision driver | which resolves force force | ... | comes out best (see below)]*
+* *[justification. e.g., only alternative, which meets KO criterion decision driver | which resolves force | ... | comes out best (see below)]*
 * *[consequences. e.g., negative impact on quality attribute, follow-up decisions required, ...]* <!-- optional -->
 
 ## Pros and Cons of the Alternatives <!-- optional -->

@@ -84,8 +84,12 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'About',
+              label: 'About MilMove',
               to: '/docs/about',
+            },
+            {
+              label: 'Architecture Decision Records',
+              to: '/docs/adrs',
             },
           ],
         },
