@@ -20,6 +20,22 @@ Our "service objects," as we call them (this is MilMove-specific terminology), a
 package that implement our business logic. An example of a service object would be something like `AddressUpdater` 
 to update an `Address` record, or `MTOShipmentCreator` to create an `MTOShipment` record. 
 
+### Where Do Service Objects Fit In?
+
+We mentioned above that a service object is a combination of the business and data access layers and that our 
+handlers are our presentation layer. To see what this means in practice, let's look at what this might look like 
+with a fake example (fake because the code doesn't actually do this because standards have changed over time). Say a 
+request came in to create a service member through the internal API. An ideal flow without errors would look something 
+like this:
+
+* The handler (e.g. `CreateServiceMemberHandler`) would handle auth checks
+* Handler translates/converts data from payload types (swagger types) to model types
+* Handler uses a service object (e.g. `ServiceMemberCreator`) to create a service member
+* Handler returns response with newly created service member
+
+There are more docs you can check out: [Using service objects](usage). Note that this is one of the last steps in 
+the tutorial, so it may make more sense if you're following along with the docs.
+
 ### Service Object Types
 
 We have a few different kinds of service objects:
