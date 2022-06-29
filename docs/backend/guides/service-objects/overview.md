@@ -17,18 +17,30 @@ The `services` package is a combination of the bottom two layers, **business log
 located within the [`mymove` `./pkg/services`](https://github.com/transcom/mymove/tree/master/pkg/services) directory.
 
 Our "service objects," as we call them (this is MilMove-specific terminology), are the structs/functions within this 
-package that implement our business logic. We have a few different kinds of service objects:
+package that implement our business logic. An example of a service object would be something like `AddressUpdater` 
+to update an `Address` record, or `MTOShipmentCreator` to create an `MTOShipment` record. 
 
-- data type: These are the service objects that are tied to a specific model, e.g. logic related to the `Reweigh` 
-  model is in the `pkg/services/reweigh` service.
-- orchestrators: These are service objects that help manage other service objects that are closely related, e.g. the 
-  logic that manages `MTOShipment` and `PPMShipment` service objects lives in `pkg/services/orchestrators/shipment`
-- utility: These are service objects that help us out across the code base, e.g. query tools are in the 
-  `pkg/services/query` service.
+### Service Object Types
 
-Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. We have
-also developed clear patterns for [creating](#creating-service-objects) and [using](#using-service-objects) this 
-structure.
+We have a few different kinds of service objects:
+
+- data type: These are the service objects that are tied to a specific model
+    - For example, the `MTOShipmentUpdater` service object contains the logic to update an `MTOShipment` model 
+      instance. The implementation code is in the `pkg/services/mto_shipment` service subpackage.
+- orchestrators: These are service objects that help manage other service objects that are closely related.
+    - For example, we have service objects to create `MTOShipments`, `MTOShipmentCreator`, and `PPMShipments`, 
+      `PPMShipmentCreator`. Each has the necessary logic for creating the model it is for, but `PPMShipment` is a 
+      child model of `MTOShipment` and needs an `MTOShipment` to exist before it can be created. To make it 
+      easier for our handlers to create a shipment of any kind, without having to know that for PPM shipments you 
+      have to first use the `MTOShipmentCreator` and then use the `PPMShipmentCreator`, we use an orchestrator 
+      service object, `ShipmentCreator`, that handles the logic of calling the correct creators as needed and in the 
+      proper order. This orchestrator service object implementation lives in the 
+      `pkg/services/orchestrators/shipment` service subpackage.
+- utility: These are service objects that help us out across the code base.
+    - For example, we have a `Fetcher` service object that fetch a record form the database. The implementation 
+      logic lives in the `pkg/services/fetch` service subpackage.
+
+Service objects allow for better unit testing, re-usability, and organization of code in the MilMove project. 
 
 ## ADRs
 
