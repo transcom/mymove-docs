@@ -108,7 +108,7 @@ Follow these directions
    ```
 
 3. Remove any calls to `suite.TruncateAll()` in the tests.
-4. Replace `suite.T().Fatalf` with `suite.Fail`.
+4. Replace `suite.T().Fatalf` or `suite.T().Fatal` with `suite.Fail`.
 5. Remove `testing` from the imports at the top of the file.
 6. Run all tests in the package.
 
@@ -156,15 +156,15 @@ You need to make two changes to this file.
 
 If you use `Suite.Run`:
 
-* This could be because each subtest is sharing DB setup. Check that you have extracted **all the shared db setup** into a separate function, and call that function at the beginning of each subtest.
+* This could be because each subtest is sharing DB setup. Check that you have extracted **all the shared db setup** into a separate function, and call that function at the beginning of each subtest. A tip is to look for `suite.DB()`.
 
-    Look at the diff of `pkg/handlers/ghcapi/orders_test.go` in [this example](https://github.com/transcom/mymove/pull/6650/commits/3baaff02ffa8ca745ffb9c75422a1598180635ec#diff-7ed9d49b328573d1e4b4c17ef8455b68ba22cedf910612f033634107ba60688a).
+    Look at the diff of `pkg/handlers/ghcapi/orders_test.go` in [this example](https://github.com/transcom/mymove/pull/8676/files#diff-afe14b5268a7dd9637cc140a082e29a7c61632a71fb43f32dd6402efe22e64a2).
 
 * If the shared setup was already in a separate function, it could just be a matter of calling the setup function at the beginning of each subtest. [Here's an example](https://github.com/transcom/mymove/pull/6650/commits/dc6d5805a104d10463a7fd5382d43a598b6626a8).
 
 * If you've properly extracted the DB setup, it's possible a subtest was depending on the previous subtest. This is not a good pattern, try to unwind that dependency. Each test should pass in isolation from each other.
 
-* Remove any calls to `suite.TruncateAll()` in the tests. Here's an example of [how the models tests were converted to use transactions](https://github.com/transcom/mymove/pull/6650/commits/3378f4c932d35f1cce58888d3a4f617af53df2d1).
+* Remove any calls to `suite.TruncateAll()` in the tests. Here's an example of [how the models tests were converted to use transactions](https://github.com/transcom/mymove/pull/6650/commits/3378f4c932d35f1cce58888d3a4f617af53df2d1#diff-3f780d99e8fc416373c42acd25dcdcb5a4bfdd85ddd03795b5a72c0a03c07d06).
 * Replace `suite.T().Fatalf` with `suite.Fail`.
   
 * If the issue is related to appContext, make sure to get the correct appContext inside the subtest using `suite.AppContextForTest()`.
@@ -173,16 +173,20 @@ If you use `Suite.Run`:
 
 ### I can't extract the db setup into a function, should I undo everything?
 
-Sometimes, it's too much of refactor to pull out all the setup and figure out how tests depend on each other. This is not a great situation, and this is a reason why tests shouldn't depend on each other.
+Sometimes, it's too much of refactor to pull out all the setup, or the setup takes a very long time.
 
-However, if you still want to keep some of the transactional performance benefits, you can use an alternate `Run` function called `RunWithRollback`. This is a **less ideal pattern** for the following reasons:
+This is not a great situation, but if you still want to keep some of the transactional performance benefits, you can use an alternate `Run` function called `RunWithPreloadedData`. This is a **less ideal pattern** for the following reasons:
 
 * It doesn't actually use the newer txdb transactions
 * You cannot use this if the underlying code under test uses transactions.
 * If someone later changes the underlying code to use transactions, they will have to do the work to fully switch to `suite.Run`, the preferred pattern. This creates a deterrent to using transactions in the codebase, and we don't want to deter that.
-* It doesn't rollback each subtest, it only rolls back after each test, so tests can still depend on each other.
+* It rolls back each subtest, but doesn't use a new connection. So any changes made in the main test will be available in the subtests.
 
-However **if you absolutely must** use `RunWithRollback`, the process is easy. Just change the `suite.Run` calls to `suite.RunWithRollback`.
+It can be preferred in one case:
+
+* Where there is a large amount of necessary setup, like populating the rate engine for payment calculations. In this case it can be valuable to have a preloaded setup.
+
+So **if you absolutely must** use `RunWithPreloadedData`, the process is easy. Just change the `suite.Run` calls to `suite.RunWithPreloadedData`.
 
 ## Background
 
@@ -214,10 +218,10 @@ be useful. Therefore, shared setup has to be moved to a function that can be run
 per subtest. In testing this approach, it was still faster with per test
 transactions than the old way of cloning a DB per package.
 
-In addition to the `suite.Run` function, we also have `suite.RunWithRollback` that could eliminate the need for calling the setup function within each subtest. This is the case if the code under test does not use transactions. If the code under test starts its own transaction, then `suite.Run` should be used.
+In addition to the `suite.Run` function, we also have `suite.RunWithPreloadedData` that could eliminate the need for calling the setup function within each subtest. This is the case if the code under test does not use transactions. If the code under test starts its own transaction, then `suite.Run` should be used.
 
 ## Updating/adding to existing tests that use transactions
 
-Make a note of how the tests are set up, and follow the existing patterns, such as using `suite.Run` or `suite.RunWithRollback`, and calling the shared DB setup function within each new subtest you add, where applicable.
+Make a note of how the tests are set up, and follow the existing patterns, such as using `suite.Run` or `suite.RunWithPreloadedData`, and calling the shared DB setup function within each new subtest you add, where applicable.
 
-If you modify the code under test such that it now starts using transactions, and if the existing tests were using `suite.RunWithRollback`, you'll need to update the tests to use `suite.Run`.
+If you modify the code under test such that it now starts using transactions, and if the existing tests were using `suite.RunWithPreloadedData`, you'll need to update the tests to use `suite.Run`.
