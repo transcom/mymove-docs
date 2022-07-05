@@ -101,7 +101,7 @@ When you are writing the code for your new migration, there are a few things you
 This section covers what it's like to add a new table, though some information is helpful when editing existing 
 tables/models as well.
 
-For the examples in this section, we'll be adding a new model called `Cat`, with a corresponding table called `cats`.
+For the examples in this section, we'll be adding a new model called `Pet`, with a corresponding table called `pets`.
 
 :::note Table Name vs Model Name
 
@@ -111,14 +111,28 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
 :::
 
 1. [Generate a new migration file](#creating-migrations).
-1. Open the generated SQL file and add the logic to create your table.  When creating the SQL you may write the migration like this:
+1. Open the generated SQL file and add the logic to create your table. When creating the SQL you may write the 
+   migration like this:
 
     ```sql
-    CREATE TABLE cats
+    CREATE TYPE pet_type AS enum (
+        'CAT',
+        'DOG',
+        'FISH',
+        'GUINEA PIG',
+        'HAMSTER',
+        'OTHER',
+        'RAT',
+        'SNAKE',
+        'TURTLE'
+        );
+    
+    CREATE TABLE pets
     (
         id uuid PRIMARY KEY NOT NULL,
         created_at timestamp NOT NULL,
         updated_at timestamp NOT NULL,
+        type pet_type NOT NULL,
         name text NOT NULL,
         birthday date,
         gotcha_day date,
@@ -126,51 +140,78 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
         weight int
     );
     
-    COMMENT on TABLE cats IS 'Store cats and their details.';
-    COMMENT on COLUMN cats.name IS 'The official name of a cat...nicknames might need their own table...';
-    COMMENT on COLUMN cats.birthday IS 'Date the cat was born.';
-    COMMENT on COLUMN cats.gotcha_day IS 'Date the cat was adopted. May be same as birthday.';
-    COMMENT on COLUMN cats.bio IS 'Big text field for owners to tell you everything about their cat.';
-    COMMENT on COLUMN cats.weight IS 'Current weight of the cat, or at least what they weighed the last time they let you weigh them.';
+    COMMENT on TABLE pets IS 'Store pets and their details.';
+    COMMENT on COLUMN pets.type IS 'The type of pet this is. There are child models for certain types to hold more information specific to that type.';
+    COMMENT on COLUMN pets.name IS 'The official name of a pet...nicknames might need their own table...';
+    COMMENT on COLUMN pets.birthday IS 'Date the pet was born.';
+    COMMENT on COLUMN pets.gotcha_day IS 'Date the pet was adopted. May be same as birthday.';
+    COMMENT on COLUMN pets.bio IS 'Big text field for owners to tell you everything about their pet.';
+    COMMENT on COLUMN pets.weight IS 'Current weight of the pet, or at least what they weighed the last time they let you weigh them.';
     ```
 
     Some things to note:
 
     1. The SQL keywords don't need to be capitalized, but it can be nice to differentiate some of them from certain 
        things like the field names or types.
-    2. We want to add comments for the table itself and every column other than the `id`, `created_at`, and `updated_at`
+    1. We create a `pet_type` `enum` to state the specific values that are allowed for our `pets.type` field. We'll see 
+       in a bit how this maps to custom types in the model. 
+    1. We want to add comments for the table itself and every column other than the `id`, `created_at`, and `updated_at`
        fields. This makes it easier for future folks to understand what the columns were meant for.
-    3. You might see some migrations use `varchar` instead of `text`. It's the same thing in the end, see
+    1. You might see some migrations use `varchar` instead of `text`. It's the same thing in the end, see
        [Postgresql Character Types](https://www.postgresqltutorial.com/postgresql-char-varchar-text/) for more info.
     
 1. Now you can create a new file in `pkg/models/` named after your new model. So for this, we'll have a new file 
-    `pkg/models/cat.go` that will look something like this:
+    `pkg/models/pet.go` that will look something like this:
 
-    ```go
+    ```go title="pkg/models/pet.go"
     package models
     
     import (
         "time"
     
-        "github.com/gofrs/uuid"
+    	"github.com/gofrs/uuid"
     
-        "github.com/transcom/mymove/pkg/unit"
+    	"github.com/transcom/mymove/pkg/unit"
     )
     
-    // Cat contains all the information relevant to a cat...
-    type Cat struct {
-        ID         uuid.UUID   `json:"id" db:"id"`
-        CreatedAt  time.Time   `json:"created_at" db:"created_at"`
-        UpdatedAt  time.Time   `json:"updated_at" db:"updated_at"`
-        Name       string      `json:"name" db:"name"`
-        Birthday   *time.Time  `json:"birthday" db:"birthday"`
-        GotchaDay  *time.Time  `json:"gotcha_day" db:"gotcha_day"`
-        Bio        *string     `json:"bio" db:"bio"`
-        Weight     *unit.Pound `json:"weight" db:"weight"`
+    type PetType string
+    
+    const (
+        // PetTypeCat captures the enum value "CAT"
+        PetTypeCat PetType = "CAT"
+        // PetTypeDog captures the enum value "DOG"
+        PetTypeDog PetType = "DOG"
+        // PetTypeFish captures the enum value "FISH"
+        PetTypeFish PetType = "FISH"
+        // PetTypeGuineaPig captures the enum value "GUINEA_PIG"
+        PetTypeGuineaPig PetType = "GUINEA_PIG"
+        // PetTypeHamster captures the enum value "HAMSTER"
+        PetTypeHamster PetType = "HAMSTER"
+        // PetTypeOther captures the enum value "OTHER"
+        PetTypeOther PetType = "OTHER"
+        // PetTypeRat captures the enum value "RAT"
+        PetTypeRat PetType = "RAT"
+        // PetTypeSnake captures the enum value "SNAKE"
+        PetTypeSnake PetType = "SNAKE"
+        // PetTypeTurtle captures the enum value "TURTLE"
+        PetTypeTurtle PetType = "TURTLE"
+    )
+    
+    // Pet contains all the information relevant to a pet...
+    type Pet struct {
+        ID        uuid.UUID   `json:"id" db:"id"`
+        CreatedAt time.Time   `json:"created_at" db:"created_at"`
+        UpdatedAt time.Time   `json:"updated_at" db:"updated_at"`
+        Type      PetType     `json:"type" db:"type"`
+        Name      string      `json:"name" db:"name"`
+        Birthday  *time.Time  `json:"birthday" db:"birthday"`
+        GotchaDay *time.Time  `json:"gotcha_day" db:"gotcha_day"`
+        Bio       *string     `json:"bio" db:"bio"`
+        Weight    *unit.Pound `json:"weight" db:"weight"`
     }
     
-    // Cats is a list of Cats
-    type Cats []Cat
+    // Pets is a list of Pets
+    type Pets []Pet
     ```
 
    Some things to note:
@@ -185,11 +226,123 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
             1. Follow a pattern similar to the
                [PPM shipment updater](https://github.com/transcom/mymove/blob/088b87605f19b18b022ff718fcbd5eb8f6962585/pkg/services/ppmshipment/ppm_shipment_updater.go#L44-L49)
                which merges the new and old shipment _before_ validating the shipment.
-    1. We define the plural `type` under the main struct as a slice of the type.
+    1. We define the plural `type`, `Pets` under the main struct as a slice of the type.
        1. You might see some models that don't follow this pattern, but generally we prefer to follow it so if you are
           adding a new table it's best to stick with this pattern.
+    1. We define a custom `string` `type`, `PetType`, that constrains the valid values for `Pet.Type`. This maps to 
+       the enum we created in the `sql` migration.
     
 1. Now you will want to run the migration to test it out with `make db_dev_migrate`.
+
+#### Example of Relationships
+
+To showcase an example of a table with relationships, we can look at what it would look like to add a model `Cat` 
+with corresponding table `cats`. This will be a child of the `Pet` model, so we'll use the corresponding field type 
+and attributes. The steps for creating the table and model are the same as in the previous section so we'll just 
+focus on what the files would look like in the end:
+
+```sql
+CREATE TABLE cats
+(
+	id uuid PRIMARY KEY NOT NULL,
+	pet_id uuid NOT NULL
+	    CONSTRAINT cats_pets_id_fkey
+	    REFERENCES pets,
+	created_at timestamp NOT NULL,
+	updated_at timestamp NOT NULL,
+	likes_catnip bool,
+	favorite_catnip_brand text,
+	favorite_cat_scratcher_type text
+);
+
+COMMENT on TABLE cats IS 'Store cats and their details.';
+COMMENT on COLUMN cats.likes_catnip IS 'Indicates whether the cat likes catnip or not.';
+COMMENT on COLUMN cats.favorite_catnip_brand IS 'If the cat does like catnip, this will store the name of their favorite brand';
+COMMENT on COLUMN cats.favorite_cat_scratcher_type IS 'Favorite type of cat scratcher, e.g. floor, wall, tower, etc.';
+```
+
+Things to note:
+
+* We define the relationship between the two tables using the field `pet_id`
+* `pet_id` has a type of `uuid` and is not nullable because for this relationship, we expect there to exist a row in 
+  `pets` for every row in `cats`
+* The `CONSTRAINT` name is something you choose. Name it something that quickly indicates what it is for, e.g. which 
+  two tables are involved. 
+* You point `pet_id` at the table it references, in our case, `pets`
+
+```go title="pkg/models/cat.go"
+package models
+
+import (
+	"time"
+
+	"github.com/gofrs/uuid"
+)
+
+// Cat contains all the information relevant to a cat...
+type Cat struct {
+	ID                       uuid.UUID `json:"id" db:"id"`
+	PetID                    uuid.UUID `json:"pet_id" db:"pet_id"`
+	Pet                      Pet       `belongs_to:"pets" fk_id:"pet_id"`
+	CreatedAt                time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt                time.Time `json:"updated_at" db:"updated_at"`
+	LikesCatnip              *bool     `json:"likes_catnip" db:"likes_catnip"`
+	FavoriteCatnipBrand      *string   `json:"favorite_catnip_brand" db:"favorite_catnip_brand"`
+	FavoriteCatScratcherType *string   `json:"favorite_cat_scratcher_type" db:"favorite_cat_scratcher_type"`
+}
+
+// Cats is a list of Cats
+type Cats []Cat
+```
+
+Things to note:
+
+* We have the `PetID` that corresponds to the `pet_id` field we defined in the migration.
+* We have a separate field, `Pet`, that will store the data for the related model. 
+  * So for example, if you want access to the name of the pet, and you have an instance of a `Cat`, `originalCat`, 
+    then you could access the name using `originalCat.Pet.Name`
+  * This field doesn't have a corresponding field on the table or in the migration. It is something that is entirely 
+    for ease of access and something which `Pop` (our ORM) understands. Note that this field being here doesn't mean 
+    the data is automatically loaded whenever you fetch a `cat` row from the database; your query will need to do 
+    the necessary joins to get the related record back.
+  * In the `struct` tags, we define that this field belongs to the `pets` table and that the `fk_id` (foreign key ID)
+    is the `pet_id` field on the `cats` table.
+
+We'll also want to update our `Pet` model to point back at our `Cat` model:
+
+```go title="pkg/models/pet.go" {24}
+package models
+
+import (
+    "time"
+
+    "github.com/gofrs/uuid"
+
+    "github.com/transcom/mymove/pkg/unit"
+)
+
+// PetType omitted for brevity
+
+// Pet contains all the information relevant to a pet...
+type Pet struct {
+    ID        uuid.UUID   `json:"id" db:"id"`
+    CreatedAt time.Time   `json:"created_at" db:"created_at"`
+    UpdatedAt time.Time   `json:"updated_at" db:"updated_at"`
+    Type      PetType     `json:"type" db:"type"`
+    Name      string      `json:"name" db:"name"`
+    Birthday  *time.Time  `json:"birthday" db:"birthday"`
+    GotchaDay *time.Time  `json:"gotcha_day" db:"gotcha_day"`
+    Bio       *string     `json:"bio" db:"bio"`
+    Weight    *unit.Pound `json:"weight" db:"weight"`
+    Cat       *Cat        `has_one:"cats" fk_id:"pet_id"`
+}
+
+// Pets is a list of Pets
+type Pets []Pet
+```
+
+Note that this is similar to the `Pet` field on the `Cat` model in that it is purely a nice feature that `Pop` lets 
+us use to more easily go across relationships.
 
 #### Model/Table Names With Acronyms
 
@@ -217,6 +370,7 @@ Migrations are run by the `milmove migrate` command. This allows us to leverage 
 The reason to use a `make` target is because it will correctly set the migration flag variables and target the correct database with environment variables.
 
 ## Update Migrations Locally
+
 In the event that you need to make an edit to a migration that you have just created prior to merging it into the main branch, 
 you can update the migration with your edits and rerun it using: 
 
