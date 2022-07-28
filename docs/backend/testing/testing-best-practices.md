@@ -14,6 +14,7 @@ sidebar_position: 11
 - Subtests must be able to run in isolation. You can verify this with Goland, which makes it easy to run individual subtests.
 - Avoid `mock.anything`. Part of mocking is to ensure that the object that is mocked has been called with the right arguments. If a handler is supposed to call a service object with a specific model ID, then if you use `mock.anything` in the test and you introduce a bug in the handler where it passes in the wrong ID, the test will still pass. If you find it hard to avoid using `mock.anything`, it's most likely a sign the code under test is not designed properly.
 - Always validate `Params` in handlers using `suite.NoError(params.Body.Validate(strfmt.Default))`
+- When using `testdatagen` to create data for test, pass `Stub: true` into the assertions when the object being created doesn't need to be saved to the database. Such as in instances when the test only needs to check for validation errors or when returning a mocked response. 
 
 ## Examples of tests that will pass when they should fail
 
