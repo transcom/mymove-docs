@@ -135,7 +135,9 @@ many steps a developer would do by hand, and if designed well, can allow a
 developer to spot check the results of the parser, run the task locally before
 data makes it into the Production environment.
 
-[How To Create a ECS Scheduled Task](https://github.com/transcom/mymove/blob/master/docs/how-to/create-an-ecs-scheduled-task.md#how-to-create-an-ecs-scheduled-task)
+:::info Interested in creating an ECS task from scratch?
+Read our Confluence documentation on [How To Create a ECS Scheduled Task](https://dp3.atlassian.net/l/cp/merdf22s).
+:::
 
 A scheduled task runs daily, and turns off if there are no actions to take.
 When the data changes (in our case for example, a new `xlsx` data set gets
