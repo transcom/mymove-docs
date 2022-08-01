@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.x  # openapi requires node >= 12
+          node-version-file: '.node-version'
 
       - name: Install yarn
         run: npm install yarn
