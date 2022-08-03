@@ -13,9 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3  # $GITHUB_WORKSPACE
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16.x  # openapi requires node >= 12
+          node-version-file: '.node-version'
+          cache: 'yarn'
 
       - name: Install yarn
         run: npm install yarn
