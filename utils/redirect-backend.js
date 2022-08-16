@@ -306,12 +306,6 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/backend/setup/common-errors-and-solutions',
-    from: [
-      '/docs/help/',
-    ],
-  },
-  {
     to: '/docs/backend/setup/backup-and-restore-dev-database',
     from: [
       '/docs/dev/contributing/database/Backup-and-Restore-Dev-Database',
