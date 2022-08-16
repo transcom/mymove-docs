@@ -27,6 +27,7 @@ id: index
 * [Practical Go Lessons](https://www.practical-go-lessons.com)
 * [Darker Corners of Go](https://rytisbiel.com/2021/03/06/darker-corners-of-go)
 * [Go By Example](https://gobyexample.com/)
+* [Go: The Complete Developer's Guide](https://www.udemy.com/course/go-the-complete-developers-guide) - paid course that's popular at Truss.
 
 #### Truss resources
 * [Truss engineering playbook resources for Go](https://playbook.truss.dev/docs/developing/languages/GO)
