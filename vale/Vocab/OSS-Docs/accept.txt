@@ -69,3 +69,6 @@ callables
 subtest
 (?i)polyfill(s)?
 (?i)toolchain(s)?
+Advana
+S3
+Fargate
