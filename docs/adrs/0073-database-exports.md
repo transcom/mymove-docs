@@ -120,3 +120,16 @@ RDS has [built-in support](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuid
 * `-` *Requires more support from Infra*
 * `-` *Costs $$$*
 * `-` *requires integrating with post to GEX script*
+
+### **AWS Lambda function that streams pg_dump to s3 bucket**
+* [pg_dump with AWS Lambda](https://github.com/jameshy/pgdump-aws-lambda)
+	* There is prior archectecture for lambda functions in our repo, but is there a precedent for a lambda function in our repo that has access to the db and an s3 bucket?
+	* What are the possibilities for data loss when relying on AWS infrastructure to perform this task?
+		*  Possibility for data loss if the stream is interrupted. While this would not be terrible during phase one (each dump would overwrite the last), it would not be good for phase 2 where our incremental changes would need to be retained.   
+		* In order to mitigate this possibility, we might want to save to an EFS in addition to sending it to the S3 bucket.
+	* There is a hard time limit with lambda functions of 15 minutes. Would we hit this time limit?
+		* If we never shifted away from doing a pg_dump, it is likely that we would hit the time limit once our db grew large enough. 
+		* It is unlikely that we would encounter this issue during phase 2, given that we would be sending only the changes over the last 12 hours
+	* How does this move into phase 2?
+		* Do we access the aws.session in the same way that we do for the lambda function.
+		* Is there a way to perform sql queries during the lambda function?
