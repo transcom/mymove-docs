@@ -8,7 +8,16 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 - 🔒 **User Story:** [_MB-13238_](https://dp3.atlassian.net/browse/MB-13238)
 - 🔒 **User Story:** [_MB-13183_](https://dp3.atlassian.net/browse/MB-13183)
 
-As part of the Advana Data Warehouse Integration effort, MilMove infrastructure must support exporting and exporting data from the MilMove database to an S3 bucket owned by Advana. This ADR concerns the methods with which the data is pulled from the database and exported to an S3 bucket to be shared with Advana. This ADR does not aim to completely address data transformation or anything more precise than exporting the entire MilMove database, but such concerns may be taken in consideration when choosing an outcome that may or may not be more conducive to future reworks.
+As part of the Advana Data Warehouse Integration effort, MilMove infrastructure must support exporting data from the MilMove database to an S3 bucket owned by Advana. This ADR concerns the methods with which the data is pulled from the database and exported to an S3 bucket to be shared with Advana. This ADR does not aim to completely address data transformation or anything more precise than exporting the entire MilMove database, but such concerns may be taken in consideration when choosing an outcome that may or may not be more conducive to future reworks.
+
+In general, the objective is to choose a solution that meets or prioritizes most of the following criteria:
+- Fits into our current infrastructure and tech stack
+- Has low complexity and is easily updatable in the future
+- Can scale to send incremental changes of the database later, possibly including data transformation
+- Doesn't negatively impact the security of our applications
+- Is reliable (e.g. mitigates data loss when services go down)
+- Won't exceed duration/size constraints as the database grows (contraints might be determined in part by the solution itself)
+
 
 ## Proposal: AWS ECS Tasks w/Golang + S3
 
@@ -98,6 +107,7 @@ the ECS tasks non-root user defined in `cmd/ecs-deploy/task_def.go` in the
 * *AWS ECS Tasks w/Golang + S3*
 * *AWS RDS Snapshot + S3*
 * *AWS Glue*
+* *AWS Lambda Function*
 
 ## Decision Outcome
 
@@ -121,15 +131,10 @@ RDS has [built-in support](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuid
 * `-` *Costs $$$*
 * `-` *requires integrating with post to GEX script*
 
-### **AWS Lambda function that streams pg_dump to s3 bucket**
-* [pg_dump with AWS Lambda](https://github.com/jameshy/pgdump-aws-lambda)
-	* There is prior archectecture for lambda functions in our repo, but is there a precedent for a lambda function in our repo that has access to the db and an s3 bucket?
-	* What are the possibilities for data loss when relying on AWS infrastructure to perform this task?
-		*  Possibility for data loss if the stream is interrupted. While this would not be terrible during phase one (each dump would overwrite the last), it would not be good for phase 2 where our incremental changes would need to be retained.   
-		* In order to mitigate this possibility, we might want to save to an EFS in addition to sending it to the S3 bucket.
-	* There is a hard time limit with lambda functions of 15 minutes. Would we hit this time limit?
-		* If we never shifted away from doing a pg_dump, it is likely that we would hit the time limit once our db grew large enough. 
-		* It is unlikely that we would encounter this issue during phase 2, given that we would be sending only the changes over the last 12 hours
-	* How does this move into phase 2?
-		* Do we access the aws.session in the same way that we do for the lambda function.
-		* Is there a way to perform sql queries during the lambda function?
+### *AWS Lambda function that streams pg_dump to s3 bucket*
+Most of what could be accomplished with an ECS task might be possible with a Lambda function. The work involved here may include using a [existing Lambda function](https://github.com/jameshy/pgdump-aws-lambda), configuring it with access to the database and and S3 bucket, and possibly configure EFS in the future.
+* `+` *An existing solution might be sufficient out-of-the-box with little configuration work*
+* `+` *There is prior architecture for lambda functions in our repo*
+* `-` *Possibility for data loss if the stream is interrupted. While this might not be an issue if the entire database is exported with each run (each dump would overwrite the last), it might have negative impacts when incremental changes would need to be retained with write-ahead logs, for example*
+	* In order to mitigate this possibility, we might want to save to an EFS in addition to sending it to the S3 bucket.
+* `-` *There is a hard time limit with lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit*
