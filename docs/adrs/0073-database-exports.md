@@ -23,31 +23,29 @@ In general, the objective is to choose a solution that meets or prioritizes most
 
 ## Considered Alternatives
 
-* Save the dataset to a file system then upload to S3
-* Stream the dataset directly to S3 in-memory
+* Using Lambda or ECS: Save the dataset to a file system then upload to S3
+* Using Lambda or ECS: Stream the dataset directly to S3 in-memory
 * Have AWS save an RDS Snapshot automatically and place in S3 bucket
 * Have AWS DMS save datasets directly into S3 as a data migration target
-
-* ~~*AWS ECS Tasks w/Golang streaming to S3*~~
-* ~~*Use AWS RDS Snapshot to save dataset to Advana*~~
-* ~~*Use AWS ECS Tasks or Lambda Functions to stream datasets to Advana*~~
-* ~~*Use AWS ECS Tasks or Lambda Functions to save datasets and upload to Advana*~~
-* ~~*Use AWS DMS to send datasets to Advana*~~
 
 ## Decision Outcome
 
 ## Pros and Cons of the Alternatives
 
-### *AWS RDS snapshot + S3*
+### *Have AWS save an RDS Snapshot automatically and place in S3 bucket*
 RDS has [built-in support](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html) for creating DB snapshots. Since exporting snapshot data to an S3 bucket is not supported out of the box by Terraform, a third-party or a custom solution would have to be explored.
 * `+` *Leverages our existing AWS app architecture*
 * `-` *Requires more support from Infra*
 * `-` *RDS to S3 not supported by Terraform natively*
 
-### *AWS Lambda function that streams pg_dump to s3 bucket*
+### *Using Lambda or ECS: Save the dataset to a file system then upload to S3*
+
+### *Using Lambda or ECS: Stream the dataset directly to S3 in-memory*
 Most of what could be accomplished with an ECS task might be possible with a Lambda function. The work involved here may include using a [existing Lambda function](https://github.com/jameshy/pgdump-aws-lambda), configuring it with access to the database and S3 bucket, and possibly configure EFS in the future.
 * `+` *An existing solution might be sufficient out-of-the-box with little configuration work*
 * `+` *There is prior architecture for lambda functions in our repo*
 * `-` *Possibility for data loss if the stream is interrupted. While this might not be an issue if the entire database is exported with each run (each dump would overwrite the last), it might have negative impacts when incremental changes would need to be retained with write-ahead logs, for example*
 	* In order to mitigate this possibility, we might want to save to an EFS in addition to sending it to the S3 bucket.
 * `-` *There is a hard time limit with lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit*
+
+### *Have AWS DMS save datasets directly into S3 as a data migration target*
