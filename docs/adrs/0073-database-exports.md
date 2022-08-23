@@ -8,6 +8,23 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 - 🔒 **User Story:** [_MB-13238_](https://dp3.atlassian.net/browse/MB-13238)
 - 🔒 **User Story:** [_MB-13183_](https://dp3.atlassian.net/browse/MB-13183)
 
+:::info This document assumes the reader knows about the following technologies:
+- [AWS Database Migration Service (DMS)][docs-dms].
+- [AWS Lambda][docs-lambda].
+- [AWS Elastic Container Service (ECS)][docs-ecs].
+- We leverage the word **dataset(s)** to mean the data that we export from our
+  database which can be in a number of formats.
+- Streaming files to AWS S3 from memory.
+- Permissions and file system to upload files to AWS S3.
+- System Security and Architecture Guide documentation updates in Confluence.
+    - Review and updated any ATO or STIG related requirements.
+- Change Data Capture or CDC to send incremental changes.
+
+[docs-ecs]: https://docs.aws.amazon.com/ecs/index.html
+[docs-dms]: https://docs.aws.amazon.com/dms/index.html
+[docs-lambda]: https://docs.aws.amazon.com/lambda/index.html
+:::
+
 As part of the Advana Data Warehouse Integration effort, MilMove infrastructure must support exporting data from the MilMove database to an S3 bucket owned by Advana. This ADR concerns the methods with which the data is pulled from the database and exported to an S3 bucket to be shared with Advana. This ADR does not aim to completely address data transformation or anything more precise than exporting the entire MilMove database, but such concerns may be taken in consideration when choosing an outcome that may or may not be more conducive to future reworks.
 
 In general, the objective is to choose a solution that meets or prioritizes most of the following criteria:
