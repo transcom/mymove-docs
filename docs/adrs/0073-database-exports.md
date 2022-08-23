@@ -29,14 +29,53 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 
 As part of the Advana Data Warehouse Integration effort, MilMove infrastructure must support exporting data from the MilMove database to an S3 bucket owned by Advana. This ADR concerns the methods with which the data is pulled from the database and exported to an S3 bucket to be shared with Advana. This ADR does not aim to completely address data transformation or anything more precise than exporting the entire MilMove database, but such concerns may be taken in consideration when choosing an outcome that may or may not be more conducive to future reworks.
 
-In general, the objective is to choose a solution that meets or prioritizes most of the following criteria:
-- Fits into our current infrastructure and tech stack
-- Has low complexity and is easily updated in the future
-- Can scale to send incremental changes of the database later, possibly including data transformation
-- Doesn't negatively impact the security of our applications
-- Is reliable (e.g. mitigates data loss when services go down)
-- Won't exceed duration/size constraints as the database grows (constraints might be determined in part by the solution itself)
+### Fits into our current tech stack
+In general, the objective is to choose a solution that meets or prioritizes most
+of the following criteria. We would like to have infrastructure changes that are
+already used in the codebase. These include ECS and Lambda functions. We
+currently leverage ECS cluster for the application, webhook-client, migrations,
+and scheduled tasks. We also currently use Lambda for a number of functions as
+well. So there is prior-art in the MilMove project to leverage either ECS or
+Lambda for specific one-off tasks such as exporting datasets from the database.
 
+There are further technical approaches here when it comes to pushing the
+datasets over to S3. We can rely on saving the dataset being exported to an
+ephemeral or persistent file system. This option is _the non-streaming option_
+for handling the datasets. There is a second option which streams datasets
+directly to S3. This option is _the streaming option_. The non-streaming option
+at the time of this writing will require some minor changes to our configuration
+for ECS tasks. This change has the potential to affect the MilMove SSAG in order
+to support ECS Fargate engine tasks from running both as a non-root user and
+with a non-writable root file system.
+
+### Low complexity and is easily updated in the future
+
+We don't want to build solutions which would require an extensive rewrite of the
+solution proposed for this ADR. This means that any alternative here will need
+to be weighed against the level of effort it would cause the teams to restart
+the work from scratch. This means that we will need to consider alternatives
+which help achieve the goals of incremental changes using a custom CDC solution.
+**This does not mean that the chosen alternative needs to implement these
+changes. This is mostly to be able to talk about the pros and cons of a given
+solution.**
+
+### Doesn't negatively impact the security of the application
+
+The alternatives here must not impact the security of the application
+negatively. Currently our ECS tasks run within a non-root and unprivileged user.
+This is further secured by our disabling of having a writable root file system.
+In order to bypass these restrictions, some of the alternatives introduce the
+need of mounted Bind Points or AWS EFS volumes. These technical details will
+require more infrastructure and additional changes to our SSAG document
+depending on the alternative chosen.
+
+### In conclusion
+
+In conclusion, the alternatives presented below are weighed by their pros (`+`)
+and cons (`-`). Out of the decision outcomes section, we will choose a proposed
+solution and place it under the **Proposal** heading. Within this section, we
+will go into further technical details and possible implementation details.
+These extra details are not done for all of the proposed alternatives.
 
 ## Proposal: We have not proposed a solution yet.
 
