@@ -12,6 +12,7 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 - [AWS Database Migration Service (DMS)][docs-dms].
 - [AWS Lambda][docs-lambda].
 - [AWS Elastic Container Service (ECS)][docs-ecs].
+- [AWS Elastic File System (EFS)][docs-efs]
 - We leverage the word **dataset(s)** to mean the data that we export from our
   database which can be in a number of formats.
 - Streaming files to AWS S3 from memory.
@@ -20,6 +21,7 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
     - Review and updated any ATO or STIG related requirements.
 - Change Data Capture or CDC to send incremental changes.
 
+[docs-efs]: https://docs.aws.amazon.com/efs/index.html
 [docs-ecs]: https://docs.aws.amazon.com/ecs/index.html
 [docs-dms]: https://docs.aws.amazon.com/dms/index.html
 [docs-lambda]: https://docs.aws.amazon.com/lambda/index.html
