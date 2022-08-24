@@ -167,7 +167,7 @@ ECS tasks and Lambda functions are AWS tools that are great for accomplishing sm
 - 🟩 Leverages some of our existing AWS app architecture
 - 🟩 Extremely flexible
 - 🟩 Business logic entirely in Go
-- 🟥 Difficult to test; ECS task deployment to experimental takes about 20 minutes and logs can be unhelpful
+- 🟥 **ECS Only:** Difficult to test; ECS task deployment to experimental takes about 20 minutes and logs can be unhelpful
 - 🟥 No prior architecture in MilMove for ECS tasks or Lambda functions with a file system, [Work-around](https://github.com/aws/containers-roadmap/issues/736#issuecomment-1124118127) for supporting a file system for an ECS task in the current architecture is kind of kludgy
 - 🟥 **ECS Only:** Supporting a file system for an ECS task would likely have small impacts to system security
 - 🟥 **Lambda Only:** There is a hard time limit with Lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit
@@ -188,5 +188,12 @@ AWS Data Migration Service seems to be good fit for the end goal of this feature
 - 🟩 Native support for sending CDC data to an S3 bucket
 - 🟩 Supported by Terraform
 - 🟩 No apparent security concerns
+- 🟩 Testing might have a quicker feedback loop with tools such as [AWS DMS
+  Studio][aws-dms-studio].
 - 🟥 May involve some difficulties with bucket versioning
 - 🟥 No existing model for this in MilMove
+- 🟥 Testing will be difficult as we will need to provision the DMS Terraform
+  which will have engineers rely on the wait times for AWS to provision the DMS
+  infrastructure.
+
+[aws-dms-studio]: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_DMSStudio.html
