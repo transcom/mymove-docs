@@ -33,6 +33,7 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 As part of the Advana Data Warehouse Integration effort, MilMove infrastructure must support exporting data from the MilMove database to an S3 bucket owned by Advana. This ADR concerns the methods with which the data is pulled from the database and exported to an S3 bucket to be shared with Advana. This ADR does not aim to completely address data transformation or anything more precise than exporting the entire MilMove database, but such concerns may be taken in consideration when choosing an outcome that may or may not be more conducive to future reworks.
 
 ### Fits into our current tech stack
+
 In general, the objective is to choose a solution that meets or prioritizes most
 of the following criteria. We would like to have infrastructure changes that are
 already used in the codebase. These include ECS and Lambda functions. We
@@ -83,44 +84,72 @@ we rely on the pros and cons of the alternatives to relay that information.
 
 ## Considered Alternatives
 
-* Using Lambda or ECS: Save the dataset to a file system then upload to S3
-* Using Lambda or ECS: Stream the dataset directly to S3 in-memory
-* Have AWS save an RDS Snapshot automatically and place in S3 bucket
-* Have AWS DMS save datasets directly into S3 as a data migration target
+**Bold text is the chosen alternative**.
+
+- Using Lambda or ECS: Save the dataset to a file system then upload to S3
+- Using Lambda or ECS: Stream the dataset directly to S3 in-memory
+- Have AWS save an RDS Snapshot automatically and place in S3 bucket
+- **Have AWS DMS save datasets directly into S3 as a data migration target**
 
 ## Decision Outcome
+
+> This section below still needs some work
+
+The AWS DMS solution sounds promising and sounds like it might hit all of our
+criteria that we need such as CSV output, CDC level change tracking, and
+automated S3 bucket replication of our database. The work required here will be
+that we will need to have a replication policy on the S3 bucket that we
+configure to be used as the target for the data migration.
+
+### Proposal: Have AWS DMS save datasets directly into S3 as a data migration target
+
+We've chosen the AWS DMS alternative. It is a solution that targets all of the
+talking points above in the Background section. Because this solution is owned
+and operated by the AWS infrastructure, it will require less work from Trussel
+engineers regardless of InfraSec or AppEng designation. It also skips the
+initial step of sharing the entire database with Advana which is less effort on
+Truss to provide a dataset every 12 hours to Advana. This solution uses CSV
+files to track the changes made to the database using a custom CDC solution that
+tracks all changes made to the database and captures them in easily consumable
+CSV files.
+
+#### Prior work
 
 ## Pros and Cons of the Alternatives
 
 ### Have AWS save an RDS Snapshot automatically and place in S3 bucket
+
 RDS has [built-in support](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html) for creating DB snapshots. Since exporting snapshot data to an S3 bucket is not supported out of the box by Terraform, a third-party or a custom solution would have to be explored.
 - 🟩 Leverages our existing AWS app architecture
-- 🟥 Requires more support from Infra
+- 🟥 Requires more support from InfraSec
 - 🟥 RDS to S3 not supported by Terraform natively
 
 ### Using Lambda or ECS: Save the dataset to a file system then upload to S3
-ECS tasks and Lambda functions are AWS tools that are great for accomplishing small tasks within the ECS environment. For this option, a simple Go function could be designed to perform a pg_dump and export the result to an S3 bucket with the AWS Go SDK. This function could then be added to the existing MilMove tasks binary or added as a Lambda function. This function could also be updated in the future to meet any sort of requirements, including fetching incremental changes and/or transforming the output data.
+
+ECS tasks and Lambda functions are AWS tools that are great for accomplishing small tasks within the ECS environment. For this option, a simple Go function could be designed to perform a `pg_dump` and export the result to an S3 bucket with the AWS Go SDK. This function could then be added to the existing MilMove tasks binary or added as a Lambda function. This function could also be updated in the future to meet any sort of requirements, including fetching incremental changes and/or transforming the output data.
 - 🟩 Leverages some of our existing AWS app architecture
 - 🟩 Extremely flexible
 - 🟩 Business logic entirely in Go
 - 🟥 Difficult to test; ECS task deployment to experimental takes about 20 minutes and logs can be unhelpful
 - 🟥 No prior architecture in MilMove for ECS tasks or Lambda functions with a file system, [Work-around](https://github.com/aws/containers-roadmap/issues/736#issuecomment-1124118127) for supporting a file system for an ECS task in the current architecture is kind of kludgy
-- 🟥 Supporting a file system for an ECS task would likely have small impacts to system security
-- 🟥 There is a hard time limit with lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit
+- 🟥 **ECS Only:** Supporting a file system for an ECS task would likely have small impacts to system security
+- 🟥 **Lambda Only:** There is a hard time limit with Lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit
 
 ### Using Lambda or ECS: Stream the dataset directly to S3 in-memory
+
 An ECS task or Lambda function could also stream data directly to an S3 bucket and skip saving to a file. This approach would avoid the security and workload concerns of the file-saving approach but may introduce other considerations.
 - 🟩 Leverages some of our existing AWS app architecture
 - 🟩 Extremely flexible
 - 🟩 Business logic entirely in Go
-- 🟥 Difficult to test; ECS task deployment to experimental takes about 20 minutes and logs can be unhelpful
-- 🟥 Possibility for data loss if the stream is interrupted. While this might not be an issue if the entire database is exported with each run (each dump would overwrite the last), it might have negative impacts when incremental changes would need to be retained with write-ahead logs, for example
-- 🟥 There is a hard time limit with lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit
+- 🟥 **ECS Only:** Difficult to test; ECS task deployment to experimental takes about 20 minutes and logs can be unhelpful
+- 🟥 Possibility for data loss if the stream is interrupted. While this might not be an issue if the entire database is exported with each run (each datasets would overwrite the last), it might have negative impacts when incremental changes would need to be retained with write-ahead logs, for example
+- 🟥 **Lambda Only:** There is a hard time limit with Lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit
 
 ### Have AWS DMS save datasets directly into S3 as a data migration target
-AWS Data Migration Service seems to be good fit for the end goal of this feature. It supports writing CDC data as a csv directly to an S3 bucket [out-of-the-box](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html).
+
+AWS Data Migration Service seems to be good fit for the end goal of this feature. It supports using CDC data as a CSV directly to an S3 bucket [out-of-the-box](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html).
 - 🟩 Native support for sending CDC data to an S3 bucket
-- 🟩 Supported by terraform
+- 🟩 Supported by Terraform
 - 🟩 No apparent security concerns
 - 🟥 May involve some difficulties with bucket versioning
 - 🟥 No existing model for this in MilMove
