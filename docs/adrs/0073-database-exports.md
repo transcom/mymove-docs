@@ -20,7 +20,7 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 - System Security and Architecture Guide (SSAG) documentation updates in
   Confluence.
     - Review and updated any ATO or STIG related requirements.
-- Change Data Capture or CDC to send incremental changes.
+- Change Data Capture (CDC) to send incremental changes.
 
 [docs-efs]: https://docs.aws.amazon.com/efs/index.html
 [docs-ecs]: https://docs.aws.amazon.com/ecs/index.html
