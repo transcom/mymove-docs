@@ -113,7 +113,28 @@ files to track the changes made to the database using a custom CDC solution that
 tracks all changes made to the database and captures them in easily consumable
 CSV files.
 
-#### Prior work
+#### Fits into our current tech stack
+
+There's an AWS DMS Terraform module that InfraSec can leverage for setting up
+DMS within our infrastructure.
+
+[gh-aws-dms-module]: https://github.com/terraform-aws-modules/terraform-aws-dms
+
+#### Low complexity and is easily updated in the future
+
+Because AWS DMS will handle the actual tasks here, Truss engineers are only
+tasked with setting up the automation and not being responsible for actively
+maintaining it.
+
+#### Doesn't negatively impact the security of the application
+
+The impacts on our security posture for the MilMove application are impacted in
+the following ways. We will need to configure our AWS S3 bucket
+
+> Let's talk about we'll need to configure for our S3 buckets and what
+> limitations this presents. How does this affect security?
+
+
 
 ## Pros and Cons of the Alternatives
 
