@@ -99,14 +99,22 @@ RDS has [built-in support](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuid
 - 🟥 RDS to S3 not supported by Terraform natively
 
 ### Using Lambda or ECS: Save the dataset to a file system then upload to S3
-- 🟥 [Work-around](https://github.com/aws/containers-roadmap/issues/736#issuecomment-1124118127) for supporting a file system in the current architecture is kind of kludgey
+ECS tasks and Lambda functions are AWS tools that are great for accomplishing small tasks within the ECS environment. For this option, a simple Go function could be designed to perform a pg_dump and export the result to an S3 bucket with the AWS Go SDK. This function could then be added to the existing MilMove tasks binary or added as a Lambda function. This function could also be updated in the future to meet any sort of requirements, including fetching incremental changes and/or transforming the output data.
+- 🟩 Leverages some of our existing AWS app architecture
+- 🟩 Extremely flexible
+- 🟩 Business logic entirely in Go
+- 🟥 Difficult to test; ECS task deployment to experimental takes about 20 minutes and logs can be unhelpful
+- 🟥 No prior architecture in MilMove for ECS tasks or Lambda functions with a file system, [Work-around](https://github.com/aws/containers-roadmap/issues/736#issuecomment-1124118127) for supporting a file system for an ECS task in the current architecture is kind of kludgy
+- 🟥 Supporting a file system for an ECS task would likely have small impacts to system security
+- 🟥 There is a hard time limit with lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit
 
 ### Using Lambda or ECS: Stream the dataset directly to S3 in-memory
-Most of what could be accomplished with an ECS task might be possible with a Lambda function. The work involved here may include using a [existing Lambda function](https://github.com/jameshy/pgdump-aws-lambda), configuring it with access to the database and S3 bucket, and possibly configure EFS in the future.
-- 🟩 An existing solution might be sufficient out-of-the-box with little configuration work
-- 🟩 There is prior architecture for lambda functions in our repo
+An ECS task or Lambda function could also stream data directly to an S3 bucket and skip saving to a file. This approach would avoid the security and workload concerns of the file-saving approach but may introduce other considerations.
+- 🟩 Leverages some of our existing AWS app architecture
+- 🟩 Extremely flexible
+- 🟩 Business logic entirely in Go
+- 🟥 Difficult to test; ECS task deployment to experimental takes about 20 minutes and logs can be unhelpful
 - 🟥 Possibility for data loss if the stream is interrupted. While this might not be an issue if the entire database is exported with each run (each dump would overwrite the last), it might have negative impacts when incremental changes would need to be retained with write-ahead logs, for example
-	- In order to mitigate this possibility, we might want to save to an EFS in addition to sending it to the S3 bucket.
 - 🟥 There is a hard time limit with lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit
 
 ### Have AWS DMS save datasets directly into S3 as a data migration target
