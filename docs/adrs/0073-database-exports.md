@@ -30,6 +30,13 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 
 ## Background
 
+> Waiting on a rewrite here to remove the distinction that we have Phase I and
+> Phase II. We really want this space to talk about the main problems that we've
+> learned are in scope. This should then say something along the lines of: We
+> need to get datasets over to Advana using S3 replication encrypted with KMS
+> and have those changed datasets represented as CSV files of the changes made
+> to the database.
+
 As part of the Advana Data Warehouse Integration effort, MilMove infrastructure must support exporting data from the MilMove database to an S3 bucket owned by Advana. This ADR concerns the methods with which the data is pulled from the database and exported to an S3 bucket to be shared with Advana. This ADR does not aim to completely address data transformation or  require anything more precise than exporting the entire MilMove database, but such concerns may be taken in consideration when choosing an outcome that may or may not be more conducive to future reworks.
 
 ### Fits into our current tech stack
@@ -93,13 +100,13 @@ we rely on the pros and cons of the alternatives to relay that information.
 
 ## Decision Outcome
 
-> This section below still needs some work
+The most promising alternative in this ADR is the AWS DMS alternative. It uses
+CDC transactions for extracting the datasets from the database, can be run on an
+interval using <TECHNOLOGY_NAME>, and transforms the CDC datasets into CSV files
+and automatically places them in a structured layout within a target S3 bucket.
 
-The AWS DMS solution sounds promising and sounds like it might hit all of our
-criteria that we need such as CSV output, CDC level change tracking, and
-automated S3 bucket replication of our database. The work required here will be
-that we will need to have a replication policy on the S3 bucket that we
-configure to be used as the target for the data migration.
+> Flesh out the above to answer the question about: How do we define intervals
+> for the AWS DMS changes?
 
 ### Proposal: Have AWS DMS save datasets directly into S3 as a data migration target
 
