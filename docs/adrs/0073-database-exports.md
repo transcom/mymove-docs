@@ -129,12 +129,28 @@ maintaining it.
 #### Doesn't negatively impact the security of the application
 
 The impacts on our security posture for the MilMove application are impacted in
-the following ways. We will need to configure our AWS S3 bucket
+the following ways. We will need to configure our AWS S3 bucket in ways that
+make sense for the Advana replication work _and_ the DMS target integration
+work. [This means that we will have prerequisites for using S3 as a
+target][docs-aws-prereq-s3]. [There are also some limitations to consider when
+using S3 as a target][docs-aws-limitations-s3].
 
 > Let's talk about we'll need to configure for our S3 buckets and what
 > limitations this presents. How does this affect security?
 
+The major security changes for our S3 bucket will be that the migration task for
+DMS will require the S3 bucket to have both **write** and **delete** access to
+the S3 bucket that is used as a target. [This language is explicitly called out
+in the Security section of the AWS DMS documentation][docs-aws-dms-security].
+The IAM role used for the migration must also be able to perform the
+`s3:PutObjectAcl` API operation as well.
 
+> So it seems to me that there's a ton of work that will go into talking about
+> S3 in this section. So let's keep going.
+
+[docs-aws-dms-prereq-s3]: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.Prerequisites
+[docs-aws-dms-limitations-s3]: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.Limitations
+[docs-aws-dms-security]: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.Security
 
 ## Pros and Cons of the Alternatives
 
