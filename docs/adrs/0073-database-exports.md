@@ -72,13 +72,12 @@ depending on the alternative chosen.
 
 ### In conclusion
 
-In conclusion, the alternatives presented below are weighed by their pros (`+`)
-and cons (`-`). Out of the decision outcomes section, we will choose a proposed
-solution and place it under the **Proposal** heading. Within this section, we
+In conclusion, the alternatives presented below are weighed by their pros 🟩
+and cons 🟥. Out of the decision outcomes section, we will choose a proposed
+solution and place it under the **Proposal:** heading. Within this section, we
 will go into further technical details and possible implementation details.
-These extra details are not done for all of the proposed alternatives.
-
-## Proposal: We have not proposed a solution yet.
+These extra details are not done for all of the proposed alternatives. Instead
+we rely on the pros and cons of the alternatives to relay that information.
 
 ## Considered Alternatives
 
