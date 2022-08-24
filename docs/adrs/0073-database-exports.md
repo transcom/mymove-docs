@@ -8,7 +8,7 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 - 🔒 **User Story:** [_MB-13238_](https://dp3.atlassian.net/browse/MB-13238)
 - 🔒 **User Story:** [_MB-13183_](https://dp3.atlassian.net/browse/MB-13183)
 
-:::info This document assumes the reader knows about the following technologies and or jargon:
+:::info This document assumes the reader knows about the following technologies and/or jargon:
 - [AWS Database Migration Service (DMS)][docs-dms].
 - [AWS Lambda][docs-lambda].
 - [AWS Elastic Container Service (ECS)][docs-ecs].
