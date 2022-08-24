@@ -72,3 +72,5 @@ subtest
 Advana
 S3
 Fargate
+kludge
+kludgy
