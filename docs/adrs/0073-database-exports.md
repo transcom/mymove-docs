@@ -132,8 +132,8 @@ The impacts on our security posture for the MilMove application are impacted in
 the following ways. We will need to configure our AWS S3 bucket in ways that
 make sense for the Advana replication work _and_ the DMS target integration
 work. [This means that we will have prerequisites for using S3 as a
-target][docs-aws-prereq-s3]. [There are also some limitations to consider when
-using S3 as a target][docs-aws-limitations-s3].
+target][docs-aws-dms-prereq-s3]. [There are also some limitations to consider
+when using S3 as a target][docs-aws-dms-limitations-s3].
 
 > Let's talk about we'll need to configure for our S3 buckets and what
 > limitations this presents. How does this affect security?
