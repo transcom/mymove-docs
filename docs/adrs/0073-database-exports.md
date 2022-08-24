@@ -129,11 +129,15 @@ maintaining it.
 #### Doesn't negatively impact the security of the application
 
 The impacts on our security posture for the MilMove application are impacted in
-the following ways. We will need to configure our AWS S3 bucket
+the following ways. We will need to configure our AWS S3 bucket following the 
+[DMS Userguide](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html).
+Some of the stand out configurations include needing the IAM role will have to 
+have DMS (dms.amazonaws.com) added as trusted entity as well as turning off version history.
 
 > Let's talk about we'll need to configure for our S3 buckets and what
 > limitations this presents. How does this affect security?
-
+> What about the KMS encrypted key.  Where is that coming from?
+> AWS Object tagging can be used to pull specific schemas from a DB.
 
 
 ## Pros and Cons of the Alternatives
