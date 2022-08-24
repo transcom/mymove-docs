@@ -99,6 +99,7 @@ RDS has [built-in support](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuid
 - 🟥 RDS to S3 not supported by Terraform natively
 
 ### Using Lambda or ECS: Save the dataset to a file system then upload to S3
+- 🟥 [Work-around](https://github.com/aws/containers-roadmap/issues/736#issuecomment-1124118127) for supporting a file system in the current architecture is kind of kludgey
 
 ### Using Lambda or ECS: Stream the dataset directly to S3 in-memory
 Most of what could be accomplished with an ECS task might be possible with a Lambda function. The work involved here may include using a [existing Lambda function](https://github.com/jameshy/pgdump-aws-lambda), configuring it with access to the database and S3 bucket, and possibly configure EFS in the future.
@@ -109,3 +110,9 @@ Most of what could be accomplished with an ECS task might be possible with a Lam
 - 🟥 There is a hard time limit with lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit
 
 ### Have AWS DMS save datasets directly into S3 as a data migration target
+AWS Data Migration Service seems to be good fit for the end goal of this feature. It supports writing CDC data as a csv directly to an S3 bucket [out-of-the-box](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html).
+- 🟩 Native support for sending CDC data to an S3 bucket
+- 🟩 Supported by terraform
+- 🟩 No apparent security concerns
+- 🟥 May involve some difficulties with bucket versioning
+- 🟥 No existing model for this in MilMove
