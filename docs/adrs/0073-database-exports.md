@@ -30,7 +30,14 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 
 ## Background
 
-As part of the Advana Data Warehouse Integration effort, MilMove infrastructure must support exporting data from the MilMove database to an S3 bucket owned by Advana. This ADR concerns the methods with which the data is pulled from the database and exported to an S3 bucket to be shared with Advana. This ADR does not aim to completely address data transformation or anything more precise than exporting the entire MilMove database, but such concerns may be taken in consideration when choosing an outcome that may or may not be more conducive to future reworks.
+> Waiting on a rewrite here to remove the distinction that we have Phase I and
+> Phase II. We really want this space to talk about the main problems that we've
+> learned are in scope. This should then say something along the lines of: We
+> need to get datasets over to Advana using S3 replication encrypted with KMS
+> and have those changed datasets represented as CSV files of the changes made
+> to the database.
+
+As part of the Advana Data Warehouse Integration effort, MilMove infrastructure must support exporting data from the MilMove database to an S3 bucket owned by Advana. This ADR concerns the methods with which the data is pulled from the database and exported to an S3 bucket to be shared with Advana. This ADR does not aim to completely address data transformation or  require anything more precise than exporting the entire MilMove database, but such concerns may be taken in consideration when choosing an outcome that may or may not be more conducive to future reworks.
 
 ### Fits into our current tech stack
 
@@ -93,13 +100,13 @@ we rely on the pros and cons of the alternatives to relay that information.
 
 ## Decision Outcome
 
-> This section below still needs some work
+The most promising alternative in this ADR is the AWS DMS alternative. It uses
+CDC transactions for extracting the datasets from the database, can be run on an
+interval using <TECHNOLOGY_NAME>, and transforms the CDC datasets into CSV files
+and automatically places them in a structured layout within a target S3 bucket.
 
-The AWS DMS solution sounds promising and sounds like it might hit all of our
-criteria that we need such as CSV output, CDC level change tracking, and
-automated S3 bucket replication of our database. The work required here will be
-that we will need to have a replication policy on the S3 bucket that we
-configure to be used as the target for the data migration.
+> Flesh out the above to answer the question about: How do we define intervals
+> for the AWS DMS changes?
 
 ### Proposal: Have AWS DMS save datasets directly into S3 as a data migration target
 
@@ -131,14 +138,36 @@ maintaining it.
 The impacts on our security posture for the MilMove application are impacted in
 the following ways. We will need to configure our AWS S3 bucket following the 
 [DMS Userguide](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html).
+
 Some of the stand out configurations include needing the IAM role will have to 
 have DMS (dms.amazonaws.com) added as trusted entity as well as turning off version history.
 
+We will need to configure our AWS S3 bucket in ways that
+make sense for the Advana replication work _and_ the DMS target integration
+work. [This means that we will have prerequisites for using S3 as a
+target][docs-aws-dms-prereq-s3]. [There are also some limitations to consider
+when using S3 as a target][docs-aws-dms-limitations-s3].
+
 > Let's talk about we'll need to configure for our S3 buckets and what
 > limitations this presents. How does this affect security?
+
+
+The major security changes for our S3 bucket will be that the migration task for
+DMS will require the S3 bucket to have both **write** and **delete** access to
+the S3 bucket that is used as a target. [This language is explicitly called out
+in the Security section of the AWS DMS documentation][docs-aws-dms-security].
+The IAM role used for the migration must also be able to perform the
+`s3:PutObjectAcl` API operation as well.
+
+> So it seems to me that there's a ton of work that will go into talking about
+> S3 in this section. So let's keep going.
+
 > What about the KMS encrypted key.  Where is that coming from?
 > AWS Object tagging can be used to pull specific schemas from a DB.
 
+[docs-aws-dms-prereq-s3]: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.Prerequisites
+[docs-aws-dms-limitations-s3]: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.Limitations
+[docs-aws-dms-security]: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.Security
 
 ## Pros and Cons of the Alternatives
 
@@ -155,7 +184,7 @@ ECS tasks and Lambda functions are AWS tools that are great for accomplishing sm
 - 🟩 Leverages some of our existing AWS app architecture
 - 🟩 Extremely flexible
 - 🟩 Business logic entirely in Go
-- 🟥 Difficult to test; ECS task deployment to experimental takes about 20 minutes and logs can be unhelpful
+- 🟥 **ECS Only:** Difficult to test; ECS task deployment to experimental takes about 20 minutes and logs can be unhelpful
 - 🟥 No prior architecture in MilMove for ECS tasks or Lambda functions with a file system, [Work-around](https://github.com/aws/containers-roadmap/issues/736#issuecomment-1124118127) for supporting a file system for an ECS task in the current architecture is kind of kludgy
 - 🟥 **ECS Only:** Supporting a file system for an ECS task would likely have small impacts to system security
 - 🟥 **Lambda Only:** There is a hard time limit with Lambda functions of 15 minutes; extra measures might need to be taken to ensure that the runtime of the function never approaches this limit
@@ -176,5 +205,12 @@ AWS Data Migration Service seems to be good fit for the end goal of this feature
 - 🟩 Native support for sending CDC data to an S3 bucket
 - 🟩 Supported by Terraform
 - 🟩 No apparent security concerns
+- 🟩 Testing might have a quicker feedback loop with tools such as [AWS DMS
+  Studio][aws-dms-studio].
 - 🟥 May involve some difficulties with bucket versioning
 - 🟥 No existing model for this in MilMove
+- 🟥 Testing will be difficult as we will need to provision the DMS Terraform
+  which will have engineers rely on the wait times for AWS to provision the DMS
+  infrastructure.
+
+[aws-dms-studio]: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_DMSStudio.html
