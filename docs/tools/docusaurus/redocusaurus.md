@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Redocusaurus
 
-:::tip
+:::tip Why do I need to read this?
 
 This documentation is helpful for anyone editing documentation related to the
 Swagger API definitions. It is helpful to understand those concepts first before
@@ -12,7 +12,7 @@ diving into this documentation.
 
 :::
 
-:::caution
+:::info Need help? Ask in Slack.
 
 This documentation leverages multiple projects that could lead to confusing
 error messages and warnings. For help, please reach out in
@@ -41,7 +41,7 @@ documentation][doc-preset] on using presets for more general information.
 
 [doc-preset]: https://docusaurus.io/docs/presets
 
-:::info
+:::note How Docusaurus consumes Swagger documentation
 
 The way `transcom/mymove-docs` uses this is by leveraging the raw GitHub URLs
 for the Yaml files found in `transcom/mymove`. This means the API documentation
