@@ -99,6 +99,14 @@ index 697ffef..30fdcc4 100644
          ],
 ```
 
+:::warning About the diff output above
+
+Due to edits to the `docusaurus.config.js` file since this documentation was
+written. The above diff is for illustrative purposes only and **will not apply
+cleanly to the `transcom/mymove` repository**.
+
+:::
+
 ### Viewing changes in local Docusaurus
 
 Now that you have updated the `docusaurus.config.js` with the changes mentioned
