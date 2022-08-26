@@ -71,12 +71,12 @@ repository.
 ### Updating the Docusaurus configuration
 
 Once you have these repositories cloned locally, you will need to edit the
-`documentation.config.js` file to leverage the `spec:` property instead of the
-`specUrl` property.
+`documentation.config.js` file to have the local copy of compiled Swagger files
+rather than pointing to the raw GitHub URL for the default branch.
 
-The Git patch below shows what these changes would look like locally. The main
-thing to consider here is the location of the Swagger specification. In the
-example below, it is relative to the `transcom/mymove-docs` repository.
+The Git patch below shows what these changes would look like locally. The
+important thing to consider here is the location of the Swagger specification.
+In the example below, it is relative to the `transcom/mymove-docs` repository.
 
 ```diff title="Updates to specification paths" {9,10,14,15}
 diff --git a/docusaurus.config.js b/docusaurus.config.js
@@ -87,12 +87,12 @@ index 697ffef..30fdcc4 100644
        {
          specs: [
            {
--            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
+-            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
 +            spec: '../mymove/swagger/prime.yaml',
              routePath: '/api/prime',
            },
            {
--            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
+-            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
 +            spec: '../mymove/swagger/support.yaml',
              routePath: '/api/support',
            },
