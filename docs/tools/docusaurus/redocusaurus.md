@@ -48,7 +48,7 @@ for the Yaml files found in `transcom/mymove`. This means the API documentation
 is in sync with the default branch for the `transcom/mymove` repository. This
 means that until your Swagger file changes are merged into the default branch of
 `transcom/mymove` you cannot view the changes in the `transcom/mymove-docs`
-repository.
+repository neither locally nor on the published website.
 
 :::
 
