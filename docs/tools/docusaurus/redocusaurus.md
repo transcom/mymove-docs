@@ -16,9 +16,9 @@ diving into this documentation.
 
 This documentation leverages multiple projects that could lead to confusing
 error messages and warnings. For help, please reach out in
-[#wg-documentation][slack-wg-documentation]🔒 if you get stuck.
+[#c-documentation][slack-c-documentation]🔒 if you get stuck.
 
-[slack-wg-documentation]: https://ustcdp3.slack.com/archives/C027BDJ4678
+[slack-c-documentation]: https://ustcdp3.slack.com/archives/C027BDJ4678
 
 :::
 
