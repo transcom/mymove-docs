@@ -30,14 +30,14 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 
 ## Background
 
-> Waiting on a rewrite here to remove the distinction that we have Phase I and
-> Phase II. We really want this space to talk about the main problems that we've
-> learned are in scope. This should then say something along the lines of: We
-> need to get datasets over to Advana using S3 replication encrypted with KMS
-> and have those changed datasets represented as CSV files of the changes made
-> to the database.
-
-As part of the Advana Data Warehouse Integration effort, MilMove infrastructure must support exporting data from the MilMove database to an S3 bucket owned by Advana. This ADR concerns the methods with which the data is pulled from the database and exported to an S3 bucket to be shared with Advana. This ADR does not aim to completely address data transformation or  require anything more precise than exporting the entire MilMove database, but such concerns may be taken in consideration when choosing an outcome that may or may not be more conducive to future reworks.
+As part of the Advana Data Warehouse Integration effort, MilMove infrastructure
+must support exporting data from the MilMove database to an S3 bucket owned by
+Advana. This ADR concerns the methods with which the dataset is pulled from the
+database and exported to an S3 bucket to be shared with Advana. ~~This ADR does
+not aim to completely address data transformation or require anything more
+precise than exporting the entire MilMove database, but such concerns may be
+taken in consideration when choosing an outcome that may or may not be more
+conducive to future reworks~~.
 
 ### Fits into our current tech stack
 
