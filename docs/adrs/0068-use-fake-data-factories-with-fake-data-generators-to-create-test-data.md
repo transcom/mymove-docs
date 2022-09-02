@@ -176,14 +176,22 @@ The rest of the pros/cons match the next option so see that one for more info.
 
 ## Resources
 
-* Some possibilities for `go` fake data generators:
-  * [jaswdr/faker](https://github.com/jaswdr/faker)
-  * [bxcodec/faker](https://github.com/bxcodec/faker)
-* Possible `js` libraries:
-  * Fake data generator: [faker](https://fakerjs.dev/)
-  * Factory tool (Called builders in this package): [test-data-bot](https://github.com/jackfranklin/test-data-bot)
 * Article talking about [why using a factory bot can be good](https://www.codewithjason.com/why-use-factory-bot/).
   * It's for `ruby`, but the idea is applicable in other languages.
 * [Slack thread where we discussed faker and factories](https://ustcdp3.slack.com/archives/CTQQJD3G8/p1646079626405239)
 * [Front-end check-in notes where we discussed faker and factories](https://dp3.atlassian.net/wiki/spaces/MT/pages/1663500318/2022-03-03+Front+End+Check-In)
 * [Back-end check-in notes where we discussed this ADR a bit](https://dp3.atlassian.net/wiki/spaces/MT/pages/1697611790/2022-03-24+Meeting+notes)
+
+### PRs
+
+* [Proof of concept PR](https://github.com/transcom/mymove/pull/8388)
+* [Base FE fake data generator and factory tool setup PR](https://github.com/transcom/mymove/pull/9142)
+
+### Possible Tools
+
+* Some possibilities for `go` fake data generators:
+    * [jaswdr/faker](https://github.com/jaswdr/faker)
+    * [bxcodec/faker](https://github.com/bxcodec/faker)
+* Possible `js` libraries:
+    * Fake data generator: [faker](https://fakerjs.dev/)
+    * Factory tool (Called builders in this package): [test-data-bot](https://github.com/jackfranklin/test-data-bot)
