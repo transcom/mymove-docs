@@ -195,3 +195,5 @@ The rest of the pros/cons match the next option so see that one for more info.
 * Possible `js` libraries:
     * Fake data generator: [faker](https://fakerjs.dev/)
     * Factory tool (Called builders in this package): [test-data-bot](https://github.com/jackfranklin/test-data-bot)
+* Data generation based on swagger definition:
+    * [swagger-codegen](https://github.com/swagger-api/swagger-codegen) 
