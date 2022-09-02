@@ -71,9 +71,11 @@ yarn cypress run --spec cypress/integration/path/to/file.jsx
 
 ## Automated tests artifacts from continuous integration
 
-:::note Artifacts overview call-out
-Please note that the Artifacts overview is the main area that's important to
-read.
+:::note External documentation call-out
+The intention of this documentation is to not repeat the official docs. At the
+time of this writing, the documentation being referenced contains an _Artifacts
+overview_ section is the main area that shows where Artifacts are stored in the
+CircleCI UI.
 :::
 
 Currently we use CircleCI to store artifacts of failed Cypress tests. These are
