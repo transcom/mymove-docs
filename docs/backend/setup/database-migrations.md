@@ -440,18 +440,20 @@ We are piggy-backing on the migration system for importing static datasets. This
 
 To run a secure migration on ONLY staging (or other chosen environment), upload the migration only to the S3 environment and blank files to the others. 
 
-1. Similar to the "Upload the migration" step above, run `ENVIRONMENTS="stg" upload-secure-migration <production_migration_file>` where `ENVIRONMENTS` is a quoted list of all the environments you wish to upload to. The default is `"exp stg prd"` but you can just do staging and production with `ENVIRONMENTS="stg prd"`
+1. Similar to the "Upload the migration" step above, run `ENVIRONMENTS="stg" upload-secure-migration <production_migration_file>` where `ENVIRONMENTS` is a quoted list of all the environments you wish to upload to. The default is `"demo exp stg prd loadtest"` but you can just do staging and production with `ENVIRONMENTS="stg prd"`
 
 1. Check that it is listed in the S3 staging secure-migrations folder. For GovCloud account that would be `DISABLE_AWS_VAULT_WRAPPER=1 AWS_PROFILE=transcom-gov-id AWS_REGION=us-gov-west-1 aws-vault exec transcom-gov-milmove-stg -- aws s3 ls s3://transcom-gov-milmove-stg-app-us-gov-west-1/secure-migrations/`.
 
 1. Check that it is NOT listed in the S3 production folder. GovCloud: `DISABLE_AWS_VAULT_WRAPPER=1 AWS_PROFILE=transcom-gov-id AWS_REGION=us-gov-west-1 aws-vault exec transcom-gov-milmove-stg -- aws s3 ls s3://transcom-gov-milmove-prd-app-us-gov-west-1/secure-migrations/`.
 
-1. Now upload empty files of the same name to the prd and exp environments: `ENVIRONMENTS="exp prd" upload-secure-migration <empty_migration_file_with_same_name>`
+1. Now upload empty files of the same name to the prd, exp, demo, and loadtest environments: `ENVIRONMENTS="exp prd demo loadtest" upload-secure-migration <empty_migration_file_with_same_name>`
 
 1. To verify upload and that the migration can be applied use the make target corresponding to your environment:
     - `make run_prd_migrations`
     - `make run_stg_migrations`
     - `make run_exp_migrations`
+    - `make run_demo_migrations`
+    - `make run_loadtest_migrations`
 
 ### How Secure Migrations Work
 
@@ -487,12 +489,18 @@ Downloading from: stg
 download: s3://transcom-gov-milmove-stg-app-us-gov-west-1/secure-migrations/20200911161101_secure_migration.up.sql to ./tmp/secure_migrations/stg/20200911161101_secure_migration.up.sql
 Downloading from: prd
 .download: s3://transcom-gov-milmove-prd-app-us-gov-west-1/secure-migrations/20200911161101_secure_migration.up.sql to ./tmp/secure_migrations/prd/20200911161101_secure_migration.up.sql
+Downloading from: demo
+.download: s3://transcom-gov-milmove-demo-app-us-gov-west-1/secure-migrations/20200911161101_secure_migration.up.sql to ./tmp/secure_migrations/demo/20200911161101_secure_migration.up.sql
+Downloading from: loadtest
+.download: s3://transcom-gov-milmove-loadtest-app-us-gov-west-1/secure-migrations/20200911161101_secure_migration.up.sql to ./tmp/secure_migrations/loadtest/20200911161101_secure_migration.up.sql
 
 Files have been downloaded to these locations:
 
 ./tmp/secure_migrations/prd/20200911161101_secure_migration.up.sql
 ./tmp/secure_migrations/exp/20200911161101_secure_migration.up.sql
 ./tmp/secure_migrations/stg/20200911161101_secure_migration.up.sql
+./tmp/secure_migrations/demo/20200911161101_secure_migration.up.sql
+./tmp/secure_migrations/loadtest/20200911161101_secure_migration.up.sql
 
 Please remember to 'rm -rf ./tmp/secure_migrations' when you are finished working
 ```
