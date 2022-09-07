@@ -475,13 +475,13 @@ There is an example of local secure migrations [in the repo](https://github.com/
 
 You may need to download and inspect secure migrations. Or perhaps you need to correct a file you uploaded by mistake. Here is how you download the secure migrations:
 
-- Download the migration to S3 with: `download-secure-migration <production_migration_file>`. You can also use the `ENVIRONMENTS` environment variable to specify one or more than one environment (exp, stg, prd).
+- Download the migration to S3 with: `download-secure-migration <production_migration_file>`. You can also use the `ENVIRONMENTS` environment variable to specify one or more than one environment (exp, stg, prd, demo, loadtest).
 - This will put files in `./tmp/secure_migrations/${environment}`.
 
 You can now inspect or modify and re-upload those files as needed. Running the script will look like this:
 
 ```bash
-download-secure-migration 20200911161101_secure_migration.up.sql
+ENVIRONMENTS="exp stg prd demo loadtest" download-secure-migration 20200911161101_secure_migration.up.sql
 
 Downloading from: exp
 download: s3://transcom-gov-milmove-exp-app-us-gov-west-1/secure-migrations/20200911161101_secure_migration.up.sql to ./tmp/secure_migrations/exp/20200911161101_secure_migration.up.sql
