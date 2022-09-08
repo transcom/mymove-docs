@@ -190,10 +190,10 @@ The rest of the pros/cons match the next option so see that one for more info.
 ### Possible Tools
 
 * Some possibilities for `go` fake data generators:
-    * [jaswdr/faker](https://github.com/jaswdr/faker)
-    * [bxcodec/faker](https://github.com/bxcodec/faker)
+  * [jaswdr/faker](https://github.com/jaswdr/faker)
+  * [bxcodec/faker](https://github.com/bxcodec/faker)
 * Possible `js` libraries:
-    * Fake data generator: [faker](https://fakerjs.dev/)
-    * Factory tool (Called builders in this package): [test-data-bot](https://github.com/jackfranklin/test-data-bot)
+  * Fake data generator: [faker](https://fakerjs.dev/)
+  * Factory tool (Called builders in this package): [test-data-bot](https://github.com/jackfranklin/test-data-bot)
 * Data generation based on swagger definition:
-    * [swagger-codegen](https://github.com/swagger-api/swagger-codegen) 
+  * [swagger-codegen](https://github.com/swagger-api/swagger-codegen)
