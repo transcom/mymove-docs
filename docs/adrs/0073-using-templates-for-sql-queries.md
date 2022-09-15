@@ -1,5 +1,5 @@
 ---
-title: 00XX Use Templates for SQL Queries
+title: 0073 Use Templates for SQL Queries
 description: |
   Decision outcome: Establish a pattern for SQL query template artifacts
 ---
