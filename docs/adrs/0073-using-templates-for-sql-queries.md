@@ -26,14 +26,18 @@ In order to achieve the best return value with the least effort, the chosen appr
 * *Do nothing*
 * *Utilize a SQL Template Engine*
 * *Build out our own SQL Templating architecture*
-* **A hybrid approach using an external library with some tweaks of our own**
+* **A hybrid approach using an external library implemented to work with Pop**
 
 ## Decision Outcome
 
 <!-- * Chosen Alternative:  -->
-* Chosen Alternative: *A hybrid approach using an external library with some tweaks of our own*
-* Positive Outcomes: We will have a SQL templating pattern that is easy to implement without requiring major refactor, provides us with linting opportunities and better code visualization, and may be very useful in the future if we end up implementing additional complex queries.
-* Consequences: If this new templating is not utilized elsewhere we will likely continue defaulting to writing SQL queries as strings in the Go code, which is our current pattern.
+* Chosen Alternative: *A hybrid approach using an external library implemented to work with Pop*
+* Positive Outcomes: 
+  * We will have a SQL templating pattern that is easy to implement without requiring major refactor, provides us with linting opportunities and better code visualization, and may be very useful in the future if we end up implementing additional complex queries.
+* Consequences: 
+  * If this new templating is not utilized elsewhere we will likely continue defaulting to writing SQL queries as strings in the Go code, which is our current pattern. 
+* Other considerations:
+  * The templating pattern must be clearly documented in order to be easily adopted.
 
 ## Pros and Cons of the Alternatives
 
@@ -62,7 +66,7 @@ In order to achieve the best return value with the least effort, the chosen appr
   * `+` Once established, future SQL query work following the determined pattern should
   be more consistent, and have positive impacts for onboarding efforts.
 
-### *A hybrid approach using an external library with some tweaks of our own*
+### *A hybrid approach using an external library implemented to work with Pop*
 
 * `+` *Simple setup.* 
 * `+` *The level of effort necessary to initiate refactor is low.*
