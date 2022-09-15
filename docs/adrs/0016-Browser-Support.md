@@ -5,6 +5,10 @@ title: 0016 Browser Support for Prototype
 
 **User Story:** 155599293
 
+:::info
+This ADR has been supersceded by the internal documention around [Supported Browsers for MilMove]([url](https://dp3.atlassian.net/wiki/spaces/MT/pages/1714552858/Supported+Browsers+for+MilMove+DRAFT))🔒
+:::
+
 There are dozen of browsers supported on multiple operating systems.  We need to manage the level of dev and testing effort required to support additional browsers and the overall impact to the user
 
 ## Considered Alternatives
