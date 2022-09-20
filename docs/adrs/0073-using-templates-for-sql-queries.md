@@ -6,7 +6,7 @@ description: |
 
 # Use Templates for SQL Queries
 
-**User Story:** *[MB-12577](https://dp3.atlassian.net/browse/MB-12577)* :lock:
+**User Story:** *[MB-12577](https://dp3.atlassian.net/browse/MB-12577)* :lock: and follow-up *[MB-13923](https://dp3.atlassian.net/browse/MB-13923)*
 
 ## Problem Statement
 The Go method which fetches a move's data change history contains a very large SQL query in which it sets up the data that is being tracked by the database triggers whenever data changes in tables. 
@@ -25,19 +25,20 @@ In order to achieve the best return value with the least effort, the chosen appr
 
 * *Do nothing*
 * *Utilize a SQL Template Engine*
-* *Build out our own SQL Templating architecture*
-* **A hybrid approach using an external library implemented to work with Pop**
+* **Build out our own SQL Templating architecture** - chosen approach updated with [MB-13923](https://dp3.atlassian.net/browse/MB-13923)
+* ~~**A hybrid approach using an external library implemented to work with Pop**~~ - this approach was initially chosen, but mid-implementation, a new direction became prefered. 
 
 ## Decision Outcome
 
 <!-- * Chosen Alternative:  -->
-* Chosen Alternative: *A hybrid approach using an external library implemented to work with Pop*
+* Chosen Alternative: ~~*A hybrid approach using an external library implemented to work with Pop*~~ *Build out our own SQL Templating architecture*
 * Positive Outcomes: 
   * We will have a SQL templating pattern that is easy to implement without requiring major refactor, provides us with linting opportunities and better code visualization, and may be very useful in the future if we end up implementing additional complex queries.
 * Consequences: 
   * If this new templating is not utilized elsewhere we will likely continue defaulting to writing SQL queries as strings in the Go code, which is our current pattern. 
 * Other considerations:
   * The templating pattern must be clearly documented in order to be easily adopted.
+* *Updated with [MB-13923](https://dp3.atlassian.net/browse/MB-13923)* Utilizes Go's `embed` directive, embedding all .SQL files at compile time for read-only access.
 
 ## Pros and Cons of the Alternatives
 
@@ -62,7 +63,8 @@ In order to achieve the best return value with the least effort, the chosen appr
 ### *Build out our own SQL Templating architecture*
 
 * `+` *Allows engineering team to take ownership of the templating design.*
-* `-` *Additional effort to build out initially*
+* `-` ~~*Additional effort to build out initially*~~ 
+  * `+` In further testing, this approach proved to be much less effort than the initially chosen approach.
   * `+` Once established, future SQL query work following the determined pattern should
   be more consistent, and have positive impacts for onboarding efforts.
 
@@ -77,3 +79,4 @@ In order to achieve the best return value with the least effort, the chosen appr
 * `+` *Significantly less effort to build out initially than completely designing our own*
   * `+` Once established, future SQL query work following the determined pattern should
   be more consistent, and have positive impacts for onboarding efforts.
+* `-` **Requires file I/O read each time move history is accessed, which is inefficient.** 
