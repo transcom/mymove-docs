@@ -4,13 +4,13 @@ title: '0074 Use changed values to match move events to their template'
 
 # *Use changed values to match move events to their template*
 
-**User Story:** *[MB-11214](https://dp3.atlassian.net/browse/MB-12606)*
+**🔒 User Story:** *[MB-11214](https://dp3.atlassian.net/browse/MB-12606)*
 
 *Currently, move history templates are matched based on action, event name, and table name. This expects that each action, event and table combination. However there are some move history events that share the same values for all three and there isn't a way to specify which template to use. The event will then match to whichever template shows up first in the index file.*
 
 ## Proposal: Clean up the current Template Manager
 
-To be able to handle changed values. We will first need to refactor the existing Template Manager. We will need the template manager to be able to three things:
+To be able to handle changed values. We will first need to refactor the existing [Template Manager](https://github.com/transcom/mymove/blob/master/src/constants/MoveHistory/TemplateManager.js). We will need the template manager to be able to three things:
 
 1. [Match templates to the an event by action, event,  and table name.](#1-match-templates-to-the-an-event-by-action-event-and-table-name)
 2. [Match template to an event using the change values.](#2-match-template-to-an-event-using-the-change-values)
@@ -105,7 +105,7 @@ export default {
 
 * `+` *This will allow us to refactor the details component and consolidate our details types from 4 types to 2 types by combining the status, labeled detail, and plain text types.*
 * `-` *Changes would eventually needed all the existing event templates to update the their details types or we will have to continue to support the legacy format.*
-* `-` *Some templates will handle multiple events and this does not follow the structure of having individual event modules which was decided in ADR 0071.*
+* `-` *Some templates will handle multiple events and this does not follow the structure of having individual event modules which was decided in [ADR 0071 Introduce Move History Events](./0071-move-history-events.md).*
 ### *Do nothing*
 
 * `-` *This does not solve the situation where multiple move event shares the same action, table and event name.*
