@@ -44,7 +44,7 @@ Factories generate data in two phases, the build and the post-build. Most values
 
 ### Fields
 
-The fields object defines the structure and values of the object your factory will return. This happens at build time. Values of this object can be literals, functions, or another object containing either.
+The `fields` object defines the structure and values of the object your factory will return. This happens at build time. Values of this object can be literals, functions, or another object containing either.
 
 ```javascript
   [BASE_OBJECT.FIELDS]: {
