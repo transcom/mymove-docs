@@ -40,6 +40,15 @@ jest.mock('services/internalApi', () => ({
 What is this used for? 
 A lot of components make service calls to the API. Being component tests, we don't actually want those to make calls to the service because that will make our tests brittle. Instead, we mock out the service calls that we need.
 
+## Factories
+There are factories available to make it easy to generate data in your front-end tests. To use them, just call the factory:
+
+```javascript
+const address = addressFactory();
+```
+
+For details about overriding test data and writing new factories, refer to [this wiki](using-factories-to-generate-data-for-frontend-tests.md). 
+
 ## Common Props 
 Please feel free to change the data itself. These are mainly meant to cover common props that components tend to use. 
 ### Service Member
