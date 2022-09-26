@@ -62,7 +62,7 @@ If your field's value is a literal, the factory will always return that value. F
 
 `[OBJECT_FIELDS.FIELD_1]: 'value'`
 
-will always set the value of `field` to `'my value'` by default (i.e., unless)
+will always set the value of `field` to `'my value'` by default.
 
 #### Functions
 
