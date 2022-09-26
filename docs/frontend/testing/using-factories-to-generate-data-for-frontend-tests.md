@@ -6,7 +6,14 @@ sidebar_position: 8
 
 ## Writing a new factory
 
-Create and export a const called `{OBJECT_}FIELDS`. This constant should be an object whose keys are CAPITAL_SNAKE_CASE and whose values are the actual, camelCase names of the fields, e.g. `MY_FIELD: myField`. While this step is not strictly necessary, it will make using your factory much easier, since the keys in question will be available to your IDE.
+Create and export a const called `{OBJECT_}FIELDS`. This constant should be an object whose keys are CAPITAL_SNAKE_CASE and whose values are the actual, camelCase names of the fields, e.g. `MY_FIELD: myField`. This makes using the factory easy, since the keys in question will be available to the user's IDE.
+
+```javascript
+  const MY_OBJECT_FIELDS = {
+    ID: 'id',
+    MY_FIELD: 'myField',
+  }
+```
 
 Create a const called `{object}Factory`, giving it a camelCase name. This const is a function that
 
@@ -17,6 +24,19 @@ Create a const called `{object}Factory`, giving it a camelCase name. This const 
   - the spread params: `...params`.
 
 Export your factory by default.
+
+```javascript
+  const myObjectFactory = (params) => {
+    return baseFactory({
+      [BASE_FIELDS.FIELD]: {
+        [MY_OBJECT_FIELDS.ID]: '...',
+        [MY_OBJECT_FIELDS.MY_FIELD]: '...',
+      },
+      // optional postBuild and traits...,
+      ...params
+    })
+  }
+```
 
 ### Build and post-build
 
@@ -40,7 +60,7 @@ The fields object defines the structure and values of the object your factory wi
 
 If your field's value is a literal, the factory will always return that value. For example:
 
-`field: 'my value'`
+`[OBJECT_FIELDS.FIELD_1]: 'value'`
 
 will always set the value of `field` to `'my value'` by default (i.e., unless)
 
@@ -48,9 +68,17 @@ will always set the value of `field` to `'my value'` by default (i.e., unless)
 
 Functions will be evaluated and the field set to their value. This is handy when a hardcoded value shouldn't be set, which is usually the case. You might generate an ID with a function, for example.
 
+`[OBJECT_FIELDS.FIELD_2]: myCoolFunction,`
+
 #### Objects
 
 Fields can be set to objects and their values will be set recursively.
+
+```javascript
+  [OBJECT_FIELDS.FIELD_3]: {
+    [SUBOBJECT_FIELDS.FIELD_1]: 'value',
+  }
+```
 
 ### Subfactories
 
@@ -86,7 +114,7 @@ The postBuild function can be used to set values on the object based on other ge
 ```javascript
 [BASE_FIELDS.FIELDS]: {
   [OBJECT_FIELDS.STATE]: getRandomState,
-}
+},
 [BASE_FIELDS.POST_BUILD]: (object) => {
   object[OBJECT_FIELDS.POSTAL_CODE] = getPostalCodeFromState(object[OBJECT_FIELDS.STATE]);
 }
