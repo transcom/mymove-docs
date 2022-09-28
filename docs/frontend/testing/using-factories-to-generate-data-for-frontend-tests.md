@@ -62,13 +62,19 @@ If your field's value is a literal, the factory will always return that value. F
 
 `[OBJECT_FIELDS.FIELD_1]: 'value'`
 
-will always set the value of `field` to `'my value'` by default.
+will always set the value of `[OBJECT_FIELDS.FIELD_1]` to `'my value'` by default.
 
 #### Functions
 
 Functions will be evaluated and the field set to their value. This is handy when a hardcoded value shouldn't be set, which is usually the case. You might generate an ID with a function, for example.
 
+Note: pass in the name of a function or an anoymous function. The builder will handle executing the function for you.
+
 `[OBJECT_FIELDS.FIELD_2]: myCoolFunction,`
+
+or
+
+`[OBJECT_FIELDS.FIELD_2]: () => 'my cool return value',`
 
 #### Objects
 
