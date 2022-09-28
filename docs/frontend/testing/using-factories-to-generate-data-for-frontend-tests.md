@@ -28,7 +28,7 @@ Export your factory by default.
 ```javascript
   const myObjectFactory = (params) => {
     return baseFactory({
-      [BASE_FIELDS.FIELD]: {
+      [BASE_FIELDS.FIELDS]: {
         [MY_OBJECT_FIELDS.ID]: '...',
         [MY_OBJECT_FIELDS.MY_FIELD]: '...',
       },
