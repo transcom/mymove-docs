@@ -181,7 +181,7 @@ In these cases, you can use `suite.PreloadData`. This can only be called once pe
 
 * Where there is a large amount of necessary setup, like populating the rate engine for payment calculations. In this case it can be valuable to have a preloaded setup.
 
-So **if you absolutely must** use `PreloadData`, the process is easy. Create a `suite.PreloadData` function and do all your test setup inside. [Here's an example](https://github.com/transcom/mymove/pull/9231/files#diff-b936d57093c15f9ccd9c96eb4172d066727952441913b6a760698f5fcff20f2aR188)
+So **if you absolutely must** use `PreloadData`, the process is easy. Create a `suite.PreloadData` function and do all your test setup inside. [Here's an example](https://github.com/transcom/mymove/blob/c4f7df208f4b63fd85b0cd7645156a3516902027/pkg/rateengine/nonlinehaul_test.go#L188)
 
 
 ## Background
