@@ -28,7 +28,7 @@ Export your factory by default.
 ```javascript
   const myObjectFactory = (params) => {
     return baseFactory({
-      [BASE_FIELDS.FIELD]: {
+      [BASE_FIELDS.FIELDS]: {
         [MY_OBJECT_FIELDS.ID]: '...',
         [MY_OBJECT_FIELDS.MY_FIELD]: '...',
       },
@@ -47,7 +47,7 @@ Factories generate data in two phases, the build and the post-build. Most values
 The `fields` object defines the structure and values of the object your factory will return. This happens at build time. Values of this object can be literals, functions, or another object containing either.
 
 ```javascript
-  [BASE_OBJECT.FIELDS]: {
+  [BASE_FIELDS.FIELDS]: {
     [OBJECT_FIELDS.FIELD_1]: 'value',
     [OBJECT_FIELDS.FIELD_2]: myCoolFunction,
     [OBJECT_FIELDS.FIELD_3]: {
