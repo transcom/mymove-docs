@@ -61,9 +61,6 @@ title: "0074 Refactor Move Event's Details Rendering "
 
 
 **Above there are two issues:**
-1. The move events will match multiple templates
-2. The move events are of different details types so the same template cannot be used.
-
 
 ### 1. The move events will match multiple templates
 Since we assume each matching combination is unique, we create a template for each move event. Given our current setup, if multiple move event has the matching combination, the move events will be able to match to multiple templates. However the TemplateManager, still holds the assumption that 1 template will match a given move event, so it returns after the first match is found. So in our case when a move events with identical match combinations, it will show whichever template is first in the `index.js` for templates even if there is another template that is a better match.
