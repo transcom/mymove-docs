@@ -6,7 +6,7 @@ title: "0074 Refactor Move Event's Details Rendering "
 
 **🔒 User Story:** *[MB-11214](https://dp3.atlassian.net/browse/MB-12606)*
 
-*At present, move history templates are matched based on action, event name, and table name. This expects that each action, event and table combination is unique. However there are some move history events that share the same values for all three and there isn't a way to specify which template to use.*
+*At present, move history templates are matched based on action, event name, and table name. This expects that each action, event, and table combination is unique. However, some move history events share the same values for all three and there isn't a way to specify which template to use.*
 
 ### Useful definition
 > **Matching combination:** A move event's action, eventName, and tableName.
@@ -61,18 +61,18 @@ title: "0074 Refactor Move Event's Details Rendering "
 
 
 **Above there are two issues:**
-1. Both move events have will match to the multiple given our current setup.
+1. The move events will match multiple templates
 2. The move events are of different details types so the same template cannot be used.
 
 
-### 1. Both move events have will match to the same template given our current setup.
-Since we assume each matching combination is unique, we create a template for each move event. Given our current setup, if multiple move event has the matching combination, the move events will be able to match to multiple templates. However the TemplateManager, still hold the assumption 1 template will match to a given move event, so it returns after the first match is found. So in our case of when a move events with identical match combinations, it will show whichever template is first in the `index.js` for templates even if there is another template that is a better match.
+### 1. The move events will match multiple templates
+Since we assume each matching combination is unique, we create a template for each move event. Given our current setup, if multiple move event has the matching combination, the move events will be able to match to multiple templates. However the TemplateManager, still holds the assumption that 1 template will match a given move event, so it returns after the first match is found. So in our case when a move events with identical match combinations, it will show whichever template is first in the `index.js` for templates even if there is another template that is a better match.
 
 ### 2. The move events are of different details types so the same template cannot be used.
-One approach could be to share the one for move events with the same matching combinations.However, the move events must have the same detail type. The detail type determines which react component will be rendered in the details column. In the example above one move event requires `labeledDetails` and the other requires `statusDetails`. Due to rigid mapping of event template to detailsType, only one detail type can be specified since there is. There is currently no supported way to display more than one detailsType within an eventTemplate.
+One approach could be to share the one for move events with the same matching combinations. However, the move events must have the same detail type. The detail type determines which react component will be rendered in the details column. In the example above one move event requires `labeledDetails` and the other requires `statusDetails`. Due to rigid mapping of event template to detailsType, only one detail type can be specified since there is. There is currently no supported way to display more than one detailsType within an eventTemplate.
 
-### Scope of issue
-To find potential the scope of the matching combinations issue, the templateManager was edited to run the movement against all the templates instead of returning as soon as it found its first match. This change would make it so a template's test would fail if another template could also be a possible match.
+### Scope of the issue
+To find potential the scope of the issue of sharing matching combinations, the templateManager was edited to run the movement against all the templates instead of returning as soon as it found its first match. This change would make it so a template's test would fail if another template could also be a possible match.
 ```js
 export default (historyRecord) => {
   // find all the templates that match
@@ -146,20 +146,20 @@ Such an approach would involve some work to convert the existing move history te
 * `+` *Displaying move history details would more closely resemble more conventional React-like patterns*
 * `+` *Refactoring the existing event templates could be broken down and addressed incrementally.*
 * `-` *Refactoring the existing event templates would be a sizeable amount of work.*
-* `-` *It does not solve the issue of move events matching to multiple templates. However it does give flexibility to share the same template*
+* `-` *It does not solve the issue of moving events matching to multiple templates. However, it does give the flexibility to share the same template*
 ## Pros and Cons of the Alternatives
 
 ### *Add a new changed values criterion for distinguishing between events when matching to event templates*
 * `+` *It is the same approach used when Action and Table were added as matching criteria when Event Name was not sufficient*
-* `-` *It assumes that not no event will have the same action, event name, table name, and changed values. We may run into a case that meets this criteria and will have to come up with another metric in which to differentiate move events.*
-* `-` *It assumes all `changedValues` listed are required. There are move events where only some of the possible `changedValues` will be present. In that situation it will not match to the template at all.*
+* `-` *It assumes that no event will have the same action, event name, table name, and changed values. We may run into a case that meets this criterion and will have to come up with another metric in which to differentiate move events.*
+* `-` *It assumes all `changedValues` listed are required. There are move events where only some of the possible `changedValues` will be present. In that situation, it will not match the template at all.*
 
 ### *Refactor our details types and details components so that different data can be displayed differently within the same details type*
 * `+` *This will allow us to refactor the details component and consolidate our details types from 4 types to 2 types by combining the status, labeled detail, and plain text types.*
-* `-` *Changes would eventually needed all the existing event templates to update the their details types or we will have to continue to support the legacy format.*
-* `-` *Details components will still be rigid and could run into the same problem if a new design for details introduced.*
+* `-` *Changes would eventually need all the existing event templates to update their details types or we will have to continue to support the legacy format.*
+* `-` *Details components will still be rigid and could run into the same problem if a new design for details is introduced.*
 
 ### *Do nothing*
 
-* `-` *This does not solve the situation where multiple move event shares the same action, table and event name.*
+* `-` *This does not solve the situation where multiple move event shares the same action, table, and event name.*
 * `-` *The move events will not consistently render the correct details*
