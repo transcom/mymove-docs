@@ -156,7 +156,7 @@ You need to make two changes to this file.
 
 If you use `Suite.Run`:
 
-* This could be because each subtest is sharing DB setup. Check that you have extracted **all the shared db setup** into a separate function, and call that function at the beginning of each subtest. A tip is to look for `suite.DB()`.
+* This could be because each subtest is sharing DB setup. Check that you have extracted **all the shared db setup** into a separate function, and call that function at the beginning of each subtest. A tip is to look for `suite.DB()`. The call to `suite.DB()` performs some of the setup to handle the per test transactions, so any call to `suite.DB()` (even if you're creating a stubbed object) should be moved from the parent test. 
 
     Look at the diff of `pkg/handlers/ghcapi/orders_test.go` in [this example](https://github.com/transcom/mymove/pull/8676/files#diff-afe14b5268a7dd9637cc140a082e29a7c61632a71fb43f32dd6402efe22e64a2).
 
