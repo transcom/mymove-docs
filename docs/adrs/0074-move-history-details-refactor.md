@@ -57,19 +57,19 @@ title: "0074 Refactor Move Event's Details Rendering "
 </table>
 
 > **Note:**
-> History record data has between abbreviated.
+> History record data has been abbreviated.
 
 
-**Above there are two issues:**
+### There are two ways to consider this issue
 
-### 1. The move events will match multiple templates
+#### 1. The move events will match multiple templates
 Since we assume each matching combination is unique, we create a template for each move event. Given our current setup, if multiple move event has the matching combination, the move events will be able to match to multiple templates. However the TemplateManager, still holds the assumption that 1 template will match a given move event, so it returns after the first match is found. So in our case when a move events with identical match combinations, it will show whichever template is first in the `index.js` for templates even if there is another template that is a better match.
 
-### 2. The move events are of different details types so the same template cannot be used.
-One approach could be to share the one for move events with the same matching combinations. However, the move events must have the same detail type. The detail type determines which react component will be rendered in the details column. In the example above one move event requires `labeledDetails` and the other requires `statusDetails`. Due to rigid mapping of event template to detailsType, only one detail type can be specified since there is. There is currently no supported way to display more than one detailsType within an eventTemplate.
+#### 2. The move events are of different details types so the same template cannot be used.
+One approach could be to share the one for move events with the same matching combinations. However, the move events must have the same detail type. The detail type determines which react component will be rendered in the details column. In the example above one move event requires `plainTextDetails` and the other requires `statusDetails`. Due to rigid mapping of event template to detailsType, only one detail type can be specified since there is. There is currently no supported way to display more than one detailsType within an eventTemplate.
 
 ### Scope of the issue
-To find potential the scope of the issue of sharing matching combinations, the templateManager was edited to run the movement against all the templates instead of returning as soon as it found its first match. This change would make it so a template's test would fail if another template could also be a possible match.
+To find potential the scope of the issue of sharing matching combinations, the `templateManager` was edited to run the movement against all the templates instead of returning as soon as it found its first match. This change would make it so a template's test would fail if another template could also be a possible match.
 ```js
 export default (historyRecord) => {
   // find all the templates that match
@@ -83,7 +83,7 @@ export default (historyRecord) => {
 };
 ```
 
-After running the test, we found all of our existing templates match 1:1. Upon, further inspection, it looks like we solved for matching combinations mostly by [sharing templates and using ternaries to return different values](https://github.com/transcom/mymove/blob/f236493f47279345a6d280382ab13738f621c59b/src/constants/MoveHistory/EventTemplates/updateMTOShipmentDeprecatePaymentRequest.js) based on `changedValues`.
+After running the test, we found all of our existing templates match 1:1. Upon, further inspection, it looks like we solved for matching combinations mostly by [sharing templates and using ternaries to return different values](https://github.com/transcom/mymove/blob/0df3d6c0e603112b006e29fd31df0b0bd80086bd/src/constants/MoveHistory/EventTemplates/updateMTOShipmentDeprecatePaymentRequest.js) based on `changedValues`.
 
 ## Proposal: Refactor event templates to return their own details components.
 
@@ -127,7 +127,7 @@ describe('when given an Approved shipment history record', () => {
   });
 });
 ```
-Such an approach would involve some work to convert the existing move history templates to follow this pattern. This work could be broken down and worked on incrementally if the `MoveHistoryDetailsSelector` is updated to accept either details provider. 
+Such an approach would involve some work to convert the existing move history templates to follow this pattern. This work could be broken down and worked on incrementally if the `MoveHistoryDetailsSelector` is updated to accept either details provider. The incremental refactor can be coupled with a better organization of the event templates into sub-folders based on `eventName`.
 
 
 ## Considered Alternatives
