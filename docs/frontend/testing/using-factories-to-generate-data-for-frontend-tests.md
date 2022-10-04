@@ -235,3 +235,19 @@ So, setting a value via a trait takes precedence over setting a value on the sam
 Be sure to prefix your test data with `mock`. Without the prefix, jest will complain about out-of-scope variables.
 
 `const mockObject = objectFactory()`
+
+## Use with Storybook and Happo
+
+Test data that will be visible in a Storybook component should be overridden with  deterministic data. Otherwise, on every subsequent run, Happo will register the difference as a failure.
+
+For example, on the homepage of the customer site, when there is as an approved PPM, the first part of the PPM's ID is displayed. Using a factory's default random generator would cause this ID to change on every run. 
+
+Instead, do
+
+```javascript
+const ppmShipment = ppmShipmentFactory({
+  [BASE_FIELDS.OVERRIDES]: {
+    [PPM_FIELDS.ID]: 'abcd1234-0000-0000-0000-000000000000',
+  },
+})
+```
