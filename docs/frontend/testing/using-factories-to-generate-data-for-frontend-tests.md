@@ -2,7 +2,7 @@
 sidebar_position: 8
 ---
 
-# [WIP] Using factories to generate data for front-end tests
+# Using factories to generate data for front-end tests
 
 ## Writing a new factory
 
