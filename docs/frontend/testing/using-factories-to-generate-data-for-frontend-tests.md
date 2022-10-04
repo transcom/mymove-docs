@@ -2,7 +2,7 @@
 sidebar_position: 8
 ---
 
-# [WIP] Using factories to generate data for front-end tests
+# Using factories to generate data for front-end tests
 
 ## Writing a new factory
 
@@ -68,7 +68,7 @@ will always set the value of `[OBJECT_FIELDS.FIELD_1]` to `'my value'` by defaul
 
 Functions will be evaluated and the field set to their value. This is handy when a hardcoded value shouldn't be set, which is usually the case. You might generate an ID with a function, for example.
 
-Note: pass in the name of a function or an anoymous function. The builder will handle executing the function for you.
+Note: pass in the name of a function or an anonymous function. The builder will handle executing the function for you.
 
 `[OBJECT_FIELDS.FIELD_2]: myCoolFunction,`
 
@@ -235,3 +235,19 @@ So, setting a value via a trait takes precedence over setting a value on the sam
 Be sure to prefix your test data with `mock`. Without the prefix, jest will complain about out-of-scope variables.
 
 `const mockObject = objectFactory()`
+
+## Use with Storybook and Happo
+
+Test data that will be visible in a Storybook component should be overridden with deterministic data. Otherwise, on every subsequent run, Happo will register the difference as a failure.
+
+For example, on the homepage of the customer site, when there is as an approved PPM, the first part of the PPM's ID is displayed. Using a factory's default random generator would cause this ID to change on every run.
+
+Instead, do
+
+```javascript
+const ppmShipment = ppmShipmentFactory({
+  [BASE_FIELDS.OVERRIDES]: {
+    [PPM_FIELDS.ID]: 'abcd1234-0000-0000-0000-000000000000',
+  },
+})
+```
