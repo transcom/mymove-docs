@@ -60,12 +60,10 @@ go version go1.16.4 darwin/amd64
     - `Dockerfile.webhook_client`
     - `Dockerfile.webhook_client_dp3`
     - `Dockerfile.webhook_client_local`
-    - `cypress/Dockerfile.cypress`
     - `scripts/gen-assets`
-    - `scripts/gen-server`
-    - `scripts/pre-commit-swagger-validate`
+    - `scripts/run-e2e-mtls-test-docker`
     - `scripts/run-e2e-test-docker`
-    - `Makefile` the `docker_circleci` task
+    - `Makefile` (in the `docker_circleci` target)
     - `.go-version`
     - `README.md` (there's a path in the nix section that references a go version number)
 - If the major/minor version changed (the first or second number, e.g. 1.x.y to 2.x.y or 1.15.x to 1.16.x):
