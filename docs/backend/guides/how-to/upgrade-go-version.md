@@ -19,6 +19,9 @@ Upgrading the Go version that we use happens in roughly these steps:
 - Update any Dockerfile that installs go with the new go version and checksum.
   - See [this PR](https://github.com/transcom/circleci-docker/pull/82) as an example.
 - Open a PR and ask someone from the Truss Infra Team (not necessarily the MilMove Infra Team) to approve it.
+- You may want to hold off merging this `circleci-docker` PR until just before you're about to land the corresponding PR for the `transcom/mymove` repo.
+  - You can use the PR's hash to test, then merge and switch to the `main` hash after all testing/checks/approvals are done.
+  - This keeps others who may be doing `circleci-docker` work from prematurely using the updated Go container before the necessary Go-related changes have landed in `transcom/mymove`.
 
 ## 2. Upgrade Local Go Version
 
