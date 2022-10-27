@@ -67,7 +67,6 @@ go version go1.16.4 darwin/amd64
     - `Dockerfile.webhook_client`
     - `Dockerfile.webhook_client_dp3`
     - `Dockerfile.webhook_client_local`
-    - `scripts/gen-assets`
     - `scripts/run-e2e-mtls-test-docker`
     - `scripts/run-e2e-test-docker`
     - `Makefile` (in the `docker_circleci` target)
