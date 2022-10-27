@@ -18,7 +18,7 @@ Upgrading the Go version that we use happens in roughly these steps:
   - The file name should be something like `gox.xx.x.linux-amd64.tar.gz`
 - Update any Dockerfile that installs go with the new go version and checksum.
   - See [this PR](https://github.com/transcom/circleci-docker/pull/82) as an example.
-- Open a PR and ask someone from the Truss Infra Team (not necessarily the MilMove Infra Team) to approve it.
+- Open a PR and ask someone from the Milmove Platform Team to approve it.
 - You may want to hold off merging this `circleci-docker` PR until just before you're about to land the corresponding PR for the `transcom/mymove` repo.
   - You can use the PR's hash to test, then merge and switch to the `main` hash after all testing/checks/approvals are done.
   - This keeps others who may be doing `circleci-docker` work from prematurely using the updated Go container before the necessary Go-related changes have landed in `transcom/mymove`.
@@ -52,8 +52,12 @@ go version go1.16.4 darwin/amd64
 
 - After your Docker image PR lands, grab the git hash from [Docker](https://hub.docker.com/r/milmove/circleci-docker) that corresponds with your merged code.
 - Update files with the updated Docker image tag hash and/or Go version:
-  - [Example PR](https://github.com/transcom/mymove/pull/6180)
-  - Files to update:
+  - [Example PR](https://github.com/transcom/mymove/pull/9423)
+  - Update the Go version number in:
+    - `README.md` (there's a path in the nix section that references a go version number)
+    - `.go-version`
+    - `.tool-versions`
+  - Update the Docker image tag hash in:
     - `.circleci/config.yml`
     - `Dockerfile.local`
     - `Dockerfile.migrations_local`
@@ -63,11 +67,11 @@ go version go1.16.4 darwin/amd64
     - `Dockerfile.webhook_client`
     - `Dockerfile.webhook_client_dp3`
     - `Dockerfile.webhook_client_local`
+    - `scripts/gen-assets`
     - `scripts/run-e2e-mtls-test-docker`
     - `scripts/run-e2e-test-docker`
     - `Makefile` (in the `docker_circleci` target)
-    - `.go-version`
-    - `README.md` (there's a path in the nix section that references a go version number)
+- If you use `asdf` to manage your local Go version, you still need to update the nix package in `nix/default.nix` - use the [package search](https://ahobson.github.io/nix-package-search) to find the hash
 - If the major/minor version changed (the first or second number, e.g. 1.x.y to 2.x.y or 1.15.x to 1.16.x):
   - [Example PR](https://github.com/transcom/mymove/pull/4990)
   - Update the following files with the new go version:
