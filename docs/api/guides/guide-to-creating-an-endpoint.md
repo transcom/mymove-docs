@@ -422,7 +422,6 @@ If you'd like to learn more about event triggers, you can find more details [her
 * [How To Call Swagger Endpoints from React](/docs/frontend/guides/access-swagger-endpoints-from-react)
 * [Acceptance Testing Prime API](/docs/api/testing/acceptance-testing-prime-api-endpoints)
 * [How to Deprecate an API Endpoint](/docs/api/guides/how-to-deprecate-endpoints)
-* [MilMove Overview Swagger section](/docs/about/overview-of-milmove/#swagger)
 * [How to Test the Prime API](/docs/api/testing/how-to-test-the-prime-api)
 * [Creating an Endpoint](/docs/api/guides/guide-to-creating-an-endpoint)
 * [Swagger tutorial](https://goswagger.io/tutorial/todo-list.html)
