@@ -48,6 +48,24 @@ storybook_1  | │                                                 │
 storybook_1  | ╰─────────────────────────────────────────────────╯
 ```
 
+### Option C: Viewing a Pull Request artifact
+
+If you don't want to set up any development tools on your local machine, another option is to use the static copy of storybook which is automatically generated as part of every pull request created by developers, although finding this does require a little bit of work.
+
+**Step 1**: When viewing a pull request on GitHub, scroll down to the section of the page that talks about automated checks. (This is also where you'll find the link to review and approve Happo diffs.) Scroll to the line with the title `ci/circleci: build_storybook`, and click on the "Details" link.
+
+![build_storybook check](/img/pr_storybook/github_check.png)
+
+**Step 2**: On the CircleCI page, you'll see several tabs near the middle of the page. Click on "Artifacts."
+
+![CircleCI artifacts](/img/pr_storybook/circleci_tabs.png)
+
+**Step 3**: Find the `storybook/index.html` link. (It'll be near the bottom of the page, as these links are in alphabetical order.) Clicking on that will take you to an externally-hosted copy of storybook; that copy will be up to date with the current state of this pull request's code.
+
+![CircleCI index.html](/img/pr_storybook/circleci_artifacts.png)
+
+Please note: that **you will need to go through this process for every change within a pull request.** CircleCI generates these externally-hosted copies of storybook automatically, but it does that with unpredictable links. Any time a pull request is updated with additional code changes, CircleCI will generate new links, with a new build of storybook, rather than updating any existing copies.
+
 ## Adding Stories
 
 To showcase a component add the _stories_ to the `src/stories` folder in an appropriate file. The storybook documentation on [Writing Stories](https://storybook.js.org/docs/basics/writing-stories/) is a good place to start with how to create ones. If there is not an appropriate file you need to create a new file in the pattern `componentName.stories.js` in the src/stories directory, and then modify the `.storybook/config.js` file to include your new file in the generated site.
