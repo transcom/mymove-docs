@@ -56,7 +56,7 @@ If you don't want to set up any development tools on your local machine, another
 
 ![build_storybook check](/img/pr_storybook/github_check.png)
 
-**Step 2**: On the CircleCI page, you'll see several tabs near the middle of the page. Click on "Artifacts."
+**Step 2**: On the CircleCI page, you'll see several tabs near the middle of the page. Click on "Artifacts." (In order to view this page, you may be prompted to log into CircleCI, since other tasks that are run may contain sensitive information. Use your GitHub account to log in.)
 
 ![CircleCI artifacts](/img/pr_storybook/circleci_tabs.png)
 
