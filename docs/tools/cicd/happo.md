@@ -33,3 +33,23 @@ When pushing to Happo, you may notice that some diff checking are barely off by 
 ![image](https://user-images.githubusercontent.com/84801109/141023587-28176a4a-0fc2-4510-ba09-29b9fb4f0634.png)
 
 In this picture, the change is negligible, and nothing significant about the page. You can click `review`, then `accept` to pass the Happo check.
+
+
+## Interactive Stories
+
+Storybook stories can be created with [`play` functions](https://storybook.js.org/docs/react/writing-stories/play-function), which allow for Testing Library-style commands that interact with page elements, and execute immediately after a story renders. These functions can be used to get components into a specific state. While they can be useful for developers and designers, **Happo generally has issues displaying stories with these functions**. If you create a story with a `play` function, turn off Happo for it using `happo: false` in a `parameters` property.
+
+```jsx
+ErrorDatesAndLocation.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  await expect(canvas.getByRole('button', { name: 'Save & Continue' })).toBeEnabled();
+
+  await userEvent.click(canvas.getByRole('button', { name: 'Save & Continue' }));
+};
+
+ErrorDatesAndLocation.parameters = {
+  happo: false,
+};
+```
+
