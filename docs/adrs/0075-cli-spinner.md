@@ -23,7 +23,7 @@ The MilMove project uses such spinners when loading or parsing documents. pterm 
 Remove all spinner code.
 
 - This allows us to resolve races conditions that are flagged by Go's `-race` flag. Resolving these race conditions helps resolve [STIG V-70185](https://www.stigviewer.com/stig/application_security_and_development/2018-12-24/finding/V-70185).
-- Having a spinner display is not critical to the operation of the application. The text of the messeage should be retained to maintain context as to what is being run.
+- Having a spinner display is not critical to the operation of the application. The text of the message should be retained to maintain context as to what is being run.
 
 ## Pros and Cons of the Decisions
 
