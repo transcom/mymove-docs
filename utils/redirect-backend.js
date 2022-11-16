@@ -150,18 +150,6 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/backend/guides/guide-to-static-analysis-annotations-for-disabled-linters',
-    from: [
-      '/docs/dev/contributing/code-analysis/Guide-to-Static-Analysis-Annotations-for-Disabled-Linters',
-    ],
-  },
-  {
-    to: '/docs/backend/guides/guide-to-static-analysis-security-workflow',
-    from: [
-      '/docs/dev/contributing/code-analysis/Guide-to-Static-Analysis-Security-Workflow',
-    ],
-  },
-  {
     to: '/docs/backend/guides/access-global-variables',
     from: [
       '/docs/dev/contributing/backend/access-global-variables',
