@@ -78,3 +78,31 @@ describe('description of what the table driven test is doing', () => {
 jest.fn() is commonly used as a placeholder function for when a component takes in a function as a prop. 
 
 ### jest.mockImplementationOnce()
+
+## Using userEvent
+
+Generally, prefer `userEvent` to `fireEvent`. `userEvent`s are designed to mock complex user interaction, and may wrap a number of low-level `fireEvent` methods. For example, prefer
+
+```
+userEvent.type(textBox, 'My verbose description');
+```
+
+to 
+
+```
+fireEvent.change(textBox, {target: {value: 'My verbose description'}});
+```
+
+because the former attempts to mimic all key and focus events that would fire when a user actually types into the field.
+
+### Performance considerations
+
+Note that there may be multiple `userEvent`s that lead to similar outcomes, but that take different amounts of time to accomplish.
+
+Compare the above to
+
+```
+userEvent.paste(textBox, 'My verbose description');
+```
+
+If the given form validates on every change, using `.type()` will validate for every character, while using `.paste()` will only validate once. If you find that using `.type()` is a bottleneck on your test, and both `.paste()` and `.type()` are otherwise appropriate, `.paste()` may be preferred.
