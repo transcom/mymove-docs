@@ -97,9 +97,9 @@ because the former attempts to mimic all key and focus events that would fire wh
 
 ### Performance considerations
 
-Note that there may be multiple `userEvent`s that lead to similar outcomes, but that take different amounts of time to accomplish.
+Note that there may be multiple `userEvent`s that lead to similar outcomes, but that take different amounts of time to accomplish, for example [type()](https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options) and [paste()](https://testing-library.com/docs/ecosystem-user-event/#pasteelement-text-eventinit-options).
 
-Compare the above to
+Compare the above use of `type()` to
 
 ```
 userEvent.paste(textBox, 'My verbose description');
