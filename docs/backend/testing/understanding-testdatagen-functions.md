@@ -4,7 +4,7 @@ sidebar_position: 13
 
 # Understanding testdatagen functions
 
-::: caution
+:::caution
 
 We are deprecating the testdatagen functions. Please check if the newer factory function is available to build your test data model → [Factory Test Data](factory-test-data-generation.md)
 
