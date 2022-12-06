@@ -13,7 +13,7 @@ jobs:
         run: npm install yarn
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile
 
       - name: Build Docusaurus from source
         run: yarn build

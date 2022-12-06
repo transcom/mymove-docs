@@ -22,13 +22,13 @@ jobs:
         run: npm install yarn
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile
 
       - name: Build the Docusaurus app
         run: yarn build
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.4.0
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: docusaurus  # the branch for the deployment
           folder: build  # the folder getting deployed
