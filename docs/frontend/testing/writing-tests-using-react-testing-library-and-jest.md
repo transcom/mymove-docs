@@ -84,7 +84,7 @@ jest.fn() is commonly used as a placeholder function for when a component takes 
 Generally, prefer `userEvent` to `fireEvent`. `userEvent`s are designed to mock complex user interaction, and may wrap a number of low-level `fireEvent` methods. For example, prefer
 
 ```
-userEvent.type(textBox, 'My verbose description');
+await userEvent.type(textBox, 'My verbose description');
 ```
 
 to 
@@ -95,6 +95,8 @@ fireEvent.change(textBox, {target: {value: 'My verbose description'}});
 
 because the former attempts to mimic all key and focus events that would fire when a user actually types into the field.
 
+Note: userEvent returns a promise, so you need to utilize `await` when calling and refrain from using in `waitFor` blocks.
+
 ### Performance considerations
 
 Note that there may be multiple `userEvent`s that lead to similar outcomes, but that take different amounts of time to accomplish, for example [type()](https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options) and [paste()](https://testing-library.com/docs/ecosystem-user-event/#pasteelement-text-eventinit-options).
@@ -102,7 +104,7 @@ Note that there may be multiple `userEvent`s that lead to similar outcomes, but 
 Compare the above use of `type()` to
 
 ```
-userEvent.paste(textBox, 'My verbose description');
+await userEvent.paste(textBox, 'My verbose description');
 ```
 
 If the given form validates on every change, using `.type()` will validate for every character, while using `.paste()` will only validate once. If you find that using `.type()` is a bottleneck on your test, and both `.paste()` and `.type()` are otherwise appropriate, `.paste()` may be preferred.
