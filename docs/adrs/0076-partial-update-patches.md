@@ -1,12 +1,12 @@
 ---
-title: "0075 Partial Update Patches"
+title: "0076 Partial Update Patches"
 ---
 
-# *0074 Partial Update Patches*
+# *0076 Partial Update Patches*
 
 **🔒 User Story:** *[MB-14102](https://dp3.atlassian.net/browse/MB-14102)*
 
-At present, the MilMove back-end does not have developed support for partial updates or deleting fields in its models through patches. ADR 0066 [todo: add link] introduced custom nullable types for patch requests which addresses this issue at the swagger/handler layer, but services may not be prepared to fully support the rest of this sort of workflow.
+At present, the MilMove back-end does not have developed support for partial updates or deleting fields in its models through patches. [ADR 0066](docs/adrs/0066-use-custom-nullable-types-for-patch-requests.md) introduced custom nullable types for patch requests which addresses this issue at the swagger/handler layer, but services may not be prepared to fully support the rest of this sort of workflow.
 
 ### Useful definition
 > **Nullable field:** A field that contains information about whether it was included in the payload. A field with `Present=true` was included in the payload, with a `Value` that may or may not be null. A field with `Present=false` was not included in the payload, and therefore should not be updated in its corresponding model.
@@ -18,9 +18,9 @@ type NullableString struct {
 }
 ```
 
-MTOShipments are an example of a case in which the back-end is not prepared to handle partial updates or intentionally setting fields to null. At the handler (e.g. the ghcapi UpdateMTOShipmentHandler[todo: add link]), the payload (which may contain nullable types) is converted to an MTOShipment model[todo: add link], and during this conversion any information that distinguishes between missing fields and null fields is lost.
+MTOShipments are an example of a case in which the back-end is not prepared to handle partial updates or intentionally setting fields to null. At the handler (e.g. the ghcapi [UpdateMTOShipmentHandler](https://github.com/transcom/mymove/blob/de9148371427ba348e94439b4acb766f05013797/pkg/handlers/ghcapi/mto_shipment.go#L284)), the payload (which may contain nullable types) is converted to an [MTOShipment model](https://github.com/transcom/mymove/blob/de9148371427ba348e94439b4acb766f05013797/pkg/handlers/ghcapi/internal/payloads/payload_to_model.go#L309), and during this conversion any information that distinguishes between missing fields and null fields is lost.
 
-Furthermore, the MTOShipmentUpdater service[todo: add link] that is called from the handler further obfuscates things. It fetches the existing MTOShipment from the database and sets fields in that struct based on which fields in the payload model are null[todo: add link]. Since at this point both omitted fields and intentionally-null fields from the payload are all represented as null, these fields simply are all not updated.
+Furthermore, the [MTOShipmentUpdater service](https://github.com/transcom/mymove/blob/de9148371427ba348e94439b4acb766f05013797/pkg/services/mto_shipment/mto_shipment_updater.go) that is called from the handler further obfuscates things. It fetches the existing MTOShipment from the database and sets fields in that struct based on which fields in the payload model are null[todo: add link]. Since at this point both omitted fields and intentionally-null fields from the payload are all represented as null, these fields simply are all not updated.
 
 
 ## Proposal: Introduce a new struct that serves between the handler and service layers and broadcasts intent.
@@ -95,7 +95,17 @@ Such a design would have many advantages in addition to solving the problem of p
 
 ### Implementation
 
-[todo: mention an slow implementation plan]
+Due to the scope of work required, implementating this pattern would need to be done slowly.
+
+#### Decisions to finalize
+* Decide on a naming convention for intermediary update models
+* Determine if all models should fall under this pattern or only update models.
+
+#### Refactor stages
+* Identify and refactor any patch endpoints that require nullable fields for deleting values.
+* Fully refactor related validator methods to cleanly handle intermediary update models
+* Refactor all update models to remove dependencies on the `models` package
+* Relocate fully refactored update models into a separate package for better separation of code
 
 
 ## Considered Alternatives
@@ -112,6 +122,7 @@ Such a design would have many advantages in addition to solving the problem of p
 * `+` *Refactoring the existing event templates could be broken down and addressed incrementally.*
 * `-` *Refactoring the existing event templates would be a sizeable amount of work.*
 * `-` *It does not solve the issue of moving events matching to multiple templates. However, it does give the flexibility to share the same template*
+* `-` *Composite struct models have dependencies on current `models` package which means they cannot be separated into a new package without introducing circular dependencies*
 
 ## Pros and Cons of the Alternatives
 
