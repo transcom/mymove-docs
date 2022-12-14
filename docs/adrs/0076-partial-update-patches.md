@@ -7,6 +7,8 @@ title: "0076 Partial Update Patches"
 **🔒 User Story:** *[MB-14102](https://dp3.atlassian.net/browse/MB-14102)*
 
 At present, the MilMove back-end does not have developed support for partial updates or deleting fields in its models through patches. [ADR 0066](docs/adrs/0066-use-custom-nullable-types-for-patch-requests.md) introduced custom nullable types for patch requests which addresses this issue at the swagger/handler layer, but services may not be prepared to fully support the rest of this sort of workflow.
+Some handlers follow a _specifc_ updates pattern, in which one or more models can be updated in a very specific way. A good example of this is the ghc api [move_task_order.go handler](https://github.com/transcom/mymove/blob/main/pkg/handlers/ghcapi/move_task_order.go) -- it has separate functions for different kinds of specific updates, like UpdateMoveTaskOrderStatusHandlerFunc and UpdateMTOStatusServiceCounselingCompletedHandlerFunc, which update the move model and other models in predictable ways. 
+For generic updates in which models can be updated in less predictable ways, dealing with scenarios in which a given field may be set to null becomes a lot trickier.
 
 ### Useful definition
 > **Nullable field:** A field that contains information about whether it was included in the payload. A field with `Present=true` was included in the payload, with a `Value` that may or may not be null. A field with `Present=false` was not included in the payload, and therefore should not be updated in its corresponding model.
