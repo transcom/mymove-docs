@@ -1,8 +1,8 @@
 ---
-title: '0073 Exporting the MilMove database with an ECS scheduled task'
+title: '0076 Exporting the MilMove database automatically'
 ---
 
-# Exporting the MilMove database with an ECS scheduled task
+# Exporting the MilMove database automatically
 
 - [**Product Brief**](https://dp3.atlassian.net/wiki/spaces/MT/pages/1802797074/Advana+Data+Warehouse+Integration)
 - 🔒 **User Story:** [_MB-13238_](https://dp3.atlassian.net/browse/MB-13238)
@@ -15,7 +15,7 @@ title: '0073 Exporting the MilMove database with an ECS scheduled task'
 - [AWS Elastic File System (EFS)][docs-efs]
 - We leverage the word **dataset(s)** to mean the data that we export from our
   database which can be in a number of formats.
-- Streaming files to AWS S3 from memory.
+- Streaming files to AWS S3 from memory rather than file system.
 - Permissions and file system to upload files to AWS S3.
 - System Security and Architecture Guide (SSAG) documentation updates in
   Confluence.
@@ -136,10 +136,10 @@ maintaining it.
 #### Doesn't negatively impact the security of the application
 
 The impacts on our security posture for the MilMove application are impacted in
-the following ways. We will need to configure our AWS S3 bucket following the 
+the following ways. We will need to configure our AWS S3 bucket following the
 [DMS Userguide](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html).
 
-Some of the stand out configurations include needing the IAM role will have to 
+Some of the stand out configurations include needing the IAM role will have to
 have DMS (dms.amazonaws.com) added as trusted entity as well as turning off version history.
 
 We will need to configure our AWS S3 bucket in ways that
