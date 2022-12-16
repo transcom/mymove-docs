@@ -13,21 +13,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3  # $GITHUB_WORKSPACE
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16.x  # openapi requires node >= 12
+          node-version-file: '.node-version'
+          cache: 'yarn'
 
       - name: Install yarn
         run: npm install yarn
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile
 
       - name: Build the Docusaurus app
         run: yarn build
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.0
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: docusaurus  # the branch for the deployment
           folder: build  # the folder getting deployed

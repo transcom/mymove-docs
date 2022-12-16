@@ -150,18 +150,6 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/backend/guides/guide-to-static-analysis-annotations-for-disabled-linters',
-    from: [
-      '/docs/dev/contributing/code-analysis/Guide-to-Static-Analysis-Annotations-for-Disabled-Linters',
-    ],
-  },
-  {
-    to: '/docs/backend/guides/guide-to-static-analysis-security-workflow',
-    from: [
-      '/docs/dev/contributing/code-analysis/Guide-to-Static-Analysis-Security-Workflow',
-    ],
-  },
-  {
     to: '/docs/backend/guides/access-global-variables',
     from: [
       '/docs/dev/contributing/backend/access-global-variables',
@@ -303,12 +291,6 @@ module.exports = [
     to: '/docs/backend/setup/configure-postico-or-tableplus-to-connect-to-mymove-db',
     from: [
       '/docs/dev/tools/Configure-Postico-or-TablePlus-to-connect-to-mymove-DB',
-    ],
-  },
-  {
-    to: '/docs/backend/setup/common-errors-and-solutions',
-    from: [
-      '/docs/help/',
     ],
   },
   {

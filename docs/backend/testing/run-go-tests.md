@@ -4,18 +4,28 @@ sidebar_position: 6
 
 # How to run Go tests
 
+:::info Having trouble setting this up?
+
+Ask in [DP3 Slack #g-database 🔒][slack-dp3-g-database] for help with these
+commands.
+
+[slack-dp3-g-database]: https://ustcdp3.slack.com/archives/CSGDM3NUW
+:::
+
 ## Run All Go Tests
 
-```console
-$ make server_test
+```console title="Running all the server tests"
+make server_test
 ```
 
 ## Run Specific Tests
 
-All of the commands in this section assume that `test_db` is setup properly. This can be done using:
+All of the commands in this section assume that `test_db` is setup properly.
+Properly here is defined as having your Test database running in Docker, having
+the Test database migrated, and seeded with DevSeed data.
 
-```console
-$ make db_test_reset && make db_test_migrate
+```console  title="Resetting and migrating the test database"
+make db_test_reset db_test_migrate
 ```
 
 ### Run Acceptance Tests

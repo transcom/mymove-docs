@@ -1,17 +1,5 @@
 module.exports = [
   {
-    to: '/docs/tools/dependabot/manage-dependabot',
-    from: [
-      '/docs/dev/versioning/manage-dependabot',
-    ],
-  },
-  {
-    to: '/docs/tools/dependabot/dependency-update-process-with-dependabot',
-    from: [
-      '/docs/dev/versioning/Dependency-Update-Process-With-Dependabot',
-    ],
-  },
-  {
     to: '/docs/tools/dockerfile/dockerfile-use,-purpose,-and-documentation',
     from: [
       '/docs/dev/contributing/backend/Dockerfile-use,-purpose,-and-documentation',

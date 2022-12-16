@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Redocusaurus
 
-:::tip
+:::tip Why do I need to read this?
 
 This documentation is helpful for anyone editing documentation related to the
 Swagger API definitions. It is helpful to understand those concepts first before
@@ -12,13 +12,13 @@ diving into this documentation.
 
 :::
 
-:::caution
+:::info Need help? Ask in Slack.
 
 This documentation leverages multiple projects that could lead to confusing
 error messages and warnings. For help, please reach out in
-[#wg-documentation][slack-wg-documentation]🔒 if you get stuck.
+[#c-documentation][slack-c-documentation]🔒 if you get stuck.
 
-[slack-wg-documentation]: https://ustcdp3.slack.com/archives/C027BDJ4678
+[slack-c-documentation]: https://ustcdp3.slack.com/archives/C027BDJ4678
 
 :::
 
@@ -41,14 +41,14 @@ documentation][doc-preset] on using presets for more general information.
 
 [doc-preset]: https://docusaurus.io/docs/presets
 
-:::info
+:::note How Docusaurus consumes Swagger documentation
 
 The way `transcom/mymove-docs` uses this is by leveraging the raw GitHub URLs
 for the Yaml files found in `transcom/mymove`. This means the API documentation
 is in sync with the default branch for the `transcom/mymove` repository. This
 means that until your Swagger file changes are merged into the default branch of
 `transcom/mymove` you cannot view the changes in the `transcom/mymove-docs`
-repository.
+repository neither locally nor on the published website.
 
 :::
 
@@ -71,12 +71,12 @@ repository.
 ### Updating the Docusaurus configuration
 
 Once you have these repositories cloned locally, you will need to edit the
-`documentation.config.js` file to leverage the `spec:` property instead of the
-`specUrl` property.
+`documentation.config.js` file to have the local copy of compiled Swagger files
+rather than pointing to the raw GitHub URL for the default branch.
 
-The Git patch below shows what these changes would look like locally. The main
-thing to consider here is the location of the Swagger specification. In the
-example below, it is relative to the `transcom/mymove-docs` repository.
+The Git patch below shows what these changes would look like locally. The
+important thing to consider here is the location of the Swagger specification.
+In the example below, it is relative to the `transcom/mymove-docs` repository.
 
 ```diff title="Updates to specification paths" {9,10,14,15}
 diff --git a/docusaurus.config.js b/docusaurus.config.js
@@ -87,17 +87,25 @@ index 697ffef..30fdcc4 100644
        {
          specs: [
            {
--            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
+-            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
 +            spec: '../mymove/swagger/prime.yaml',
              routePath: '/api/prime',
            },
            {
--            specUrl: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
+-            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
 +            spec: '../mymove/swagger/support.yaml',
              routePath: '/api/support',
            },
          ],
 ```
+
+:::warning About the diff output above
+
+Due to edits to the `docusaurus.config.js` file since this documentation was
+written. The above diff is for illustrative purposes only and **will not apply
+cleanly to the `transcom/mymove` repository**.
+
+:::
 
 ### Viewing changes in local Docusaurus
 

@@ -68,3 +68,24 @@ SPECS=cypress/integration/office/**/* make e2e_test_docker
 ```sh
 yarn cypress run --spec cypress/integration/path/to/file.jsx
 ```
+
+## Automated tests artifacts from continuous integration
+
+:::note External documentation call-out
+The intention of this documentation is to not repeat the official docs. At the
+time of this writing, the documentation being referenced contains an _Artifacts
+overview_ section, which shows where Artifacts are stored in the
+CircleCI UI.
+:::
+
+We use CircleCI to store artifacts for failed Cypress tests. These are available
+to all Trussels with GitHub repository access in the CircleCI UI. [Please see
+the official CirclCI documentation about build
+artifacts][docs-circleci-artifacts]. The project's Artifacts are only stored on
+failed Integration Tests that run in CI. This is defined in our
+`.circleci/config.yml` file in the project under the `e2e_tests_cypress:`
+stanza. [Here's a link to an example at the time of this
+writing][gh-circleci-e2e_tests_cypress].
+
+[docs-circleci-artifacts]: https://circleci.com/docs/artifacts#artifacts-overview
+[gh-circleci-e2e_tests_cypress]: https://github.com/transcom/mymove/blob/35630d2f7e94371393860dfd63f9b6d49eededdb/.circleci/config.yml#L567-L633

@@ -156,7 +156,7 @@ You need to make two changes to this file.
 
 If you use `Suite.Run`:
 
-* This could be because each subtest is sharing DB setup. Check that you have extracted **all the shared db setup** into a separate function, and call that function at the beginning of each subtest. A tip is to look for `suite.DB()`.
+* This could be because each subtest is sharing DB setup. Check that you have extracted **all the shared db setup** into a separate function, and call that function at the beginning of each subtest. A tip is to look for `suite.DB()`. The call to `suite.DB()` performs some of the setup to handle the per test transactions, so any call to `suite.DB()` (even if you're creating a stubbed object) should be moved from the parent test. 
 
     Look at the diff of `pkg/handlers/ghcapi/orders_test.go` in [this example](https://github.com/transcom/mymove/pull/8676/files#diff-afe14b5268a7dd9637cc140a082e29a7c61632a71fb43f32dd6402efe22e64a2).
 
@@ -175,18 +175,14 @@ If you use `Suite.Run`:
 
 Sometimes, it's too much of refactor to pull out all the setup, or the setup takes a very long time.
 
-This is not a great situation, but if you still want to keep some of the transactional performance benefits, you can use an alternate `Run` function called `RunWithPreloadedData`. This is a **less ideal pattern** for the following reasons:
+In these cases, you can use `suite.PreloadData`. This can only be called once per test and will set up data that will then be used by all subtests. Once it is called, it will set a savepoint from which all subtests will start. When a subtests ends, the db will rollback to the savepoint. This way, each subtest can reuse the preloaded data, but subtests cannot modify the data used by another test. In most situations, it is preferrable to extract db setup into a setup function.
 
-* It doesn't actually use the newer txdb transactions
-* You cannot use this if the underlying code under test uses transactions.
-* If someone later changes the underlying code to use transactions, they will have to do the work to fully switch to `suite.Run`, the preferred pattern. This creates a deterrent to using transactions in the codebase, and we don't want to deter that.
-* It rolls back each subtest, but doesn't use a new connection. So any changes made in the main test will be available in the subtests.
-
-It can be preferred in one case:
+`PreloadData` can be preferred in one case:
 
 * Where there is a large amount of necessary setup, like populating the rate engine for payment calculations. In this case it can be valuable to have a preloaded setup.
 
-So **if you absolutely must** use `RunWithPreloadedData`, the process is easy. Just change the `suite.Run` calls to `suite.RunWithPreloadedData`.
+So **if you absolutely must** use `PreloadData`, the process is easy. Create a `suite.PreloadData` function and do all your test setup inside. [Here's an example](https://github.com/transcom/mymove/blob/c4f7df208f4b63fd85b0cd7645156a3516902027/pkg/rateengine/nonlinehaul_test.go#L188)
+
 
 ## Background
 
@@ -218,10 +214,11 @@ be useful. Therefore, shared setup has to be moved to a function that can be run
 per subtest. In testing this approach, it was still faster with per test
 transactions than the old way of cloning a DB per package.
 
-In addition to the `suite.Run` function, we also have `suite.RunWithPreloadedData` that could eliminate the need for calling the setup function within each subtest. This is the case if the code under test does not use transactions. If the code under test starts its own transaction, then `suite.Run` should be used.
+If tests require a really large amount of data setup, you can use `suite.PreloadData`. If `PreloadData` is called, all subtests will start with the data that was set up in `PreloadData`, but subtests won't be able to modify the data used by another test. 
+
+Note that any call to `suite.DB()` needs to be in a `setupTestData` function, `suite.PreloadData`, or in a subtest.
 
 ## Updating/adding to existing tests that use transactions
 
-Make a note of how the tests are set up, and follow the existing patterns, such as using `suite.Run` or `suite.RunWithPreloadedData`, and calling the shared DB setup function within each new subtest you add, where applicable.
+Make a note of how the tests are set up, and follow the existing patterns, such as using `suite.Run`, and calling the shared DB setup function within each new subtest you add, where applicable.
 
-If you modify the code under test such that it now starts using transactions, and if the existing tests were using `suite.RunWithPreloadedData`, you'll need to update the tests to use `suite.Run`.
