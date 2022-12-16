@@ -10,7 +10,7 @@ MilMove is using [Gorilla Mux](https://github.com/gorilla/mux) for routing.
 ## Code Snippet Analysis
 
 :::note
-This document won't analyze all the code related to how server side routing works, but select ones that are considered notable and for which there is extensive knowlege on.
+This document won't analyze all the code related to how server side routing works, but select ones that are considered notable and for which there is extensive knowlege.
 :::
 
 ### Subrouting
