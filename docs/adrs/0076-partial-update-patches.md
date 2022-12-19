@@ -7,8 +7,8 @@ title: "0076 Partial Update Patches"
 **🔒 User Story:** *[MB-14102](https://dp3.atlassian.net/browse/MB-14102)*
 
 At present, the MilMove back-end does not have developed support for partial updates or deleting fields in its models through patches. [ADR 0066](docs/adrs/0066-use-custom-nullable-types-for-patch-requests.md) introduced custom nullable types for patch requests which addresses this issue at the swagger/handler layer, but services may not be prepared to fully support the rest of this sort of workflow.
-Some handlers follow a _specifc_ updates pattern, in which one or more models can be updated in a very specific way. A good example of this is the ghc api [move_task_order.go handler](https://github.com/transcom/mymove/blob/main/pkg/handlers/ghcapi/move_task_order.go) -- it has separate functions for different kinds of specific updates, like UpdateMoveTaskOrderStatusHandlerFunc and UpdateMTOStatusServiceCounselingCompletedHandlerFunc, which update the move model and other models in predictable ways. 
-For generic updates in which models can be updated in less predictable ways, dealing with scenarios in which a given field may be set to null becomes a lot trickier.
+Some handlers follow a narrow updates pattern, in which one or more models can be updated in a very specific way. A good example of this is the ghc api [move_task_order.go handler](https://github.com/transcom/mymove/blob/main/pkg/handlers/ghcapi/move_task_order.go) -- it has separate functions for different kinds of specific updates, like UpdateMoveTaskOrderStatusHandlerFunc and UpdateMTOStatusServiceCounselingCompletedHandlerFunc, which update the move model and other models in predictable ways. 
+For generic updates in which models can be updated in more spontaneous ways, dealing with scenarios in which a given field may be set to null becomes a lot trickier.
 
 ### Useful definition
 > **Nullable field:** A field that contains information about whether it was included in the payload. A field with `Present=true` was included in the payload, with a `Value` that may or may not be null. A field with `Present=false` was not included in the payload, and therefore should not be updated in its corresponding model.
@@ -22,7 +22,7 @@ type NullableString struct {
 
 MTOShipments are an example of a case in which the back-end is not prepared to handle partial updates or intentionally setting fields to null. At the handler (e.g. the ghcapi [UpdateMTOShipmentHandler](https://github.com/transcom/mymove/blob/de9148371427ba348e94439b4acb766f05013797/pkg/handlers/ghcapi/mto_shipment.go#L284)), the payload (which may contain nullable types) is converted to an [MTOShipment model](https://github.com/transcom/mymove/blob/de9148371427ba348e94439b4acb766f05013797/pkg/handlers/ghcapi/internal/payloads/payload_to_model.go#L309), and during this conversion any information that distinguishes between missing fields and null fields is lost.
 
-Furthermore, the [MTOShipmentUpdater service](https://github.com/transcom/mymove/blob/de9148371427ba348e94439b4acb766f05013797/pkg/services/mto_shipment/mto_shipment_updater.go) that is called from the handler further obfuscates things. It fetches the existing MTOShipment from the database and sets fields in that struct based on which fields in the payload model are null[todo: add link]. Since at this point both omitted fields and intentionally-null fields from the payload are all represented as null, these fields simply are all not updated.
+Furthermore, the [MTOShipmentUpdater service](https://github.com/transcom/mymove/blob/de9148371427ba348e94439b4acb766f05013797/pkg/services/mto_shipment/mto_shipment_updater.go) that is called from the handler further obfuscates things. It fetches the existing MTOShipment from the database and [sets fields in that struct](https://github.com/transcom/mymove/blob/de9148371427ba348e94439b4acb766f05013797/pkg/services/mto_shipment/mto_shipment_updater.go#L103) based on which fields in the payload model are null. Since at this point both omitted fields and intentionally-null fields from the payload are all represented as null, these fields simply are all not updated.
 
 
 ## Proposal: Introduce a new struct that serves between the handler and service layers and broadcasts intent.
@@ -111,8 +111,9 @@ Due to the scope of work required, implementating this pattern would need to be 
 
 
 ## Considered Alternatives
-* *Add a new changed values criterion for distinguishing between events when matching to event templates*
-* *Refactor our details types and details components so that different data can be displayed uniquely within the same details type*
+* *Introduce a new struct that serves between the handler and service layers and broadcasts intent*
+* *Update model to store information about "presence"*
+* *Pass payload to service*
 * *Do nothing*
 
 ## Decision Outcome
@@ -128,11 +129,11 @@ Due to the scope of work required, implementating this pattern would need to be 
 
 ## Pros and Cons of the Alternatives
 
-### *Update model to store information about "presence" *
+### *Update model to store information about "presence"*
 * `+` *Addresses issue of not being able to delete fields with patches*
 * `+` *Little added effort when updating model with additional fields*
 * `-` *Violates expectations of pop database models*
-* `-` *Large amount of work involved in refactoring current models and all services that use thems*
+* `-` *Large amount of work involved in refactoring current models and all services that use them*
 
 ### *Pass payload to service*
 The handlers would no longer transform payloads to service models and instead pass the payload to the service
@@ -141,6 +142,5 @@ The handlers would no longer transform payloads to service models and instead pa
 * `-` *Further entangles handler and service (service now works with payload model)*
 
 ### *Do nothing*
-
 * `+` *No additional work*
 * `-` *Does not address issue of not being able to delete fields with patches*
