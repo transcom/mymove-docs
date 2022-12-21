@@ -238,7 +238,7 @@ The package is made up of four main files and accompanying test files:
     * process - must be `PTE`
     * series - must be `EMD_EPD2D_PTE_NUS_DPG`
     * units - must be `$/gal`
-    * Also the fuel data array must have a length greater than zero
+    * fuel data array - must have a length greater than zero
 * ghc_diesel_fuel_price_storer.go
   * takes the retrieved EIA data and checks the `ghc_diesel_fuel_prices` table if there is already an entry for that period. 
   * If there is an entry, it updates the price if it differs. 
