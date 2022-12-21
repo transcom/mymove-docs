@@ -216,32 +216,11 @@ mymove/pkg/services
 │   └── table_from_slice_creator_test.go
 ```
 
-## Pre-GHC MilMove FuelPrice
-
-:::caution TODO: Add description
-
-* Add **description** for this package/section.
-* After description is added, filenames (unless it is useful to leave here) can be removed.
-* Leave directory names in section.
-* Be sure to leave filename if the whole package doesn't pertain to invoicing. Leaving only the filenames that
-are important to invoicing. (E.g., `bin` and `cmd` packages. )
-
-:::
-
-
-```
-mymove/pkg/services
-├── fuelprice
-│   ├── diesel_fuel_price_storer.go
-│   ├── diesel_fuel_price_storer_test.go
-│   └── fuel_price_service_test.go
-```
-
 ## [MilMove GHC FuelPrice](https://github.com/transcom/mymove/tree/master/pkg/services/ghcdieselfuelprice)
 
-The GHC FuelPrice service is utilized by the milmove-task command `save_ghc_fuel_price_data.go`. It calls the EIA API v2.1.0 to retrieve the weekly No. 2 diesel fuel price for the U.S. With version 2.1.0 the EIA API added the `seriesid` endpoint. This allows us to use the `series_id` url parameter that we used in the v1 api as a keyword path parameter. The specific path we use is `https://api.eia.gov/v2/seriesid/PET.EMD_EPD2D_PTE_NUS_DPG.W`. 
+The GHC FuelPrice service is utilized by the milmove-task command `save_ghc_fuel_price_data.go`. It calls the EIA API v2.1.0 to retrieve the weekly No. 2 diesel fuel price for the U.S. You can access their [technical documentation here](https://www.eia.gov/opendata/documentation.php). With version 2.1.0 the EIA API added the `seriesid` endpoint. This allows us to use the `series_id` url parameter that we used in the v1 api as a keyword path parameter. The specific path we use is `https://api.eia.gov/v2/seriesid/PET.EMD_EPD2D_PTE_NUS_DPG.W`. 
 
-The package is made up of four main files and four accompanying test files:
+The package is made up of four main files and accompanying test files:
 * ghc_diesel_fuel_price_data.go
   * Defines the Diesel Fuel Price Info Struct, which contains the EIA data struct and is instantiated with the function that will fetch the EIA data
   * The EIA Data struct is shaped to model the response data that is returned from the EIA API and is populated when the fetcher function unmarshals the JSON data returned from the API call.
@@ -254,9 +233,12 @@ The package is made up of four main files and four accompanying test files:
     * duoarea - must be `NUS`
     * area-name - must be `U.S.`
     * frequency - must be `weekly`
-    * date format - must be `YYY-MM-DD` otherwise we won't parse our date correctly for db storage
+    * date format - must match a key in the map retrieved from the function `getEIADateFormatMap`
     * product - must be `EPD2D`
+    * process - must be `PTE`
+    * series - must be `EMD_EPD2D_PTE_NUS_DPG`
     * units - must be `$/gal`
+    * Also the fuel data array must have a length greater than zero
 * ghc_diesel_fuel_price_storer.go
   * takes the retrieved EIA data and checks the `ghc_diesel_fuel_prices` table if there is already an entry for that period. 
   * If there is an entry, it updates the price if it differs. 
