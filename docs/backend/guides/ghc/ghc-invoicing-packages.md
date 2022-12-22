@@ -218,7 +218,7 @@ mymove/pkg/services
 
 ## [MilMove GHC FuelPrice](https://github.com/transcom/mymove/tree/master/pkg/services/ghcdieselfuelprice)
 
-The GHC FuelPrice service is utilized by the milmove-task command `save_ghc_fuel_price_data.go`. It calls the EIA API v2.1.0 to retrieve the weekly No. 2 diesel fuel price for the U.S. You can access their [technical documentation here](https://www.eia.gov/opendata/documentation.php). With version 2.1.0 the EIA API added the `seriesid` endpoint. This allows us to use the `series_id` url parameter that we used in the v1 api as a keyword path parameter. The specific path we use is `https://api.eia.gov/v2/seriesid/PET.EMD_EPD2D_PTE_NUS_DPG.W`. 
+The GHC FuelPrice service is utilized by the milmove-task command `save_ghc_fuel_price_data.go`. This is run daily via an AWS ECS task. It calls the EIA API v2.1.0 to retrieve the weekly No. 2 diesel fuel price for the U.S. This weekly price is used in the pricing calculations for service items. You can access their [technical documentation here](https://www.eia.gov/opendata/documentation.php). With version 2.1.0 the EIA API added the `seriesid` endpoint. This allows us to use the `series_id` url parameter that we used in the v1 api as a keyword path parameter. The specific path we use is `https://api.eia.gov/v2/seriesid/PET.EMD_EPD2D_PTE_NUS_DPG.W`. 
 
 The package is made up of four main files and accompanying test files:
 * ghc_diesel_fuel_price_data.go
