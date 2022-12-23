@@ -27,8 +27,8 @@ Furthermore, the [MTOShipmentUpdater service](https://github.com/transcom/mymove
 
 ## Proposal: Introduce a new struct that serves between the handler and service layers and broadcasts intent.
 
-In this proposal, a new service model, `MTOShipmentUpdate`, would serve communication between the handlers and the `UpdateShipment` service. 
-The MTOShipmentUpdate model would represent an update to an MTOShipment. It would resemble the MTOShipment struct, but its fields could be Nullable, which means that they would contain information about whether a field should be updated by the update service.
+In this proposal, a new service struct, `MTOShipmentUpdate`, would serve communication between the handlers and the `UpdateShipment` service. 
+The MTOShipmentUpdate struct would represent an update to an MTOShipment. It would resemble the MTOShipment struct, but its fields could be Nullable, which means that they would contain information about whether a field should be updated by the update service.
 
 ```
 type Nullable[T any] struct {
@@ -91,23 +91,26 @@ type MTOShipmentUpdate struct {
 }
 ```
 
-Handlers would be in charge of converting payloads into the MTOShipmentUpdate model and passing it to the UpdateShipment service. The UpdateShipment service would be responsible for fetching the database model (MTOShipment) and updating it appropriately based on the `Present` fields in the MTOShipmentUpdate.
+Handlers would be in charge of converting payloads into the MTOShipmentUpdate struct and passing it to the UpdateShipment service. The UpdateShipment service would be responsible for fetching the database model (MTOShipment) and updating it appropriately based on the `Present` fields in the MTOShipmentUpdate.
 
-Such a design would have many advantages in addition to solving the problem of partial model updates and setting fields to null. The UpdateMTOShipment struct provides clarity by broadcasting intent: it clearly exists to update a shipment and it tells the service exactly what it wants. It also helps to further disentangle the handler layer from the database and services; since the handler now uses the MTOShipmentUpdate model, it no longer needs to know about the database structure. This design will also allow for a thorough cleanup of a lot of the handler and service logic through removal of repeated null checking and shifting business logic responsibilities cleanly to the services.
+Such a design would have many advantages in addition to solving the problem of partial model updates and setting fields to null. The UpdateMTOShipment struct provides clarity by broadcasting intent: it clearly exists to update a shipment and it tells the service exactly what it wants. It also helps to further disentangle the handler layer from the database and services; since the handler now uses the MTOShipmentUpdate struct, it no longer needs to know about the database structure. This design will also allow for a thorough cleanup of a lot of the handler and service logic through removal of repeated null checking and shifting business logic responsibilities cleanly to the services.
+
+### Requirements and Naming
+Not every database model requires an "update" struct unless it meets the following criteria:
+1. It must be updated in unspecific ways (partial updates)
+2. It requires possible field deletion
+If a model simply meets the first criterion, it wouldn't necessitate creating a corresponding update struct, but the pattern would be available and it would potentially be a good practice in case the second criterion is ever met in the future. 
+In the case that an update struct is to be created, it can simply be named after its model with "Update" appended to the end of its name (e.g. MTOShipment -> MTOShipmentUpdate).
 
 ### Implementation
 
 Due to the scope of work required, implementating this pattern would need to be done slowly.
 
-#### Decisions to finalize
-* Decide on a naming convention for intermediary update models
-* Determine if all models should fall under this pattern or only update models.
-
 #### Refactor stages
 * Identify and refactor any patch endpoints that require nullable fields for deleting values.
-* Fully refactor related validator methods to cleanly handle intermediary update models
-* Refactor all update models to remove dependencies on the `models` package
-* Relocate fully refactored update models into a separate package for better separation of code
+* Fully refactor related validator methods to cleanly handle update structs
+* Refactor all update structs to remove dependencies on the `models` package
+* Relocate fully refactored update structs into a separate package for better separation of code
 
 
 ## Considered Alternatives
