@@ -10,6 +10,7 @@ Ask in [DP3 Slack #g-database 🔒][slack-dp3-g-database] for help with these
 commands.
 
 [slack-dp3-g-database]: https://ustcdp3.slack.com/archives/CSGDM3NUW
+
 :::
 
 ## Run All Go Tests
@@ -24,24 +25,8 @@ All of the commands in this section assume that `test_db` is setup properly.
 Properly here is defined as having your Test database running in Docker, having
 the Test database migrated, and seeded with DevSeed data.
 
-```console  title="Resetting and migrating the test database"
+```console title="Resetting and migrating the test database"
 make db_test_reset db_test_migrate
-```
-
-### Run Acceptance Tests
-
-If you're adding a feature that requires new or modified configuration, it's a good idea to run acceptance tests against our environments before you merge into master.  You can run acceptance tests against an environment with:
-
-```console
-$ TEST_ACC_ENV=experimental make acceptance_test
-```
-
-This command will first load the variables from the `config/env/*.env` file and then run `chamber exec` to pull the environments from AWS.  You can run acceptance tests for the database connection, DOD certificates, and Honeycomb through environment variables with `TEST_ACC_INIT_DATABASE=1` and `TEST_ACC_DOD_CERTIFICATES=1`, respectively.
-
-For example to run acceptance tests against staging, including DOD certificate parsing, use:
-
-```console
-$ TEST_ACC_ENV=staging TEST_ACC_DOD_CERTIFICATES=1 make acceptance_test
 ```
 
 ### Run All Tests in a Single Package
@@ -89,6 +74,7 @@ $ rg -t go --files | entr -c go test ./pkg/models
 There is generally no need to be any more specific than `rg -t go`, as watching all `.go` files is plenty fast enough.
 
 ## Run Tests with Coverage Report
+
 Go has a built-in test coverage tool. You can generate test coverage reports at any level outlined above.
 
 ### Simple Coverage Report
@@ -98,11 +84,13 @@ $ go test ./pkg/handlers/internalapi -cover
 ```
 
 You will see a result similar to the following, showing the amount of code coverage your tests produce:
+
 ```console
 ok  	github.com/transcom/mymove/pkg/handlers/internalapi	72.020s	coverage: 73.5% of statements
 ```
 
 ### Detailed Coverage Report
+
 You can view line-by-line coverage in the browser using the following commands:
 
 ```console
