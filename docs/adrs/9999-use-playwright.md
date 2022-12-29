@@ -33,6 +33,8 @@ Comparable to Cypress in aim, Playwright has the benefit of improved tooling aro
 
 One final consideration is around the timeframe of changing over to any new tool. We have multiple efforts nominally underway, but functionally stalled, that would gradually let us change our way of working from one library or technique to another. We want to avoid another iteration of this pattern, and while we are cognizant of the risks and communication costs of any sort of cutover, we will seek to convert all existing Cypress-based integration tests to Playwright at once, immediately removing our dependence on the older tool.
 
+(It's worth noting that we've started a preliminary, experimental effort in to convert a subset of our Cypress-based integration test code base into Playwright using the improved tooling that's available to us. The results have been promising, both in terms of completeness and speed of development.)
+
 ## Pros and Cons of the Alternatives
 
 ### _Continue using existing version of Cypress_
