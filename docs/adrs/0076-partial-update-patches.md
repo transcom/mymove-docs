@@ -10,6 +10,9 @@ At present, the MilMove back-end does not have developed support for partial upd
 Some handlers follow a narrow updates pattern, in which one or more models can be updated in a very specific way. A good example of this is the ghc api [move_task_order.go handler](https://github.com/transcom/mymove/blob/main/pkg/handlers/ghcapi/move_task_order.go) -- it has separate functions for different kinds of specific updates, like UpdateMoveTaskOrderStatusHandlerFunc and UpdateMTOStatusServiceCounselingCompletedHandlerFunc, which update the move model and other models in predictable ways. 
 For generic updates in which models can be updated in more spontaneous ways, dealing with scenarios in which a given field may be set to null becomes a lot trickier.
 
+### Goal
+(Proposal Spoiler Alert) The intention of implementing the chosen proposal of Intermediate Structs is to introduce an option for our endpoints in cases where it would be beneficial. While it likely isn't necessary or worth it to refactor all endpoints to use intermediate structs, the door would be opened to using them where it would be beneficial for existing or future models that may need partial updates, or models that simply need to be able to set fields to null. The [proof-of-concept PR](https://github.com/transcom/mymove/pull/9503) created to accompany this ADR that introduces this pattern for the MTOShipment model only updates one field to be "nullable", the `counselor_remarks` field. This proof-of-concept PR not only introduces this pattern to MilMove, but serves as an incremental step towards making partial updates fully possible for just the MTOShipment model.
+
 ### Useful definition
 > **Nullable field:** A field that contains information about whether it was included in the payload. A field with `Present=true` was included in the payload, with a `Value` that may or may not be null. A field with `Present=false` was not included in the payload, and therefore should not be updated in its corresponding model.
 
@@ -25,7 +28,7 @@ MTOShipments are an example of a case in which the back-end is not prepared to h
 Furthermore, the [MTOShipmentUpdater service](https://github.com/transcom/mymove/blob/de9148371427ba348e94439b4acb766f05013797/pkg/services/mto_shipment/mto_shipment_updater.go) that is called from the handler further obfuscates things. It fetches the existing MTOShipment from the database and [sets fields in that struct](https://github.com/transcom/mymove/blob/de9148371427ba348e94439b4acb766f05013797/pkg/services/mto_shipment/mto_shipment_updater.go#L103) based on which fields in the payload model are null. Since at this point both omitted fields and intentionally-null fields from the payload are all represented as null, these fields simply are all not updated.
 
 
-## Proposal: Introduce a new struct that serves between the handler and service layers and broadcasts intent.
+## Proposal: **Intermediate Structs** -- introduce a new struct that serves between the handler and service layers and broadcasts intent.
 
 In this proposal, a new service struct, `MTOShipmentUpdate`, would serve communication between the handlers and the `UpdateShipment` service. 
 The MTOShipmentUpdate struct would represent an update to an MTOShipment. It would resemble the MTOShipment struct, but its fields could be Nullable, which means that they would contain information about whether a field should be updated by the update service.
