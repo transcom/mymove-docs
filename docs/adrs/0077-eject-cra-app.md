@@ -72,24 +72,32 @@ This ADR has not been decided on yet. Once it has been reviewed by the MilMove
 engineer practice, it will have a decision outcome written in this section.
 :::
 
+## Pros and Cons of the Alternatives
 
-### *[alternative 1]*
+### *Do nothing, keep using React-App-Rewired to dynamically patch configurations*
 
-* `+` *[argument 1 pro]*
-* `+` *[argument 2 pro]*
-* `-` *[argument 1 con]*
-* *[...]* <!-- numbers of pros and cons can vary -->
+* `+` *Our 0072 ADR covers situations where we can dynamically patch
+  configurations*
+* `+` *We continue benefiting from minor _Create-React-App_ updates, __if they
+  occur__*
+* `-` *We remain in the _Create-React-App_ ecosystem for longer than recommended
+  by the co-author.*
 
-### *[alternative 2]*
+### *Eject the __Create-React-App__ configuration*
 
-* `+` *[argument 1 pro]*
-* `+` *[argument 2 pro]*
-* `-` *[argument 1 con]*
-* *[...]* <!-- numbers of pros and cons can vary -->
-
-### *[alternative 3]*
-
-* `+` *[argument 1 pro]*
-* `+` *[argument 2 pro]*
-* `-` *[argument 1 con]*
-* *[...]* <!-- numbers of pros and cons can vary -->
+* `+` *Reduces the dependency on **Create-React-App**.*
+* `+` *Allows engineering team to take ownership of the configuration for the
+  client application.*
+* `-` *No wide-support from engineering team to maintain the build toolchain.*
+  * `+` Without wide-support from engineering, the lack of configuration is a safer
+  space to exist in for the project regardless of the benefits or
+  responsibilities to leverage the build toolchain manually.
+* `+` *Removes the reliance on **Create-React-App** and **React-Scripts** to
+  incorporate security fixes which do not have much larger teams dedicated to
+  this.*
+* `+` *Breaks out of the update cycle for **Create-React-App** and
+  **React-Scripts**.*
+  * `-` The update cycle of **Create-React-App** and **React-Scripts** is one that
+  is owned by their upstream development team. This cycle is a benefit to the
+  MilMove engineering team as there are less dependencies that need to be
+  managed by us.
