@@ -67,11 +67,11 @@ _React-App-Rewired_ repository. The second driver is that we are noticing
 
 ## Decision Outcome
 
-* Chosen Alternative: *[alternative 1]*
-* *[justification. e.g., only alternative, which meets KO criterion decision driver | which resolves force | ... | comes out best (see below)]*
-* *[consequences. e.g., negative impact on quality attribute, follow-up decisions required, ...]* <!-- optional -->
+:::info
+This ADR has not been decided on yet. Once it has been reviewed by the MilMove
+engineer practice, it will have a decision outcome written in this section.
+:::
 
-## Pros and Cons of the Alternatives <!-- optional -->
 
 ### *[alternative 1]*
 
