@@ -122,12 +122,11 @@ Due to the scope of work required, implementating this pattern would need to be 
 ## Decision Outcome
 
 ### Chosen Alternative: *Introduce a new struct that serves between the handler and service layers and broadcasts intent*
-
-* `+` *The strategy for displaying details for move history rows would be much more flexible*
-* `+` *Displaying move history details would more closely resemble more conventional React-like patterns*
+* `+` *Addresses issue of not being able to delete fields with patches*
+* `+` *Clearly broadcasts intent to handlers and services.*
+* `+` *Decouples handlers and api endpoints from the database and its models.*
 * `+` *Refactoring the existing event templates could be broken down and addressed incrementally.*
 * `-` *Refactoring the existing event templates would be a sizeable amount of work.*
-* `-` *It does not solve the issue of moving events matching to multiple templates. However, it does give the flexibility to share the same template*
 * `-` *Composite struct models have dependencies on current `models` package which means they cannot be separated into a new package without introducing circular dependencies*
 
 ## Pros and Cons of the Alternatives
