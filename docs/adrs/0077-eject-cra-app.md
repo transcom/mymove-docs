@@ -58,7 +58,12 @@ There are a number of decision drivers here to determine how we consider how to
 approach this work. The first driver is the fact that we've been using
 _React-App-Rewired_ now for seven months with a lot of success. This means that
 we've been effectively _owning our configuration files_ as it was stated in the
-_React-App-Rewired_ repository. The second driver is that we are noticing
+_React-App-Rewired_ repository. The second driver is that we are noticing there
+are some production optimizations that our MilMove team would like to do to our
+building of the client code in CI.
+
+These two drivers may be enough to help the MilMove engineering team make a
+decision here.
 
 ## Considered Alternatives
 
