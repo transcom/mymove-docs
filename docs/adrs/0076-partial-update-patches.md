@@ -118,6 +118,7 @@ Due to the scope of work required, implementating this pattern would need to be 
 
 ## Considered Alternatives
 * *Introduce a new struct that serves between the handler and service layers and broadcasts intent*
+* *Move struct update logic to handler*
 * *Update model to store information about "presence"*
 * *Pass payload to service*
 * *Do nothing*
@@ -125,15 +126,23 @@ Due to the scope of work required, implementating this pattern would need to be 
 ## Decision Outcome
 
 ### Chosen Alternative: *Introduce a new struct that serves between the handler and service layers and broadcasts intent*
+> **proof-of-concept PR:** [MB-14102-Shipment_update_poc](https://github.com/transcom/mymove/pull/9503)
 * `+` *Addresses issue of not being able to delete fields with patches*
 * `+` *Clearly broadcasts intent to handlers and services.*
 * `+` *Decouples handlers and api endpoints from the database and its models.*
 * `+` *Refactoring the existing event templates could be broken down and addressed incrementally.*
 * `-` *Refactoring the existing event templates would be a sizeable amount of work.*
 * `-` *Composite struct models have dependencies on current `models` package which means they cannot be separated into a new package without introducing circular dependencies*
-
+* `-` *Complicates service validators, which must now handle new intermediate struct*
 ## Pros and Cons of the Alternatives
 
+### *Move struct update logic to handler*
+> **proof-of-concept PR:** [MB-1402-Shipment_update_poc_handler_logic](https://github.com/transcom/mymove/pull/9858)
+* `+` *Addresses issue of not being able to delete fields with patches*
+* `+` *Relatively simple to implement in existing handlers*
+* `+` *Doesn't overcomplicate service validators*
+* `-` *Handlers responsible for a lot of logic, including fetching db model and updating that fetched struct with payload intelligently*
+* `-` *Handlers and endpoints still coupled to database models*
 ### *Update model to store information about "presence"*
 * `+` *Addresses issue of not being able to delete fields with patches*
 * `+` *Little added effort when updating model with additional fields*
