@@ -102,7 +102,22 @@ which makes tests much less flaky!
 ```javascript
   await expect(page.getByText('Edit')).toHaveCount(2);
 ```
+### Accessing Traces in CircleCI
+Unfortunately, [playwright traces do not load in
+CircleCI](https://github.com/microsoft/playwright/issues/18108). The
+workaround is to download them to your developer machine and then run
 
+```shell
+playwright show-trace path/to/trace.zip
+```
+
+Please note that if you use Safari to download the trace file, it will
+automatically unzip it for you, which then confuses playwright.
+Download it with another browser like Chrome or zip it back up
+
+```shell
+(cd ~/Downloads && zip -r trace.zip randomhextracegoeshere) && playwright show-trace ~/Downloads/trace.zip
+```
 
 ## Testharness in the Support API
 To make it easy for a test to create the data it needs on demand, a
