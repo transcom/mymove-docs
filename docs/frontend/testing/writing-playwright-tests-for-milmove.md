@@ -16,7 +16,7 @@ You can almost certainly use some of the knowledge from [Writing Tests using Rea
 ### No seed data
 Unlike our old cypress testing strategy of running a command to load
 seed data with hard coded ids that tests can reference, with
-playwright if a test needs test data in the database, it should create
+playwright, if a test needs test data in the database, it should create
 it using the testharness in the support api. See below for more
 details.
 
@@ -30,10 +30,13 @@ That's how we get flaky tests!
 
 ### Test data growth can (eventually) cause test failures
 The majority of the time, playwright tests will be run on an empty
-database. If you are developing locally and run the tests many time,
-each test will need create its own data. That may eventually cause some
-tests to fail because they are expecting their newly created data to
-show up on the first page of a paginated result.
+database. If you are developing locally and run the tests many times,
+each test run will create its own data, causing more and more entries
+(e.g. moves) in the database. Having many moves in the database may
+cause some tests to fail because they are expecting their newly
+created data to show up on the first page of a paginated result, but
+the data the test is looking for may instead be on the second or third
+page of results.
 
 While it's not ideal for tests to depend on that behavior, sometimes
 the effort to make the test more robust is not worth the gain.
