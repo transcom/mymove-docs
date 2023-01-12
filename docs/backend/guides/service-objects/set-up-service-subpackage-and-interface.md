@@ -23,7 +23,7 @@ mymove/
 ## Service Interface
 
 The `services/pet.go` file will define the interface for our service objects. As noted in the 
-[structure](/docs/backend/guides/service-objects/structure] page, this file will only have the interface, while the 
+[structure](/docs/backend/guides/service-objects/structure) page, this file will only have the interface, while the 
 implementation logic will live in the subpackage. This means that the interface's functions that we define here will 
 have to match the receiver functions for our service object structs we create later in the implementation files.
 
