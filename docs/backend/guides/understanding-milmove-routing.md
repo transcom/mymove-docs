@@ -4,7 +4,8 @@ This document is a brief summary on how routing on MilMove works.
 
 ## Routing
 
-The routing is initialized in `serve.go`, which calls `InitRouting` inside of `routing_init.go`. This initializes the routing that will be used by the MilMove application. This sets up routing for all 3 sites, the MilMove application, office, and admin. Perhaps this not ideal, but this is how it works as of the writing of this document (December 2022).
+Routing is a mechanism where HTTP requests are routed to the code that handles them. It is how we determine what should happen when a user visits a certain URL.
+For MilMove, the routing is initialized in `serve.go`, which calls `InitRouting` inside of `routing_init.go`. This initializes the routing that will be used by the MilMove application. This sets up routing for all 3 sites, the MilMove application, office, and admin. Perhaps this not ideal, but this is how it works as of the writing of this document (December 2022). Additionally, the routing for Prime API and Support API are is set up as well.
 MilMove is using [Gorilla Mux](https://github.com/gorilla/mux) for routing.
 
 ## Code Snippet Analysis
@@ -16,7 +17,7 @@ This document won't analyze all the code related to how server side routing work
 ### Subrouting
 
 Gorilla Mux allows easy configuration of matching routes.
-Here were are matching by a path prefix. This means that any requests that are prefixed with `/static`, will use the set middleware and handlers.
+Here we are are matching by a path prefix. This means that any requests that are prefixed with `/static`, will use the set middleware and handlers.
 
 Here's the code with some comments to further explain.
 
@@ -72,7 +73,7 @@ In this case for `ValidMethodsStatic`, the function checks if the request is eit
 
 ### Index Handler
 
-This index handler is used to handle all path prefixes that start with `/`.
+This index handler is used to handle all path prefixes that start with `/`. In the following code snippet, the root would be the base URL. So for a request to `https://my.stg.move.mil/`, the root would be `https://my.stg.move.mil` and the Path Prefix would be `/`. As a result, the request would be handled by the index handler.
 
 ```golang
 root.PathPrefix("/").Handler(indexHandler(routingConfig, appCtx.Logger())).Methods("GET", "HEAD")
@@ -84,13 +85,13 @@ This is the corresponding `indexHandler` function, with comments to explain.
 // indexHandler returns a handler that will serve the resulting content
 func indexHandler(routingConfig *Config, globalLogger *zap.Logger) http.HandlerFunc {
 
-    // Get the path to the index file using the build root directory and then name index.html
+    // Get the path to the index file using the build root directory and the name index.html
 	indexPath := path.Join(routingConfig.BuildRoot, "index.html")
 
     // Open the index.html file.
 	reader, err := routingConfig.FileSystem.Open(filepath.Clean(indexPath))
 
-    // If we can't open it, then client_build should be run
+    // If we can't open it, then log that client_build should be run
 	if err != nil {
 		globalLogger.Fatal("could not read index.html template: run make client_build", zap.Error(err))
 	}
