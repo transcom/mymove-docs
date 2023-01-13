@@ -5,7 +5,7 @@ This document is a brief summary on how routing on MilMove works.
 ## Routing
 
 Routing is a mechanism where HTTP requests are routed to the code that handles them. It is how we determine what should happen when a user visits a certain URL.
-For MilMove, the routing is initialized in `serve.go`, which calls `InitRouting` inside of `routing_init.go`. This initializes the routing that will be used by the MilMove application. This sets up routing for all 3 sites, the MilMove application, office, and admin. Perhaps this not ideal, but this is how it works as of the writing of this document (December 2022). Additionally, the routing for Prime API and Support API are is set up as well.
+For MilMove, the routing is initialized in `serve.go`, which calls `InitRouting` inside of `routing_init.go`. This initializes the routing that will be used by the MilMove application. This sets up routing for all 3 sites, the MilMove application, office, and admin. Additionally, the routing for Prime API and Support API are is set up as well. Perhaps this not ideal, but this is how it works as of the writing of this document (December 2022).
 MilMove is using [Gorilla Mux](https://github.com/gorilla/mux) for routing.
 
 ## Code Snippet Analysis
