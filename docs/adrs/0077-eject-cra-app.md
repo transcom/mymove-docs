@@ -39,10 +39,10 @@ for CI/CD systems.
 
 [➡️  *webpack*: Setup cache in CI/CD system](https://webpack.js.org/configuration/cache/#setup-cache-in-cicd-system)
 
-There is also evidence from the _Create-React-App_ repository that is has been
-volunteer-supported since the 6th of July 2021 according to one of the original
-co-authors of the library. This means that the future of _Create-React-App_ is
-unknown for our project. Since, _Create-React-App_ is only a set of useful
+According to one of the original co-authors of the library, the _Create-React-App_ 
+repository has been volunteer-supported since the 6th of July 2021. This means that 
+the future of _Create-React-App_ is unknown for our project. 
+Since _Create-React-App_ is only a set of useful
 configurations for working with a React application, we are again presented with
 evidence that we should manage the configuration for our MilMove React
 application ourselves. The original co-creator even states that it might not be
