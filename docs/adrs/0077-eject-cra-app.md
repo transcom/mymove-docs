@@ -26,7 +26,7 @@ The main reason to consider this again is that it was discovered on back on the
 does not call `compiler.close` which prevents the *webpack* cache from being
 saved. This means that the `make client_build` command will always compile the
 application every time, even without changes being made to the `src/` directory.
-This prevents the CI system from saving artifacts from previous builds and means
+Not having the *webpack* cache being saved prevents the CI system from saving artifacts from previous builds and means
 that the CI system compiles the client code on every time regardless of changes
 made to that single component of the MilMove system.
 
