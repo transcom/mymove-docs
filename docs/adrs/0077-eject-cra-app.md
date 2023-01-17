@@ -21,8 +21,8 @@ repository.
 
 [adr-0072]: ./0072-using-react-app-rewired.md
 
-The main reason to consider this again is that it was discovered on back on the
-13th of May 2022 that the _React-Scripts_, which _Create-React-App_ provides,
+The main reason to consider this again is that on May 13, 2022 it was discovered  
+that the _React-Scripts_, which _Create-React-App_ provides,
 does not call `compiler.close` which prevents the *webpack* cache from being
 saved. This means that the `make client_build` command will always compile the
 application every time, even without changes being made to the `src/` directory.
