@@ -10,7 +10,7 @@
 
 1. Configure direnv:
 
-   1. [Set up direnv](/docs/about/application-setup/direnvmd)
+   1. [Set up direnv](/docs/about/application-setup/direnv.md)
    1. In `.zshrc` (or the relevant one for you), the `nix` setup line (inserted by the `nix` installation) needs to run
       before the `direnv` hook setup.
 
