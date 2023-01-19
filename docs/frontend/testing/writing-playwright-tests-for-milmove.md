@@ -139,3 +139,31 @@ testharness in the support API has been created on the backend. The
 If you need to create a new method, make sure you do not hard code
 object IDs so that the same test can be run in the same database
 multiple times in a row without error.
+
+### Adding a new testharness endpoint
+
+Ideally you would be re-using/creating a function like we have in
+[testdatagen/scenario/shared.go](https://github.com/transcom/mymove/blob/main/pkg/testdatagen/scenario/shared.go).
+Again, make sure any objects you build do not have hardcoded IDs so
+that multiple instances can be created.
+
+1. Add a new function in the [testdatagen/testharness
+   package](https://github.com/transcom/mymove/tree/cf5ad992f2f3a833651d79efc49d92dc6b018d8d/pkg/testdatagen/testharness)
+1. Add a new entry to the [actionDispatcher
+   map](https://github.com/transcom/mymove/blob/cf5ad992f2f3a833651d79efc49d92dc6b018d8d/pkg/testdatagen/testharness/dispatch.go#L15)
+   calling your new function
+1. Add a new function to [testharness.js](https://github.com/transcom/mymove/blob/cf5ad992f2f3a833651d79efc49d92dc6b018d8d/playwright/tests/utils/testharness.js)
+
+### How the testharness works in the backend
+
+If devlocal auth is enabled (`DEVLOCAL_AUTH=true`), the [testharness
+handler is added under path
+`/testharness`](https://github.com/transcom/mymove/blob/8fd35682409c0b4fc8ab14b9a8b6db957e1efb2d/pkg/handlers/routing/routing_init.go#L403-L408).
+Note that the testharness is unauthenticated so that e.g. users can be
+created. 
+
+The [testharness handler calls
+testharness.Dispatch](https://github.com/transcom/mymove/blob/cf5ad992f2f3a833651d79efc49d92dc6b018d8d/pkg/handlers/testharnessapi/api.go#L32)
+
+Then the dispatcher uses the `actionDispatcher` map as described
+above.
