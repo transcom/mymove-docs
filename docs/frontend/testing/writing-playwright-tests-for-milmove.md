@@ -14,6 +14,7 @@ You can almost certainly use some of the knowledge from [Writing Tests using Rea
 ## Best Practices / Things to Know
 
 ### No seed data
+
 Unlike our old cypress testing strategy of running a command to load
 seed data with hard coded ids that tests can reference, with
 Playwright, if a test needs test data in the database, it should create
@@ -24,11 +25,13 @@ You should be able to run any Playwright test after a `make
 db_dev_reset db_dev_migrate` or after `make db_dev_truncate`.
 
 ### Always (always!) ensure your test runs independently
+
 When adding a test, you should ensure it can run on its own without
 any other test. Never have one test depend on another test having run.
 That's how we get flaky tests!
 
 ### Test data growth can (eventually) cause test failures
+
 The majority of the time, Playwright tests will be run on an empty
 database. If you are developing locally and run the tests many times,
 each test run will create its own data, causing more and more entries
@@ -45,6 +48,7 @@ If you start getting failures for tests that used to pass, try `make
 db_dev_truncate`.
 
 ### Use Playwright fixtures
+
 To quote from the [Playwright documentation on
 fixtures](https://playwright.dev/docs/test-fixtures)
 
@@ -59,6 +63,7 @@ consider adding it to a fixture in that directory. That allows others
 to more easily discover and reuse your helper.
 
 ### Wait for the page to load
+
 After performing an action which results in data on the page changing,
 use async assertions (see below) to wait for the page to be in the
 appropriate state. As much as possible, avoid tying your test to
@@ -70,6 +75,7 @@ need is visible on the page before proceeding.
 See more at the [Playwright docs for navigation](https://playwright.dev/docs/navigations)
 
 ### Prefer user-facing attributes instead of css selectors 
+
 Quoting from the [Playwright docs on
 locators](https://playwright.dev/docs/locators#locating-elements)
 
@@ -78,6 +84,7 @@ locators](https://playwright.dev/docs/locators#locating-elements)
 > explicit contracts such as page.getByRole().
 
 ### Avoid force clicking at (almost) all costs
+
 Force clicking bypasses the
 [actionability](https://playwright.dev/docs/actionability) checks and
 increases the chances of flaky tests.
@@ -106,6 +113,7 @@ which makes tests much less flaky!
   await expect(page.getByText('Edit')).toHaveCount(2);
 ```
 ### Accessing Traces in CircleCI
+
 Unfortunately, [Playwright traces do not load in
 CircleCI](https://github.com/microsoft/playwright/issues/18108). The
 workaround is to download them to your developer machine and then run
@@ -123,6 +131,7 @@ Download it with another browser like Chrome or zip it back up
 ```
 
 ## Testharness in the Support API
+
 To make it easy for a test to create the data it needs on demand, a
 testharness in the support API has been created on the backend. The
 `utils/testharness.js` has all of the methods.
