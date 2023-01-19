@@ -5,7 +5,7 @@ sidebar_position: 9
 # Writing Playwright Tests for MilMove
 
 This guide covers how MilMove writes tests for Playwright. You should
-probably familarize yourself with the [playwright docs on writing
+probably familarize yourself with the [Playwright docs on writing
 tests](https://playwright.dev/docs/writing-tests). Some of the best
 practices below merely reinforces information from that doc.
 
@@ -16,11 +16,11 @@ You can almost certainly use some of the knowledge from [Writing Tests using Rea
 ### No seed data
 Unlike our old cypress testing strategy of running a command to load
 seed data with hard coded ids that tests can reference, with
-playwright, if a test needs test data in the database, it should create
+Playwright, if a test needs test data in the database, it should create
 it using the testharness in the support api. See below for more
 details.
 
-You should be able to run any playwright test after a `make
+You should be able to run any Playwright test after a `make
 db_dev_reset db_dev_migrate` or after `make db_dev_truncate`.
 
 ### Always (always!) ensure your test runs independently
@@ -29,7 +29,7 @@ any other test. Never have one test depend on another test having run.
 That's how we get flaky tests!
 
 ### Test data growth can (eventually) cause test failures
-The majority of the time, playwright tests will be run on an empty
+The majority of the time, Playwright tests will be run on an empty
 database. If you are developing locally and run the tests many times,
 each test run will create its own data, causing more and more entries
 (e.g. moves) in the database. Having many moves in the database may
@@ -44,8 +44,8 @@ the effort to make the test more robust is not worth the gain.
 If you start getting failures for tests that used to pass, try `make
 db_dev_truncate`.
 
-### Use playwright fixtures
-To quote from the [playwright documentation on
+### Use Playwright fixtures
+To quote from the [Playwright documentation on
 fixtures](https://playwright.dev/docs/test-fixtures)
 
 > Playwright Test is based on the concept of test fixtures. Test
@@ -67,10 +67,10 @@ events](https://playwright.dev/docs/network#network-events) and
 instead use async assertions (see below) to wait until the data you
 need is visible on the page before proceeding.
 
-See more at the [playwright docs for navigation](https://playwright.dev/docs/navigations)
+See more at the [Playwright docs for navigation](https://playwright.dev/docs/navigations)
 
 ### Prefer user-facing attributes instead of css selectors 
-Quoting from the [playwright docs on
+Quoting from the [Playwright docs on
 locators](https://playwright.dev/docs/locators#locating-elements)
 
 > Playwright comes with multiple built-in locators. To make tests
@@ -83,7 +83,7 @@ Force clicking bypasses the
 increases the chances of flaky tests.
 
 Instead of using a locator for the `input`, try clicking on the
-associated text or parent element. The experience with playwright so
+associated text or parent element. The experience with Playwright so
 far on MilMove is that if you need to force click, it's probably a
 smell that there's something wrong with how the page is working (e.g.
 a component with a label of the empty string instead of
@@ -91,7 +91,7 @@ a component with a label of the empty string instead of
 
 ### Use async assertions
 
-This is referenced in the [playwright assertions
+This is referenced in the [Playwright assertions
 docs](https://playwright.dev/docs/writing-tests#assertions) and will
 be expounded upon here.
 
@@ -106,7 +106,7 @@ which makes tests much less flaky!
   await expect(page.getByText('Edit')).toHaveCount(2);
 ```
 ### Accessing Traces in CircleCI
-Unfortunately, [playwright traces do not load in
+Unfortunately, [Playwright traces do not load in
 CircleCI](https://github.com/microsoft/playwright/issues/18108). The
 workaround is to download them to your developer machine and then run
 
@@ -115,7 +115,7 @@ playwright show-trace path/to/trace.zip
 ```
 
 Please note that if you use Safari to download the trace file, it will
-automatically unzip it for you, which then confuses playwright.
+automatically unzip it for you, which then confuses Playwright.
 Download it with another browser like Chrome or zip it back up
 
 ```shell
