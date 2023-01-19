@@ -84,7 +84,9 @@ Historically we have leaned on Browser tests to cover testing our app thoroughly
 * We used to use the [Cypress framework](https://www.cypress.io/) for
   most browser testing, both with chrome and headless chrome
 * We have now converted to using [Playwright](https://playwright.dev).
-  See also [writing playwright tests for milmove](writing-playwright-tests-for-milmove.md).
+  See also [writing playwright tests for
+  milmove](writing-playwright-tests-for-milmove.md) and the [Convert
+  integration tests to Playwright ADR](../../adrs/0076-use-playwright.md).
 
 ### Storybook Testing
 
