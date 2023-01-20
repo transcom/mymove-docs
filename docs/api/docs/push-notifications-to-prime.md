@@ -10,7 +10,7 @@ We will be using Web Hooks to implement the push mechanism.
 
 > Webhooks are a useful and a resource-light way to implement event reactions. Web hooks provide a mechanism where by a server-side application can notify a client-side application when a new event (that the client-side application might be interested in) has occurred on the server.
 >
-> Source: https://codeburst.io/what-are-webhooks-b04ec2bf9ca2
+>Source: https://codeburst.io/what-are-webhooks-b04ec2bf9ca2
 
 For a quick primer on REST hooks and overview of webhooks - this is a great start → https://resthooks.org/docs/
 
@@ -22,9 +22,9 @@ It's important to note that since Milmove is a Dod property, the connection to t
 
 There are three components of the solution
 
-- **Subscribe to Notifications** - The prime will subscribe to notifications using a URL that Milmove can send a POST request to.
-- **Generate Notifications** - Updates to the MTO in Milmove will trigger events which will store notifications.
-- **Send Notifications** - A client will read the notifications and send them to Prime.
+* **Subscribe to Notifications** - The prime will subscribe to notifications using a URL that Milmove can send a POST request to.
+* **Generate Notifications** - Updates to the MTO in Milmove will trigger events which will store notifications.
+* **Send Notifications** - A client will read the notifications and send them to Prime.
 
 ## Subscribe to Notifications
 
@@ -95,11 +95,11 @@ We do not want to send the whole MTO on each event, not do we want to send a sin
 
 Logical Objects that the Prime is interested in are:
 
-- Move - Consists of `Move` and `Contractors`
-- Orders - Consists of `Orders`, `Customer`, `Entitlement`, `DutyStation`, and `Address`.
-- MTOShipment - Consists of `MTOShipment`, `Agent` and `Address`.
-- MTOServiceItem - Consists of `MTOServiceItem`, `MTOServiceItemDimensions`, `MTOServiceItemCustomerContacts`
-- PaymentRequest - Consists of `PaymentRequest`, `PaymentServiceItems`, `PaymentServiceItemParams` and `Uploads`
+* Move - Consists of `Move` and `Contractors`
+* Orders - Consists of `Orders`, `Customer`, `Entitlement`, `DutyStation`, and `Address`.
+* MTOShipment - Consists of `MTOShipment`, `Agent` and `Address`.
+* MTOServiceItem - Consists of `MTOServiceItem`, `MTOServiceItemDimensions`, `MTOServiceItemCustomerContacts`
+* PaymentRequest - Consists of `PaymentRequest`, `PaymentServiceItems`, `PaymentServiceItemParams` and `Uploads`
 
 What this means is an update to an address on an MTOShipment should result in an "MTOShipment.Update" event.
 
