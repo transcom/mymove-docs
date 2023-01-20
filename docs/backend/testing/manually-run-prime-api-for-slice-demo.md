@@ -1,6 +1,6 @@
 # Manually run Prime API for Slice demo 
 
-[Pricing Acceptance script](https://github.com/transcom/mymove/blob/master/scripts/pricing-acceptance) is being used to mimick the Prime's use of the Prime API. If this script fails on a step, you will need to run the commands manually. This wiki page is to document the list of commands in order that would normally be run by the Prime.
+[Pricing Acceptance script](https://github.com/transcom/mymove/blob/main/scripts/pricing-acceptance) is being used to mimick the Prime's use of the Prime API. If this script fails on a step, you will need to run the commands manually. This wiki page is to document the list of commands in order that would normally be run by the Prime.
 
 # 1. Fetch MTOs available to the Prime
 

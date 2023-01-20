@@ -1118,14 +1118,14 @@ function that we can call to run through those rules. Now you can move on to set
 ## Examples
 
 * Shipment Orchestrator
-    * https://github.com/transcom/mymove/blob/master/pkg/services/orchestrators/shipment/rules.go
-    * https://github.com/transcom/mymove/blob/master/pkg/services/orchestrators/shipment/validation.go
+    * https://github.com/transcom/mymove/blob/main/pkg/services/orchestrators/shipment/rules.go
+    * https://github.com/transcom/mymove/blob/main/pkg/services/orchestrators/shipment/validation.go
 * PPMShipments
-    * https://github.com/transcom/mymove/blob/master/pkg/services/ppmshipment/rules.go
-    * https://github.com/transcom/mymove/blob/master/pkg/services/ppmshipment/validation.go
+    * https://github.com/transcom/mymove/blob/main/pkg/services/ppmshipment/rules.go
+    * https://github.com/transcom/mymove/blob/main/pkg/services/ppmshipment/validation.go
 * Reweighs
-    * https://github.com/transcom/mymove/blob/master/pkg/services/reweigh/rules.go
-    * https://github.com/transcom/mymove/blob/master/pkg/services/reweigh/validation.go
+    * https://github.com/transcom/mymove/blob/main/pkg/services/reweigh/rules.go
+    * https://github.com/transcom/mymove/blob/main/pkg/services/reweigh/validation.go
 
 ## Resources
 

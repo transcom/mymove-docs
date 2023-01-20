@@ -92,13 +92,13 @@ If err = cmd.Wait(); err != nil {
 
 We’re following the route that involves writing a script, and we can model it after the following lines in the
 [cac-migration script](https://github.com/transcom/mymove/blob/107872f9f6e7739f6b5d5efe988357b8fbe67192/cmd/milmove/gen_certs_migration.go#L199-L217).
-From within the script, we will prompt the user to upload the migration to s3 as explained in [step 8](https://github.com/transcom/mymove/blob/master/docs/database/migrate-the-database.md#creating-secure-migrations)
+From within the script, we will prompt the user to upload the migration to s3 as explained in [step 8](/docs/backend/setup/database-migrations.md#creating-secure-migrations)
 
 ```
 log.Print(“Upload the migration to S3 with:upload-secure-migration <production_migration_file>”)
 ```
 The command gets defined in `cmd/milmove/main.go` and list it
-in [Creating a Migration](https://github.com/transcom/mymove/blob/master/docs/database/migrate-the-database.md#creating-a-migration)
+in [Creating a Migration](/docs/backend/setup/database-migrations.md#creating-migrations)
 
 ### Step 2:
 Run the pricing parser and spot check results. Generate the migration for production.

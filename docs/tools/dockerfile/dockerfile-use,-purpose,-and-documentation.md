@@ -6,7 +6,7 @@ sidebar_position: 1
 
 This document lists all the current Dockerfiles we use, their base images, and what user that image uses. It also notes why that image uses the user account it uses.
 
-NOTE for `gcr.io/distroless/base:latest` based images these by default run with `root` locally. However, we have updated our ECS task definition (See code [here](https://github.com/transcom/mymove/blob/master/cmd/ecs-deploy/task_def.go#L581)) to override that to run with a UID of `1042` and not `root`/`UID:0`.
+NOTE for `gcr.io/distroless/base:latest` based images these by default run with `root` locally. However, we have updated our ECS task definition (See code [here](https://github.com/transcom/mymove/blob/main/cmd/ecs-deploy/task_def.go#L581)) to override that to run with a UID of `1042` and not `root`/`UID:0`.
 
 All docker images that are deployed must not use `root` as their user inside the container to meet Docker STIG requirements. We've updated all Dockerfiles for deployed containers to not use root. We chose not to do this as well on Dockerfiles for images that are not deployed but only used on local laptops or in our CircleCI pipeline for development and testing.
 

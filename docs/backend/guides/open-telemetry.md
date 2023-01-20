@@ -4,7 +4,7 @@ sidebar_position: 23
 
 # Open Telemetry
 
-The Milmove app has had aspects of logging (Zap), tracing (trace middleware), and monitoring (AWS infra dashboards) previously, but there is now an [ADR to use the Open Telemetry library](https://github.com/transcom/mymove/blob/master/docs/adr/0061-use-opentelemetry-for-distributed-tracing.md) to standardize our efforts. While not solely useful just for load testing, it did expose our need for better insight into the performance of the Milmove app and it's services.
+The Milmove app has had aspects of logging (Zap), tracing (trace middleware), and monitoring (AWS infra dashboards) previously, but there is now [ADR 0061 Open Telemetry library](/docs/adrs/0061-use-opentelemetry-for-distributed-tracing.md) to standardize our efforts. While not solely useful just for load testing, it did expose our need for better insight into the performance of the Milmove app and it's services.
 
 ## Implementation
 

@@ -94,7 +94,7 @@ staging.*
 
 ## Adding Service Items to a Shipment
 
-Use the appropriate payload and create file to add service items to the shipment. Some examples are below, or [see reDoc createMTOServiceItem](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml#operation/createMTOServiceItem) for more help.
+Use the appropriate payload and create file to add service items to the shipment. Some examples are below, or [see reDoc createMTOServiceItem](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml#operation/createMTOServiceItem) for more help.
 
 ```sh
 prime-api-client --cac --hostname api.stg.move.mil --port 443 create-mto-service-item --filename create_payload.json | jq
@@ -147,7 +147,7 @@ prime-api-client --cac --hostname api.stg.move.mil --port 443 create-mto-service
 
 ## Creating a Payment request
 
-It may be helpful to check out the API docs, see [Milmove Prime API Documentation](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml) and [Milmove Support API Documentation](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml). Also further information in [this repo](https://github.com/transcom/prime_api_deliverable).
+It may be helpful to check out the API docs, see [Milmove Prime API Documentation](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml) and [Milmove Support API Documentation](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/main/swagger/support.yaml). Also further information in [this repo](https://github.com/transcom/prime_api_deliverable).
 
 ### Prerequisites
 
@@ -742,7 +742,7 @@ aws-vault exec transcom-gov-milmove-stg -- ecs-service-logs show -s app-client-t
     "ts": "2020-06-17T18:45:48.516Z",
     "caller": "primeapi/payment_request.go:39",
     "msg": "primeapi.CreatePaymentRequestHandler info",
-    "git_branch": "master",
+    "git_branch": "main",
     "git_commit": "71969d2e81f4fb10c5333bf9f152430541a06681",
     "ecs_cluster": "arn:aws:ecs:us-west-2:923914045601:cluster/app-staging",
     "ecs_task_def_family": "app-client-tls-staging",
@@ -755,7 +755,7 @@ aws-vault exec transcom-gov-milmove-stg -- ecs-service-logs show -s app-client-t
     "ts": "2020-06-17T18:45:49.130Z",
     "caller": "primeapi/payment_request.go:81",
     "msg": "Error creating payment request",
-    "git_branch": "master",
+    "git_branch": "main",
     "git_commit": "71969d2e81f4fb10c5333bf9f152430541a06681",
     "ecs_cluster": "arn:aws:ecs:us-west-2:923914045601:cluster/app-staging",
     "ecs_task_def_family": "app-client-tls-staging",
@@ -769,7 +769,7 @@ aws-vault exec transcom-gov-milmove-stg -- ecs-service-logs show -s app-client-t
     "ts": "2020-06-17T18:45:49.130Z",
     "caller": "primeapi/payment_request.go:106",
     "msg": "Payment Request",
-    "git_branch": "master",
+    "git_branch": "main",
     "git_commit": "71969d2e81f4fb10c5333bf9f152430541a06681",
     "ecs_cluster": "arn:aws:ecs:us-west-2:923914045601:cluster/app-staging",
     "ecs_task_def_family": "app-client-tls-staging",
@@ -792,7 +792,7 @@ aws-vault exec transcom-gov-milmove-stg -- ecs-service-logs show -s app-client-t
     "ts": "2020-06-17T18:45:49.130Z",
     "caller": "middleware/request_logger.go:85",
     "msg": "Request",
-    "git_branch": "master",
+    "git_branch": "main",
     "git_commit": "71969d2e81f4fb10c5333bf9f152430541a06681",
     "ecs_cluster": "arn:aws:ecs:us-west-2:923914045601:cluster/app-stg",
     "ecs_task_def_family": "app-client-tls-stg",

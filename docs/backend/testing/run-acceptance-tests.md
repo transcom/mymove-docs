@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # How to run acceptance tests
 
-Before accepting work to merge into master different feature branches need to go through manual acceptance testing.
+Before accepting work to merge into main, different feature branches need to go through manual acceptance testing.
 This document will get you set up for that testing and also show you how to run tests against feature branches.
 
 ## Setup

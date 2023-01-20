@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## Design + Engineering Process for new components
 
-MilMove has defined a process for taking a new component from concept to design to implementation. This section of the doc will describe this process. We use [Storybook](https://storybook.js.org/) for showing the finished components and you can view all current ones on master by going to our [public storybook site](https://storybook.move.mil/). If you want to see things locally please check out the [How To Run Storybook](../setup/run-storybook.md) document.
+MilMove has defined a process for taking a new component from concept to design to implementation. This section of the doc will describe this process. We use [Storybook](https://storybook.js.org/) for showing the finished components and you can view all current ones on main by going to our [public storybook site](https://storybook.move.mil/). If you want to see things locally please check out the [How To Run Storybook](../setup/run-storybook.md) document.
 
 ### Design delivers component design
 
@@ -194,7 +194,7 @@ For an overview of the CSS structure on the project, see this talk: [CSS Overvie
 
 #### Using Sass and CSS Modules
 
-* All new components should utilize [Sass](https://sass-lang.com/documentation/file.SASS_REFERENCE.html) and [CSS modules](https://github.com/css-modules/css-modules) (See [ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0031-css-tooling.md)).  To apply Sass and CSS Modules, name files  with this syntax: `<component>.module.scss`
+* All new components should utilize [Sass](https://sass-lang.com/documentation/file.SASS_REFERENCE.html) and [CSS modules](https://github.com/css-modules/css-modules) (See [ADR 0031 CSS Tooling](/docs/adrs/0031-css-tooling.md)).  To apply Sass and CSS Modules, name files  with this syntax: `<component>.module.scss`
 * Use CSS Modules' [`composes`](https://bambielli.com/til/2017-08-11-css-modules-composes/#) to build a new class out of other pre-defined classes
 * Where to put styles?
   * For global styles, such as colors and themes, utilize global variables in files such as `colors.scss`

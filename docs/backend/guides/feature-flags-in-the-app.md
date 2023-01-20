@@ -16,7 +16,7 @@ A temporary feature flag as service counseling work goes on to gate the service 
 
 When `true`, all moves are routed to service counseling. This means their status gets set to `MoveStatusNeedsServiceCounseling`.
 
-When `false`, no moves are routed to service counseling. Their status gets set to `MoveStatusSUBMITTED`. (See: https://github.com/transcom/mymove/blob/master/pkg/models/move.go#L26 for the move status types.)
+When `false`, no moves are routed to service counseling. Their status gets set to `MoveStatusSUBMITTED`. (See: https://github.com/transcom/mymove/blob/main/pkg/models/move.go#L26 for the move status types.)
 
 ## `FEATURE_FLAG_ACCESS_CODE`
 This flag determines whether or not service members are prompted for an access code before they start onboarding.

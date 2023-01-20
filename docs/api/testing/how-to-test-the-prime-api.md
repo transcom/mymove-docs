@@ -77,7 +77,7 @@ go run ./cmd/prime-api-client --insecure <subcommand> <additional_flags> | jq
 
 You will first have to complete [these steps](https://dp3.atlassian.net/l/c/use2NV2M) to create CAC access.
 
-Additionally, those changes must be deployed to each environment. Merging to master will deploy to staging. But you need to explicitly deploy to experimental to get access there, otherwise you won't have access.
+Additionally, those changes must be deployed to each environment. Merging to main will deploy to staging. But you need to explicitly deploy to experimental to get access there, otherwise you won't have access.
 
 ### DoD Certificates
 

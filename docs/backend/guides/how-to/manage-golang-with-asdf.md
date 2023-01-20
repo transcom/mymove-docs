@@ -13,7 +13,7 @@ Besides being the home row of the left hand in the qwerty layout it is also a to
 
 ## Why ASDF?
 
-To find out more on why asdf was chosen please read [ADR 0056 - Use asdf to manage golang versoins in development](https://github.com/transcom/mymove/blob/master/docs/adr/0056-use-asdf-to-manage-golang-versions-in-development.md)
+To find out more on why asdf was chosen please read [ADR 0056 - Use asdf to manage golang versions in development](/docs/adrs/0056-use-asdf-to-manage-golang-versions-in-development.md)
 
 ## Why `asdf global golang <version>`?
 

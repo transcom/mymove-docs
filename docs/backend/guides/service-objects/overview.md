@@ -14,7 +14,7 @@ The MilMove backend is _loosely_ designed with this
 3. **Data access layer.** - Code that directly interacts with and manipulates the database.
 
 The `services` package is a combination of the bottom two layers, **business logic** and **data access**. It is 
-located within the [`mymove` `./pkg/services`](https://github.com/transcom/mymove/tree/master/pkg/services) directory.
+located within the [`mymove` `./pkg/services`](https://github.com/transcom/mymove/tree/main/pkg/services) directory.
 
 Our "service objects," as we call them (this is MilMove-specific terminology), are the structs/functions within this 
 package that implement our business logic. An example of a service object would be something like `AddressUpdater` 
@@ -62,9 +62,9 @@ Service objects allow for better unit testing, re-usability, and organization of
 
 We have two decision records related to service objects:
 
-- [Service Object Layer ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0033-service-object-layer.md) 
+- [ADR 0033 Service Object Layer](/docs/adrs/0033-service-object-layer.md)
   is the one that began our use of service objects.
-- [Use orchestrator service objects ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0069-use-orchestrator-service-objects.md)
+- [ADR 0069 Use orchestrator service objects ADR](/docs/adrs/0069-use-orchestrator-service-objects.md)
   is where we defined a new type of service object to help manage interactions between closely related service objects.
 
 ## Key features

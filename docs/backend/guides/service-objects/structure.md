@@ -7,7 +7,7 @@ This page will primarily cover how service objects are structured and a general 
 Details for actually working with the different files will be covered in the next pages.
 
 All types of service objects should be in the
-[`mymove` `./pkg/services`](https://github.com/transcom/mymove/tree/master/pkg/services) directory, but their 
+[`mymove` `./pkg/services`](https://github.com/transcom/mymove/tree/main/pkg/services) directory, but their 
 structure within there will vary based on the type of service object you're working with.
 
 Our service objects are composed of an interface that is defined in the `services` package as well as a subpackage 

@@ -30,7 +30,7 @@ The main methods of the `APIParser` class are:
 
 
   parser = APIParser(
-    api_file="https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml")
+    api_file="https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml")
 
   parser.get_request_body(path="/mto-shipments", method="post")
   ```
@@ -48,7 +48,7 @@ The main methods of the `APIParser` class are:
   from utils.parsers import APIParser
 
   parser = APIParser(
-    api_file="https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml")
+    api_file="https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml")
 
   parser.get_response_body(path="/mto-service-items", method="post", status="201")
   ```
@@ -65,7 +65,7 @@ The main methods of the `APIParser` class are:
 
 
   parser = APIParser(
-    api_file="https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml")
+    api_file="https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml")
 
   parser.get_definition(name="MoveTaskOrder")
   ```
@@ -85,7 +85,7 @@ The main methods of the `APIParser` class are:
 
 
   parser = APIParser(
-    api_file="https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml")
+    api_file="https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml")
 
   parser.generate_fake_request(path="/mto-service-items", method="post",
                                overrides={"modelType": "MTOServiceItemDDSFIT"})
@@ -119,7 +119,7 @@ class GHCAPIParser(APIParser):
     Sample Parser class for the GHC API.
     """
     
-    api_file = "https://raw.githubusercontent.com/transcom/mymove/master/swagger/ghc.yaml"
+    api_file = "https://raw.githubusercontent.com/transcom/mymove/main/swagger/ghc.yaml"
     
     def _custom_field_validation(self, api_field, object_def):
         """

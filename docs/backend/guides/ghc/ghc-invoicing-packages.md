@@ -85,7 +85,7 @@ mymove/
 │   │   └── main.go
 ```
 
-## [Payment Request](https://github.com/transcom/mymove/tree/master/pkg/payment_request)
+## [Payment Request](https://github.com/transcom/mymove/tree/main/pkg/payment_request)
 
 :::caution TODO: Add description
 
@@ -109,7 +109,7 @@ are important to invoicing. (E.g., `bin` and `cmd` packages. )
 ├── service_param_list_valid_test.go
 ```
 
-## [Service Param Value Lookups](https://github.com/transcom/mymove/tree/master/pkg/payment_request/service_param_value_lookups)
+## [Service Param Value Lookups](https://github.com/transcom/mymove/tree/main/pkg/payment_request/service_param_value_lookups)
 
 :::caution TODO: Add description
 
@@ -216,7 +216,7 @@ mymove/pkg/services
 │   └── table_from_slice_creator_test.go
 ```
 
-## [MilMove GHC FuelPrice](https://github.com/transcom/mymove/tree/master/pkg/services/ghcdieselfuelprice)
+## [MilMove GHC FuelPrice](https://github.com/transcom/mymove/tree/main/pkg/services/ghcdieselfuelprice)
 
 The GHC FuelPrice service is utilized by the milmove-task command `save_ghc_fuel_price_data.go`. This is run daily via an AWS ECS task. It calls the EIA API v2.1.0 to retrieve the weekly No. 2 diesel fuel price for the U.S. This weekly price is used in the pricing calculations for service items. You can access their [technical documentation here](https://www.eia.gov/opendata/documentation.php). With version 2.1.0 the EIA API added the `seriesid` endpoint. This allows us to use the `series_id` url parameter that we used in the v1 api as a keyword path parameter. The specific path we use is `https://api.eia.gov/v2/seriesid/PET.EMD_EPD2D_PTE_NUS_DPG.W`. 
 
@@ -245,7 +245,7 @@ The package is made up of four main files and accompanying test files:
   * If there isn't then a new entry is created 
 
 
-## [GHC Import](https://github.com/transcom/mymove/tree/master/pkg/services/ghcimport)
+## [GHC Import](https://github.com/transcom/mymove/tree/main/pkg/services/ghcimport)
 
 :::caution TODO: Add description
 
@@ -303,7 +303,7 @@ mymove/pkg/services
 │   └── zip5_to_rate_area_mappings.go
 ```
 
-## [GHC Rate Engine](https://github.com/transcom/mymove/tree/master/pkg/services/ghcrateengine)
+## [GHC Rate Engine](https://github.com/transcom/mymove/tree/main/pkg/services/ghcrateengine)
 
 :::caution TODO: Add description
 
@@ -373,7 +373,7 @@ mymove/pkg/services
 │   └── shared_test.go
 ```
 
-## [Invoice](https://github.com/transcom/mymove/tree/master/pkg/services/invoice)
+## [Invoice](https://github.com/transcom/mymove/tree/main/pkg/services/invoice)
 
 :::caution TODO: Add description
 
@@ -408,7 +408,7 @@ mymove/pkg/services
 ├── invoice.go
 ```
 
-## [MTO Shipment Updater](https://github.com/transcom/mymove/blob/master/pkg/services/mto_shipment/mto_shipment_updater.go)
+## [MTO Shipment Updater](https://github.com/transcom/mymove/blob/main/pkg/services/mto_shipment/mto_shipment_updater.go)
 
 :::caution TODO: Add description
 
@@ -421,7 +421,7 @@ are important to invoicing. (E.g., `bin` and `cmd` packages. )
 :::
 
 
-[updateShipmentRecord](https://github.com/transcom/mymove/blob/master/pkg/services/mto_shipment/mto_shipment_updater.go#L315) calls [ShipmentRecalculatePaymentRequest](https://github.com/transcom/mymove/blob/master/pkg/services/mto_shipment/mto_shipment_updater.go#L519)
+[updateShipmentRecord](https://github.com/transcom/mymove/blob/main/pkg/services/mto_shipment/mto_shipment_updater.go#L315) calls [ShipmentRecalculatePaymentRequest](https://github.com/transcom/mymove/blob/main/pkg/services/mto_shipment/mto_shipment_updater.go#L519)
 
 ```
 mymove/pkg/services
@@ -431,7 +431,7 @@ mymove/pkg/services
 ├── mto_shipment.go
 ```
 
-## [Payment Request](https://github.com/transcom/mymove/tree/master/pkg/services/payment_request)
+## [Payment Request](https://github.com/transcom/mymove/tree/main/pkg/services/payment_request)
 ```
 mymove/pkg/services
 ├── payment_request
@@ -459,8 +459,8 @@ mymove/pkg/services
 ├── payment_request.go
 ```
 
-## [Reweigh Updater](https://github.com/transcom/mymove/blob/master/pkg/services/reweigh/reweigh_updater.go)
-[doUpdateReweigh](https://github.com/transcom/mymove/blob/master/pkg/services/reweigh/reweigh_updater.go#L58) calls [ShipmentRecalculatePaymentRequest](https://github.com/transcom/mymove/blob/master/pkg/services/reweigh/reweigh_updater.go#L124)
+## [Reweigh Updater](https://github.com/transcom/mymove/blob/main/pkg/services/reweigh/reweigh_updater.go)
+[doUpdateReweigh](https://github.com/transcom/mymove/blob/main/pkg/services/reweigh/reweigh_updater.go#L58) calls [ShipmentRecalculatePaymentRequest](https://github.com/transcom/mymove/blob/main/pkg/services/reweigh/reweigh_updater.go#L124)
 ```
 mymove/pkg/services
 ├── reweigh

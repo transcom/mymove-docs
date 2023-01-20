@@ -5,7 +5,7 @@ another. We also want to be able to have a per request trace id
 associated with a logger so that we can correlate log messages in a
 single request.
 
-See [ADR 0064](https://github.com/transcom/mymove/blob/master/docs/adr/0064-use-stateless-services-with-context.md) for more background.
+See [ADR 0064 Use Stateless Services with Context](/docs/adrs/0064-use-stateless-services-with-context.md) for more background.
 
 The way we achieve that goal is by storing the DB connection, logger, and
 session inside an instance of `appcontext.AppContext`, and requiring all

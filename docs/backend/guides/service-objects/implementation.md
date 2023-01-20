@@ -1094,6 +1094,6 @@ smaller, and well-named private function. We should strive to keep all functions
 readability. The creator was much smaller, so it's not as vital to do that there, but as you can see, the updater is 
 quite large by the end.
 
-[ApproveOrRejectServiceItem](https://github.com/transcom/mymove/blob/master/pkg/services/mto_service_item/mto_service_item_updater.go#L44-L123)
+[ApproveOrRejectServiceItem](https://github.com/transcom/mymove/blob/main/pkg/services/mto_service_item/mto_service_item_updater.go#L44-L123)
 is a good example of a function that performs a lot of actions, and each one is encapsulated in a separate function.
 :::
