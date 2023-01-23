@@ -114,12 +114,34 @@ which makes tests much less flaky!
 ```
 ### Accessing Traces in CircleCI
 
+We run Playwright in [CircleCI using parallelism so the job completes
+faster](https://circleci.com/docs/parallelism-faster-jobs/). This
+means that if there is a test failure, you need to figure out which
+parallel run failed. That run will be red in CircleCI. You can then go
+to the `Artifacts` tab and then find the artifacts for that run.
+
 Unfortunately, [Playwright traces do not load in
-CircleCI](https://github.com/microsoft/playwright/issues/18108). The
-workaround is to download them to your developer machine and then run
+CircleCI](https://github.com/microsoft/playwright/issues/18108). We
+have two workarounds.
+
+#### Complete Archive
+
+The first is that we zip up the entire playwright run (for that
+particular parallel run) in `complete-playwright-report.zip`. Download
+that zip file and unzip it (unless you are using Safari, which will unzip
+it for you automatically). Then you can [view the report](https://playwright.dev/docs/ci-intro#viewing-the-html-report).
 
 ```shell
-playwright show-trace path/to/trace.zip
+yarn playwright show-report path/to/report-folder
+```
+
+#### Individual Trace
+
+The complete report is a bit large, so you could also download the
+trace for just a failing run and view that.
+
+```shell
+yarn playwright show-trace path/to/trace.zip
 ```
 
 Please note that if you use Safari to download the trace file, it will
@@ -129,6 +151,18 @@ Download it with another browser like Chrome or zip it back up
 ```shell
 (cd ~/Downloads && zip -r trace.zip randomhextracegoeshere) && playwright show-trace ~/Downloads/trace.zip
 ```
+
+### Playwright Workers
+
+By default [Playwright runs tests in
+parallel](https://playwright.dev/docs/test-parallel#worker-processes).
+On you local dev machine, it guesses how many workers to use based on
+your CPU. It shows that at the beginning of the run, with something
+like `Running 16 tests using 5 workers`.
+
+If you find you are having test failures locally, try [limiting
+workers](https://playwright.dev/docs/test-parallel#limit-workers) by
+using the `--workers` flag.
 
 ## Testharness in the Support API
 
