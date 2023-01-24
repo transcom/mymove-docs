@@ -24,12 +24,12 @@ Ex: `bp-MB-13507-change-aoa-language`
 
 Ex: `[MB-13507] Changed AOA language for Customer PPM Form`
 
-a) Next, provide the link to your Jira ticket.
-b) Under the “Summary” section, this is where you may add in any special details you believe reviewers should be aware of. For example, explaining why you wrote some code the way you did, why you chose this approach instead of another.
-c) “Setup to Run Your Code”-thankfully there is already boilerplate info there, so no need to touch this section.    
-d) Under “Additional Steps”, this is where you add the steps reviewers need to take to view and check your changes.
-e) The “Verification Steps for Author” section is where you check to ensure your PR is ready for review. (See the **Final Touches** section below for more info on requesting reviewers). 
-f) “Verification Steps for Reviewers”- section for reviewers, don’t touch.
+a) Next, provide the link to your Jira ticket.<br/>
+b) Under the “Summary” section, this is where you may add in any special details you believe reviewers should be aware of. For example, explaining why you wrote some code the way you did, why you chose this approach instead of another.<br/>
+c) “Setup to Run Your Code”-thankfully there is already boilerplate info there, so no need to touch this section.  
+d) Under “Additional Steps”, this is where you add the steps reviewers need to take to view and check your changes.<br/>
+e) The “Verification Steps for Author” section is where you check to ensure your PR is ready for review. (See the **Final Touches** section below for more info on requesting reviewers). <br/>
+f) “Verification Steps for Reviewers”- section for reviewers. Feel free to delete any sections here that are not pertinent to your PR. For ex: if your PR is frontend only, then you can delete the database section.<br/>
 g) “Screenshots”-attach any relevant screenshots. Ex: for Frontend updates, a screenshot that displays the change you made in the app
 
 ## Final Touches :ok_hand:
@@ -43,7 +43,8 @@ a) Under “Reviewers”, select your team from the dropdown. If you are making 
 ![Image showing the reviewers side panel](/img/create_pr/reviewers.png)
 
 At least 1 engineer from your team needs to approve your PR in order for you to merge it in.<br/>
-If you also need design/database review, one person from those teams will need to approve your PR as well. 
+If you also need design/database review, one person from those teams will need to approve your PR as well. <br/>
+**Please note**: Depending on what parts of the code your PR touches, some reviewers will be automatically assigned to the PR. For ex: if your PR is frontend and you have code changes in Storybook or .scss files, the truss-design team will be automatically assigned as a reviewer. 
 
 b) Under “Labels”, select your team name.
 
@@ -94,8 +95,10 @@ Another way of merging your changes is using Mergify.
 
 **Con of using Mergify**
 -   Can take a while, especially if there are multiple merges happening at the same time. Mergify has a queue of jobs that it tries to merge in order so you may be blocked by other merges. Nonetheless, it is very seamless and simple.
+-   Can get "merge happy" and prematurely merge before getting all the necessary reviews and approvals. For ex: it might merge your PR after only getting a design review when your PR needs **both** design and code reviews.<br/>  
+**NOTE**: That is why it is important to only assign the "ready-to-merge" label **AFTER** you know you have gotten all the necessary reviews and approvals for your PR. 
 
-**How to use Mergify**
+### How to use Mergify
 
 a)  Under the “Labels” section on the right, select “ready-to-merge”.
 
