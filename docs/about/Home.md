@@ -3,6 +3,7 @@ id: index
 slug: /about/
 sidebar_position: 1
 ---
+
 # Welcome to the MilMove Wiki!
 
 The intention for this wiki is to share our collective knowledge on best practices and allow everyone working on the DoD MilMove project to write code in compatible styles.
@@ -17,7 +18,7 @@ If you are looking to understand choices made in this project, see the list of
 :::tip Editing Docusaurus
 
 If you are looking to edit or add to this documentation, checkout the page on
-[Using Docusaurus](../tools/docusaurus/docusaurus.md)].
+[Using Docusaurus](../tools/docusaurus/docusaurus.md).
 
 :::
 

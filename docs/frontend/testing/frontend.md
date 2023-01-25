@@ -81,8 +81,12 @@ Historically we have leaned on Browser tests to cover testing our app thoroughly
 
 ### Browser Testing
 
-* We use the [Cypress framework](https://www.cypress.io/) for most browser testing, both with chrome and headless chrome
-* For testing on Windows 10 with IE 11 we have a [testing document](https://docs.google.com/document/d/1j04tGHTBpcdS8RSzlSB-dImLbIxsLpsFlCzZUWxUKxg/edit#)
+* We used to use the [Cypress framework](https://www.cypress.io/) for
+  most browser testing, both with chrome and headless chrome
+* We have now converted to using [Playwright](https://playwright.dev).
+  See also [writing playwright tests for
+  milmove](writing-playwright-tests-for-milmove.md) and the [Convert
+  integration tests to Playwright ADR](../../adrs/0076-use-playwright.md).
 
 ### Storybook Testing
 
