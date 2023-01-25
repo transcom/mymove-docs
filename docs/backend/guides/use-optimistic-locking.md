@@ -194,4 +194,4 @@ You should now be able to update the move task order without getting that pesky
 - [Optimistic concurrency control on Wikipedia](https://en.wikipedia.org/wiki/Optimistic_concurrency_control)
 - [Optimistic Locking in a REST API](https://sookocheff.com/post/api/optimistic-locking-in-a-rest-api/)
 - [ADR 0042: Use If-Match / E-tags for optimistic locking ](https://github.com/transcom/mymove/blob/a0eb0fb0d58f06493f26bff553d78fff5fa1aa86/docs/adr/0042-optimistic-locking.md)
-- [ADR 0049: Do not update child records using parent's E-tag](https://github.com/transcom/mymove/blob/master/docs/adr/0049-etag-for-child-updates.md)
+- [ADR 0049: Do not update child records using parent's E-tag](/docs/adrs/0049-etag-for-child-updates.md)

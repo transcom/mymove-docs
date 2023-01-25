@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Setting up Postman
 
-In addition to using the UI, you can use Postman to hit the [Admin](https://github.com/transcom/mymove/blob/master/swagger/admin.yaml), [Customer](https://github.com/transcom/mymove/blob/master/swagger/internal.yaml), and [Office](https://github.com/transcom/mymove/blob/master/swagger/ghc.yaml) APIs. They require a slightly different setup process from other uses of Postman on the Milmove project (see: [mTLS setup](setup-postman-to-make-mutual-tls-api-calls.md)). 
+In addition to using the UI, you can use Postman to hit the [Admin](https://github.com/transcom/mymove/blob/main/swagger/admin.yaml), [Customer](https://github.com/transcom/mymove/blob/main/swagger/internal.yaml), and [Office](https://github.com/transcom/mymove/blob/main/swagger/ghc.yaml) APIs. They require a slightly different setup process from other uses of Postman on the Milmove project (see: [mTLS setup](setup-postman-to-make-mutual-tls-api-calls.md)). 
 
 In order to set up Postman, you need to have Postman, local server, and local client running.
 
