@@ -1,5 +1,7 @@
 ---
 title: '📄 ADR Template'
+description: |
+    A plain-text description for the ADR that shows up on the ADR page.
 ---
 
 # *[short title of solved problem and solution]*
