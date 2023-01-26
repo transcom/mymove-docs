@@ -2,7 +2,9 @@
 
 ## Configuration
 
-[`analyze-bundle.yml`](https://github.com/transcom/mymove/blob/main/.github/workflows/analyze-bundle.yml)
+```yml reference
+https://github.com/transcom/mymove/blob/main/.github/workflows/analyze-bundle.yml
+```
 
 ## Purpose
 
