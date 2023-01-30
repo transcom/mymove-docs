@@ -2,7 +2,9 @@
 
 ## Configuration
 
-[`auto-approve.yml`](https://github.com/transcom/mymove/blob/main/.github/workflows/auto-approve.yml)
+```yml reference
+https://github.com/transcom/mymove/blob/main/.github/workflows/auto-approve.yml
+```
 
 ## Purpose
 
