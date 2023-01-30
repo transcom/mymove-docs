@@ -71,16 +71,16 @@ Whether or not you already have Homebrew installed, you'll need to make sure it'
 up to date and ready to brew:
 
 ```shell
-SKIP_LOCAL=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press)"
+SKIP_LOCAL=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/monfresh/fresh-brew/main/fresh-press)"
 ```
 
 If you're using the Fish shell, run this command:
 
 ```shell
-SKIP_LOCAL=true bash (curl -fsSL https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press | psub)
+SKIP_LOCAL=true bash (curl -fsSL https://raw.githubusercontent.com/monfresh/fresh-brew/main/fresh-press | psub)
 ```
 
-See the [trussworks/fresh-brew repo](https://github.com/trussworks/fresh-brew)
+See the [monfresh/fresh-brew repo](https://github.com/monfresh/fresh-brew)
 for more information.
 
 #### Setup: Git
@@ -241,7 +241,7 @@ We have scripts that will install all the dependencies for you, as well as confi
 SKIP_CHECKS=true make prereqs
 ```
 
-This will install everything listed in `Brewfile.local`, as well as Docker.
+This will install everything listed in `Brewfile.local`, as well as Docker. (Depending on your machine's configuration, you may need to ensure that `go` is availble on the command line, and that `GOPATH` is a defined system variable. Running the script will output errors if this is the case.)
 
 **Note**: The script might ask you for your macOS password at certain points, like when installing opensc, or when it needs to write to your `/etc/hosts` file.
 
