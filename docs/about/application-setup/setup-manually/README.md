@@ -1,6 +1,6 @@
 ---
 id: Setup Manually
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 ### Setup: Manual
