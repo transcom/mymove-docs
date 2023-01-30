@@ -3,7 +3,7 @@
 ## Configuration
 
 ```yml reference
-https://github.com/transcom/mymove/blob/main/.github/workflows/happo-tests-master.yml
+https://github.com/transcom/mymove/blob/main/.github/workflows/happo-tests-main.yml
 ```
 
 ## Purpose
