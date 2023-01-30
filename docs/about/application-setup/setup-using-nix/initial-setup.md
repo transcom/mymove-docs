@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Nix Initial Setup
 
 1. First read the overview in the

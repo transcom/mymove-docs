@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Install Dependencies
 
 1. Install a few MilMove dependencies:

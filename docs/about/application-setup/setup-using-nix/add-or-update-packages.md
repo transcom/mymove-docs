@@ -1,3 +1,6 @@
+---
+sidebar_position: 4
+---
 # Add or Update Packages
 
 First, you need to find the package you are looking for.
