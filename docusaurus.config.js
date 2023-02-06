@@ -182,6 +182,7 @@ module.exports = {
     ],
   ],
   themes: [
+    '@saucelabs/theme-github-codeblock',
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
