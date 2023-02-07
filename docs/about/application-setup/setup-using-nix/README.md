@@ -1,6 +1,6 @@
 ---
 id: Setup Using Nix
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 If you need help with this setup, you can ask for help in the

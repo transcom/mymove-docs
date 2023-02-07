@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Clean Up Local Environment
 
 This section is only if you had previously set up any of these tools/packages. It is also optional, with the following

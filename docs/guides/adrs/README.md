@@ -8,6 +8,22 @@ read loosely as the more important words are decision records. To get started,
 take a look at [the ADR template](./template.md) and then copy it into
 `docs/adrs/` to make your own.
 
+## Creating ADRs using this repository
+
+For convenience, ADRs can be created using [the Template found in this
+guide](./template.md). You can also create a new ADR file automatically with
+`npm-run` scripts. Run the following command and set name to the dashed name of
+your ADR and the script will create an ADR file for you.
+
+```bash
+npm run new-adr --slug="my-short-and-brief-adr"
+```
+
+This command will create a new file for your ADR with placeholder title and
+description. Make sure you keep these values and the name of the file up to date
+as other ADRs may be added to the repository in the time it takes for your ADR
+to get peer-reviewed and approved.
+
 ## Required file names
 
 ADRs live in the `docs/adrs/` folder. They are automatically generated into
