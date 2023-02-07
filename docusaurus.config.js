@@ -21,6 +21,11 @@ module.exports = {
   organizationName: 'USTransCom',
   projectName: 'mymove-docs',
   themeConfig: {
+    docs: {
+      sidebar: {
+        hideable: true,
+      },
+    },
     navbar: {
       title: 'MilMove Documentation',
       logo: {
