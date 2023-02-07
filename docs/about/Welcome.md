@@ -25,61 +25,6 @@ routed to your `name@truss.works` email automatically. Don't use this for the
 office-side of account creation. It's helpful to use these types of accounts for
 the customer-side accounts.
 
-### Setup: Shared
-
-### Other Possible Setups
-
-The instructions so far have been for getting the project up and running, but focused on the client/customer side.
-There are more things you can set up in the following sections.
-
-#### Setup: Office Local client
-
-1. Ensure that you have a test account which can log into the office site. To load test data, run:
-
-   ```shell
-   make db_dev_e2e_populate
-   ```
-
-1. Run
-
-   ```shell
-   make office_client_run
-   ```
-
-1. Log into "Local Sign In" and either select a pre-made user or use the button to create a new user
-
-#### Setup: Admin Local client
-
-Run
-
-```shell
-make admin_client_run
-```
-
-#### Setup: Orders Gateway
-
-Nothing to do.
-
-#### Setup: Prime API
-
-The API that the Prime will use is authenticated via mutual TSL so there are a few things you need to do to interact
-with it in a local environment.
-
-1. Make sure that the `primelocal` alias is setup for localhost
-   1. Check your `/etc/hosts` file for an entry for `primelocal`.
-2. Run
-
-   ```shell
-   make server_run
-   ```
-
-3. Access the Prime API using the devlocal-mtls certs. There is a script that shows you how to do this with curl
-   at `./scripts/prime-api`. For instance to call the `move-task-orders` endpoint, run
-
-   ```shell
-   ./scripts/prime-api move-task-orders
-   ```
-
 ## Development
 
 ### GoLand
