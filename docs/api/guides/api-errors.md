@@ -61,7 +61,7 @@ Below are the subset of HTTP responses we generate in the Prime API handlers and
 - `404` **Not Found** - When a non-existent resource is requested.
 - `422` **Unprocessable Entity** - Used for validation errors.
 - `409` **Conflict** - When we cannot process the request due to the current state of the server.
-- `412` **Precondition Failed** - When the [optimistic locking](https://github.com/transcom/mymove/blob/master/docs/adr/0042-optimistic-locking.md) precondition is violated because the provided eTag does not match the record.
+- `412` **Precondition Failed** - When the [optimistic locking](/docs/adrs/0042-optimistic-locking.md) precondition is violated because the provided eTag does not match the record.
 
 One special note for Bad Request errors, which is not listed above. `400` **Bad Request** implies that the request is malformed, such as if the body does not parse. Since the request is first parsed by swagger, swagger will return a Bad Request error if it is unable to parse. The handler never gets called unless the request was able to be correctly parsed. Therefore, we should never need to return Bad Request.
 

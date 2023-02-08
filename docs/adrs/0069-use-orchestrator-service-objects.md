@@ -4,7 +4,7 @@ title: 0069 Use orchestrator service objects
 
 # Use orchestrator service objects
 
-**NOTE:** [ADR-0033 Service Object Layer](./0033-service-object-layer.md) is the one that started us on using service
+**NOTE:** [ADR 0033 Service Object Layer](./0033-service-object-layer.md) is the one that started us on using service
 objects. This ADR doesn't supersede it, but it may be helpful to read the other one if you want more background on
 why we use service objects.
 
@@ -12,7 +12,7 @@ why we use service objects.
 
 ### Service Object Background
 
-We introduced service objects in [ADR-0033 Service Object Layer](./0033-service-object-layer.md). We use them to leave
+We introduced service objects in [ADR 0033 Service Object Layer](./0033-service-object-layer.md). We use them to leave
 business logic and database details/transactions out of the handlers. Ideally handlers should only focus on translating
 data from the protocol layer to the service layer and vice-versa. Service objects also allow us to more easily re-use
 business logic across the codebase as needed, including re-using service objects across handlers to keep things

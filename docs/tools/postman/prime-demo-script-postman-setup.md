@@ -43,7 +43,7 @@ We have created a repo in GitHub with postman collections from previous slice de
 
 If you have never set up postman before checkout our instructions for [setting up postman](https://transcom.github.io/mymove-docs/docs/dev/tools/Postman/Setting-Up-Postman).
 ### Creating a Collection from scratch:
-Once you have cloned the `prime_api_deliverable` repo, create a new branch if someone is reviewing your script or just start working directly in master. 
+Once you have cloned the `prime_api_deliverable` repo, create a new branch if someone is reviewing your script or just start working directly in main. 
 Open the file in your favorite text editor. Under the postman folder, create a new folder for our slice demo collection.
 Our naming convention for each slice demo folder is going to be: YYYYMM-slice-demo.
 

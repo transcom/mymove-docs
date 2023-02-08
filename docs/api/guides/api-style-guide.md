@@ -23,7 +23,7 @@ We really need a comprehensive style guide, but in the meanwhile this page will 
 
 ### **Case**
 
-Consistency is important and using mixed cases is confusing. We selected camelCase because it's predominant in the code base and required the least amount of effort to implement. [Decision Record](https://github.com/transcom/mymove/blob/master/docs/adr/0044-params-styling.md)
+Consistency is important and using mixed cases is confusing. We selected camelCase because it's predominant in the code base and required the least amount of effort to implement. [ADR 0044 Params Styling](/docs/adrs/0044-params-styling.md)
 
 * Use camelCase for all API parameters in the body and path.
 
@@ -65,7 +65,7 @@ Consistency is important and using mixed cases is confusing. We selected camelCa
 
 ### **Dates**
 
-* Use Swagger supported date formats, `date-time` or `date`, depending on whether we need to store an exact timestamp of the event. [ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0051-swagger-date-formats.md)
+* Use Swagger supported date formats, `date-time` or `date`, depending on whether we need to store an exact timestamp of the event. [ADR 0051 Swagger Date Formats](/docs/adrs/0051-swagger-date-formats.md)
 
   ```yaml
       requestedPickupDate:
@@ -77,7 +77,7 @@ Consistency is important and using mixed cases is confusing. We selected camelCa
         readOnly: true
   ```
 
-Note that **in the database**, we use the following recommendations. [Decision Record](https://github.com/transcom/mymove/blob/master/docs/adr/0043-prime-time.md)
+Note that **in the database**, we use the following recommendations. [ADR 0043 Prime Time](/docs/adrs/0043-prime-time.md)
 
 * Use timestamps when recording when an action has occurred. Examples include `created_at`, `updated_at`, etc. values
 

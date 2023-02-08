@@ -7,7 +7,7 @@ our Storybook Testing Frontend Testing section.
 [docs-internal-happo]: ../../frontend/testing/frontend.md "More Happo documentation"
 :::
 
-Happo is a UI diff checker tool that helps compare the UI pages from branches to master. When styling changes have been made, Happo notifies that a diff has occured and asks a reviewer to review the Happo changes before allowing the PR to be merged in.
+Happo is a UI diff checker tool that helps compare the UI pages from branches to main. When styling changes have been made, Happo notifies that a diff has occured and asks a reviewer to review the Happo changes before allowing the PR to be merged in.
 
 ## What to do with Happo Errors
 

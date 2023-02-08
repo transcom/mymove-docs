@@ -87,12 +87,12 @@ index 697ffef..30fdcc4 100644
        {
          specs: [
            {
--            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
+-            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml',
 +            spec: '../mymove/swagger/prime.yaml',
              routePath: '/api/prime',
            },
            {
--            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
+-            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/support.yaml',
 +            spec: '../mymove/swagger/support.yaml',
              routePath: '/api/support',
            },

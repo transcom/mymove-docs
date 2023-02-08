@@ -72,7 +72,7 @@ For steps on how to setup AWS creds with Chamber click [here](https://dp3.atlass
 
 ## System Requirements
 
-Click [here](https://github.com/transcom/mymove/blob/master/docs/adr/0016-Browser-Support.md) to view list of supported browsers.
+Click on the link to [ADR 0016 Browser Support](/docs/adrs/0016-Browser-Support.md) to view list of supported browsers.
 
 ## Installing Go using asdf
 
@@ -164,7 +164,7 @@ To launch the standalone Storybook site use the command `make storybook` and it 
 
 ## Reviewing a PR/branch
 
-By default you have a copy of the source code of the `master` branch in your mymove folder.  This is the branch that gets autodeployed to staging when PRs are merged.  This will get out of date fairly quickly as code gets merged frequently.  To update to what is the latest code on GitHub you should run `git fetch` periodically on this branch.
+By default you have a copy of the source code of the `main` branch in your mymove folder.  This is the branch that gets autodeployed to staging when PRs are merged.  This will get out of date fairly quickly as code gets merged frequently.  To update to what is the latest code on GitHub you should run `git fetch` periodically on this branch.
 
 Once you have synced with GitHub you want to switch to the branch of the Pull Request.  The name of the branch is found at the top of the GitHub PR page.
 

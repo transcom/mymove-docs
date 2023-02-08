@@ -59,7 +59,7 @@ RDS IAM authentication is the method of connecting to the database using IAM as 
 
 ### Locally connecting to RDS using IAM authentication
 
-An RDS instance must be configured with IAM authentication before connecting. All RDS in the MilMove environment has this enabled. If wishing to connect to a RDS instance first prepare the infrastructure to allow this with this [guide](https://github.com/transcom/transcom-infrasec-com/blob/master/docs/runbook/0009-accessing-the-db-with-iam.md). Once complete locally milmove server can be ran with the following
+An RDS instance must be configured with IAM authentication before connecting. All RDS in the MilMove environment has this enabled. If wishing to connect to a RDS instance first prepare the infrastructure to allow this with this [guide](https://dp3.atlassian.net/wiki/spaces/MT/pages/1249738774/0009+Accessing+the+DB+with+IAM). Once complete locally milmove server can be ran with the following
 
 ```bash
 /path/to/milmove serve --db-iam --db-iam-role arn:aws:iam::AWSACCOUNT:role/CONNECTROLE  --db-region us-east-2 --db-host RDSURL  --db-ssl-mode verify-full --db-ssl-root-cert bin/rds-ca-2019-root.pem  --db-user db_user
@@ -98,7 +98,7 @@ that is deployed.
 },
 ```
 
-Update the related environment configuration to match. Note that the database user is normally different than `master` as additional configuration is needed to allow a database user to login via IAM. MilMove convention for IAM enabled user is `ecs_user`. Below is a snippet of the [experimental environment config](https://github.com/transcom/mymove/blob/master/config/env/experimental.env):
+Update the related environment configuration to match. Note that the database user is normally different than `main` as additional configuration is needed to allow a database user to login via IAM. MilMove convention for IAM enabled user is `ecs_user`. Below is a snippet of the [experimental environment config](https://github.com/transcom/mymove/blob/master/config/env/experimental.env):
 
 ```ini
 DB_USER=ecs_user
@@ -118,9 +118,9 @@ In the event of a IAM failure it may be desired to revert back to conventional u
    chamber write app-YOURENV db_password NEW_PASSWORD
    ```
 
-1. Update the environment configuration files to disable IAM authentication. Keep in mind the database `user` will need to be set to `master`.
+1. Update the environment configuration files to disable IAM authentication. Keep in mind the database `user` will need to be set to `main`.
 
 1. ```ini
-   DB_USER=master
+   DB_USER=main
    DB_IAM=false
    ```

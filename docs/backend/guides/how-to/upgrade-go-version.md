@@ -84,8 +84,8 @@ go version go1.16.4 darwin/amd64
 
 ## 4. Notify Folks
 
-- It can be jarring when everything suddenly breaks after pulling from master, so it's a nice courtesy to notify folks in #prac-engineering in slack that the official Go version will be updated shortly and their local Go version should be upgraded as well
-- If `circleci-lint` has changed as well, then in-flight PRs will need to be formatted before they are merged, lest they break master
+- It can be jarring when everything suddenly breaks after pulling from main, so it's a nice courtesy to notify folks in #prac-engineering in slack that the official Go version will be updated shortly and their local Go version should be upgraded as well
+- If `circleci-lint` has changed as well, then in-flight PRs will need to be formatted before they are merged, lest they break main
 
 ### Message template
 Below is an example message one can use as a template for their notification to #prac-engineering (credit: Reggie R):

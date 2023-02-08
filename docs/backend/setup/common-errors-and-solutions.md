@@ -11,7 +11,7 @@ Having trouble running mymove locally? This page collects common errors and thei
 ### Invalid migration path 
 
 ```
-2020-08-05T10:41:00.589-0500	INFO	milmove/migrate.go:61	checking migration config	{"git_branch": "master", "git_commit": "c42a3ef9a458e5b9de94fa3507b6c2f43b209856"}
+2020-08-05T10:41:00.589-0500	INFO	milmove/migrate.go:61	checking migration config	{"git_branch": "main", "git_commit": "c42a3ef9a458e5b9de94fa3507b6c2f43b209856"}
 panic: invalid configuration: Expected migrations//secure to be a path in the filesystem: invalid migration path "migrations//secure"
 ```
 

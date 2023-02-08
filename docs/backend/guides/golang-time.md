@@ -102,6 +102,6 @@ func TestMyTimeFunc(t *testing.T) {
 
 The MilMove project has a set of date/calendar utility to help develop and test.
 You can find them in the [dates
-package](https://github.com/transcom/mymove/tree/master/pkg/dates)
+package](https://github.com/transcom/mymove/tree/main/pkg/dates)
 
-For testing, we also have `TestYear` in the [constants package](https://github.com/transcom/mymove/blob/master/pkg/testdatagen/constants.go), which should be used instead of the current year.
+For testing, we also have `TestYear` in the [constants package](https://github.com/transcom/mymove/blob/main/pkg/testdatagen/constants.go), which should be used instead of the current year.

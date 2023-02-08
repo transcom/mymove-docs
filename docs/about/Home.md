@@ -32,4 +32,4 @@ in the LICENSE.md file in this repository.
 
 :::
 
-[gh-adr-readme]: https://github.com/transcom/mymove/tree/master/docs/adr#architectural-decision-log
+[gh-adr-readme]: https://transcom.github.io/mymove-docs/docs/guides/adrs/

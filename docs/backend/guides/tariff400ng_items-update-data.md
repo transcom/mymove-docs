@@ -40,9 +40,9 @@ This basically is overkill (in this scenario) since there was only 1 column copi
 
 * (optional) Or copy and paste row inside your Postgres editor of choice, changing the necessary rows
 
-### Create the [migration](https://github.com/transcom/mymove/blob/master/docs/database.md#migrations)
+### Create the [migration](/docs/backend/setup/database-migrations.md)
 
 ## Source code
 
-* For an HHG (Household Goods) move, the function that computes and creates shipment line items is [`ComputeShipment`](https://github.com/transcom/mymove/blob/master/pkg/rateengine/rateengine.go#L241)
-* For a PPM (Personally Procured Move) move, the function that computes and creates shipment line items is [`computePPM`](https://github.com/transcom/mymove/blob/master/pkg/rateengine/rateengine.go#L84)
+* For an HHG (Household Goods) move, the function that computes and creates shipment line items is [`ComputeShipment`](https://github.com/transcom/mymove/blob/main/pkg/rateengine/rateengine.go#L241)
+* For a PPM (Personally Procured Move) move, the function that computes and creates shipment line items is [`computePPM`](https://github.com/transcom/mymove/blob/main/pkg/rateengine/rateengine.go#L84)

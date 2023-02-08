@@ -80,8 +80,8 @@ about [AppContext and how to use it](/docs/backend/guides/use-stateless-services
 
 Often, the particular model type you are dealing with is passed in as input as well. For our example, we'll have a 
 service object to create a pet and one to update a pet, so we'll need to take in a `models.Pet` type. For updates,
-we'll also need to take in an E-tag per our 
-[optimistic locking ADR](https://github.com/transcom/mymove/blob/master/docs/adr/0042-optimistic-locking.md).
+we'll also need to take in an E-tag per 
+[ADR 0042 Optimistic Locking](/docs/adrs/0042-optimistic-locking.md).
 
 So now our interfaces look like this:
 

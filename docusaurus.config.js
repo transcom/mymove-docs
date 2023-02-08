@@ -163,23 +163,23 @@ module.exports = {
       {
         specs: [
           {
-            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/admin.yaml',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/admin.yaml',
             route: '/api/admin',
           },
           {
-            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/internal.yaml',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/internal.yaml',
             route: '/api/internal',
           },
           {
-            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/ghc.yaml',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/ghc.yaml',
             route: '/api/ghc',
           },
           {
-            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/prime.yaml',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml',
             route: '/api/prime',
           },
           {
-            spec: 'https://raw.githubusercontent.com/transcom/mymove/master/swagger/support.yaml',
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/support.yaml',
             route: '/api/support',
           },
         ],

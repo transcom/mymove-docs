@@ -48,7 +48,7 @@ contact and `subscription` status.
 
 Next, we generate events when they occur in our system, by calling an event package. The event function will collect information that will allow the audit pkg and notifications pkg to assemble the record that they need to store.
 
-Relevant code is in **[pkg/services/event/event.go](https://github.com/transcom/mymove/blob/master/pkg/services/event/event.go)**
+Relevant code is in **[pkg/services/event/event.go](https://github.com/transcom/mymove/blob/main/pkg/services/event/event.go)**
 
 Event struct will contain the following parameters
 
@@ -126,7 +126,7 @@ It will check that the originator of the action was not the same as the prime, t
 
 It will store a record with all relevant information including the payload in the notifications table.
 
-Relevant code is in **[pkg/services/event/notification.go](https://github.com/transcom/mymove/blob/master/pkg/services/event/notification.go)**
+Relevant code is in **[pkg/services/event/notification.go](https://github.com/transcom/mymove/blob/main/pkg/services/event/notification.go)**
 
 ## Send Notifications
 
