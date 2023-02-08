@@ -4,7 +4,7 @@ sidebar_position: 4
 # How we use TanStack Query
 
 :::caution Version information
-The MilMove project uses **TanStack Query v4** for the Frontend applications. Within TanStack Query, we are using the React framework, a combination colloquially known as React Query.
+The MilMove project uses **TanStack Query v4** for the Frontend applications. Within TanStack Query, we are using the React framework, a combination colloquially known as **React Query**.
 :::
 
 :::success Ask in Slack
@@ -39,7 +39,7 @@ On the MilMove project we setup all of our [custom React Query hooks in the same
 file][gh-mymove-hooks-queries], with the exceptions of Mutations. For Mutations
 we create these on a per-page or per-Component basis.
 
-Custom Query Example
+### Custom Query Example
 
 ```js
 export const useNewCustomQueries = (moveCode) => {
@@ -122,7 +122,7 @@ const onSubmit = async () => {
 
 There are some common ["gotchas"](https://tkdodo.eu/blog/mastering-mutations-in-react-query#some-callbacks-might-not-fire) that can cause mutations to not behave as expected. To avoid those issues, logic should be handled in the `useMutation` callback which is called first. UI changes should happen in the `mutate` callback which is called second after the `useMutation` callback. This is handled second so the mutation can complete. If UI changes happen on the `useMutation`, the mutation will prematurely end.
 
-Example of mutation
+#### Example of mutation
 ```js
 
 // Mutation creation
@@ -196,17 +196,22 @@ we get real-user data.
 :::
 ## Testing
 
-In order to test component using React Query, it needs to have a wrapper with an instance of the query client running. <ReactQueryWrapper/> is available in [testing utils](https://github.com/transcom/mymove/blob/main/src/testUtils.jsx) to accomplish that. The wrapper has been added to <MockProviders/>.
+:::note Official documentation
+[Read the official documentation on this here][docs-rq-testing].
+[docs-rq-testing]: https://tanstack.com/query/v4/docs/react/guides/testing
+:::
+
+In order to test component using React Query, it needs to have a wrapper with an instance of the query client running. `ReactQueryWrapper` is available in [testing utils](https://github.com/transcom/mymove/blob/main/src/testUtils.jsx) to accomplish that. The wrapper has been added to `MockProviders`.
 
 ```js
     it('has a React Query wrapper directly', async () => {
-      render(<ShipmentForm  shipmentType={SHIPMENT_OPTIONS.HHG} />, {wrapper: ReactQueryWrapper});
+      render(<ShipmentForm />, {wrapper: ReactQueryWrapper});
     });
 
     it('has a React Query wrapper via Mock Providers', async () => {
       render(
         <MockProviders>
-          <ShipmentForm {...defaultPropsSeparation} shipmentType={SHIPMENT_OPTIONS.HHG} />
+          <ShipmentForm />
         </MockProviders>,
       );
     });
