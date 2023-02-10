@@ -24,16 +24,17 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
    ```
    git clone https://github.com/transcom/mymove-docs.git && cd mymove-docs
    ```
+
 ### With Homebrew
 
 ```shell
-bash <(curl -s https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press)
+bash <(curl -s https://raw.githubusercontent.com/monfresh/fresh-brew/main/fresh-press)
 ```
 
 If you're using the Fish shell, run this command instead:
 
 ```shell
-bash (curl -s https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press | psub)
+bash (curl -s https://raw.githubusercontent.com/monfresh/fresh-brew/main/fresh-press | psub)
 ```
 
 This command will install Homebrew if you don't already have it, or update it
@@ -41,7 +42,7 @@ if you already have it. It will also install or update `git` and the GitHub CLI,
 as well as the dependencies that are specific to this project, as defined in
 `fresh-brew.local` and `Brewfile.local`. Finally, it will launch the MilMove docs
 website for you. Read more about the script by visiting the repo:
-https://github.com/trussworks/fresh-brew.
+https://github.com/monfresh/fresh-brew.
 
 If the script fails, pay attention to any errors or warnings from Homebrew in
 the terminal. Homebrew usually provides detailed instructions for fixing things,
@@ -64,23 +65,25 @@ Alternatively, manually download them from:
 If you see this, follow the instructions, then quit and restart your terminal
 once the Command Line Tools are installed, and run the setup script above again.
 
-
 ### With Nix
 
 1. Install or update Homebrew using the same script as in the previous section,
-but without running the `*.local` scripts:
+   but without running the `*.local` scripts:
+
 ```shell
 export SKIP_LOCAL=true
-bash <(curl -s https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press)
+bash <(curl -s https://raw.githubusercontent.com/monfresh/fresh-brew/main/fresh-press)
 ```
 
 For Fish shell:
+
 ```shell
 export SKIP_LOCAL=true
-bash (curl -s https://raw.githubusercontent.com/trussworks/fresh-brew/main/fresh-press | psub)
+bash (curl -s https://raw.githubusercontent.com/monfresh/fresh-brew/main/fresh-press | psub)
 ```
 
 1. Install Nix if you don't already have it:
+
 ```
 sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume --no-daemon
 ```
