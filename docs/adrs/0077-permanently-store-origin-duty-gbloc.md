@@ -24,6 +24,14 @@ USTC needs to be able to access the historical data for moves.
 * View tables are not transferred to data warehouse. USTC needs the duty location GBLOC data warehoused.
 * The `origin_duty_location_to_gbloc` does not handle GBLOC outliers, such as USMC logic, leading to [incorrect data](https://dp3.atlassian.net/browse/MB-15143) :lock:.
 
+### Important distinction to note:
+In addition to `origin_duty_location_to_gbloc`, there is another view for `move_to_gbloc`. This is used to fetch the Shipment GBLOC, which is based
+on the origin address of the first shipment in a move. The Shipment GBLOC and Origin Duty Location GBLOC are both fetched, and the API manages the logic
+for which GBLOC to select to route the move to the correct queue. 
+
+For the purpose of the current requirement, the `move_to_gbloc` view will remain in place, and the routing logic in the API will not be changed. The primary change
+will be in storing the origin duty location GBLOC when an MTO is created, and query the stored origin duty location GBLOC.
+
 ## Decision Drivers
 
 * Complexity and impact of refactor
