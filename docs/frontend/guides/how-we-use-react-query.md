@@ -37,26 +37,62 @@ functionality can also be achieved locally using command-line tools such as
 
 On the MilMove project we setup all of our [custom React Query hooks in the same
 file][gh-mymove-hooks-queries], with the exceptions of Mutations. For Mutations
-we create these on a per-page or per-Component basis.
+we create these on a per-page or per-Component basis. 
+```js title="src/hooks/queries.js"
+export const useNewCustomQueries = (moveCode) => {
+    const { data: move, ...moveQuery } = useQuery({ 
+    queryKey: [KEY, moveCode],
+    queryFn: ({ queryKey }) => getMove(...queryKey),
+    });
+    const { isLoading, isError, isSuccess } = getQueriesStatus([movesQuery]);
+    return {move,orders,isLoading, isError,isSuccess,};
+};
+```
+When writing a custom query, you can choose to spread the queryKeys to the query function.
+```js title="src/hooks/queries.js"
+export const useNewCustomQueries = (moveCode) => {
+    const { data: move, ...moveQuery } = useQuery({ 
+    queryKey: [KEY, moveCode],
+    // highlight-next-line
+    queryFn: ({ queryKey }) => getMove(...queryKey)});
 
-### Custom Query Example
+    const { isLoading, isError, isSuccess } = getQueriesStatus([movesQuery]);
+    return {move,orders,isLoading, isError,isSuccess,};
+};
+
+```
+Or you can pass only the queryKey need for the api call.
+
+```js title="src/hooks/queries.js"
+export const useNewCustomQueries = (moveCode) => {
+    const { data: move, ...moveQuery } = useQuery({ 
+    queryKey: [KEY, moveCode],
+    // highlight-next-line
+    queryFn: ({ queryKey }) => getMove(queryKey[1]),
+    });
+    
+    const { isLoading, isError, isSuccess } = getQueriesStatus([movesQuery, ordersQuery]);
+    return {move,orders,isLoading, isError,isSuccess,};
+};
+
+```
+Multiple queries can be in the same custom Query. If the one query has a dependency based on another query'ss data, setting the `enabled` key with the needed value will paused the query while that value is undefined.
 
 ```js title="src/hooks/queries.js"
 export const useNewCustomQueries = (moveCode) => {
     // First query
     const { data: move, ...moveQuery } = useQuery({ 
     queryKey: [KEY, moveCode],
-    // You can choose to spread all the query keys or only send the ones needed for the api call
     queryFn: ({ queryKey }) => getMove(...queryKey),
     });
+
     const orderId = move?.ordersId;
     
     // Second Query
     const { data: order, ...ordersQuery } = useQuery({ 
     queryKey: [KEY, moveId],
-    // You can choose to spread all the query keys or only send the ones needed for the api call
     queryFn: ({ queryKey }) => getOrders(queryKey[1]),
-    // Will not execute this query until orderId id defined
+    // highlight-next-line
     enabled: !!orderId
     });
 
@@ -64,7 +100,7 @@ export const useNewCustomQueries = (moveCode) => {
     const { isLoading, isError, isSuccess } = getQueriesStatus([movesQuery, ordersQuery]);
     return {
     move,
-    orders,
+    order,
     isLoading,
     isError,
     isSuccess,
@@ -95,10 +131,15 @@ There are some common ["gotchas"](https://tkdodo.eu/blog/mastering-mutations-in-
 
 #### Mutate functions
 
-There are two mutation functions, `mutate` or `mutateAsync`. The `mutate` function does not return anything and utilizes React Query's built in error handling. The `mutateAsync` function returns a promise but requires manual error handling. Preference is given to using the `mutate` function because errors are handled.
+:::tip TDLR;
+Preference is given to using the `mutate` function because errors are handled by React Query.
+:::
+
+There are two mutation functions, `mutate` or `mutateAsync`. The `mutate` function does not return anything and utilizes React Query's built in error handling. However there still access to the mutated data via React Query's callbacks.
 
 ```js 
-/// mutate syntax
+import { useMutation } from '@tanstack/react-query'
+
 const {mutate: myMutation } = useMutation({mutateFn: functionToBeCalled});
 
 const onSubmit = () => {
@@ -109,8 +150,13 @@ const onSubmit = () => {
         }
     })
 }
+```
 
-// mutateAsync syntax
+The `mutateAsync` function returns a promise but requires manual error handling.
+
+```js 
+import { useMutation } from '@tanstack/react-query'
+
 const {mutateAsync: myAsyncMutation } = useMutation({mutateFn: functionToBeCalled});
 
 const onSubmit = async () => {
@@ -125,21 +171,17 @@ const onSubmit = async () => {
 }
 ```
 #### Mutation callbacks
- Callbacks maybe not fire as expected. To avoid that issue, logic should be handled in the `useMutation` callback which is called first. UI changes should happen in the `mutate` callback which is called second after the `useMutation` callback. This is handled second so the mutation can complete. 
- 
- If UI changes, such navigating to a new page, happen on the `useMutation` callback, the mutation will prematurely end. In this codebase, the mutation is often created in a different component that where mutate function is called.
+:::info Note
+ In this codebase, the mutation is often created in a different component that where mutate function is called.
+:::
 
- Please note that in this codebase, the mutation is often created in a different component that where mutate function is called.
-
-##### Example of mutation
-```jsx title="src/components/Office/EditComponentDetails.jsx"
+ Callbacks maybe not fire as expected. To avoid that issue, logic should be handled in the `useMutation` callback which is called first. 
+ ```jsx title="src/components/Office/EditComponentDetails.jsx"
 
 import {useQueryClient} from '@tanstack/react-query'
 
-// Access query client in order to interact with the cache
-const queryClient = useQueryClient()
+const queryClient = useQueryClient();
 
-// Mutation creation
 const { mutate: myNewMutation } = useMutation(
     {
    mutationFn: functionToBeCalled ,
@@ -153,12 +195,13 @@ const { mutate: myNewMutation } = useMutation(
         }
     });
 ```
+UI changes should happen in the `mutate` callback which is called second after the `useMutation` callback. This is handled second so the mutation can complete. 
+
 ```jsx title="src/components/Office/ComponentForm.jsx"
 
 const ComponentForm = ({myNewMutation}) => {
 
 const onSubmit = () => {
-    // Mutation call
     myNewMutation(
         variables,
         // Second callback
@@ -172,6 +215,11 @@ const onSubmit = () => {
             }
 
 ```
+
+ If UI changes, such navigating to a new page, happen on the `useMutation` callback, the mutation will prematurely end. In this codebase, the mutation is often created in a different component that where mutate function is called.
+
+
+
 
 [gh-mymove-use-mutation]: https://github.com/transcom/mymove/search?l=JavaScript&q=%22useMutation%28%22
 
@@ -191,16 +239,14 @@ data for related Entities as well.
 
 import {useQueryClient} from '@tanstack/react-query'
 
-// Access query client in order to interact with the cache
 const queryClient = useQueryClient()
 
 const {mutate: myMutation } = useMutation({
     mutateFn: functionToBeCalled,
     onSuccess: () => {
-        // invalidate the query after the mutation
-        queryClient.invalidateQueries({
-            queryKey: [KEY_1, KEY_2]
-        })
+        // highlight-next-line 
+        queryClient.invalidateQueries({queryKey: [KEY_1, KEY_2]})
+
     }
 });
 
@@ -216,9 +262,28 @@ const {mutate: myMutation } = useMutation({
 :::
 
 :::info About Query Cache
-Currently, we access the Query cache via the QueryClient. This is mostly used to invalidate and refetch queries. In the future, we have the ability to do Query Cache for the React Query when
+Currently, we access the Query cache via the QueryClient using the `useQueryClient` hook. This is mostly used to invalidate and refetch queries.  In the future, we have the ability to do Query Cache for the React Query when
 we get real-user data.
 :::
+
+```js
+
+import {useQueryClient} from '@tanstack/react-query'
+
+        // highlight-next-line 
+const queryClient = useQueryClient()
+
+const {mutate: myMutation } = useMutation({
+    mutateFn: functionToBeCalled,
+    onSuccess: () => {
+        queryClient.invalidateQueries({queryKey: [KEY_1, KEY_2]})
+
+    }
+});
+
+```
+
+
 ## Testing
 
 :::note Official documentation
@@ -226,7 +291,7 @@ we get real-user data.
 [docs-rq-testing]: https://tanstack.com/query/v4/docs/react/guides/testing
 :::
 
-In order to test component using React Query, it needs to have a wrapper with an instance of the query client running. `ReactQueryWrapper` is available in [testing utils](https://github.com/transcom/mymove/blob/main/src/testUtils.jsx) to accomplish that. The wrapper has been added to `MockProviders`.
+In order to test component using React Query, it needs to have a wrapper with an instance of the query client running. `ReactQueryWrapper` is available in [testing utils](https://github.com/transcom/mymove/blob/main/src/testUtils.jsx) to accomplish that. The wrapper has been added to `MockProviders` also in the testing utils.
 
 ```js
     it('has a React Query wrapper directly', async () => {
