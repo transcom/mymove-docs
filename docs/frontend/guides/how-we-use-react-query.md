@@ -41,7 +41,7 @@ we create these on a per-page or per-Component basis.
 
 ### Custom Query Example
 
-```js
+```js title="src/hooks/queries.js"
 export const useNewCustomQueries = (moveCode) => {
     // First query
     const { data: move, ...moveQuery } = useQuery({ 
@@ -90,9 +90,14 @@ shown on that Component or Page.
 
 ### Writing Mutations
 
+There are some common ["gotchas"](https://tkdodo.eu/blog/mastering-mutations-in-react-query#common-gotchase) that can cause mutations to not behave as expected. To avoid those issues, the examples below give examples of best practices to follow in order for mutations to work consistently. These preferences were influenced by methods recommended by the maintainers of React Query.
+
+
+#### Mutate functions
+
 There are two mutation functions, `mutate` or `mutateAsync`. The `mutate` function does not return anything and utilizes React Query's built in error handling. The `mutateAsync` function returns a promise but requires manual error handling. Preference is given to using the `mutate` function because errors are handled.
 
-```js
+```js 
 /// mutate syntax
 const {mutate: myMutation } = useMutation({mutateFn: functionToBeCalled});
 
@@ -119,11 +124,20 @@ const onSubmit = async () => {
     }
 }
 ```
+#### Mutation callbacks
+ Callbacks maybe not fire as expected. To avoid that issue, logic should be handled in the `useMutation` callback which is called first. UI changes should happen in the `mutate` callback which is called second after the `useMutation` callback. This is handled second so the mutation can complete. 
+ 
+ If UI changes, such navigating to a new page, happen on the `useMutation` callback, the mutation will prematurely end. In this codebase, the mutation is often created in a different component that where mutate function is called.
 
-There are some common ["gotchas"](https://tkdodo.eu/blog/mastering-mutations-in-react-query#some-callbacks-might-not-fire) that can cause mutations to not behave as expected. To avoid those issues, logic should be handled in the `useMutation` callback which is called first. UI changes should happen in the `mutate` callback which is called second after the `useMutation` callback. This is handled second so the mutation can complete. If UI changes happen on the `useMutation`, the mutation will prematurely end.
+ Please note that in this codebase, the mutation is often created in a different component that where mutate function is called.
 
-#### Example of mutation
-```js
+##### Example of mutation
+```jsx title="src/components/Office/EditComponentDetails.jsx"
+
+import {useQueryClient} from '@tanstack/react-query'
+
+// Access query client in order to interact with the cache
+const queryClient = useQueryClient()
 
 // Mutation creation
 const { mutate: myNewMutation } = useMutation(
@@ -138,15 +152,24 @@ const { mutate: myNewMutation } = useMutation(
         console.log('Error handling');
         }
     });
+```
+```jsx title="src/components/Office/ComponentForm.jsx"
 
-// Mutation call
-myNewMutation(
-    variables,
-    // Second callback
-    {
-        onSuccess: () => { console.log('Where UI changes should happen') },
-        onError: () => console.log('Error handling UI');
-    });
+const ComponentForm = ({myNewMutation}) => {
+
+const onSubmit = () => {
+    // Mutation call
+    myNewMutation(
+        variables,
+        // Second callback
+        {
+            onSuccess: () => { console.log('Where UI changes should happen') },
+            onError: () => console.log('Error handling  UI'),
+        });
+    }
+
+    return (<Formik onSubmit={onSubmit}/>)
+            }
 
 ```
 
@@ -165,6 +188,8 @@ data related to the Entity that you're updating. Make sure you also fetch new
 data for related Entities as well.
 
 ```js
+
+import {useQueryClient} from '@tanstack/react-query'
 
 // Access query client in order to interact with the cache
 const queryClient = useQueryClient()
