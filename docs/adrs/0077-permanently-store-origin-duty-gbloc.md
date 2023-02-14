@@ -11,7 +11,7 @@ description: |
 ## Problem Statement
 
 In our current database structure, GBLOCs are stored in the `postal_code_to_gblocs` as a one-to-many value - one GBLOC can 
-represent many postal codes - and MTOs associate to GBLOCs using the `origin_duty_location_to_gbloc` view.
+represent many postal codes - and move origin duty locations associate to GBLOCs using the `origin_duty_location_to_gbloc` view.
 The view queries the `postal_code_to_gblocs` table on every read to fetch the GBLOC associated with the origin postal code on the
 MTO while having the benefit of behaving like a table that can be joined in other queries.
 
@@ -51,6 +51,7 @@ will be in storing the origin duty location GBLOC when an MTO is created, and qu
 > **bold denotes chosen**
 
 * *Do nothing*
+* *Surface Origin GBLOC data in History & Audit Log*
 * *Add a column to the orders table*
 * *Store the Origin Duty Location GBLOC in a join table*
 
@@ -60,12 +61,10 @@ will be in storing the origin duty location GBLOC when an MTO is created, and qu
 * Chosen Alternative: *TBD*
 * Positive Outcomes: 
   * Eliminate relying on a view for frequently accessed data
-  * Maintain historical data on origin duty location GBLOCs
+  * Provides a direct link from an orders record to its GBLOC, which would flow to warehouse
 * Consequences: 
   * Event triggers will need to be added/maintained for history and audit logging purposes
-  * Will require coordination with team managing the warehouse integration
 * Other considerations:
-  * :musical_note: How do you solve a problem like USMC? :musical_note:
   * Data backfill will need to be addressed
 
 ## Pros and Cons of the Alternatives
@@ -74,7 +73,23 @@ will be in storing the origin duty location GBLOC when an MTO is created, and qu
 Continue using the views as we currently are, and address existing bugs and edge cases as needed.
 
 * `+` *There's no work to be done so teams can focus on other work.*
-* `-` *GBLOC data remains dynamic and no historical data is warehoused*
+* `+` *No data backfill required*
+* `-` *GBLOC data remains dynamic and no view data is warehoused*
+* `-` If Postal code to GBLOC relationship changes in the future, there is no historical record in MilMove
+of what the GBLOC was at the time of the move.
+
+### *Surface Origin Duty Location GBLOC data in History & Audit Log*
+Continue using the views as we currently do, address existing bugs and edge cases as needed, but 
+visually display GBLOC data in the history and audit log alongside the duty location data.
+
+* `+` *No significant changes means lower level of impact*
+  * `+` Could be a "quick win"
+* `+` *Client can see visual reference to a move's GBLOC*
+* `+` *No data backfill required*
+* `-` *Adds another join to the move history fetcher SQL query*
+* `-` *GBLOC data remains dynamic and no view data is warehoused*
+* `-` If Postal code to GBLOC relationship changes in the future, there is no historical record in MilMove
+of what the GBLOC was at the time of the move.
 
 ### *Add a column to the orders table*
 Reintroduce the `gbloc` column to the `orders` table. This column was included when the table was originally created,
@@ -83,16 +98,16 @@ but later dropped in favor of using the view to fetch the origin duty location G
 * `+` *Single column to add*
 * `+` *Reduces the number of joins when querying for move task orders.*
 * `+` *Eliminates the need for the `origin_duty_location_to_gbloc` view and associated models, potential positive performance impact.*
-* `-` *Likely introduces breaking changes to warehouse integration.*
-  * `-` Would require coordination with team responsible for data warehouse integration.
+* `-` *Backfill data will need to be generated*
+* `-` *Will require DB trigger update/maintenence to be incorporated into the history & audit log*
 
 ### *Store the Origin Duty Location GBLOC in a join table*
 
 * `+` *Easily duplicate the expected data output of the existing `origin_duty_location_to_gbloc` view.*
   * `+` Lower impact on existing API
   * `+` Faster implementation
-* `+` *Would not introduce breaking changes to data warehouse integration*
-  * `-` Would still eventually need to be added to the data warehouse integration.
 * `-` *A new table adds to DB maintenence load*
 * `-` *Pattern of duplicating expected data output is outside of relational DB design best practices*
   * Note that the current GBLOC db design does not lend itself to a pefect solution in this requirement.
+* `-` *Backfill data will need to be generated*
+* `-` *Will require DB trigger update/maintenence to be incorporated into the history & audit log*
