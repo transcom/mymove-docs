@@ -1,7 +1,7 @@
 ---
 title: 0077 Permanently store Origin Duty Location GBLOC
 description: |
-  Decision outcome: [TBD]
+  Decision outcome: Add a column to the orders table for Origin Duty Location GBLOC
 ---
 
 # Permanently Store the Origin Duty Location GBLOC
@@ -52,18 +52,18 @@ will be in storing the origin duty location GBLOC when an MTO is created, and qu
 
 * *Do nothing*
 * *Surface Origin GBLOC data in History & Audit Log*
-* *Add a column to the orders table*
+* **Add a column to the orders table**
 * *Store the Origin Duty Location GBLOC in a join table*
 
 ## Decision Outcome
 
 <!-- * Chosen Alternative:  -->
-* Chosen Alternative: *TBD*
+* Chosen Alternative: *Add a column to the orders table*
 * Positive Outcomes: 
   * Eliminate relying on a view for frequently accessed data
   * Provides a direct link from an orders record to its GBLOC, which would flow to warehouse
 * Consequences: 
-  * Event triggers will need to be added/maintained for history and audit logging purposes
+  * Event triggers will need to be updated for history and audit logging purposes
 * Other considerations:
   * Data backfill will need to be addressed
 
@@ -99,6 +99,7 @@ but later dropped in favor of using the view to fetch the origin duty location G
 * `+` *Reduces the number of joins when querying for move task orders.*
 * `+` *Eliminates the need for the `origin_duty_location_to_gbloc` view and associated models, potential positive performance impact.*
 * `-` *Backfill data will need to be generated*
+  * `+` We can leverage the SQL query currently used for the `origin_duty_location_to_gbloc` view to backfill data
 * `-` *Will require DB trigger update/maintenence to be incorporated into the history & audit log*
 
 ### *Store the Origin Duty Location GBLOC in a join table*
