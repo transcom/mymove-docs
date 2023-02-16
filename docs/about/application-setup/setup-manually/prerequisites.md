@@ -6,7 +6,7 @@ We have scripts that will install all the dependencies for you, as well as confi
 SKIP_CHECKS=true make prereqs
 ```
 
-This will install everything listed in `Brewfile.local`, as well as Docker.
+This will install everything listed in `Brewfile.local`, as well as Docker. (Depending on your machine's configuration, you may need to ensure that `go` is availble on the command line, and that `GOPATH` is a defined system variable. Running the script will output errors if this is the case.)
 
 :::note
 The script might ask you for your macOS password at certain points, like when installing opensc, or when it needs to write to your `/etc/hosts` file.
