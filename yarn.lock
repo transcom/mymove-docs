@@ -1563,18 +1563,10 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
 
-"@docusaurus/theme-translations@2.3.1":
+"@docusaurus/theme-translations@2.3.1", "@docusaurus/theme-translations@^2.0.0-rc.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@docusaurus/theme-translations/-/theme-translations-2.3.1.tgz#b2b1ecc00a737881b5bfabc19f90b20f0fe02bb3"
   integrity sha512-BsBZzAewJabVhoGG1Ij2u4pMS3MPW6gZ6sS4pc+Y7czevRpzxoFNJXRtQDVGe7mOpv/MmRmqg4owDK+lcOTCVQ==
-  dependencies:
-    fs-extra "^10.1.0"
-    tslib "^2.4.0"
-
-"@docusaurus/theme-translations@^2.0.0-rc.1":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@docusaurus/theme-translations/-/theme-translations-2.2.0.tgz#5fbd4693679806f80c26eeae1381e1f2c23d83e7"
-  integrity sha512-3T140AG11OjJrtKlY4pMZ5BzbGRDjNs2co5hJ6uYJG1bVWlhcaFGqkaZ5lCgKflaNHD7UHBHU9Ec5f69jTdd6w==
   dependencies:
     fs-extra "^10.1.0"
     tslib "^2.4.0"
@@ -1641,10 +1633,10 @@
     cssesc "^3.0.0"
     immediate "^3.2.3"
 
-"@easyops-cn/docusaurus-search-local@^0.33.6":
-  version "0.33.6"
-  resolved "https://registry.yarnpkg.com/@easyops-cn/docusaurus-search-local/-/docusaurus-search-local-0.33.6.tgz#89850191ada74b372e4379cb0d2caac39bc78ba5"
-  integrity sha512-3UqsJ42akhHDSlW9SravWQF5ZUI5VEKlzt50djbRRjDdJGefe1v9FpBKVdqHtPPFefcJoagtpfK4/R3dtDeEhw==
+"@easyops-cn/docusaurus-search-local@^0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@easyops-cn/docusaurus-search-local/-/docusaurus-search-local-0.34.0.tgz#a459e5df9094b57a464631db9d3cd850019589c9"
+  integrity sha512-yxEbX6xEAF9+OS305jzUPf53TD3y1VHKyFaBE31XHzy8zs++cRGBACYm9nhJmCrA0n/JjMNq65NyVHkuTaEpMw==
   dependencies:
     "@docusaurus/plugin-content-docs" "^2.0.0-rc.1"
     "@docusaurus/theme-translations" "^2.0.0-rc.1"
