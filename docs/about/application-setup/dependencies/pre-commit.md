@@ -36,27 +36,6 @@ or
 make server_generate client_deps && pre-commit run -a
 ```
 
-## Pre-Commit Troubleshooting (Manual): Process hanging on install hooks
+## Troubleshooting pre-commit issues
 
-If any pre-commit commands (or `make deps`) result in hanging or incomplete
-installation, remove the pre-commit cache and the `.client_deps.stamp` and try again:
-
-```shell
-rm -rf ~/.cache/pre-commit
-rm .client_deps.stamp
-```
-
-## Pre-Commit Troubleshooting (Nix): SSL: CERTIFICATE VERIFY FAILED
-
-This can happen because of the way certs need to be handled in this project and `nix`. To get around this issue, you
-can try running:
-
-```shell
-NIX_SSL_CERT_FILE=$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt <pre-commit related command>
-```
-
-E.g.
-
-```shell
-NIX_SSL_CERT_FILE=$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt pre-commit install-hooks
-```
+[Troubleshoot Precommit Hook Failures](../../../guides/troubleshoot-precommit-hook-failures.md)
