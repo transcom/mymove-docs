@@ -34,7 +34,7 @@ $ pre-commit install-hooks
 [INFO] Once installed this environment will be reused.
 [INFO] This may take a few minutes...
 ```
-#### Solution
+#### Solution 1
 For this error you may need to set your global nodenv version
 
 Check the current versions,
@@ -55,6 +55,13 @@ Then inside mymove,
 ~/mymove$ pre-commit install-hooks
 ```
 
+#### Solution 2
+If the above solution does not work, and running the above still results in a hanging or incomplete installation, remove the pre-commit cache and the `.client_deps.stamp` and try again
+
+```shell
+rm -rf ~/.cache/pre-commit
+rm .client_deps.stamp
+```
 
 ### 2. Golang-ci Error: “no go files to analyze”
 For an error about context loading failing, clean your precommit cache.
@@ -129,3 +136,20 @@ Can't run linter goanalysis_metalinter: assign: failed prerequisites: inspect@gi
 ```
 #### Solution
 This could be due to the build failing. Try `make server_build` to check.
+
+#### Nix Error: SSL Certificate verify failed
+
+This can happen because of the way certs need to be handled in this project and `nix`. 
+
+#### Solution
+To get around this issue, you can try running:
+
+```shell
+NIX_SSL_CERT_FILE=$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt <pre-commit related command>
+```
+
+E.g.
+
+```shell
+NIX_SSL_CERT_FILE=$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt pre-commit install-hooks
+```
