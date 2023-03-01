@@ -38,4 +38,4 @@ make server_generate client_deps && pre-commit run -a
 
 ## Troubleshooting pre-commit issues
 
-[Troubleshoot Precommit Hook Failures](../../../guides/troubleshoot-precommit-hook-failures.md)
+[Troubleshoot Precommit Hook Failures](/docs/backend/guides/troubleshoot-precommit-hook-failures.md)
