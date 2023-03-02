@@ -8,7 +8,7 @@ sidebar_position: 2
 This page is out-of-date! Please reach out in [#c-documentation][slack-c-doc] 🔒
 to discuss how best to update this page.
 
-[slack-c-doc]: (https://ustcdp3.slack.com/archives/C027BDJ4678)
+[slack-c-doc]: https://ustcdp3.slack.com/archives/C027BDJ4678
 
 :::
 
