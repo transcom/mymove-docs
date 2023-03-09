@@ -361,9 +361,8 @@ pluralization can be complicated). So, we require a `TableName` method on quite 
 
 Also, note this about the `TableName` method per
 [Pop's documentation](https://gobuffalo.io/documentation/database/models/#using-a-custom-table-name):
-```
-It is recommended to use a value receiver over a pointer receiver if the struct is used as a value anywhere in the code.
-```
+>It is recommended to use a value receiver over a pointer receiver if the struct is used as a value anywhere in the code.
+
 We have run into problems using a pointer receiver for `TableName`, perhpas due to the fact that Pop often treats
 models internally as type `interface{}` in its algorithms, and an
 [interface doesn't play well with pointer receivers](https://stackoverflow.com/questions/40823315/x-does-not-implement-y-method-has-a-pointer-receiver).
