@@ -52,11 +52,11 @@ go version go1.16.4 darwin/amd64
 
 - After your Docker image PR lands, grab the git hash from [Docker](https://hub.docker.com/r/milmove/circleci-docker) that corresponds with your merged code.
 - Update files with the updated Docker image tag hash and/or Go version:
-  - [Example PR](https://github.com/transcom/mymove/pull/9423)
+  - [Example PR](https://github.com/transcom/mymove/pull/10185)
   - Update the Go version number in:
-    - `README.md` (there's a path in the nix section that references a go version number)
     - `.go-version`
     - `.tool-versions`
+    - `go-version` in `.github/workflows/go-auto-approve.yml`
   - Update the Docker image tag hash in:
     - `.circleci/config.yml`
     - `Dockerfile.local`
@@ -67,15 +67,13 @@ go version go1.16.4 darwin/amd64
     - `Dockerfile.webhook_client`
     - `Dockerfile.webhook_client_dp3`
     - `Dockerfile.webhook_client_local`
-    - `scripts/run-e2e-mtls-test-docker`
-    - `scripts/run-e2e-test-docker`
     - `Makefile` (in the `docker_circleci` target)
 - If you use `asdf` to manage your local Go version, you still need to update the nix package in `nix/default.nix` - use the [package search](https://ahobson.github.io/nix-package-search) to find the hash
 - If the major/minor version changed (the first or second number, e.g. 1.x.y to 2.x.y or 1.15.x to 1.16.x):
-  - [Example PR](https://github.com/transcom/mymove/pull/4990)
+  - [Example PR](https://github.com/transcom/mymove/pull/10185)
   - Update the following files with the new go version:
-    - `go-version` in `.github/workflows/go-auto-approve.yml`
     - `go.mod`
+  - You may have to update the `golangci-lint` pre-commit hook version found in `.pre-commit-config.yaml` to one that supports the new Go version
 - Rerun the Go formatter on the codebase with `pre-commit run --all-files golangci-lint`
 - Regenerate mocks (in case the signatures have changed that we're mocking): `make mocks_generate`
 - Run `make e2e_test_docker` to test that the `Dockerfile.*local` files work  with the new image.
