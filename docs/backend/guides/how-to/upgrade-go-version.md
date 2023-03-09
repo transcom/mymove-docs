@@ -22,6 +22,10 @@ Upgrading the Go version that we use happens in roughly these steps:
 - You may want to hold off merging this `circleci-docker` PR until just before you're about to land the corresponding PR for the `transcom/mymove` repo.
   - You can use the PR's hash to test, then merge and switch to the `main` hash after all testing/checks/approvals are done.
   - This keeps others who may be doing `circleci-docker` work from prematurely using the updated Go container before the necessary Go-related changes have landed in `transcom/mymove`.
+- Keep in mind that others may have merged things into the `main` branch on `circleci-docker` that haven't been
+deployed yet in a MilMove build. Carefully examine the diffs since the last used hash and see if any look like
+they could have an impact and test accordingly (including an experimental deploy if warranted such as when a base
+Docker image has changed).
 
 ## 2. Upgrade Local Go Version
 
