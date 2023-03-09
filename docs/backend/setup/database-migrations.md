@@ -337,6 +337,11 @@ type Pet struct {
     Cat       *Cat        `has_one:"cats" fk_id:"pet_id"`
 }
 
+// TableName overrides the table name used by Pop.
+func (p Pet) TableName() string {
+	return "pets"
+}
+
 // Pets is a list of Pets
 type Pets []Pet
 ```
@@ -344,20 +349,24 @@ type Pets []Pet
 Note that this is similar to the `Pet` field on the `Cat` model in that it is purely a nice feature that `Pop` lets 
 us use to more easily go across relationships.
 
-#### Model/Table Names With Acronyms
+#### TableName method
 
-If your model/table name has an acronym in it, e.g. `PPMShipment`/`ppm_shipments`, you will need to define a receiver 
-function called `TableName` for the model struct that helps `Pop` know what the table name should be. An example is our 
-[`PPMShipment` model's receiver function](https://github.com/transcom/mymove/blob/9c2a281dbd777b77064c1ae563531a3f0c7bf9d0/pkg/models/ppm_shipment.go#L62-L65):
+[Pop's `TableName` method](https://gobuffalo.io/documentation/database/models/#using-a-custom-table-name) above is
+technically optional. If you don't include it, Pop will attempt to guess the table  name by parsing the model's name
+into words separated by underscores and then making that plural. However, in practice we've found that algorithm does
+not work the way we would like with acronyms (like `PPMShipment`) or with some  attempts at pluralization (since
+pluralization can be complicated). So, we require a `TableName` method on quite a few models. Rather than put
+`TableName` on selected models and rely on Pop's automatic table name determination for the others, we now include
+`TableName` on *all* models for consistency and resiliency to future changes in the table name algorithm.
 
-```go
-// TableName overrides the table name used by Pop. By default it tries using the name `ppmshipments`.
-func (p PPMShipment) TableName() string {
-	return "ppm_shipments"
-}
+Also, note this about the `TableName` method per
+[Pop's documentation](https://gobuffalo.io/documentation/database/models/#using-a-custom-table-name):
 ```
-
-As the comment indicates, `Pop` resolves the name incorrectly because the acronym in the model name throws it off.
+It is recommended to use a value receiver over a pointer receiver if the struct is used as a value anywhere in the code.
+```
+We have run into problems using a pointer receiver for `TableName`, perhpas due to the fact that Pop often treats
+models internally as type `interface{}` in its algorithms, and an
+[interface doesn't play well with pointer receivers](https://stackoverflow.com/questions/40823315/x-does-not-implement-y-method-has-a-pointer-receiver).
 
 ## Running Migrations
 
