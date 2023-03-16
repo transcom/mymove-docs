@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 ---
-# How we use TanStack Query
+# How we use React Query
 
 :::caution Version information
 The MilMove project uses **TanStack Query v4** for the Frontend applications. Within TanStack Query, we are using the React framework, a combination colloquially known as **React Query**.
@@ -72,7 +72,7 @@ export const useNewCustomQueries = (moveCode) => {
 Multiple queries can be in the same custom Query. If the one query has a dependency based on another query's data, setting the `enabled` key with the needed value will paused the query while that value is undefined.
 
 ```js reference
-https://github.com/transcom/mymove/blob/main/src/hooks/queries.js#L166-L201
+https://github.com/transcom/mymove/blob/75dfe0af80d0811680243cc707a612a842db97b1/src/hooks/queries.js#L166-L201
 ```
 
 [gh-mymove-hooks-queries]: https://github.com/transcom/mymove/search?l=JavaScript&q=%22useQuery%28%22
@@ -143,16 +143,60 @@ const onSubmit = async () => {
 :::
 
  Callbacks maybe not fire as expected. To avoid that issue, logic should be handled in the `useMutation` callback which is called first. 
- ```jsx reference
-https://github.com/transcom/mymove/blob/main/src/pages/Office/EditShipmentDetails/EditShipmentDetails.jsx#L22-L30
+
+```js 
+ import {useQueryClient} from '@tanstack/react-query'
+
+const queryClient = useQueryClient();
+
+const { mutate: myNewMutation } = useMutation(
+   {
+  mutationFn: functionToBeCalled ,
+    // First callback
+   onSuccess: () => { 
+       console.log('Where logic should be handled') 
+       queryClient.invalidateQueries({queryKey: [myKey]})
+       },
+   onError: () => {
+       console.log('Error handling');
+       }
+   });
 ```
+
 UI changes should happen in the `mutate` callback which is called second after the `useMutation` callback. This is handled second so the mutation can complete. 
 
-```jsx reference
-https://github.com/transcom/mymove/blob/main/src/components/Office/ShipmentForm/ShipmentForm.jsx#L330-L339
+```js
+const ComponentForm = ({myNewMutation}) => {
+
+const onSubmit = () => {
+    myNewMutation(
+        variables,
+        // Second callback
+        {
+            onSuccess: () => { console.log('Where UI changes should happen') },
+            onError: () => console.log('Error handling  UI'),
+        });
+    }
+
+    return (<Formik onSubmit={onSubmit}/>)
+            }
 ```
 
+:::caution Note
  If UI changes, such navigating to a new page, happen on the `useMutation` callback, the mutation will prematurely end. In this codebase, the mutation is often created in a different component that where mutate function is called.
+:::
+
+#### Example of useMutation in the codebase
+The `useMutation` is called on the `EditShipmentDetails` component. This creates the `mutateMTOShipment` mutation. It has it's `onSuccess` and `onError` handlers that will be called. In these callbacks is where invalidation or any business logic is done. 
+ ```jsx reference
+https://github.com/transcom/mymove/blob/75dfe0af80d0811680243cc707a612a842db97b1/src/pages/Office/EditShipmentDetails/EditShipmentDetails.jsx#L22-L30
+```
+#### Example of using the mutate function in the codebase
+`mutateMTOShipment` is passed down to the shipment form as the value for `submitHandler`. When `submitHandler` is called, it has additional `onSuccess` and `onError` callbacks. The callbacks on `submitHandler` are called **after** the callbacks on the `useMutation` function above. The callbacks on the `submitHandler`, where UI changes are done.
+```jsx reference
+https://github.com/transcom/mymove/blob/75dfe0af80d0811680243cc707a612a842db97b1/src/components/Office/ShipmentForm/ShipmentForm.jsx#L330-L339
+```
+
 
 
 
