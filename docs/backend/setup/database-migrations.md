@@ -168,10 +168,10 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
     
     import (
         "time"
+		
+        "github.com/gofrs/uuid"
     
-    	"github.com/gofrs/uuid"
-    
-    	"github.com/transcom/mymove/pkg/unit"
+        "github.com/transcom/mymove/pkg/unit"
     )
     
     type PetType string
@@ -209,6 +209,11 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
         Bio       *string     `json:"bio" db:"bio"`
         Weight    *unit.Pound `json:"weight" db:"weight"`
     }
+   
+    // TableName overrides the table name used by Pop.
+    func (p Pet) TableName() string {
+        return "pets"
+    }
     
     // Pets is a list of Pets
     type Pets []Pet
@@ -244,15 +249,15 @@ focus on what the files would look like in the end:
 ```sql
 CREATE TABLE cats
 (
-	id uuid PRIMARY KEY NOT NULL,
-	pet_id uuid NOT NULL
-	    CONSTRAINT cats_pets_id_fkey
-	    REFERENCES pets,
-	created_at timestamp NOT NULL,
-	updated_at timestamp NOT NULL,
-	likes_catnip bool,
-	favorite_catnip_brand text,
-	favorite_cat_scratcher_type text
+    id uuid PRIMARY KEY NOT NULL,
+    pet_id uuid NOT NULL
+        CONSTRAINT cats_pets_id_fkey
+        REFERENCES pets,
+    created_at timestamp NOT NULL,
+    updated_at timestamp NOT NULL,
+    likes_catnip bool,
+    favorite_catnip_brand text,
+    favorite_cat_scratcher_type text
 );
 
 COMMENT on TABLE cats IS 'Store cats and their details.';
@@ -274,21 +279,26 @@ Things to note:
 package models
 
 import (
-	"time"
+    "time"
 
-	"github.com/gofrs/uuid"
+    "github.com/gofrs/uuid"
 )
 
 // Cat contains all the information relevant to a cat...
 type Cat struct {
-	ID                       uuid.UUID `json:"id" db:"id"`
-	PetID                    uuid.UUID `json:"pet_id" db:"pet_id"`
-	Pet                      Pet       `belongs_to:"pets" fk_id:"pet_id"`
-	CreatedAt                time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt                time.Time `json:"updated_at" db:"updated_at"`
-	LikesCatnip              *bool     `json:"likes_catnip" db:"likes_catnip"`
-	FavoriteCatnipBrand      *string   `json:"favorite_catnip_brand" db:"favorite_catnip_brand"`
-	FavoriteCatScratcherType *string   `json:"favorite_cat_scratcher_type" db:"favorite_cat_scratcher_type"`
+    ID                       uuid.UUID `json:"id" db:"id"`
+    PetID                    uuid.UUID `json:"pet_id" db:"pet_id"`
+    Pet                      Pet       `belongs_to:"pets" fk_id:"pet_id"`
+    CreatedAt                time.Time `json:"created_at" db:"created_at"`
+    UpdatedAt                time.Time `json:"updated_at" db:"updated_at"`
+    LikesCatnip              *bool     `json:"likes_catnip" db:"likes_catnip"`
+    FavoriteCatnipBrand      *string   `json:"favorite_catnip_brand" db:"favorite_catnip_brand"`
+    FavoriteCatScratcherType *string   `json:"favorite_cat_scratcher_type" db:"favorite_cat_scratcher_type"`
+}
+
+// TableName overrides the table name used by Pop.
+func (c Cat) TableName() string {
+    return "cats"
 }
 
 // Cats is a list of Cats
@@ -339,7 +349,7 @@ type Pet struct {
 
 // TableName overrides the table name used by Pop.
 func (p Pet) TableName() string {
-	return "pets"
+    return "pets"
 }
 
 // Pets is a list of Pets
