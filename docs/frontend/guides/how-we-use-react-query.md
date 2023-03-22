@@ -144,8 +144,8 @@ const onSubmit = async () => {
 
  Callbacks maybe not fire as expected. To avoid that issue, logic should be handled in the `useMutation` callback which is called first. 
 
-```js 
- import {useQueryClient} from '@tanstack/react-query'
+```js title="use-mutation-example.jsx"
+import {useQueryClient} from '@tanstack/react-query'
 
 const queryClient = useQueryClient();
 
@@ -165,7 +165,7 @@ const { mutate: myNewMutation } = useMutation(
 
 UI changes should happen in the `mutate` callback which is called second after the `useMutation` callback. This is handled second so the mutation can complete. 
 
-```js
+```js title="second-callback-example.jsx"
 const ComponentForm = ({myNewMutation}) => {
 
 const onSubmit = () => {
