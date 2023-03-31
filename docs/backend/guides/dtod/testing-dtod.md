@@ -33,7 +33,11 @@ In the server logs, you should see this line
 
 ### Changing the Password Locally
 
-The password can be overriden by running `export DTOD_API_PASSWORD=newpassword` after `direnv allow` runs.
+The password can be overriden by running `export DTOD_API_PASSWORD='newpassword'` after `direnv allow` runs.
+
+:::caution
+If the password contains special characters, ensure that they are escaped appropriately.
+:::
 
 ## Getting Additional Logging
 
