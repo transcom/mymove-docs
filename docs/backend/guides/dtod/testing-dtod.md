@@ -4,7 +4,7 @@ The instructions that follow will say to change the environment variable inside 
 
 - Environment variables can be changed inside of `.envrc.local`
 - Runing `export DTOD_USE_MOCK=false` after `direnv allow`
-- `export DTOD_USE_MOCK=false make server_run`
+- `DTOD_USE_MOCK=false make server_run`
 
 :::note
 If you are not using the plugin [better-direnv](https://plugins.jetbrains.com/plugin/19275-better-direnv) and you are running the server in Goland, be sure to refresh the Goland environment.
