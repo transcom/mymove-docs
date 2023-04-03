@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# Using Docusaurus 
+# Using Docusaurus
 
-Docusaurus is our documentation framework of choice (and you can see a record of that decision in [this closed PR](https://github.com/transcom/mymove/pull/6869)). One of the main reasons we picked this framework was because of how easy it was to manipulate the documentation without being an experienced software engineer. Here is a general outline of how to work with Docusaurus in a way that should be accessible to all of us on the project, from designers to product managers to engineers. 
+Docusaurus is our documentation framework of choice (and you can see a record of that decision in [this closed PR](https://github.com/transcom/mymove/pull/6869)). One of the main reasons we picked this framework was because of how easy it was to manipulate the documentation without being an experienced software engineer. Here is a general outline of how to work with Docusaurus in a way that should be accessible to all of us on the project, from designers to product managers to engineers.
 
 Note that to modify any part of the repo, you must be a member of the [United States Transportation Command](https://github.com/transcom) GitHub organization.
 
@@ -16,8 +16,8 @@ When you're browsing the docs and you come across a page you'd like to edit, scr
 
 This should take you to the edit screen in GitHub for this particular markdown file. In this screen, you can edit the page however you please (we have instructions for some [common edits](#common-edits) below), and then preview your changes using the "**Preview**" tab at the top of the text box. Note there are some quirks about previewing your work in GitHub:
 
-* Embedded images will not be shown in GitHub, but you will see them in the Docusaurus site.
-* The frontmatter will be visible at the top of the page in GitHub, but this will not show up in Docusaurus.
+- Embedded images will not be shown in GitHub, but you will see them in the Docusaurus site.
+- The frontmatter will be visible at the top of the page in GitHub, but this will not show up in Docusaurus.
 
 ![Preview the page](/img/docusaurus/preview_page.png)
 
@@ -63,9 +63,9 @@ Add your content. This process is the same as [editing a page](#common-edits). O
 
 ## Delete a page
 
-Before you delete a page, first ask yourself: "Am I sure this content needs to be fully removed, or could it be useful somewhere else?" If you could envision the document being useful in Confluence, or by providing historical insight, consider [moving it](#move-a-page) to the **[Vault](../../vault/index.md)** instead. This folder is intended to hold archived, experimental, and misplaced documentation. It will be reviewed periodically and moved or deleted later, if deemed necessary. 
+Before you delete a page, first ask yourself: "Am I sure this content needs to be fully removed, or could it be useful somewhere else?" If you could envision the document being useful in Confluence, or by providing historical insight, consider [moving it](#move-a-page) to the **[Vault](../../vault/index.md)** instead. This folder is intended to hold archived, experimental, and misplaced documentation. It will be reviewed periodically and moved or deleted later, if deemed necessary.
 
-If you are confident that this page can be truly deleted, first locate the markdown file in GitHub. While viewing the file, click the button near the top right corner that looks like a trashcan. 
+If you are confident that this page can be truly deleted, first locate the markdown file in GitHub. While viewing the file, click the button near the top right corner that looks like a trashcan.
 
 ![Delete a page](/img/docusaurus/delete_page.png)
 
@@ -75,9 +75,9 @@ On the following screen, scroll down to the bottom and commit the deletion just 
 
 Moving a page in GitHub is trickier than any other functionality. To do this in the browser, you would need to:
 
-* Copy all the contents of the page in the old location.
-* Create a new page in the desired location, paste in the contents, and save.
-* Go back to the old page and delete it.
+- Copy all the contents of the page in the old location.
+- Create a new page in the desired location, paste in the contents, and save.
+- Go back to the old page and delete it.
 
 This is kind of a pain. I would recommend checking the repo out and moving files locally on your machine, if that is something you're comfortable with doing. Some instructions for how to get set up are in the [README for this repo](https://github.com/transcom/mymove-docs#running-locally-on-macos).
 
@@ -144,7 +144,7 @@ slug: /other-url
 
 ### Add images
 
-Images and all other static files are saved in this repositories `static/` folder. Within this folder, there is a directory for images specifically: `static/img/`. 
+Images and all other static files are saved in this repositories `static/` folder. Within this folder, there is a directory for images specifically: `static/img/`.
 
 To add your image, you must first upload it to this folder (ideally in a subdirectory that helps clarify what page it's used on). Once you have uploaded the image, you can embed it in any markdown file with the syntax:
 
@@ -153,7 +153,7 @@ To add your image, you must first upload it to this folder (ideally in a subdire
 ```
 
 :::caution
-Broken image links will break the build for Docusaurus, so please be careful when moving or renaming images. You must follow the above syntax exactly for the link to work. 
+Broken image links will break the build for Docusaurus, so please be careful when moving or renaming images. You must follow the above syntax exactly for the link to work.
 
 If the build is broken and the site cannot redeploy, please contact an engineer to help resolve the issue. There will still be an old version of the site deployed, so this is not a crisis.
 :::
@@ -162,17 +162,17 @@ If the build is broken and the site cannot redeploy, please contact an engineer 
 
 Code blocks work as they normally do in markdown files, but now you can add titles and highlight important lines. Use this syntax to add a title and highlight:
 
-```md
+````md
     ```js title="Hello, JavaScript!" {2}
     function helloWorld() {
       console.log('Hello, world!');
     }
     ```
-```
+````
 
 ```js title="Hello, JavaScript!" {2}
 function helloWorld() {
-  console.log('Hello, world!');
+  console.log("Hello, world!");
 }
 ```
 
@@ -206,14 +206,14 @@ For example, linking to _Access a Global Application Variable_ in Docusaurus
 means that you can link to it like this.
 
 ```markdown title="Linking from the file at docs/about/Home.md with a relative link"
-[Access a Global Application Variable](../dev/contributing/backend/access-global-variables.md#how-to-access-a-global-application-variable)
+[Access a Global Application Variable](../dev/contributing/backend/environement_variables/access-global-variables.md#how-to-access-a-global-application-variable)
 ```
 
 Notice in the above example that the path (`../dev/contributing/backend/`)
 is relative to the file `docs/about/Home.md`.
 
 ```markdown title="Linking from the file at docs/about/Home.md with an absolute link"
-[Access a Global Application Variable](/docs/dev/contributing/backend/access-global-variables.md#how-to-access-a-global-application-variable)
+[Access a Global Application Variable](/docs/dev/contributing/backend/environement_variables/access-global-variables.md#how-to-access-a-global-application-variable)
 ```
 
 Notice in the above example that the path (`/docs/dev/contributing/backend/`)
