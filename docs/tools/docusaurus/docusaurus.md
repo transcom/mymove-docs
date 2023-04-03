@@ -206,14 +206,14 @@ For example, linking to _Access a Global Application Variable_ in Docusaurus
 means that you can link to it like this.
 
 ```markdown title="Linking from the file at docs/about/Home.md with a relative link"
-[Access a Global Application Variable](../dev/contributing/backend/environement_variables/access-global-variables.md#how-to-access-a-global-application-variable)
+[Access a Global Application Variable](../dev/contributing/backend/environment_variables/access-global-variables.md#how-to-access-a-global-application-variable)
 ```
 
 Notice in the above example that the path (`../dev/contributing/backend/`)
 is relative to the file `docs/about/Home.md`.
 
 ```markdown title="Linking from the file at docs/about/Home.md with an absolute link"
-[Access a Global Application Variable](/docs/dev/contributing/backend/environement_variables/access-global-variables.md#how-to-access-a-global-application-variable)
+[Access a Global Application Variable](/docs/dev/contributing/backend/environment_variables/access-global-variables.md#how-to-access-a-global-application-variable)
 ```
 
 Notice in the above example that the path (`/docs/dev/contributing/backend/`)
