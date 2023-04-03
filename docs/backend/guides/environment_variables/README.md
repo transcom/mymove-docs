@@ -1,6 +1,6 @@
 # Environment Variables
 
-To manage our environment variables, we use [direnv](https://direnv.net/) which evaluayes the `.envrc` file when changing into the repository direction.
+To manage our environment variables, we use [direnv](https://direnv.net/) which evaluates the `.envrc` file when changing into the repository directory.
 
 ```shell reference
 https://github.com/transcom/mymove/blob/b059c86e383567db8499b55c2ff38e2ea0655983/.envrc#L51-L79
