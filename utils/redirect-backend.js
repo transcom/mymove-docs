@@ -150,9 +150,9 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/backend/guides/access-global-variables',
+    to: '/docs/backend/guides/environment_variables/access-global-variables',
     from: [
-      '/docs/dev/contributing/backend/access-global-variables',
+      '/docs/dev/contributing/backend/environment_variables/access-global-variables',
     ],
   },
   {
