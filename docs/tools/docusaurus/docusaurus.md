@@ -16,8 +16,8 @@ When you're browsing the docs and you come across a page you'd like to edit, scr
 
 This should take you to the edit screen in GitHub for this particular markdown file. In this screen, you can edit the page however you please (we have instructions for some [common edits](#common-edits) below), and then preview your changes using the "**Preview**" tab at the top of the text box. Note there are some quirks about previewing your work in GitHub:
 
-- Embedded images will not be shown in GitHub, but you will see them in the Docusaurus site.
-- The frontmatter will be visible at the top of the page in GitHub, but this will not show up in Docusaurus.
+* Embedded images will not be shown in GitHub, but you will see them in the Docusaurus site.
+* The frontmatter will be visible at the top of the page in GitHub, but this will not show up in Docusaurus.
 
 ![Preview the page](/img/docusaurus/preview_page.png)
 
@@ -75,9 +75,9 @@ On the following screen, scroll down to the bottom and commit the deletion just 
 
 Moving a page in GitHub is trickier than any other functionality. To do this in the browser, you would need to:
 
-- Copy all the contents of the page in the old location.
-- Create a new page in the desired location, paste in the contents, and save.
-- Go back to the old page and delete it.
+* Copy all the contents of the page in the old location.
+* Create a new page in the desired location, paste in the contents, and save.
+* Go back to the old page and delete it.
 
 This is kind of a pain. I would recommend checking the repo out and moving files locally on your machine, if that is something you're comfortable with doing. Some instructions for how to get set up are in the [README for this repo](https://github.com/transcom/mymove-docs#running-locally-on-macos).
 
@@ -162,17 +162,17 @@ If the build is broken and the site cannot redeploy, please contact an engineer 
 
 Code blocks work as they normally do in markdown files, but now you can add titles and highlight important lines. Use this syntax to add a title and highlight:
 
-````md
+```md
     ```js title="Hello, JavaScript!" {2}
     function helloWorld() {
       console.log('Hello, world!');
     }
     ```
-````
+```
 
 ```js title="Hello, JavaScript!" {2}
 function helloWorld() {
-  console.log("Hello, world!");
+  console.log('Hello, world!');
 }
 ```
 
