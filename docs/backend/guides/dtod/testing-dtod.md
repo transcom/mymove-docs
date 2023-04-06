@@ -55,4 +55,7 @@ The `Dump: true` config option should only be used locally as that dumps out the
 ### Challenges with Getting Additional Logging
 
 The soap library being used only returns an error if the status code is < 200 or >= 400.
+
+```go reference
 https://github.com/tiaguinho/gosoap/blob/f4a99995a898b6a2de86e74d0942ffc4cfa89c0d/soap.go#L251-L261.
+```
