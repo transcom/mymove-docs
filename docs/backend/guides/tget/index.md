@@ -20,10 +20,14 @@ In the future, an SFTP connection would potentially be made to retrieve the upda
 
 ## Resources
 
-https://www.ustranscom.mil/dtr/part-ii/dtr_part_ii_app_v.pdf
-https://drive.google.com/drive/folders/1bKxCpYzebzwOSokepeLt_ZGJ7YXHqdHw
-https://docs.google.com/document/d/1anKX49otdynoG_o3ENPYQtAcUWJ2X7v4IvBDHFwoxAY/edit
-https://drive.google.com/drive/folders/1AT6XBR5qtUT2gHP2GSs4ylQ701bZf_dV
-https://docs.google.com/document/d/11RAVk9uGCOW7Uk5ZBDFLtel-YY-uVqtj/edit#
-https://github.com/transcom/mymove/pull/5922
-https://github.com/transcom/mymove/blob/b46b8e1f245174532fd9287eb8abd950ccb89aa3/pkg/handlers/ghcapi/tac.go#L23
+- This is the [Appendix to TAC procedures](https://www.ustranscom.mil/dtr/part-ii/dtr_part_ii_app_v.pdf) and gives an overview of TACs, what they are, and how to maintain them.
+
+- A slightly newer [Google Drive folder that contains an example of a TAC file and an overview](https://drive.google.com/drive/folders/1XF8aQNtKuqtHow3xN2UI9w9g7cRT6y-g).
+
+- An older [Google Drive folder that notably contains an architectural design document as well as various related TGET things](https://drive.google.com/drive/folders/1AT6XBR5qtUT2gHP2GSs4ylQ701bZf_dV).
+
+- An [architectural design document that details how TGET would be incorporated into the application and how it would get updated](https://docs.google.com/document/d/11RAVk9uGCOW7Uk5ZBDFLtel-YY-uVqtj/edit#).
+
+- [Pull request that adds the transportation_accounting_codes table](https://github.com/transcom/mymove/pull/5922).
+
+- [Code location where the transportation_accounting_codes table is used inside of the MilMove application](https://github.com/transcom/mymove/blob/b46b8e1f245174532fd9287eb8abd950ccb89aa3/pkg/handlers/ghcapi/tac.go#L23).
