@@ -14,7 +14,7 @@ An example of this would be where the TOO (Transportation Ordering Officer) ente
 
 The current implmentation is based from a sample file that had been parsed to retrieve all the unique TAC values. A new table in the database was made called `transportation_accounting_codes` and a secure migration was done to put all those unique values into the database.
 
-In the MilMove app, when a user enters a value in to the TAC field, a call gets made to our backend to check if the input shows up in the database.
+In the MilMove app, when a user enters a value in to the TAC field, a call gets made to our backend to check if the input shows up in the database. If the TAC value is invalid, the user is notified, but still allowed to proceed.
 
 In the future, an SFTP connection would potentially be made to retrieve the updated file.
 
