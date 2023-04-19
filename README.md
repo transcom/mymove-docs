@@ -120,7 +120,7 @@ with
           },
 ```
 
-Remember to run `yarn start` after making this change locally. For more information about viewing local changes to the API documentation check out [Updating the Docusaurus configuration
+Remember to run `yarn start` after making this change locally and do not commit the changes made to `docusaurus.config.js` for testing purposes. For more information about viewing local changes to the API documentation check out [Updating the Docusaurus configuration
 ](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus).
 
 ### PR Reviewers
