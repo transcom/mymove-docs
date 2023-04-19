@@ -120,8 +120,7 @@ with
           },
 ```
 
-Remember to run `yarn start` after making this change locally and do not commit the changes made to `docusaurus.config.js` for testing purposes. For more information about viewing local changes to the API documentation check out [Updating the Docusaurus configuration
-](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus).
+Remember to run `yarn start` after making this change locally and do not commit the changes made to `docusaurus.config.js` for testing purposes. For more information about viewing local changes to the API documentation check out [Updating the Docusaurus configuration](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus).
 
 ### PR Reviewers
 PR reviewers can also test changes made to the documentation by adding the path to your github repo in Redocly:
