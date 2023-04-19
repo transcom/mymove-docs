@@ -99,6 +99,33 @@ Note: if you're using the Fish shell, you'll need to [complete an extra step](ht
 The site should load automatically in your browser at
 [http://localhost:4000/mymove-docs/](http://localhost:4000/mymove-docs/).
 
+## Testing Locally
+Run the local server with the following commands: `yarn install`, `yarn start`.
+
+When updating the Prime API documentation in the `mymove` repo with changes made to `prime.yaml` you can see those changes by updating `docusaurus.config.js`.
+Simple replace the following section:
+```
+          {
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/ghc.yaml',
+            route: '/api/ghc',
+          },
+```
+
+with
+
+```
+          {
+            spec: '../mymove/swagger/prime.yaml',  # Path to the mymove repo on your computer
+            route: '/api/ghc',
+          },
+```
+
+PR reviewers can also test changes made to the documentation by adding the path to your github repo in Redocly:
+`https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/BRANCH PATH/swagger/prime.yaml#tag/ENDPOINT PATH`
+
+For example, if a branch is created to update a service item you would pass in the github branch as follows:
+`https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/MB-0000-Branch-Name/swagger/prime.yaml#tag/mtoServiceItem/operation/createMTOServiceItem`
+
 ## Deployment
 
 This site is currently deployed using GitHub pages: https://transcom.github.io/mymove-docs/. We're using GitHub actions to redeploy whenever changes are merged to the main branch, which includes all commits that are made and saved directly in GitHub.
