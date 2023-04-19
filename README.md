@@ -120,6 +120,9 @@ with
           },
 ```
 
+Remember to run `yarn start` after making this change locally.
+
+### PR Reviewers
 PR reviewers can also test changes made to the documentation by adding the path to your github repo in Redocly:
 `https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/BRANCH PATH/swagger/prime.yaml#tag/ENDPOINT PATH`
 
