@@ -140,7 +140,7 @@ Be aware that GitHub pages has a _soft_ limit of 10 deploys per hour, and it is 
 [Please read more about how Redocusaurus is being used for API documentation.](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus).
 
 ### Updating Example Data in Documentation
-The example data in the documentation is based on swagger definitions and the behavior defined in the Service and Model.Redocly will generate examples and fill in information that is not explicitly added to swagger by default.
+The example data in the documentation is based on swagger definitions and the behavior defined in the Service and Model. Redocly will generate examples and fill in information that is not explicitly added to swagger by default.
 In some cases, the response example will show all polymorphic types even if some types are not updatable. This is due to how Redocly pulls in the data to generate the examples, and it is best to add details on what is not updatable in the description of the endpoint to avoid confusion when looking at the examples.
 
 ## ADR Documentation
