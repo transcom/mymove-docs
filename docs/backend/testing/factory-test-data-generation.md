@@ -17,18 +17,24 @@ By packaging them in nice identical containers, we get some useful features that
 
 * **Use traits for commonly used patterns.**
 
-  Don't create variants of the Build functions. Where possible, create a `Trait` - they are much more flexible and allow us to mix and match useful traits. See [Traits](#traits).
+  Don't create variants of the Build functions unless the default
+  build function should build something that another variant would
+  like to exclude. An example is `BuildDutyLocation` and
+  `BuildDutyLocationWithoutTransportationOffice`
+
+  Where possible, create a `Trait` - they are much more flexible and
+  allow us to mix and match useful traits. See [Traits](#traits).
 
 * **Don't reuse your customization list.**
-  
+
   The Build functions modify the customization list that is passed in. Create a trait if you want to reuse customizations.
 
 * **Select the right `Type` for your `Customization`**.
-  
+
   See [CustomTypes](#customtypes).
 
 * **Use LinkOnly to hook up a premade model.**
-  
+
   See [LinkOnly](#linkonly)
 
 * **If a `pkg/factory/<model>_factory.go` exists for your model, please use it.**
@@ -132,7 +138,7 @@ To create an `AdminUser` whose `User` should have a `customEmail`, just provide 
   user := BuildAdminUser(suite.DB(), []Customization{
    {
     Model: models.User{ // ← Type field not required, defaults to model type
-     LoginGovEmail: customEmail, 
+     LoginGovEmail: customEmail,
     },
    },
   }, nil)
