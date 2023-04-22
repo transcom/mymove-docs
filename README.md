@@ -100,10 +100,12 @@ The site should load automatically in your browser at
 [http://localhost:4000/mymove-docs/](http://localhost:4000/mymove-docs/).
 
 ## Testing Locally
+
 Run the local server with the following commands: `yarn install`, `yarn start`.
 
 When updating the Prime API documentation in the `mymove` repo with changes made to `prime.yaml` you can see those changes by updating `docusaurus.config.js`.
 Simple replace the following section:
+
 ```
           {
             spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/ghc.yaml',
@@ -123,6 +125,7 @@ with
 Remember to run `yarn start` after making this change locally and do not commit the changes made to `docusaurus.config.js` for testing purposes. For more information about viewing local changes to the API documentation check out [Updating the Docusaurus configuration](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus).
 
 ### PR Reviewers
+
 PR reviewers can also test changes made to the documentation by adding the path to your github repo in Redocly:
 `https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/transcom/mymove/BRANCH PATH/swagger/prime.yaml#tag/ENDPOINT PATH`
 
@@ -140,8 +143,10 @@ Be aware that GitHub pages has a _soft_ limit of 10 deploys per hour, and it is 
 [Please read more about how Redocusaurus is being used for API documentation.](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus).
 
 ### Updating Example Data in Documentation
-The example data in the documentation is based on swagger definitions and the behavior defined in the Service and Model. Redocly will generate examples and fill in information that is not explicitly added to swagger by default.
-In some cases, the response example will show all polymorphic types even if some types are not updatable. This is due to how Redocly pulls in the data to generate the examples, and it is best to add details on what is not updatable in the description of the endpoint to avoid confusion when looking at the examples.
+
+The example data in the documentation is based on swagger definitions and the behavior defined in the Service and Model. When example data is not provided, Redocly will generate examples based on the information it has available to it, like the type or enum.
+In some cases, the response examples will show all polymorphic types even if some types are not updatable. This is due to how Redocly pulls in the data to generate the examples, and it is best to add details on what is not updatable in the description of the endpoint to avoid confusion when looking at the examples.
+An example of all polymorphoc types can be found in the examples for `MTOServiceItem`, which will display response examples for `MTOServiceItemDomesticCrating` when only `Shuttle` and `SIT` service items can be updated.
 
 ## ADR Documentation
 
