@@ -101,3 +101,8 @@ Imports for MyModal in Storybook should work as follows.
 ```js
 import { MyModal } from "./MyModal";
 ```
+
+## Resources
+
+- [`EulaModal`](https://github.com/transcom/mymove/blob/main/src/components/EulaModal/index.jsx) is a live example of how this all works inside MilMove.
+- [`SignIn`](https://github.com/transcom/mymove/blob/main/src/pages/SignIn/SignIn.jsx) demonstrates how `EulaModal` gets used.
