@@ -59,6 +59,12 @@ module.exports = {
         },
         {
           type: 'doc',
+          docId: 'integrations/index',
+          position: 'left',
+          label: 'Integrations',
+        },
+        {
+          type: 'doc',
           docId: 'api/index',
           position: 'left',
           label: 'API',
