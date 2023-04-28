@@ -1,6 +1,5 @@
 ---
 id: index
-sidebar_position: 1
 slug: /backend/guides/dtod
 ---
 
