@@ -15,9 +15,9 @@ This strategy has obvious benefits in helping to support a high test coverage, b
 
 
 ### Scenarios that result in a test coverage decrease
-1. removal of code that is more tested than the total coverage. If the total coverage is 77.0% and a block of code that is tested at 100% is deleted, the average coverage goes down.
-2. Addition of code that is less tested than the total coverage and should be tested more. This is the scenario that we want to address with our code coverage strategy.
-3. Addition of code that is less tested than the total coverage and doesn't need to be tested more. The difference between this scenario and scenario 2 can be subjective, but one can imagine a scenario in which a Go database model is created and doesn't require any tests.
+1. **Removal of code that is _more_ tested than the total coverage.** If the total coverage is 77.0% and a block of code that is tested at 100% is deleted, the average coverage goes down.
+2. **Addition of code that is _less_ tested than the total coverage and _should be tested more_.** This is the scenario that we want to address with our code coverage strategy.
+3. **Addition of code that is _less_ tested than the total coverage and _doesn't need to be tested more_.** The difference between this scenario and scenario 2 can be subjective, but one can imagine a scenario in which a Go database model is created and doesn't require any tests.
 
 Our current strategy of never allowing the total coverage to decrease attempts to address scenario 2, but it also unfairly flags scenarios 1 and 3. We also have the option to manually reset the test coverage floor, but determining whether that is appropriate (i.e. discerning which scenario is applicable to a given PR) can be difficult and time-consuming. Furthermore, any combination of the three scenarios can be applicable to a given PR -- it doesn't have to be just one -- which can make it extra difficult to decide whether a coverage decrease is legitimate.
 
@@ -40,7 +40,7 @@ Chosen Option: *The Happo Approach*
 
 Our approach to Happo changes is currently the following: the Happo PR check is not a required check, but it reports failures and includes an easily-accessible link on the PR to Happo diffs which provide context around visual changes. Something similar could be implemented for code coverage checks with the following steps:
 1. Make the code coverage checks optional so that failures do not block a PR
-2. Generate a link automatically on the PR (perhaps through a comment) that provides more context behind the failure (including, but not limited to, the go-coverate.html artifact generated in circle-ci)
+2. Generate a link automatically on the PR (perhaps through a comment) that provides more context behind the failure (including, but not limited to, the go-coverage.html artifact generated in circle-ci)
 
 * `+` *Low-medium effort*
 * `+` *Provides a way to maintain high test coverage*
@@ -55,7 +55,7 @@ Our approach to Happo changes is currently the following: the Happo PR check is 
 Continue blocking PRs that decrease test coverage.
 
 * `+` *No implementation effort*
-* `+` *Provides a way to waintain high test coverage with stricter enforcement*
+* `+` *Provides a way to maintain high test coverage with stricter enforcement*
 * `+` *Provides a way to override failures with a commit*
 * `-` *Blocks PRs unnecessarily*
 * `-` *Difficult to determine whether failures are legitimate*
