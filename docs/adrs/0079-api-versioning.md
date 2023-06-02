@@ -11,10 +11,13 @@ description: How to implement API Versioning
 In order to support the Prime API Integration and prevent introducing potential breaking changes to the API, MilMove needs to version future updates to the Prime API. This ADR will attempt to address the "How?" questions associated with this endeavor. While some of the challenges involved are technical in nature, much of the challenge is coming up with patterns that are clear, understandable, and acceptable to the members of the engineering team.
 
 There are a few areas to consider when deciding how to implement API versioning:
-* The overall versioning strategy (URL patterns, query params, headers, etc.)
-* What endpoints will be incorporated into a new API version?
+* [The overall versioning strategy (URL patterns, query params, headers, etc.)](#options-for-versioning-strategy)
+* [What endpoints will be incorporated into a new API version?](#codebase-management)
 * An overall file organization strategy - This could even be broken up into categories to consider on their own, because we don't necessarily want to take the same organization approach for all areas of the application
-* Documentation considerations - This is a necessity since it will be key ensuring the consumers of our API are informed on what is changed between versions
+  * [Swagger files](#swagger-organization)
+  * [Handlers](#handler-organization)
+  * [Services and fetchers](#servicesfetcher-organization)
+* [Documentation considerations](#documentation) - This is a necessity since it will be key ensuring the consumers of our API are informed on what is changed between versions
 
 ## API Versioning Strategy
 
@@ -80,9 +83,9 @@ In the process of versioning our API, we will need to have some agreed upon patt
 
 #### Handler Organization
 
-Since we will be generating separate `*messages` and `*operations` pacakges for the version 2 api, it would make sense then to create a separate directory for the version 2 handlers. This will make it easier to differentiate the handlers from different versions, and ensure we are using the correct generated code for that handler.
+Since we will be generating separate `*messages` and `*operations` packages for the version 2 api, it would make sense then to create a separate directory for the version 2 handlers. This will make it easier to differentiate the handlers from different versions, and ensure we are using the correct generated code for that handler.
 
-You can see an example of utilizing the generated code in the handlers and creating the neccessary routing [in this commit](https://github.com/transcom/mymove/pull/10816/commits/0c4be3bab159a49f83e407830a9fecb9d27278da).
+You can see an example of utilizing the generated code in the handlers and creating the necessary routing [in this commit](https://github.com/transcom/mymove/pull/10816/commits/0c4be3bab159a49f83e407830a9fecb9d27278da).
 
 #### Services/Fetcher Organization
 
@@ -107,5 +110,15 @@ Here are some questions to consider, when adding a new endpoint to our version 2
 There are definitely other alternatives out there. Please feel free to suggest another.
 
 **Chosen Alternative:** I am not sure yet.
+
+### Documentation
+Communicating version changes to the prime will be crucial. We will want to deploy our primev2 api docs
+in the same manner that we deploy the [prime api docs](https://transcom.github.io/mymove-docs/api/prime).
+
+We also might want to consider having a prime api specific release notes section in somewhere in the [API
+section of our documentation](https://transcom.github.io/mymove-docs/docs/api).
+However, that might be better for a documentation specific ADR.
+
+
 
 
