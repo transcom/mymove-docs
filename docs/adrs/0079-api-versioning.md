@@ -76,11 +76,13 @@ In the process of versioning our API, we will need to have some agreed upon patt
   * Pros: It would be easier to keep the definitions separate and avoid accidental introduction of breaking changes. It would enable us to use the generated code for our handlers and payload/model files.
   * Cons: More generated files to manage
 
-**Chosen Alternative:** Option 2. While it does increase the number of files, it will be clearer to differentiate and easier to maintain a separate swagger file and its accompanying generated files.
+**Chosen Alternative:** Option 2. While it does increase the number of files, it will be clearer to differentiate and easier to maintain a separate swagger file and its accompanying generated files. [You can see an example in this commit](https://github.com/transcom/mymove/pull/10816/commits/0f387d655e098e589b10ab27b388bc771e873f09).
 
 #### Handler Organization
 
 Since we will be generating separate `*messages` and `*operations` pacakges for the version 2 api, it would make sense then to create a separate directory for the version 2 handlers. This will make it easier to differentiate the handlers from different versions, and ensure we are using the correct generated code for that handler.
+
+You can see an example of utilizing the generated code in the handlers and creating the neccessary routing [in this commit](https://github.com/transcom/mymove/pull/10816/commits/0c4be3bab159a49f83e407830a9fecb9d27278da).
 
 #### Services/Fetcher Organization
 
@@ -91,15 +93,16 @@ Here are some questions to consider, when adding a new endpoint to our version 2
 1. What do we do if we create a new endpoint that requires changes to the service that is called? How do we organize the functions/files? Do we create a new file in the services folder? Should we store these services files in a separate v2 subdir? What is the naming structure going to look like?
 2. What if the new endpoint does not require changes to the service? Should we make a new service anyway to prevent issues further down the line?
 
-* Option 1: Create a new fetcher and service for the new version. This can be separated out into a new file or put in the same services file. In the example linked below it is separated out into its own file.
-  * Pros: Clear delineation between the two versions. You would not be able to mix up the new service with the old service since it does not use the same fetcher.
-  * Cons: Repetitive code. Naming questions arise, in order to delineate the new from the old.
 
-* Option 2: Rename the old version to something that indicates it is old and add the new version to the same fetcher.
+
+* Option 1: Rename the old version to something that indicates it is old and add the new version to the same fetcher.
   * Pros: As we remove the deprecated endpoints, we will have less code duplication.
   * Cons: It will be easier to use the wrong service with the wrong endpoint.
-
-* (Comparison of Option 1 and Option 2)[https://github.com/transcom/mymove/pull/10790/commits/4591c9acc54891389d2b0893bcd73004f5774bcf]: Option 1 is on the right and Option 2 is on the left.
+  * [Example can be seen here](https://github.com/transcom/mymove/pull/10816/commits/0913f2f4625450a2ac43b358e1890d17d77b747d)
+* Option 2: Create a new fetcher and service for the new version. This can be separated out into a new file or put in the same services file. In the example linked below it is separated out into its own file.
+  * Pros: Clear delineation between the two versions. You would not be able to mix up the new service with the old service since it does not use the same fetcher.
+  * Cons: Repetitive code. Naming questions arise, in order to delineate the new from the old. Difficulty when dealing with more complicated services, especially when we use a service in another service.
+  * [Example can be seen here](https://github.com/transcom/mymove/compare/0c4be3b...3769845)
 
 There are definitely other alternatives out there. Please feel free to suggest another.
 
