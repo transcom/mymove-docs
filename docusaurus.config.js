@@ -1,5 +1,4 @@
-const lightCodeTheme = require('prism-react-renderer/themes/oceanicNext');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const { themes } = require('prism-react-renderer');
 
 // These Redirect lists for recently migated pages. These Redirects are here to
 // help, but shouldn't be relied on indefinitely as they are client-side only
@@ -146,8 +145,8 @@ module.exports = {
       copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`
     },
     prism: {
-      theme: lightCodeTheme,
-      darkTheme: darkCodeTheme,
+      theme: themes.oceanicNext,
+      darkTheme: themes.dracula,
     },
   },
   presets: [
