@@ -55,7 +55,7 @@ Our approach to Happo changes is currently the following: the Happo PR check is 
 Continue blocking PRs that decrease test coverage.
 
 * `+` *No implementation effort*
-* `+` *Provides a way to maintain high test coverage with stricter enforcement*
+* `+` *Provides a way to maintain current test coverage and never decrease it*
 * `+` *Provides a way to override failures with a commit*
 * `-` *Blocks PRs unnecessarily*
 * `-` *Difficult to determine whether failures are legitimate*
