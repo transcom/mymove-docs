@@ -16,7 +16,7 @@ There are a few areas to consider when deciding how to implement API versioning:
 * An overall file organization strategy - This could even be broken up into categories to consider on their own, because we don't necessarily want to take the same organization approach for all areas of the application
   * [Swagger files](#swagger-organization)
   * [Handlers](#handler-organization)
-  * [Services and fetchers](#servicesfetcher-organization)
+  * [Services](#services-organization)
 * [Documentation considerations](#documentation) - This is a necessity since it will be key ensuring the consumers of our API are informed on what is changed between versions
 
 ## API Versioning Strategy
@@ -97,7 +97,7 @@ Since we will be generating separate `*messages` and `*operations` packages for 
 
 You can see an example of utilizing the generated code in the handlers and creating the necessary routing [in this commit](https://github.com/transcom/mymove/pull/10816/commits/0c4be3bab159a49f83e407830a9fecb9d27278da).
 
-#### Services/Fetcher Organization
+#### Services Organization
 
 This is where there are a few options to organize our services. And I am currently unsure about the best way to go.
 
@@ -107,12 +107,12 @@ Here are some questions to consider, when adding a new endpoint to our version 2
 2. What if the new endpoint does not require changes to the service? Should we make a new service anyway to prevent issues further down the line?
 
 
-* Option 1: Rename the old version to something that indicates it is old and add the new version to the same fetcher.
+* Option 1: Rename the old version to something that indicates it is old and add the new version to the same interface.
   * Pros: As we remove the deprecated endpoints, we will have less code duplication.
   * Cons: It will be easier to use the wrong service with the wrong endpoint.
   * [Example can be seen here](https://github.com/transcom/mymove/pull/10816/commits/0913f2f4625450a2ac43b358e1890d17d77b747d)
-* Option 2: Create a new fetcher and service for the new version. This can be separated out into a new file or put in the same services file. In the example linked below it is separated out into its own file.
-  * Pros: Clear delineation between the two versions. You would not be able to mix up the new service with the old service since it does not use the same fetcher.
+* Option 2: Create a new interface and service for the new version. This can be separated out into a new file or put in the same services file. In the example linked below it is separated out into its own file.
+  * Pros: Clear delineation between the two versions. You would not be able to mix up the new service with the old service since it does not use the same interface.
   * Cons: Repetitive code. Naming questions arise, in order to delineate the new from the old. Difficulty when dealing with more complicated services, especially when we use a service in another service.
   * [Example can be seen here](https://github.com/transcom/mymove/compare/0c4be3b...3769845)
 
