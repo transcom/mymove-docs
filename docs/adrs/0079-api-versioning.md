@@ -32,6 +32,16 @@ Patch versions include backwards-compatible bug fixes.
 
 For example, a version could be noted as "2.1.3," where '2' is the major version, '1' is the minor version, and '3' is the patch version.
 
+#### Options on SemVer
+* Option 1: Allow for the prime to specify which minor/patch version to use
+  * Pros: Would be really granular for the consumer of our API.
+  * Cons: Would be a heavy lift to retain former minor and patch versions of our endpoints for the deprecation period.
+* Option 2: Use the most recent minor/patch versions for the respective major version, and only allow the prime to specify which major version to use.
+  * Pros: Easier to implement. For our purposes we do not need to get too complicated.
+  * Cons: Not as granular for the prime in choosing what is returned.
+
+**Chosen Alternative**: Option 2. This meets our requirements and is easier to implement. We will use the minor/patch versions to note changes in our API.
+
 ### Options for Versioning Strategy
 There are a few options for implementing api versioning in our prime API.
 
@@ -95,7 +105,6 @@ Here are some questions to consider, when adding a new endpoint to our version 2
 
 1. What do we do if we create a new endpoint that requires changes to the service that is called? How do we organize the functions/files? Do we create a new file in the services folder? Should we store these services files in a separate v2 subdir? What is the naming structure going to look like?
 2. What if the new endpoint does not require changes to the service? Should we make a new service anyway to prevent issues further down the line?
-
 
 
 * Option 1: Rename the old version to something that indicates it is old and add the new version to the same fetcher.
