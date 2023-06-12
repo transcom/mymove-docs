@@ -11,7 +11,7 @@ description: |
 ## Problem Statement
 
 Our current system of maintaining test coverage involves measuring the current total test coverage and ensuring that any given PR does not decrease the total coverage.
-This strategy has obvious benefits in helping to support a high test coverage, but it can also introduce unnecessary roadblocks in the PR workflow. To understand this, it's helpful to understand the scenarios that might result in a decrease in total coverage.
+This strategy has obvious benefits in preventing test coverage from going down, but it has also introduced roadblocks in the PR workflow. To understand this, it's helpful to understand the scenarios that might result in a decrease in total coverage.
 
 
 ### Scenarios that result in a test coverage decrease
