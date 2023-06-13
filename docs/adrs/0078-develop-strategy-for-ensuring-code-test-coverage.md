@@ -1,10 +1,10 @@
 ---
-title: 0078 Develop strategy for ensuring code test coverage
+title: 0078 Update strategy for maintaining code test coverage
 description: |
-  Decision outcome: The Happo Approach
+  Decision outcome: Lenience for Tiny Coverage Decreases
 ---
 
-# Develop strategy for ensuring code test coverage
+# Update strategy for maintaining code test coverage
 
 **User Story:** *[MB-16176](https://dp3.atlassian.net/browse/MB-16176)* :lock:
 
