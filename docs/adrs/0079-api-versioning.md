@@ -115,6 +115,10 @@ Here are some questions to consider, when adding a new endpoint to our version 2
   * Pros: Clear delineation between the two versions. You would not be able to mix up the new service with the old service since it does not use the same interface.
   * Cons: Repetitive code. Naming questions arise, in order to delineate the new from the old. Difficulty when dealing with more complicated services, especially when we use a service in another service.
   * [Example can be seen here](https://github.com/transcom/mymove/compare/0c4be3b...3769845)
+* Option 3: Create subdirectories in the current services directories for each version. Pass along a version flag in the AppContext (or some other method). Use that flag to identify which version of the service to use.
+  * Pros: Clear delineation between the two versions. There would not need to be a break from how we are currently utilizing our services and interfaces. We would only need to pull in the changed services into our subdirectories, which would lead to less code duplication.
+  * Cons: We would need to ensure that our flagging system worked completely as intended in order to not accidentally introduce breaking changes.
+  * [Example can be seen here](https://github.com/transcom/mymove/compare/0c4be3b...8ad4aed)
 
 There are definitely other alternatives out there. Please feel free to suggest another.
 
@@ -127,7 +131,3 @@ in the same manner that we deploy the [prime api docs](https://transcom.github.i
 We also might want to consider having a prime api specific release notes section in somewhere in the [API
 section of our documentation](https://transcom.github.io/mymove-docs/docs/api).
 However, that might be better for a documentation specific ADR.
-
-
-
-
