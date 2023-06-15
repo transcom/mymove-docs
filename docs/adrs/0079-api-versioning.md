@@ -122,10 +122,10 @@ Here are some questions to consider, when adding a new endpoint to our version 2
 
 There are definitely other alternatives out there. Please feel free to suggest another.
 
-**Chosen Alternative:** I am not sure yet.
+**Chosen Alternative:** Option 3. It is dependent on reliably setting the api version flag and getting it to the services. However, once this is accomplished, this option best separates the different versions.
 
 ### Documentation
-Communicating version changes to the prime will be crucial. We will want to deploy our primev2 api docs
+Communicating version changes to the prime will be crucial. We will want to deploy our prime V2 api docs
 in the same manner that we deploy the [prime api docs](https://transcom.github.io/mymove-docs/api/prime).
 
 We also might want to consider having a prime api specific release notes section in somewhere in the [API
