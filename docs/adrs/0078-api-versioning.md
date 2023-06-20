@@ -99,7 +99,7 @@ You can see an example of utilizing the generated code in the handlers and creat
 
 #### Services Organization
 
-This is where there are a few options to organize our services. And I am currently unsure about the best way to go.
+This is where there are a few options to organize our services.
 
 Here are some questions to consider, when adding a new endpoint to our version 2 API:
 
@@ -123,6 +123,9 @@ Here are some questions to consider, when adding a new endpoint to our version 2
 There are definitely other alternatives out there. Please feel free to suggest another.
 
 **Chosen Alternative:** Option 3. It is dependent on reliably setting the api version flag and getting it to the services. However, once this is accomplished, this option best separates the different versions.
+
+#### A Note on versioning our db/models
+While it would be possible to create versions of our db/models, we will want to avoid getting into that
 
 ### Documentation
 Communicating version changes to the prime will be crucial. We will want to deploy our prime V2 api docs
