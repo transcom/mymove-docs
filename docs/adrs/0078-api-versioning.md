@@ -125,7 +125,7 @@ There are definitely other alternatives out there. Please feel free to suggest a
 **Chosen Alternative:** Option 3. It is dependent on reliably setting the api version flag and getting it to the services. However, once this is accomplished, this option best separates the different versions.
 
 #### A Note on versioning our db/models
-While it would be possible to create versions of our db/models, we will want to avoid getting into that
+While it would be technically possible to create versions of our db/models, we will want to avoid that if at all possible. The complications that this would introduce into our application would be great.
 
 ### Documentation
 Communicating version changes to the prime will be crucial. We will want to deploy our prime V2 api docs
