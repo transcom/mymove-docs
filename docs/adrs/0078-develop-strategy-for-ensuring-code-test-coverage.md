@@ -1,7 +1,7 @@
 ---
 title: 0078 Update strategy for maintaining code test coverage
 description: |
-  Decision outcome: Lenience for Tiny Coverage Decreases
+  Decision outcome: The Happo Approach
 ---
 
 # Update strategy for maintaining code test coverage
@@ -37,7 +37,33 @@ To improve upon the current coverage strategy and address the scenarios above, w
 
 ## Decision Outcome
 
-Chosen Option: *Lenience for Tiny Coverage Decreases*
+Chosen Option: *The Happo Approach*
+
+Our approach to Happo changes is currently the following: the Happo PR check is not a required check, but it reports failures and includes an easily-accessible link on the PR to Happo diffs which provide context around visual changes. Something similar could be implemented for code coverage checks with the following steps:
+1. Make the code coverage checks optional so that failures do not block a PR
+2. Generate a link automatically on the PR (perhaps through a comment) that provides more context behind the failure (including, but not limited to, the go-coverage.html artifact generated in circle-ci)
+
+This strategy acknowleges that while a required coverage check seems to strictly ensure a lower coverage limit, scenarios 2 and 3 may often result in coverage decreases set manually when folks reset the limit. It also acknowledges that understanding code coverage and creating rules around it is difficult to do automatically and thus leaves enforcement entirely to PR creators and reviewers.
+
+* `+` *Low-medium effort*
+* `+` *Provides a way to maintain high test coverage*
+* `+` *Does not unnecessarily block PRs*
+* `+` *Provides easily-accessible context behind coverage decreases, at least with server coverage*
+* `-` *Requires a cultural enforcement of coverage maintenance*
+
+## Pros and Cons of the Alternatives
+
+### *Do nothing*
+
+Continue blocking PRs that decrease test coverage.
+
+* `+` *No implementation effort*
+* `+` *Provides a way to maintain current test coverage and never decrease it*
+* `+` *Provides a way to override failures with a commit*
+* `-` *Blocks PRs unnecessarily*
+* `-` *Difficult to determine whether failures are legitimate*
+
+### *Lenience for Tiny Coverage Decreases*
 
 This strategy is sort of a middle ground between the current strategy and the Happo Approach in that it blocks PRs with coverage changes > 0.1%, and it reports changes <=0.1%. It can be implemented with the following steps:
 1. Alter the current PR-required code coverage check to block coverage decreases > 0.1%
@@ -52,29 +78,3 @@ The goal of this strategy is to completely prevent most coverage decreases while
 * `+` *Provides easily-accessible context behind coverage decreases, at least with server coverage*
 * `-` *Requires a cultural enforcement of coverage maintenance*
 * `-` *The significance of 0.1% coverage change is vague and perhaps a poor measure of impact on a codebase*
-
-## Pros and Cons of the Alternatives
-
-### *Do nothing*
-
-Continue blocking PRs that decrease test coverage.
-
-* `+` *No implementation effort*
-* `+` *Provides a way to maintain current test coverage and never decrease it*
-* `+` *Provides a way to override failures with a commit*
-* `-` *Blocks PRs unnecessarily*
-* `-` *Difficult to determine whether failures are legitimate*
-
-### *The Happo Approach*
-
-Our approach to Happo changes is currently the following: the Happo PR check is not a required check, but it reports failures and includes an easily-accessible link on the PR to Happo diffs which provide context around visual changes. Something similar could be implemented for code coverage checks with the following steps:
-1. Make the code coverage checks optional so that failures do not block a PR
-2. Generate a link automatically on the PR (perhaps through a comment) that provides more context behind the failure (including, but not limited to, the go-coverage.html artifact generated in circle-ci)
-
-This strategy acknowleges that while a required coverage check seems to strictly ensure a lower coverage limit, scenarios 2 and 3 may often result in coverage decreases set manually when folks reset the limit. It also acknowledges that understanding code coverage and creating rules around it is difficult to do automatically and thus leaves enforcement entirely to PR creators and reviewers.
-
-* `+` *Low-medium effort*
-* `+` *Provides a way to maintain high test coverage*
-* `+` *Does not unnecessarily block PRs*
-* `+` *Provides easily-accessible context behind coverage decreases, at least with server coverage*
-* `-` *Requires a cultural enforcement of coverage maintenance*
