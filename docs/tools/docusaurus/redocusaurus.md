@@ -10,6 +10,9 @@ This documentation is helpful for anyone editing documentation related to the
 Swagger API definitions. It is helpful to understand those concepts first before
 diving into this documentation.
 
+The goal of this documentation is to allow engineers to read Swagger API
+documentation within the Docusaurus site locally.
+
 :::
 
 :::info Need help? Ask in Slack.
@@ -121,6 +124,23 @@ Docusaurus will helpfully reload the page. Because of interconnectedness of
 different technology, you may have to run the `make swagger_generate` command
 more than once if the changes aren't being reflected in your local Docusaurus
 API page.
+
+:::tip
+
+To automate the rendering changes in Docusaurus use the following command within
+the `transcom/mymove` repository.
+
+```bash
+rg -t yaml -t md --files swagger-def | entr -c make server_generate
+```
+
+If you do not have `rg` installed, run a similar command using `find`.
+
+```bash
+{ find swagger-def -type f -name '*.yml' ; find swagger-def -type f -name '*.yaml' ; find swagger-def -type f -name '*.md' } | entr -c make server_generate
+```
+
+:::
 
 ## Undoing local configuration for Redocusaurus
 
