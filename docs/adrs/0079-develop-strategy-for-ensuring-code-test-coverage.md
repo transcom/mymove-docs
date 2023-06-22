@@ -78,3 +78,9 @@ The goal of this strategy is to completely prevent most coverage decreases while
 * `+` *Provides easily-accessible context behind coverage decreases, at least with server coverage*
 * `-` *Requires a cultural enforcement of coverage maintenance*
 * `-` *The significance of 0.1% coverage change is vague and perhaps a poor measure of impact on a codebase*
+
+## Closing Notes
+
+This ADR prescribes a couple of additional outcomes to support whichever approach is chosen:
+- Additional documentation will be created to provide information about our test coverage checks, including an explanation of why coverage might decrease for a PR and how to access and understand the artifacts produced by the coverage checks.
+- A check-in will be planned for one month after the implementation of the chosen decision to review its impacts on test coverage. Plans for more follow-ups or a check-in cadence can also be reviewed then.
