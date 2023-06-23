@@ -1,9 +1,9 @@
 ---
-title: 0078 Use AWS AppConfig Feature Flags
+title: 0078 Use Flipt for Feature Flags
 description: Feature Flags enable CI/CD and roll-forward recovery. The question isn't "why?", but "how?"
 ---
 
-# AppConfig Feature Flags to enable CI/CD and roll-forward recovery
+# Flipt Feature Flags to enable CI/CD and roll-forward recovery
 
 **User Story:** MB-13752
 
@@ -45,13 +45,17 @@ For 30 days before we go live, the Prime (HSA) requires a code freeze for testin
 * Option #1: LaunchDarkly: This is the industry standard feature flag platform.
 * Option #2: Unleash: Open source, can be self-hosted
 * Option #3: AWS AppConfig: we're already using lots of AWS, what's a little more?
+* Option #4: Flipt: Open source, self hosted, supports file based config
 
 ## Decision Outcome
 
-Chosen Alternative: Option #3: AWS AppConfig
+Chosen Alternative: Option #4: Flipt
 
-LaunchDarkly is the industry standard, but there is no room for it in the budget. Unleash has similar features to AWS AppConfig, but requires more setup and maintenance effort when self-hosted. This leaves AWS AppConfig as the reasonable choice.
+LaunchDarkly is the industry standard, but there is no room for it in the budget. Unleash has similar features to AWS AppConfig, but requires more setup and maintenance effort when self-hosted (e.g. it requires a PostgreSQL database). AWS AppConfig is really a thin shim over config files and doesn't provide much in the way of helping us manage feature groupings.
 
+Flipt provides a [filesystem backend](https://www.flipt.io/docs/experimental/filesystem-backends) which would allow a way for us to manage our feature flags using a [gitops](https://about.gitlab.com/topics/gitops/) style process. We can test out our flag configuration in separate environments (e.g. experimental, demo, staging) before rolling out to production. It also allows us to deploy the Flipt service without requiring another stateful system (e.g. no database).
+
+We will have a couple of different options for how we deploy flipt. Examining the options for how flipt is deployed may be its own ADR.
 
 ## Pros and Cons of the Alternatives
 
@@ -75,6 +79,7 @@ LaunchDarkly is the industry standard, but there is no room for it in the budget
 * '+' Can be self-hosted
 * '-' Adds another thing for Platform to do before Milestone 1
 * '-' Open source version may be limited
+* '-' Somewhat complicated deployment model
 
 
 ### Option #3: AWS AppConfig
@@ -82,4 +87,11 @@ LaunchDarkly is the industry standard, but there is no room for it in the budget
 * '+' Very little Platform setup, AppEng already has limited access to AWS console
 * '+' Cost is rolled into existing AWS ODC, no separate approval
 * '-' Unknown cost
+* '-' Very low level
 
+### Option #4: Flipt
+* '+' Provides flexibility to enable feature flags to groups of users in almost any configuration we could imagine
+* '+' Open Source
+* '+' Self hosted option is easy-ish to deploy
+* '+' Gitops style, audited feature flag management
+* '-' Additional service to deploy
