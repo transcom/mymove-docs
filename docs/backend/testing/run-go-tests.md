@@ -23,7 +23,7 @@ make server_test
 
 All of the commands in this section assume that `test_db` is setup properly.
 Properly here is defined as having your Test database running in Docker, having
-the Test database migrated, and seeded with DevSeed data.
+the Test database migrated, and seeded with `DevSeed` data.
 
 ```shell title="Resetting and migrating the test database"
 make db_test_reset db_test_migrate
@@ -45,7 +45,9 @@ go test ./pkg/handlers/internalapi/ -testify.m Test_Name
 
 ### Run Subtest with Names Matching a String
 
-Subtests often have non alpha numeric characters in the name, which testify translates to underscore. You can see the name of the test by running all of the tests like above, but with the verbose flag.
+Sub-tests often have non alpha numeric characters in the name, which testify
+translates to underscore. You can see the name of the test by running all of the
+tests like above, but with the verbose flag.
 
 ```shell
 go test -v ./pkg/handlers/internalapi/ -testify.m Test_name
@@ -59,7 +61,8 @@ go test -count=1 -v -run 'Test_suite_name/Test_name/sub_test_name' ./pkg/handler
 
 ## Run Tests when a File Changes
 
-You'll need to install [ripgrep](https://github.com/BurntSushi/ripgrep) and [entr](http://www.entrproject.org/) (`brew install ripgrep entr`):
+You'll need to install [`ripgrep`](https://github.com/BurntSushi/ripgrep) and
+[`entr`](http://www.entrproject.org/) (`brew install ripgrep entr`):
 
 ```shell
 rg -t go --files | entr -c $YOUR_TEST_COMMAND
