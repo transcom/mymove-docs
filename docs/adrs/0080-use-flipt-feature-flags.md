@@ -45,13 +45,16 @@ For 30 days before we go live, the Prime (HSA) requires a code freeze for testin
 * Option #1: LaunchDarkly: This is the industry standard feature flag platform.
 * Option #2: Unleash: Open source, can be self-hosted
 * Option #3: AWS AppConfig: we're already using lots of AWS, what's a little more?
-* Option #4: Flipt: Open source, self hosted, supports file based config
+* Option #4: Roll our own
+* Option #5: Flipt: Open source, self hosted, supports file based config
 
 ## Decision Outcome
 
-Chosen Alternative: Option #4: Flipt
+Chosen Alternative: Option #5: Flipt
 
 LaunchDarkly is the industry standard, but there is no room for it in the budget. Unleash has similar features to AWS AppConfig, but requires more setup and maintenance effort when self-hosted (e.g. it requires a PostgreSQL database). AWS AppConfig is really a thin shim over config files and doesn't provide much in the way of helping us manage feature groupings.
+
+Rolling our own is a possibility, but one key feature we'd want to think about is how to promote feature flags from one environment to another (e.g. from staging to production). That suggests that tying the feature flag to the environment by e.g. storing the flags in the database isn't ideal as we need to recreate the flag settings in each environment. Combining that with the desire to have feature flags be enabled on a per user basis, it makes the complexity of rolling our own outweigh the relatively simple flipt deployment.
 
 Flipt provides a [filesystem backend](https://www.flipt.io/docs/experimental/filesystem-backends) which would allow a way for us to manage our feature flags using a [gitops](https://about.gitlab.com/topics/gitops/) style process. We can test out our flag configuration in separate environments (e.g. experimental, demo, staging) before rolling out to production. It also allows us to deploy the Flipt service without requiring another stateful system (e.g. no database).
 
@@ -89,7 +92,13 @@ We will have a couple of different options for how we deploy flipt. Examining th
 * '-' Unknown cost
 * '-' Very low level
 
-### Option #4: Flipt
+### Option #4: Roll our own
+* '+' Provides all flexibility we want
+* '+' Easy to deploy
+* '-' No easy way to migrate settings from one environment to another
+* '-' We have to implement all the flexibility
+
+### Option #5: Flipt
 * '+' Provides flexibility to enable feature flags to groups of users in almost any configuration we could imagine
 * '+' Open Source
 * '+' Self hosted option is easy-ish to deploy
