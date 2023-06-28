@@ -155,3 +155,7 @@ with Pop about this.  Please refer to the issue for more details.
 One workaround is to remove one of the associations from the `EagerPreload` and include it separately by
 iterating over the results and doing a `Load` on the missing association each time through the loop.
 That's not as efficient as `EagerPreload` of course, but it will at least populate the models correctly.
+
+### `Eager` vs `EagerPreload` Inconsistency
+
+The data loaded using `EagerPreload` and `Eager` differs when there is no joined record to load. `EagerPreload` will simply return `nil` for the associated record, while `Eager` return an empty/zero value struct as the associated record. It is recommended to always use `EagerPreload` over `Eager` for optimization reasons (`Eager` suffers from ["n+1" problem](https://github.com/transcom/mymove-docs/blob/main/docs/backend/guides/database.md#excessive-queries-eg-n1-problem)). However, the `nil` record behavior of `EagerPreload` is somewhat prohibitive. It results in the inability to distinguish between associated records that (correctly) did not join and never having attempted to `EagerPreload` associated records. There is not much that can be done to workaround this issue other than trying to avoid situations in the code where we don't know if records have been loaded with `EagerPreload` by minimizing codepaths where `EagerPreload` is expected to happen "up-stream" or out of the context of where the associated records are used.
