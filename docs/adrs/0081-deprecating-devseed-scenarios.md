@@ -22,7 +22,9 @@ is broken._ <!-- optional -->
 ## Considered Alternatives
 
 - _Do nothing_
-- _Deprecate `devseed` scenarios and remove them from documentation & codebase_
+- _Deprecate `devseed` scenarios and provide team-wide guidance on exclusively
+  using `testharness` scenarios_
+- _Deprecate and delete `deveseed` scenarios_
 - _Update `devseed` scenarios and use them in tandem with `testharness`
   scenarios_
 
