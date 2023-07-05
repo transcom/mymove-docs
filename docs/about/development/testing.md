@@ -13,7 +13,7 @@ There are a few handy targets in the Makefile to help you run tests:
   - Note: this runs with a full clean/rebuild, so it is not great for fast iteration.
     Use `make e2e_test` to pick individual tests from the Cypress UI.
 - `make test`: Run e2e, client- and server-side testing suites.
-- `yarn playwright test`: Runs the playwright tests against the dec server and useful for inspecting individual e2e tests when debugging.
+- `yarn playwright test`: Runs the playwright tests against the dev server. Once started, one can inspect the individual e2e tests when debugging.
  - Note: You must already have the servers running for this to work!
 ** Deprecated: Cypress tests **
 - `yarn test:e2e`: Useful for debugging. This opens the cypress test runner
