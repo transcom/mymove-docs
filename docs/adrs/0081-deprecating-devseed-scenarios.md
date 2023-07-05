@@ -63,24 +63,43 @@ browser-UI based at this time.
 
 ## Decision Outcome
 
+> to be decided
+
+<!--
 - Chosen Alternative: _[alternative 1]_
 - _[justification. e.g., only alternative, which meets KO criterion decision driver | which resolves force | ... | comes out best (see below)]_
-- _[consequences. e.g., negative impact on quality attribute, follow-up decisions required, ...]_ <!-- optional -->
+ optional -->
 
 ## Pros and Cons of the Alternatives <!-- optional -->
 
 ### _Do nothing_
 
-- `+` _[argument 1 pro]_
-- `+` _[argument 2 pro]_
-- `-` _[argument 1 con]_
-- _[...]_ <!-- numbers of pros and cons can vary -->
+- `+` _No extra work involved._
+- `-` _Teams will remain unsure about whether to use `devseed` or `testharness`
+  data._
+- `-` _Teams may duplicate work as `testharness` data is required for Playwright
+  tests._
 
-### _Deprecate `devseed` scenarios and remove them from documentation & codebase_
+### _Deprecate `devseed` scenarios and provide team-wide guidance on exclusively using `testharness` scenarios_
 
-- `+` _[argument 1 pro]_
-- `+` _[argument 2 pro]_
-- `-` _[argument 1 con]_
+- `+` _Teams will be able to focus on data creation using `testharness` data._
+- `+` _Teams will have `testharness` data for Playwright tests that have been
+  used during the development of features._
+- `-` _Teams will need to over-communicate `testharness` data creation over
+  `devseed` data creation._
+- `-` _Using `testharness` data can slow us down because currently it only
+  creates individual moves rather than subscenarios like `devseed` data which
+  can create multiple moves tied to an Epic._
+  - `?` _This will change the way we create move data. With `testharness` data
+    will need to be created manually._
+  - `?` _Teams will be able to create more specific move data faster._
+
+### _Deprecate and delete `deveseed` scenarios_
+
+- `+` _Teams will be able to focus on data creation using `testharness` data._
+- `+` _Teams will have `testharness` data for Playwright tests that have been
+  used during the development of features._
+- `-` _More work involved in implementing the ADR._
 - _[...]_ <!-- numbers of pros and cons can vary -->
 
 ### _Update `devseed` scenarios and use them in tandem with `testharness` scenarios_
