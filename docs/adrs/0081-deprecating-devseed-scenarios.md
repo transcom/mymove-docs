@@ -59,8 +59,6 @@ browser-UI based at this time.
 - _Deprecate `devseed` scenarios and provide team-wide guidance on exclusively
   using `testharness` scenarios_
 - _Deprecate and delete `deveseed` scenarios_
-- _Update `devseed` scenarios and use them in tandem with `testharness`
-  scenarios_
 
 ## Decision Outcome
 
@@ -103,8 +101,3 @@ browser-UI based at this time.
 - `+` _Removing `devseed` scenarios may drastically improve the deployment of ephemeral deploys._
 - `-` _More work involved in implementing the ADR._
 - _[...]_ <!-- numbers of pros and cons can vary -->
-
-### _Update `devseed` scenarios and use them in tandem with `testharness` scenarios_
-
-- `+` _Teams will be able to create subscenarios withs a sets of moves that are related to current work_
-- `-` _There would be duplication of work to create both `devseed` and `testharness` data_
