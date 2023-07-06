@@ -218,13 +218,17 @@ mymove/pkg/services
 
 ## [MilMove GHC FuelPrice](https://github.com/transcom/mymove/tree/main/pkg/services/ghcdieselfuelprice)
 
-The GHC FuelPrice service is utilized by the milmove-task command `save_ghc_fuel_price_data.go`. This is run daily via an AWS ECS task. It calls the EIA API v2.1.0 to retrieve the weekly No. 2 diesel fuel price for the U.S. This weekly price is used in the pricing calculations for service items. You can access their [technical documentation here](https://www.eia.gov/opendata/documentation.php). With version 2.1.0 the EIA API added the `seriesid` endpoint. This allows us to use the `series_id` url parameter that we used in the v1 api as a keyword path parameter. The specific path we use is `https://api.eia.gov/v2/seriesid/PET.EMD_EPD2D_PTE_NUS_DPG.W`. 
+The GHC FuelPrice service is utilized by the milmove-tasks command `save_ghc_fuel_price_data.go`.
+
+The task is scheduled to run [daily at 5:30 AM EST via an AWS ECS task](https://github.com/transcom/terraform-aws-app-environment/blob/8a16a883215d6fd7ddaec4946adf03183883d695/ecs_scheduled_tasks.tf#L80-L81). Weekly price data is supposed to be released by the government around [~5PM EST on Mondays unless there is a holiday schedule](https://www.eia.gov/petroleum/gasdiesel/schedule.php).
+
+The task calls the EIA API v2.1.0 to retrieve the weekly No. 2 diesel fuel price for the U.S. This weekly price is used in the pricing calculations for Fuel Surcharge service items. You can access their [technical documentation here](https://www.eia.gov/opendata/documentation.php). With version 2.1.0 the EIA API added the `seriesid` endpoint. This allows us to use the `series_id` url parameter that we used in the v1 api as a keyword path parameter. The specific path we use is `https://api.eia.gov/v2/seriesid/PET.EMD_EPD2D_PTE_NUS_DPG.W`.
 
 The package is made up of four main files and accompanying test files:
 * ghc_diesel_fuel_price_data.go
   * Defines the Diesel Fuel Price Info Struct, which contains the EIA data struct and is instantiated with the function that will fetch the EIA data
   * The EIA Data struct is shaped to model the response data that is returned from the EIA API and is populated when the fetcher function unmarshals the JSON data returned from the API call.
-* ghc_diesel_fuel_price_fetcher.go 
+* ghc_diesel_fuel_price_fetcher.go
   * Includes the function for fetching the fuel data from the EIA API and populating the EIA data struct
   * Also calls the EIA Data validator
 * ghc_diesel_fuel_price_validator.go
@@ -240,9 +244,9 @@ The package is made up of four main files and accompanying test files:
     * units - must be `$/gal`
     * fuel data array - must have a length greater than zero
 * ghc_diesel_fuel_price_storer.go
-  * takes the retrieved EIA data and checks the `ghc_diesel_fuel_prices` table if there is already an entry for that period. 
-  * If there is an entry, it updates the price if it differs. 
-  * If there isn't then a new entry is created 
+  * takes the retrieved EIA data and checks the `ghc_diesel_fuel_prices` table if there is already an entry for that period.
+  * If there is an entry, it updates the price if it differs.
+  * If there isn't then a new entry is created
 
 
 ## [GHC Import](https://github.com/transcom/mymove/tree/main/pkg/services/ghcimport)
