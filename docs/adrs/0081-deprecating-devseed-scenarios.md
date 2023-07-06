@@ -10,14 +10,15 @@ description: |
 
 ## Background
 
-There are currently two ways to create moves programmatically in the MilMove
-system. One way is the `devseed` data and the other is the `testharness` data.
-This ADR examines benefits of each method for generating test data in the
-MilMove system.
+When working with or testing our system, it can be helpful to have sample data
+in the system that gives you good starting points for different steps in the process
+and/or seeing different features in action. There are currently two ways to create
+moves programmatically in the MilMove system. One way is the `devseed` data and the
+other is the `testharness` data. This ADR examines benefits of each method for
+generating test data in the MilMove system.
 
-The main driving force behind this decision is to provide clarify for the Truss
-engineering team to have one-way of generating move data in the MilMove system
-without having to create both `devseed` data and `testharness` data.
+The main driving force behind this decision is to provide clarity to the Truss
+engineering team on which method to use when generating move data in the MilMove system.
 
 ### Ways to create test data in MilMove
 
@@ -35,8 +36,8 @@ and can be generated within the browser under `/testharness/list` after a
 deployment to ephemeral or locally during development. These moves can be
 generated as many times as needed by the developer/user within the browser.
 Since this move data is also used with Playwright tests, an added benefit is
-testing the `testharness` data generation can be done programmatically as part
-of the end-to-end testing.
+that the generated `testharness` data can be used for both development and
+end-to-end testing.
 
 ### Current state of documentation related to test data
 
@@ -99,12 +100,11 @@ browser-UI based at this time.
 - `+` _Teams will be able to focus on data creation using `testharness` data._
 - `+` _Teams will have `testharness` data for Playwright tests that have been
   used during the development of features._
+- `+` _Removing `devseed` scenarios may drastically improve the deployment of ephemeral deploys._
 - `-` _More work involved in implementing the ADR._
 - _[...]_ <!-- numbers of pros and cons can vary -->
 
 ### _Update `devseed` scenarios and use them in tandem with `testharness` scenarios_
 
-- `+` _[argument 1 pro]_
-- `+` _[argument 2 pro]_
-- `-` _[argument 1 con]_
-- _[...]_ <!-- numbers of pros and cons can vary -->
+- `+` _Teams will be able to create subscenarios withs a sets of moves that are related to current work_
+- `-` _There would be duplication of work to create both `devseed` and `testharness` data_
