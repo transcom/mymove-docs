@@ -220,7 +220,7 @@ mymove/pkg/services
 
 The GHC FuelPrice service is utilized by the milmove-tasks command `save_ghc_fuel_price_data.go`.
 
-The task is scheduled to run [daily at 5:30 AM EST via an AWS ECS task](https://github.com/transcom/terraform-aws-app-environment/blob/8a16a883215d6fd7ddaec4946adf03183883d695/ecs_scheduled_tasks.tf#L80-L81). Weekly price data is supposed to be released by the government around [~5PM EST on Mondays unless there is a holiday schedule](https://www.eia.gov/petroleum/gasdiesel/schedule.php).
+The task is scheduled to run :lock:[daily at 5:30 AM EST via an AWS ECS task](https://github.com/transcom/terraform-aws-app-environment/blob/8a16a883215d6fd7ddaec4946adf03183883d695/ecs_scheduled_tasks.tf#L80-L81). Weekly price data is supposed to be released by the government around [~5PM EST on Mondays unless there is a holiday schedule](https://www.eia.gov/petroleum/gasdiesel/schedule.php).
 
 The task calls the EIA API v2.1.0 to retrieve the weekly No. 2 diesel fuel price for the U.S. This weekly price is used in the pricing calculations for Fuel Surcharge service items. You can access their [technical documentation here](https://www.eia.gov/opendata/documentation.php). With version 2.1.0 the EIA API added the `seriesid` endpoint. This allows us to use the `series_id` url parameter that we used in the v1 api as a keyword path parameter. The specific path we use is `https://api.eia.gov/v2/seriesid/PET.EMD_EPD2D_PTE_NUS_DPG.W`.
 
