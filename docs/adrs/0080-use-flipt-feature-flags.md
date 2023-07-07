@@ -37,7 +37,63 @@ After we have been live for several months, the customer requires us to move fro
 
 Scenario 3: Prime Freeze
 
-For 30 days before we go live, the Prime (HSA) requires a code freeze for testing. We do not want to stop deploying for 30 days, and we really don't want to stop development for 30 days. Feature flags would allow us to build (and maybe even deploy) code during the freeze and remain productive.
+For 30 days before we go live, the Prime (HSA) requires a code freeze for testing. We do not want to stop deploying for 30 days, and we really don't want to stop development for 30 days. Feature flags would allow us to build and deploy code during the freeze and remain productive.
+
+### Feature Flag Workflow
+
+The [launch darkly overview of feature flags](https://launchdarkly.com/blog/what-are-feature-flags/) is a good summary of what feature flags can do.
+
+Imagine MilMove is being used daily in production. Further, imagine we are adding new functionality to MilMove. We need to make schema changes, backend changes, and frontend changes. We want to be able test all aspects of the feature before releasing it for general availability.
+
+We want a way where we can hide this new functionality until is is ready, but we don't want to have to have a separate branch in git and wait to merge all this code into main. We want to separate the release of the feature from the deployment of the code.
+
+Suppose we want to have a limited rollout in production and only want certain service members to have access to MilMove for setting up their move. We could add logic to the auth handlers in the backend that might look like
+
+```go
+// how we might allow only certain users to log into the
+// production environment when we are testing moves
+
+const loginAllowedFlag = "loginAllowed"
+	flag, err := h.FeatureFlagFetcher().GetFlagForUser(r.Context(), appCtx, loginAllowedFlag, map[string]string{})
+	if err != nil {
+		// in this case, we will fail open in case of feature flag
+		// failure. The user has already been authenticated by login.gov
+		appCtx.Logger().Warn("Feature flag failure in auth handler", zap.Error(err))
+	} else {
+		if !flag.IsEnabledVariant() {
+			appCtx.Logger().Info("User does not have login flag enabled", zap.String("flag, loginEnabledFlag))
+			invalidPermissionsResponse(appCtx, h.HandlerConfig, h.Context, w, r)
+			return
+		}
+  }
+```
+
+The feature flag service can use the information about the user to decide if they can log in.
+
+Or imagine when we are implementing OCONUS moves, but we don't want to roll it out to all service members at once. Maybe we have something in the UI that presents different options.
+
+```javascript
+import { FeatureFlag, featureIsEnabled } from 'components/FeatureFlag/FeatureFlag';
+
+// ...
+
+export const ConusOrNot = () => {
+  const enabledOconus = () => {
+    // something
+  }
+  const disabledOconus = () => {
+    // something
+  }
+  const featureFlagRender = (flagValue) => {
+    if (featureIsEnabled(flagValue)) {
+      return enabledOconus;
+    }
+    return disabledOconus;
+  };
+
+  return <FeatureFlag flagKey="service-member-oconus" render={featureFlagRender} />;
+}
+```
 
 ## Considered Alternatives
 
@@ -64,12 +120,12 @@ We will have a couple of different options for how we deploy flipt. Examining th
 
 ### Option #0: Do Nothing
 * '+' No change to App Eng workflow
-* '+' No additional setup for Platform Team
-* '-' We will at some point ship the wrong code
-* '-' Will break API versioning required by Prime
+* '+' No additional work for Platform Team
+* '-' We will at some point ship the wrong code that includes a half baked feature that wasn't meant for public use yet
+* '-' Could break API versioning required by Prime and/or make it harder to make API changes
 
 
-### Option #1: LaunchDarkly
+### Option #1: [LaunchDarkly](https://launchdarkly.com)
 * '+' Industry standard
 * '+' Feature Rich
 * '-' Expensive. No room in ODC budget
@@ -77,30 +133,30 @@ We will have a couple of different options for how we deploy flipt. Examining th
 * '-' Unknown if Platform Team will need to be involved
 
 
-### Option #2: Unleash
+### Option #2: [Unleash](https://github.com/Unleash/unleash)
 * '+' Open Source
-* '+' Can be self-hosted
+* '+' Can be self-hosted, so meets MilMove security requirements
 * '-' Adds another thing for Platform to do before Milestone 1
 * '-' Open source version may be limited
 * '-' Somewhat complicated deployment model
 
 
-### Option #3: AWS AppConfig
+### Option #3: [AWS AppConfig](https://docs.aws.amazon.com/appconfig/latest/userguide/what-is-appconfig.html)
 * '+' Not a lot of additional setup, App Eng already used to getting other configuration information from AWS
 * '+' Very little Platform setup, AppEng already has limited access to AWS console
-* '+' Cost is rolled into existing AWS ODC, no separate approval
+* '+' No separate approval, meets MilMove security requirements
 * '-' Unknown cost
 * '-' Very low level
 
 ### Option #4: Roll our own
 * '+' Provides all flexibility we want
-* '+' Easy to deploy
+* '+' Easy to deploy (probably?) and meets MilMove security requirements
 * '-' No easy way to migrate settings from one environment to another
 * '-' We have to implement all the flexibility
 
-### Option #5: Flipt
+### Option #5: [Flipt](https://www.flipt.io)
 * '+' Provides flexibility to enable feature flags to groups of users in almost any configuration we could imagine
 * '+' Open Source
-* '+' Self hosted option is easy-ish to deploy
+* '+' Self hosted option is easy-ish to deploy, so meets MilMove security requirements
 * '+' Gitops style, audited feature flag management
 * '-' Additional service to deploy
