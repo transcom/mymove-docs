@@ -3,6 +3,15 @@ sidebar_position: 2
 ---
 # DoD Certificates
 
+:::caution
+
+This page is out-of-date! Please reach out in [#c-documentation][slack-c-doc] 🔒
+to discuss how best to update this page.
+
+[slack-c-doc]: https://ustcdp3.slack.com/archives/C027BDJ4678
+
+:::
+
 MilMove has two kinds of server certificates. The first is a normal, commercially-signed cert stored in AWS Certificate Manager (ACM). We use these certificates for the user-facing properties like <https://my.move.mil/>. The other kind of certificate is signed by DISA, and we use those for communications (inbound and outbound) with other DoD entities.
 
 As of this writing, our DoD certificates expire in **September of 2021.** These certificates will need to be renewed before then.
