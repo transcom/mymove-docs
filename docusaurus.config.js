@@ -1,5 +1,4 @@
-const lightCodeTheme = require('prism-react-renderer/themes/oceanicNext');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const { themes } = require('prism-react-renderer');
 
 // These Redirect lists for recently migated pages. These Redirects are here to
 // help, but shouldn't be relied on indefinitely as they are client-side only
@@ -56,6 +55,12 @@ module.exports = {
           docId: 'backend/index',
           position: 'left',
           label: 'Backend',
+        },
+        {
+          type: 'doc',
+          docId: 'integrations/index',
+          position: 'left',
+          label: 'Integrations',
         },
         {
           type: 'doc',
@@ -137,11 +142,11 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`
+      copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`,
     },
     prism: {
-      theme: lightCodeTheme,
-      darkTheme: darkCodeTheme,
+      theme: themes.oceanicNext,
+      darkTheme: themes.dracula,
     },
   },
   presets: [
@@ -183,13 +188,13 @@ module.exports = {
             route: '/api/support',
           },
         ],
-      }
+      },
     ],
   ],
   themes: [
     '@saucelabs/theme-github-codeblock',
     [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
+      require.resolve('@easyops-cn/docusaurus-search-local'),
       /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
       ({
         // `hashed` is recommended as long-term-cache of index file is possible.
@@ -211,7 +216,7 @@ module.exports = {
           redirects.push(APIPages);
           return redirects.flat();
         })(),
-      }
+      },
     ],
   ],
 };

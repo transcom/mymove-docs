@@ -168,10 +168,10 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
     
     import (
         "time"
+		
+        "github.com/gofrs/uuid"
     
-    	"github.com/gofrs/uuid"
-    
-    	"github.com/transcom/mymove/pkg/unit"
+        "github.com/transcom/mymove/pkg/unit"
     )
     
     type PetType string
@@ -209,6 +209,11 @@ See the [conventions Pop follows](https://www.gobuffalo.io/en/docs/db/getting-st
         Bio       *string     `json:"bio" db:"bio"`
         Weight    *unit.Pound `json:"weight" db:"weight"`
     }
+   
+    // TableName overrides the table name used by Pop.
+    func (p Pet) TableName() string {
+        return "pets"
+    }
     
     // Pets is a list of Pets
     type Pets []Pet
@@ -244,15 +249,15 @@ focus on what the files would look like in the end:
 ```sql
 CREATE TABLE cats
 (
-	id uuid PRIMARY KEY NOT NULL,
-	pet_id uuid NOT NULL
-	    CONSTRAINT cats_pets_id_fkey
-	    REFERENCES pets,
-	created_at timestamp NOT NULL,
-	updated_at timestamp NOT NULL,
-	likes_catnip bool,
-	favorite_catnip_brand text,
-	favorite_cat_scratcher_type text
+    id uuid PRIMARY KEY NOT NULL,
+    pet_id uuid NOT NULL
+        CONSTRAINT cats_pets_id_fkey
+        REFERENCES pets,
+    created_at timestamp NOT NULL,
+    updated_at timestamp NOT NULL,
+    likes_catnip bool,
+    favorite_catnip_brand text,
+    favorite_cat_scratcher_type text
 );
 
 COMMENT on TABLE cats IS 'Store cats and their details.';
@@ -274,21 +279,26 @@ Things to note:
 package models
 
 import (
-	"time"
+    "time"
 
-	"github.com/gofrs/uuid"
+    "github.com/gofrs/uuid"
 )
 
 // Cat contains all the information relevant to a cat...
 type Cat struct {
-	ID                       uuid.UUID `json:"id" db:"id"`
-	PetID                    uuid.UUID `json:"pet_id" db:"pet_id"`
-	Pet                      Pet       `belongs_to:"pets" fk_id:"pet_id"`
-	CreatedAt                time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt                time.Time `json:"updated_at" db:"updated_at"`
-	LikesCatnip              *bool     `json:"likes_catnip" db:"likes_catnip"`
-	FavoriteCatnipBrand      *string   `json:"favorite_catnip_brand" db:"favorite_catnip_brand"`
-	FavoriteCatScratcherType *string   `json:"favorite_cat_scratcher_type" db:"favorite_cat_scratcher_type"`
+    ID                       uuid.UUID `json:"id" db:"id"`
+    PetID                    uuid.UUID `json:"pet_id" db:"pet_id"`
+    Pet                      Pet       `belongs_to:"pets" fk_id:"pet_id"`
+    CreatedAt                time.Time `json:"created_at" db:"created_at"`
+    UpdatedAt                time.Time `json:"updated_at" db:"updated_at"`
+    LikesCatnip              *bool     `json:"likes_catnip" db:"likes_catnip"`
+    FavoriteCatnipBrand      *string   `json:"favorite_catnip_brand" db:"favorite_catnip_brand"`
+    FavoriteCatScratcherType *string   `json:"favorite_cat_scratcher_type" db:"favorite_cat_scratcher_type"`
+}
+
+// TableName overrides the table name used by Pop.
+func (c Cat) TableName() string {
+    return "cats"
 }
 
 // Cats is a list of Cats
@@ -337,6 +347,11 @@ type Pet struct {
     Cat       *Cat        `has_one:"cats" fk_id:"pet_id"`
 }
 
+// TableName overrides the table name used by Pop.
+func (p Pet) TableName() string {
+    return "pets"
+}
+
 // Pets is a list of Pets
 type Pets []Pet
 ```
@@ -344,20 +359,23 @@ type Pets []Pet
 Note that this is similar to the `Pet` field on the `Cat` model in that it is purely a nice feature that `Pop` lets 
 us use to more easily go across relationships.
 
-#### Model/Table Names With Acronyms
+#### TableName method
 
-If your model/table name has an acronym in it, e.g. `PPMShipment`/`ppm_shipments`, you will need to define a receiver 
-function called `TableName` for the model struct that helps `Pop` know what the table name should be. An example is our 
-[`PPMShipment` model's receiver function](https://github.com/transcom/mymove/blob/9c2a281dbd777b77064c1ae563531a3f0c7bf9d0/pkg/models/ppm_shipment.go#L62-L65):
+[Pop's `TableName` method](https://gobuffalo.io/documentation/database/models/#using-a-custom-table-name) above is
+technically optional. If you don't include it, Pop will attempt to guess the table  name by parsing the model's name
+into words separated by underscores and then making that plural. However, in practice we've found that algorithm does
+not work the way we would like with acronyms (like `PPMShipment`) or with some  attempts at pluralization (since
+pluralization can be complicated). So, we require a `TableName` method on quite a few models. Rather than put
+`TableName` on selected models and rely on Pop's automatic table name determination for the others, we now include
+`TableName` on *all* models for consistency and resiliency to future changes in the table name algorithm.
 
-```go
-// TableName overrides the table name used by Pop. By default it tries using the name `ppmshipments`.
-func (p PPMShipment) TableName() string {
-	return "ppm_shipments"
-}
-```
+Also, note this about the `TableName` method per
+[Pop's documentation](https://gobuffalo.io/documentation/database/models/#using-a-custom-table-name):
+>It is recommended to use a value receiver over a pointer receiver if the struct is used as a value anywhere in the code.
 
-As the comment indicates, `Pop` resolves the name incorrectly because the acronym in the model name throws it off.
+We have run into problems using a pointer receiver for `TableName`, perhpas due to the fact that Pop often treats
+models internally as type `interface{}` in its algorithms, and an
+[interface doesn't play well with pointer receivers](https://stackoverflow.com/questions/40823315/x-does-not-implement-y-method-has-a-pointer-receiver).
 
 ## Running Migrations
 

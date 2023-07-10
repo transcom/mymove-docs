@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# Using Docusaurus 
+# Using Docusaurus
 
-Docusaurus is our documentation framework of choice (and you can see a record of that decision in [this closed PR](https://github.com/transcom/mymove/pull/6869)). One of the main reasons we picked this framework was because of how easy it was to manipulate the documentation without being an experienced software engineer. Here is a general outline of how to work with Docusaurus in a way that should be accessible to all of us on the project, from designers to product managers to engineers. 
+Docusaurus is our documentation framework of choice (and you can see a record of that decision in [this closed PR](https://github.com/transcom/mymove/pull/6869)). One of the main reasons we picked this framework was because of how easy it was to manipulate the documentation without being an experienced software engineer. Here is a general outline of how to work with Docusaurus in a way that should be accessible to all of us on the project, from designers to product managers to engineers.
 
 Note that to modify any part of the repo, you must be a member of the [United States Transportation Command](https://github.com/transcom) GitHub organization.
 
@@ -63,9 +63,9 @@ Add your content. This process is the same as [editing a page](#common-edits). O
 
 ## Delete a page
 
-Before you delete a page, first ask yourself: "Am I sure this content needs to be fully removed, or could it be useful somewhere else?" If you could envision the document being useful in Confluence, or by providing historical insight, consider [moving it](#move-a-page) to the **[Vault](../../vault/index.md)** instead. This folder is intended to hold archived, experimental, and misplaced documentation. It will be reviewed periodically and moved or deleted later, if deemed necessary. 
+Before you delete a page, first ask yourself: "Am I sure this content needs to be fully removed, or could it be useful somewhere else?" If you could envision the document being useful in Confluence, or by providing historical insight, consider [moving it](#move-a-page) to the **[Vault](../../vault/index.md)** instead. This folder is intended to hold archived, experimental, and misplaced documentation. It will be reviewed periodically and moved or deleted later, if deemed necessary.
 
-If you are confident that this page can be truly deleted, first locate the markdown file in GitHub. While viewing the file, click the button near the top right corner that looks like a trashcan. 
+If you are confident that this page can be truly deleted, first locate the markdown file in GitHub. While viewing the file, click the button near the top right corner that looks like a trashcan.
 
 ![Delete a page](/img/docusaurus/delete_page.png)
 
@@ -144,7 +144,7 @@ slug: /other-url
 
 ### Add images
 
-Images and all other static files are saved in this repositories `static/` folder. Within this folder, there is a directory for images specifically: `static/img/`. 
+Images and all other static files are saved in this repositories `static/` folder. Within this folder, there is a directory for images specifically: `static/img/`.
 
 To add your image, you must first upload it to this folder (ideally in a subdirectory that helps clarify what page it's used on). Once you have uploaded the image, you can embed it in any markdown file with the syntax:
 
@@ -153,7 +153,7 @@ To add your image, you must first upload it to this folder (ideally in a subdire
 ```
 
 :::caution
-Broken image links will break the build for Docusaurus, so please be careful when moving or renaming images. You must follow the above syntax exactly for the link to work. 
+Broken image links will break the build for Docusaurus, so please be careful when moving or renaming images. You must follow the above syntax exactly for the link to work.
 
 If the build is broken and the site cannot redeploy, please contact an engineer to help resolve the issue. There will still be an old version of the site deployed, so this is not a crisis.
 :::
@@ -206,14 +206,14 @@ For example, linking to _Access a Global Application Variable_ in Docusaurus
 means that you can link to it like this.
 
 ```markdown title="Linking from the file at docs/about/Home.md with a relative link"
-[Access a Global Application Variable](../dev/contributing/backend/access-global-variables.md#how-to-access-a-global-application-variable)
+[Access a Global Application Variable](../dev/contributing/backend/environment_variables/access-global-variables.md#how-to-access-a-global-application-variable)
 ```
 
 Notice in the above example that the path (`../dev/contributing/backend/`)
 is relative to the file `docs/about/Home.md`.
 
 ```markdown title="Linking from the file at docs/about/Home.md with an absolute link"
-[Access a Global Application Variable](/docs/dev/contributing/backend/access-global-variables.md#how-to-access-a-global-application-variable)
+[Access a Global Application Variable](/docs/dev/contributing/backend/environment_variables/access-global-variables.md#how-to-access-a-global-application-variable)
 ```
 
 Notice in the above example that the path (`/docs/dev/contributing/backend/`)

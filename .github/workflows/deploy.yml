@@ -2,8 +2,10 @@ name: Deploy Docusaurus to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-
+    branches: [main]
+  # enables runs every day at midnight UTC
+  schedule:
+    - cron: "0 0 * * *"
   # enables manual runs
   workflow_dispatch:
 
@@ -11,12 +13,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3  # $GITHUB_WORKSPACE
+      - uses: actions/checkout@v3 # $GITHUB_WORKSPACE
 
       - uses: actions/setup-node@v3
         with:
-          node-version-file: '.node-version'
-          cache: 'yarn'
+          node-version-file: ".node-version"
+          cache: "yarn"
 
       - name: Install yarn
         run: npm install yarn
@@ -28,7 +30,7 @@ jobs:
         run: yarn build
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.4.2
         with:
-          branch: docusaurus  # the branch for the deployment
-          folder: build  # the folder getting deployed
+          branch: docusaurus # the branch for the deployment
+          folder: build # the folder getting deployed
