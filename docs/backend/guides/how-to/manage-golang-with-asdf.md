@@ -102,7 +102,7 @@ export GOROOT="$(asdf where golang)/go/"
 Some users have run into an issue with not being able run `asdf`. This is fixed by adding the following line to the `.bash_profile` file:
 
 ```sh
-source /usr/local/opt/asdf/asdf.sh
+source $(brew --prefix asdf)/libexec/asdf.sh
 ```
 
 then run `source ~/.bash_profile` in the terminal to reload.
@@ -112,7 +112,9 @@ then run `source ~/.bash_profile` in the terminal to reload.
 If you are getting can't compile because library was compiled for `old version of go` vs `current version of go`. You probably should exit your shell and open a new one. Also ensure the below are in your shell's rc file.
 
 ```sh
-source /usr/local/opt/asdf/asdf.sh
+# Ensure that the `asdf.sh` file is run first before envoking any `go *`
+# commands.
+source $(brew --prefix asdf)/libexec/asdf.sh
 
 export GOPATH=$(go env GOPATH)
 export PATH="$PATH:$(go env GOPATH)/bin"
