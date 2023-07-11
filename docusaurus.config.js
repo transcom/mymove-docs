@@ -142,7 +142,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`
+      copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`,
     },
     prism: {
       theme: themes.oceanicNext,
@@ -188,13 +188,13 @@ module.exports = {
             route: '/api/support',
           },
         ],
-      }
+      },
     ],
   ],
   themes: [
     '@saucelabs/theme-github-codeblock',
     [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
+      require.resolve('@easyops-cn/docusaurus-search-local'),
       /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
       ({
         // `hashed` is recommended as long-term-cache of index file is possible.
@@ -216,7 +216,7 @@ module.exports = {
           redirects.push(APIPages);
           return redirects.flat();
         })(),
-      }
+      },
     ],
   ],
 };
