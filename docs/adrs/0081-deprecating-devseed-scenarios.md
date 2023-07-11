@@ -84,6 +84,7 @@ browser-UI based at this time.
 - `+` _Teams will be able to focus on data creation using `testharness` data._
 - `+` _Teams will have `testharness` data for Playwright tests that have been
   used during the development of features._
+- `+` _Removing `devseed` scenarios may drastically improve the deployment of ephemeral deploys._
 - `-` _Teams will need to over-communicate `testharness` data creation over
   `devseed` data creation._
 - `-` _Using `testharness` data can slow us down because currently it only
