@@ -33,4 +33,4 @@ sidebar_position: 3
    ```
 
    1. This will install some things like `pre-commit` hooks, `node_modules`, etc. You can see
-      [Setup: Dependencies](/docs/about/application-setup/06-dependencies) for more info on some of the parts.
+      [Setup: Dependencies](/docs/about/application-setup/dependencies) for more info on some of the parts.
