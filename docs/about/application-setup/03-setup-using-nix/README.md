@@ -1,5 +1,6 @@
 ---
 id: Setup Using Nix
+pagination_prev: about/application-setup/manual-vs-nix
 ---
 
 :::info
