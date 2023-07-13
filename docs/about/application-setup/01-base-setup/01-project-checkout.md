@@ -1,6 +1,6 @@
 # Project Checkout
 
-You can check out this repository by running
+You can clone this repository by running
 
 ```shell
 git clone git@github.com:transcom/mymove.git
