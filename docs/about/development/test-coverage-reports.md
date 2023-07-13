@@ -32,6 +32,10 @@ make server_test_coverage
 
 Both client and server test coverage checks generate coverage reports. If checks fail due to coverage dropping from the baseline, accessing the respective reports can provide context and help improve coverage where needed.
 
+A comment will be added to the GitHub PR with a link to the coverage report.
+
+Locally, reports are available in the `mymove` directory at their respective paths.
+
 ### Client reports
 
 Client coverage reports provide an overview of coverage per directory, and provide a means to drill down to details of individual files and view coverage per expression.
@@ -44,20 +48,6 @@ An HTML version of the client coverage report is stored at `coverage/lcov-report
 #### Details:
 ![Client coverage details](/img/cicd/client_coverage_details.png)
 
-#### How to review test coverage locally
-
-Open the coverage report from the `mymove` directory at its location above.
-
-#### How to review test coverage through CircleCI / Github
-
-From the `client_test` check on your PR, click "Details," which takes you to that job in CircleCI. (You can also navigate to it directly.)
-
-![client_test details link](/img/cicd/client_test_details.png)
-
-Click the "Artifacts" tab, then click the file with the above path.
-
-![client_test artifacts](/img/cicd/client_test_artifacts.png)
-
 ### Server reports
 
 Server coverage reports provide details of coverage on a per file basis, and analyze coverage per block.
@@ -66,20 +56,6 @@ An HTML version of the server coverage report is stored at `tmp/test-results/got
 
 #### Report
 ![Server coverage report](/img/cicd/server_coverage_report.png)
-
-#### How to review test coverage locally
-
-Open the coverage report from the `mymove` directory at its location above.
-
-#### How to review test coverage through CircleCI / Github
-
-From the `server_test` check on your PR, click "Details," which takes you to that job in CircleCI. (You can also navigate to it directly.)
-
-![server_test details link](/img/cicd/server_test_details.png)
-
-Click the "Artifacts" tab, then click the file with the above path.
-
-![server_test artifacts](/img/cicd/server_test_artifacts.png)
 
 ## What to do if test coverage checks fail
 
@@ -95,4 +71,4 @@ Often, changes to the codebase should be tested. If coverage checks are failing 
 
 ### "The Happo Approach"
 
-If your changes include scenario(s) where code coverage does not need to increase -- deleting better-covered code than the baseline, or adding code that may not need to be tested -- coverage checks can be ignored, at the PR reviewers discretion. This is referred to as "the Happo approach," since the check is optional and a reviewer can decide to approve the PR even with the check failing, like the Happo checks.
+If your changes include scenario(s) where code coverage does not need to increase -- deleting better-covered code than the baseline, or adding code that may not need to be tested -- coverage checks can be ignored, at the PR reviewer's discretion. This is referred to as "the Happo approach," since the check is optional and a reviewer can decide to approve the PR even with the check failing, like the Happo checks.
