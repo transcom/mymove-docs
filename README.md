@@ -1,6 +1,6 @@
 # MilMove Documentation
 
-[![GitHub pages deployment](https://github.com/transcom/mymove-docs/actions/workflows/deploy.yml/badge.svg)](https://github.com/transcom/mymove-docs/actions/workflows/deploy.yml)
+[![GitHub pages deployment](https://github.com/caci-milmove/mymove-docs/actions/workflows/deploy.yml/badge.svg)](https://github.com/caci-milmove/mymove-docs/actions/workflows/deploy.yml)
 
 ## Overview
 
@@ -122,7 +122,7 @@ with
           },
 ```
 
-Remember to run `yarn start` after making this change locally and do not commit the changes made to `docusaurus.config.js` for testing purposes. For more information about viewing local changes to the API documentation check out [Updating the Docusaurus configuration](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus).
+Remember to run `yarn start` after making this change locally and do not commit the changes made to `docusaurus.config.js` for testing purposes. For more information about viewing local changes to the API documentation check out [Updating the Docusaurus configuration](https://caci-milmove.github.io/mymove-docs/docs/dev/tools/redocusaurus).
 
 ### PR Reviewers
 
@@ -140,7 +140,7 @@ Be aware that GitHub pages has a _soft_ limit of 10 deploys per hour, and it is 
 
 ## API Documentation
 
-[Please read more about how Redocusaurus is being used for API documentation.](https://transcom.github.io/mymove-docs/docs/dev/tools/redocusaurus).
+[Please read more about how Redocusaurus is being used for API documentation.](https://caci-milmove.github.io/mymove-docs/docs/dev/tools/redocusaurus).
 
 ### Updating Example Data in Documentation
 
@@ -151,4 +151,4 @@ An example of all polymorphoc types can be found in the examples for `MTOService
 ## ADR Documentation
 
 [Please read more about how ADRs are written in our ADR
-documentation.](https://transcom.github.io/mymove-docs/docs/guides/adrs/)
+documentation.](https://caci-milmove.github.io/mymove-docs/docs/guides/adrs/)
