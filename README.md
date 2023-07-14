@@ -22,7 +22,7 @@ This website is created using [Docusaurus](https://docusaurus.io/), a React-base
 1. Open your terminal/command line.
 2. Clone the repo onto your machine and `cd` into it:
    ```
-   git clone https://github.com/transcom/mymove-docs.git && cd mymove-docs
+   git clone https://github.com/caci-milmove/mymove-docs.git && cd mymove-docs
    ```
 
 ### With Homebrew
@@ -134,7 +134,7 @@ For example, if a branch is created to update a service item you would pass in t
 
 ## Deployment
 
-This site is currently deployed using GitHub pages: https://transcom.github.io/mymove-docs/. We're using GitHub actions to redeploy whenever changes are merged to the main branch, which includes all commits that are made and saved directly in GitHub.
+This site is currently deployed using GitHub pages: https://caci-milmove.github.io/mymove-docs/. We're using GitHub actions to redeploy whenever changes are merged to the main branch, which includes all commits that are made and saved directly in GitHub.
 
 Be aware that GitHub pages has a _soft_ limit of 10 deploys per hour, and it is possible we could run up against this (read more about the limitations of pages here: [About GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#usage-limits)). It should not have a significant affect on our day-to-day activities, however, and may never become a noticeable issue.
 
