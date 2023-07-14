@@ -1,5 +1,13 @@
 # Git
 
+:::info
+
+This section assumes git has been installed, configured, and linked to your github account already.
+
+If not (e.g. if you are setting up a brand-new machine), follow the [official github instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+
+:::
+
 Use your work email when making commits to our repositories. The simplest path to correctness is setting global config:
 
 ```shell
