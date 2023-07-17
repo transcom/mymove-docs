@@ -184,6 +184,14 @@ module.exports = {
             route: '/api/prime',
           },
           {
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml',
+            route: '/api/prime/v1',
+          },
+          {
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime_v2.yaml',
+            route: '/api/prime/v2',
+          },
+          {
             spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/support.yaml',
             route: '/api/support',
           },

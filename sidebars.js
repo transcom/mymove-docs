@@ -91,6 +91,11 @@ module.exports = {
         },
         {
           type: 'link',
+          label: 'Prime V2',
+          href: '/api/prime/v2',
+        },
+        {
+          type: 'link',
           label: 'Support',
           href: '/api/support',
         },
