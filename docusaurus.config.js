@@ -179,6 +179,7 @@ module.exports = {
             spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/ghc.yaml',
             route: '/api/ghc',
           },
+          // Continue to support existing url for those that have bookmarked this link. We can route this to the oldest supported definition
           {
             spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml',
             route: '/api/prime',
