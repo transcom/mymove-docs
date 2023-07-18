@@ -3,6 +3,8 @@ title: 0078 API Versioning
 description: How to implement API Versioning
 ---
 
+**Note:** The code organization parts of this are now superseded by [ADR0080 API Versioning based on Test Run](./0080-api-versioning-based-on-test-run.md).
+
 # How to implement API Versioning for Prime API
 
 **User Story:** *[MB-15994](https://dp3.atlassian.net/browse/MB-15994)*
