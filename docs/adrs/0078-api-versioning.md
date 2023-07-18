@@ -87,7 +87,7 @@ In the process of versioning our API, we will need to have some agreed upon patt
 
 #### Swagger Organization
 
-**Current Setup:** In our swagger-def files we currently have a file for each api (`prime.yaml`, `ghc.yaml`, etc.). We also have some shared files in the `definitions`, `parameters`, `paths`, `responses` and `tags` directories. Some of the definitions in our swagger-def yaml files reference these shared definitions and some do not. Here is an [example](https://github.com/transcom/mymove/blob/66fdbaab15ea26e669195bf14f04a5a840d9795c/swagger-def/ghc.yaml#L3158-L3162) of where `current_address` uses the shared definitions, whereas `backup_contact` uses an internal defnition.
+**Current Setup:** In our swagger-def files we currently have a file for each api (`prime.yaml`, `ghc.yaml`, etc.). We also have some shared files in the `definitions`, `parameters`, `paths`, `responses` and `tags` directories. Some of the definitions in our swagger-def yaml files reference these shared definitions and some do not. Here is an [example](https://github.com/transcom/mymove/blob/66fdbaab15ea26e669195bf14f04a5a840d9795c/swagger-def/ghc.yaml#L3158-L3162) of where `current_address` uses the shared definitions, whereas `backup_contact` uses an internal definition.
 
 * Option 1: Keep a singular prime swagger-def file and modify the paths to point to either v1 or v2.
   * Pros: It would be less files to manage, especially the generated swagger and server files.
