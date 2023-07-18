@@ -87,7 +87,7 @@ In the process of versioning our API, we will need to have some agreed upon patt
 
 #### Swagger Organization
 
-**Current Setup:** In our swagger-def files we currently have a file for each api (`prime.yaml`, `ghc.yaml`, etc.). We also have some shared files in the `definitions`, `parameters`, `paths`, `responses` and `tags` directories. Some of the definitions in our swagger-def yaml files reference these shared definitions and some do not. Here is an [example](https://github.com/transcom/mymove/blob/66fdbaab15ea26e669195bf14f04a5a840d9795c/swagger-def/ghc.yaml#L3158-L3162) of where `current_address` uses the shared definitions, whereas `backup_contact` uses an internal definition.
+**Current Setup:** In our swagger-def files we currently have a file for each api (`prime.yaml`, `ghc.yaml`, etc.). We also have some shared files in the `definitions`, `parameters`, `paths`, `responses` and `tags` directories. Some of the definitions in our swagger-def yaml files reference these shared definitions and some do not. Here is an [example](https://github.com/transcom/mymove/blob/66fdbaab15ea26e669195bf14f04a5a840d9795c/swagger-def/ghc.yaml#L3158-L3162) of where `current_address` uses the shared definitions, whereas `backup_contact` uses an internal defnition.
 
 * Option 1: Keep a singular prime swagger-def file and modify the paths to point to either v1 or v2.
   * Pros: It would be less files to manage, especially the generated swagger and server files.
@@ -97,8 +97,6 @@ In the process of versioning our API, we will need to have some agreed upon patt
   * Cons: More generated files to manage
 
 **Chosen Alternative:** Option 2. While it does increase the number of files, it will be clearer to differentiate and easier to maintain a separate swagger file and its accompanying generated files. [You can see an example in this commit](https://github.com/transcom/mymove/pull/10816/commits/0f387d655e098e589b10ab27b388bc771e873f09).
-
-**General Recommendations:** Try and reference existing definitions when possible and create new versions of the definitions when something changes. This should help identify the definitions that have been modified from version to version. You can see an example in this [PR](https://github.com/transcom/mymove/pull/10952/files#diff-ccf222ad69199a6edb2088799e4ac7f8118591dc804aff747293bf1e81262940). Having to copy over existing definitions from the previous version can be tedious and if this is done in the main yaml file it can make it hard to quickly identify what fields are being modified.
 
 #### Handler Organization
 
@@ -125,13 +123,12 @@ Here are some questions to consider, when adding a new endpoint to our version 2
   * [Example can be seen here](https://github.com/transcom/mymove/compare/0c4be3b...3769845)
 * Option 3: Create subdirectories in the current services directories for each version. Pass along a version flag in the AppContext (or some other method). Use that flag to identify which version of the service to use.
   * Pros: Clear delineation between the two versions. There would not need to be a break from how we are currently utilizing our services and interfaces. We would only need to pull in the changed services into our subdirectories, which would lead to less code duplication.
-  * Cons: We would need to ensure that our flagging system worked completely as intended in order to not accidentally introduce breaking changes. The flagging system obfuscates complexity and enables folks to be able to misuse the flags.
+  * Cons: We would need to ensure that our flagging system worked completely as intended in order to not accidentally introduce breaking changes.
   * [Example can be seen here](https://github.com/transcom/mymove/compare/0c4be3b...8ad4aed)
-* Option 4: Only create new services if they are needed and shift any shared logic into reusable functions.
-  * Pros: It allows flexibility. We can let endpoints utilize existing services or utilize the newly created service.
-  * Cons: Sometimes the shared portions of existing functions don't have clear logical break points and it can be easy to have arbitrary functions that don't do a complete "unit" of work.
 
-**Chosen Alternative:** Option 4. It allows the handler to determine what services will be called and provides the ability to have to opt into changes. By default no existing endpoints are impacted unless an existing service is updated.
+There are definitely other alternatives out there. Please feel free to suggest another.
+
+**Chosen Alternative:** Option 3. It is dependent on reliably setting the api version flag and getting it to the services. However, once this is accomplished, this option best separates the different versions.
 
 #### A Note on versioning our db/models
 
