@@ -17,7 +17,7 @@ Everything in the [previous ADR](./0078-api-versioning.md) outside of the file o
 
 We are continuing to leverage [Option 2: Have an entirely separate version 2 swagger file](https://transcom.github.io/mymove-docs/docs/adrs/api-versioning#swagger-organization) from the original ADR.
 
-Going through this approach we were able to confirm the exist pros and cons.
+Going through this approach we were able to confirm the existing pros and cons.
 
 > Pros: It would be easier to keep the definitions separate and avoid accidental introduction of breaking changes. It would enable us to use the generated code for our handlers and payload/model files.
 >
