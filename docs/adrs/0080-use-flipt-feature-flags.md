@@ -14,9 +14,9 @@ In production, USTC is going to expect very fast turnaround on some changes (hop
 There are a few different approaches to solving this problem, depending on which decade you’re in. During the 2020s, the industry generally uses feature flags, so that is the type of solution considered here.
 The other thing that feature flags allow, that would be very difficult otherwise, is segmenting the user base. Say for example that several months after we are live, we need to stop using login.gov and start using Okta. We could pick a date, and after that date require everyone to just set up a new login to get to their existing data. This would be inconsiderate at least, and a less-than-delightful user experience for people who happen to be in the middle of moving their entire family across the country on that date. Instead of that very bad scenario, we can use feature flags to have both login methods enabled at the same time, and select which one to use depending on the user. New users approaching the system can be directed to Okta, while existing users can continue to use login.gov. After all of the login.gov users have completed their moves, the feature can be turned off, and then later removed if needed. This approach can be used for any change, as needed.
 
-The chosen solution:
+The chosen solution should:
 
-* Should not disrupt the existing engineering workflow without good reason
+* Not disrupt the existing engineering workflow without good reason
 * Be respectful of budgetary concerns
 * Improve our ability to deliver code
 * Solve all of the problem scenarios below
