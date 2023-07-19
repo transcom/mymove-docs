@@ -9,7 +9,7 @@ _Previously we wrote [ADR0078 API Versioning](./0078-api-versioning.md) that sug
 
 # How to implement API Versioning for Prime API
 
-Everything in the [previous ADR](./0078-api-versioning.md) outside of the file organization strategy are accurate and reflect what is happening in our system.
+Everything in the [previous ADR](./0078-api-versioning.md) outside of the file organization strategy is accurate and reflects the process that we follow for API versioning.
 
 ## File/Code Organization
 
