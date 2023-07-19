@@ -9,7 +9,7 @@ sidebar_position: 7
 3. In the transcom/mymove repo, create a PR to update node. [Here's an example](https://github.com/transcom/mymove/pull/6878) && [this PR](https://github.com/transcom/mymove/pull/6904)
 
 Things to modify:
-* Bump the `.node_version`
+* Bump the nodejs version in `.tool-versions` and `.node_version` (some folks may still be using nodenv to manage node)
 * Modify the instances of `milmove/circleci-docker:milmove-app-` and replace the hash w/ the one found in step 2. (I used the PR branch name rather than hash so it would pull any changes I made over on the `circleci-docker` PR without having to update the hash each time I made a change)
 * update `check-node-version` and `prereqs`
 * Do a find and replace to update references of the prior node version with the new node version

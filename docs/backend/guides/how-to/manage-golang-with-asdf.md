@@ -39,10 +39,11 @@ Run `cat .tool-versions` to output what version of go we should be using
 
 ```sh
 ❯ cat .tool-versions
-golang 1.15.10
+golang 1.20.5
+nodejs 18.13.0
 ```
 
-Then run `asdf global golang 1.15.10`
+Then run `asdf global golang 1.20.5`
 
 ### Reload your shell
 
@@ -112,7 +113,7 @@ then run `source ~/.bash_profile` in the terminal to reload.
 If you are getting can't compile because library was compiled for `old version of go` vs `current version of go`. You probably should exit your shell and open a new one. Also ensure the below are in your shell's rc file.
 
 ```sh
-# Ensure that the `asdf.sh` file is run first before envoking any `go *`
+# Ensure that the `asdf.sh` file is run first before invoking any `go *`
 # commands.
 source $(brew --prefix asdf)/libexec/asdf.sh
 
