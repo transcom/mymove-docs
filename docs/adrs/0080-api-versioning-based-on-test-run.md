@@ -43,7 +43,7 @@ Through this test run, we realized that the flagging system had an additional co
 
 Because of these findings we decided to go with a new option.
 
-Option 4: Only create new services if they are needed and shift any shared logic into reusable functions.
+Option 4: Only create new services if they are needed and shift any shared logic into reusable functions. These new services won't be versioned and will be added like existing functions. (Eg. if we have a service for fetching orders we might create a separate `fetchOrdersWithAddresses` function that has the same core functionality but also fetches all of the child addresses.)
 
 - Pros: It allows flexibility. We can let endpoints utilize existing services or utilize the newly created service.
 - Cons: Sometimes the shared portions of existing functions don't have clear logical break points and it can be easy to have arbitrary functions that don't do a complete "unit" of work.
