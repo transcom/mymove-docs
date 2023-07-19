@@ -39,7 +39,7 @@ Previously we were suggesting to go with [Option 3: Creating subdirectories and 
 >
 > Cons: Repetitive code. Naming questions arise, in order to delineate the new from the old. Difficulty when dealing with more complicated services, especially when we use a service in another service.
 
-Through this test run, we realized that the flagging system had an additional con in that it was obfuscating complexity and enabling folks to potentially misuse the flag. The default behavior also made it so that all existing tests that used a given service would have been updated to leverage the new versioned service.
+Through this test run, we realized that the flagging system had an additional con. It obfuscated complexity and enabled the flag to be misused. If you take a look at the [example PR](https://github.com/transcom/mymove/compare/0c4be3b...8ad4aed#diff-a2ee24d035b334c22da8c32ee512e2ec1308300bc7b80f0e9f466d13e997dd49) for this suggested option you'll see that the default behavior of the service is to call the v2 service when the flag is not set. This meant that all tests would likely need to have this flag set in some obfuscated initialization code while still making the flag overridable. This added additional complexity and made it so that we could theoretically add a conditional for the flag throughout our codebase. This opens the possibility for code to branch out in a myriad of ways even when we only wanted this functionality to be used in a specific way. The way that we introduced the flag was also a bit questionable. We added it to the app context which was bringing http/routing concerns to the app context which should probably remain separated.
 
 Because of these findings we decided to go with a new option.
 
