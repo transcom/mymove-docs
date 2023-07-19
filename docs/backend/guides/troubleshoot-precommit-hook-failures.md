@@ -26,7 +26,7 @@ If they are not installed:
 ## Errors and Solutions
 
 ### 1. Error: Installing environment
-For an error about installing the environment, try ensuring your nodenv is set correctly.
+For an error about installing the environment, try ensuring your nodenv or asdf manage node version is set correctly.
 This is what the error looks like, it stalls here for a while….
 ```
 $ pre-commit install-hooks
@@ -35,19 +35,43 @@ $ pre-commit install-hooks
 [INFO] This may take a few minutes...
 ```
 #### Solution 1
-For this error you may need to set your global nodenv version
+For this error you may need to set your global node version.
 
-Check the current versions,
-```
-~/$ cat .node-version
-12.21.0
-```
+Check the current versions from inside the mymove folder,
+
+* asdf
+  ```
+  ~/$ cat .tool-versions
+  18.13.0
+  ```
+
+  Verify which version of nodejs asdf is using (the version with the asterisk is currently selected)
+  ```
+  ~/$ asdf list nodejs
+  16.15.0
+  *18.13.0
+  18.15.0
+  18.16.0
+  ```
+
+* nodenv
+  ```
+  ~/$ cat .node-version
+  12.21.0
+  ```
 
 Outside mymove folder, set the global version,
-```
-~/mymove$ cd ..
-~/$ nodenv global 12.21.0
-```
+* asdf
+  ```
+  ~/mymove$ cd ..
+  ~/$ asdf global 12.21.0
+  ```
+* nodenv
+  ```
+  ~/mymove$ cd ..
+  ~/$ asdf global 12.21.0
+  ```
+
 
 Then inside mymove,
 ```
@@ -139,7 +163,7 @@ This could be due to the build failing. Try `make server_build` to check.
 
 #### Nix Error: SSL Certificate verify failed
 
-This can happen because of the way certs need to be handled in this project and `nix`. 
+This can happen because of the way certs need to be handled in this project and `nix`.
 
 #### Solution
 To get around this issue, you can try running:

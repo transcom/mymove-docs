@@ -8,7 +8,7 @@ Having trouble running mymove locally? This page collects common errors and thei
 
 ## Migrations
 
-### Invalid migration path 
+### Invalid migration path
 
 ```
 2020-08-05T10:41:00.589-0500	INFO	milmove/migrate.go:61	checking migration config	{"git_branch": "main", "git_commit": "c42a3ef9a458e5b9de94fa3507b6c2f43b209856"}
@@ -30,21 +30,18 @@ The engine "node" is incompatible with this module. Expected version "12.21.0". 
 ```
 
 #### Solution
-The project uses node version `12.21.0`. Use `nodenv` to manage your node versions and easily switch between them.
+The project uses the node version specified in `.tool-versions`. Use `asdf` to manage your node versions and easily switch between them.
 
-* Install `nodenv`: https://github.com/nodenv/nodenv
-  * `brew install nodenv`
+* Install `asdf`: https://asdf-vm.com/
+  * `brew install asdf`
 * Install the correct version of Node
-  * `nodenv install 12.21.0`
-* Set version of Node
-  * `nodenv local 12.21.0`
-
-**Note**: Make sure you've appended `eval "$(nodenv init -)"` to your shell rc. Read through the [official docs](https://github.com/nodenv/nodenv#installation) when installing `nodenv`.
+  * `asdf plugin add nodejs`
+  * `asdf install`
 
 ## Compiling
 
 ## The client doesn't reflect my new changes or will not build locally
-The client server is detecting a build problem. You fix it, but it does not see the new code and the problem remains. Sometimes, no new build is triggered. 
+The client server is detecting a build problem. You fix it, but it does not see the new code and the problem remains. Sometimes, no new build is triggered.
 
 This can manifest in a couple of ways, appearing to be a code problem or potential a missing npm package and various other "weird" symptoms. Sometimes it occurs on branch switching without shutting down the server first.
 
@@ -64,6 +61,6 @@ You may see an error message stating `Conflicting order` from a plugin such as t
 
 The way to resolve these errors is to figure out what the common parents of these components or files are and where they are used.  You will likely need to reorder the import statements of these resources in a consistent fashion.  Because we are using create-react-app we can't easily suppress this warning in a webpack config.
 
-For more details you can consult this [GitHub issue](https://github.com/facebook/create-react-app/issues/5372).  
+For more details you can consult this [GitHub issue](https://github.com/facebook/create-react-app/issues/5372).
 
 

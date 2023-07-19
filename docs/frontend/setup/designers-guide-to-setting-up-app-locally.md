@@ -60,7 +60,7 @@ For the sake of time let's try to install all of these dependencies at once. Som
 
 1. From your Terminal copy and paste the command below and press the enter key
 
-`brew install awscli bash chamber jq asdf yarn pre-commit shellcheck postgresql nodenv opensc circleci direnv entr aws-vault watchman`
+`brew install asdf awscli bash chamber jq asdf yarn pre-commit shellcheck postgresql opensc circleci direnv entr aws-vault watchman`
 
 ## Defining your environment variables with the .envrc.local
 
@@ -98,6 +98,10 @@ source /usr/local/opt/asdf/asdf.sh
 export GOPATH=${GOPATH:-$(go env GOPATH)}
 export PATH=$(go env GOPATH)/bin:$PATH
 eval "$(direnv hook zsh)"
+```
+
+If using nodenv, add the following line to the end of your file as well
+```shell
 eval "$(nodenv init -)"
 ```
 
