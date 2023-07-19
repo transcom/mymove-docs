@@ -108,13 +108,15 @@ export const ConusOrNot = () => {
 
 Chosen Alternative: Option #5: Flipt
 
+This section is an overview of why choose Flipt over the alternatives.
+
 LaunchDarkly is the industry standard, but there is no room for it in the budget. Unleash has similar features to AWS AppConfig, but requires more setup and maintenance effort when self-hosted (e.g. it requires a PostgreSQL database). AWS AppConfig is really a thin shim over config files and doesn't provide much in the way of helping us manage feature groupings.
 
 Rolling our own is a possibility, but one key feature we'd want to think about is how to promote feature flags from one environment to another (e.g. from staging to production). That suggests that tying the feature flag to the environment by e.g. storing the flags in the database isn't ideal as we need to recreate the flag settings in each environment. Combining that with the desire to have feature flags be enabled on a per user basis, it makes the complexity of rolling our own outweigh the relatively simple flipt deployment.
 
 Flipt provides a [filesystem backend](https://www.flipt.io/docs/experimental/filesystem-backends) which would allow a way for us to manage our feature flags using a [gitops](https://about.gitlab.com/topics/gitops/) style process. We can test out our flag configuration in separate environments (e.g. experimental, demo, staging) before rolling out to production. It also allows us to deploy the Flipt service without requiring another stateful system (e.g. no database).
 
-We will have a couple of different options for how we deploy flipt. Examining the options for how flipt is deployed may be its own ADR.
+We will have a couple of different options for how we deploy flipt. Examining the options for how flipt is deployed will be its own ADR.
 
 ## Pros and Cons of the Alternatives
 
