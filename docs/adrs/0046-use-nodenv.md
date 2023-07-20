@@ -1,7 +1,6 @@
 ---
 title: 0046 Use nodenv to manage Node versions in development
 ---
-
 # Use [nodenv](https://github.com/nodenv/nodenv) to manage Node versions in development
 
 :::warning
