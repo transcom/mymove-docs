@@ -19,7 +19,11 @@ This ADR supersedes [ADR-0046](0046-use-nodenv.md) and [ADR-0056](0056-use-asdf-
 
 * Chosen Alternative: Use [asdf](https://asdf-vm.com/) to manage golang and node versions
 
-ADR-0056 notes the following as a disadvantage of using asdf for golang and node:
+ADR-0056 notes that the original author would like to see asdf used for other tools (presumably such as node)
+
+> Admittedly we are not yet taking advantage of `asdf` for other tools, but I would like to see that happen.
+
+ADR-0056 also lists the following as a disadvantage of using asdf for golang and node:
 
 > installing node, yarn, or golang with asdf and another one of the similar tools can cause conflicts depending on which
 > of the version manager tools is first in a particular path.
