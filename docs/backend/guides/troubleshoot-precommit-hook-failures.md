@@ -41,36 +41,35 @@ Check the current versions from inside the mymove folder,
 
 * asdf
   ```
-  ~/$ cat .tool-versions
-  golang 1.20.5
-  nodejs 18.13.0
+  ~/mymove$ cat .tool-versions
+  golang <project-go-version>
+  nodejs <project-node-version>
   ```
 
   Verify which version of nodejs asdf is using (the version with the asterisk is currently selected)
   ```
-  ~/$ asdf list nodejs
-  16.15.0
-  *18.13.0
-  18.15.0
-  18.16.0
+  ~/mymove$ asdf list nodejs
+  <lower-node-version>
+  *<current-node-version>
+  <higher-node-version>
   ```
 
 * nodenv
   ```
-  ~/$ cat .node-version
-  12.21.0
+  ~/mymove$ cat .node-version
+  <project-node-version>
   ```
 
 Outside mymove folder, set the global version,
 * asdf
   ```
   ~/mymove$ cd ..
-  ~/$ asdf global nodejs 12.21.0
+  ~/$ asdf global nodejs <project-node-version>
   ```
 * nodenv
   ```
   ~/mymove$ cd ..
-  ~/$ asdf global 12.21.0
+  ~/$ asdf global <project-node-version>
   ```
 
 

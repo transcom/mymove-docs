@@ -35,15 +35,9 @@ Run `asdf install` to install the binary for the currently required version of g
 
 ### Configure global use of golang version
 
-Run `cat .tool-versions` to output what version of go we should be using
+Run `cat .tool-versions` or view the `.tool-versions` file in your editor to output what version of go we should be using
 
-```sh
-❯ cat .tool-versions
-golang 1.20.5
-nodejs 18.13.0
-```
-
-Then run `asdf global golang 1.20.5`
+Then run `asdf global golang <version>` where `<version>` is the version defined in `.tool-versions`
 
 ### Reload your shell
 
@@ -55,7 +49,7 @@ Run `asdf current` and `which go` to verify they point to the right versions. Th
 
 ```sh
 ❯ asdf current
-golang          1.15.10          /Users/john/projects/dod/mymove/.tool-versions
+golang          <version>          /Users/john/projects/dod/mymove/.tool-versions
 
 ❯ which go
 /Users/john/.asdf/shims/go
