@@ -28,7 +28,7 @@ ADR-0056 also lists the following as a disadvantage of using asdf for golang and
 > installing node, yarn, or golang with asdf and another one of the similar tools can cause conflicts depending on which
 > of the version manager tools is first in a particular path.
 
-This is actually and advantage of using asdf, since one of the difficulties of managing asdf _and_ node is the obfuscation
+This is actually an advantage of using asdf, since one of the difficulties of managing asdf _and_ node is the obfuscation
 of which version will be shimmed by which tool. Picking and using _one_ tool is the solution. Since asdf is already required
 for managing go, and it is capable of managing node, it is the logical choice.
 
