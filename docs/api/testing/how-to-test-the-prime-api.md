@@ -64,6 +64,12 @@ You must have data generated within your database and have the server running.
 
 To interact with the Prime API, we will use a CLI utility called `prime-api-client`. To get command line help:
 
+:::info
+
+The `prime-api-client` currently only supports /v1 APIs. Additional code changes are needed in order to enable support for v2 APIs.
+
+:::
+
 * `go run ./cmd/prime-api-client --help` to see a list of all subcommands and common arguments/flags
 * `go run ./cmd/prime-api-client <subcommand> --help` to see a list of specific arguments/flags for a subcommand
 
