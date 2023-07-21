@@ -100,11 +100,6 @@ export PATH=$(go env GOPATH)/bin:$PATH
 eval "$(direnv hook zsh)"
 ```
 
-If using nodenv, add the following line to the end of your file as well
-```shell
-eval "$(nodenv init -)"
-```
-
 You will need to restart your terminal or close and open a new window.
 
 The next time you switch the the mymove folder in your terminal you will be prompted to run `direnv allow` for it to autoload the environment variables.
