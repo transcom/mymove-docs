@@ -3,6 +3,12 @@ title: 0056 Use ASDF To Manage Golang Versions In Development
 ---
 # Use ASDF To Manage Golang Versions In Development
 
+:::warning
+
+**Replaced by [ADR 0081](0081-use-asdf-to-manage-node-and-golang-versions-in-development.md)**
+
+:::
+
 There are many tools for managing versions of developer tools on developer machines. [brew](https://brew.sh/), [nodenv](https://github.com/nodenv/nodenv), [g](https://github.com/stefanmaric/g), etc. Historically MilMove has used brew for many things, but for node and golang this has lead to problems. Because of the issues around requiring specific versions of node and golang brew has caused more headaches than it is worth dealing with. This lead to [ADR 0046 Use nodenv](0046-use-nodenv.md), which solved the problem for node. However we don't have one for golang. So this ADR aims to provide a recommendation towards managing golang release versions in development.
 
 ## Considered Alternatives

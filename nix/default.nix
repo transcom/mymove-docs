@@ -8,12 +8,12 @@ buildEnv {
     (import
       (builtins.fetchGit {
         # Descriptive name to make the store path easier to identify
-        name = "nodejs-16.15.0";
+        name = "nodejs-18.13.0";
         url = "https://github.com/NixOS/nixpkgs/";
         ref = "refs/heads/nixpkgs-unstable";
         rev = "0b45cae8a35412e461c13c5037dcdc99c06b7451";
       })
-      { }).nodejs-16_x
+      { }).nodejs-18_x
 
     (import
       (builtins.fetchGit {
