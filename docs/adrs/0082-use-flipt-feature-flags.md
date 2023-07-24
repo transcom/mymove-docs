@@ -1,5 +1,5 @@
 ---
-title: 0078 Use Flipt for Feature Flags
+title: 0082 Use Flipt for Feature Flags
 description: Feature Flags enable CI/CD and roll-forward recovery. The question isn't "why?", but "how?"
 ---
 
