@@ -1,12 +1,10 @@
 ---
-title: "0081 Deprecating `devseed` Scenarios"
+title: "0083 Deprecating `devseed` Scenarios"
 description: |
-  A description for ADR 0081
+  A description for ADR 0083
 ---
 
 # _Deprecating `devseed` Scenarios and use `testharness` Scenarios instead_
-
-<!-- **User Story:** _[ticket/issue-number]_ optional -->
 
 ## Background
 
@@ -69,21 +67,13 @@ future if needed.
 - _Do nothing_
 - _Deprecate `devseed` scenarios and provide team-wide guidance on exclusively
   using `testharness` scenarios_
-- _Deprecate and delete `devseed` scenarios_
+- _Deprecate and delete `devseed` scenarios (and related files in pkg/testdatagen/scenario)_
 
 ## Decision Outcome
 
-Deprecate and delete `devseed` scenarios (and related files in pkg/testdatagen/scenario)
+Deprecate and delete `devseed` scenarios (and related files in pkg/testdatagen/scenario). This will give us a singular way to create test data and remove the overhead of maintaining `devseed` data
 
-- This will give us a singular way to create test data and remove the overhead of maintaining `devseed` data
-- `?` This would remove seed data from `run-prime-docker` - is that still being used?
-
-<!--
-- Chosen Alternative: _[alternative 1]_
-- _[justification. e.g., only alternative, which meets KO criterion decision driver | which resolves force | ... | comes out best (see below)]_
- optional -->
-
-## Pros and Cons of the Alternatives <!-- optional -->
+## Pros and Cons of the Alternatives
 
 ### _Do nothing_
 
@@ -110,12 +100,12 @@ Deprecate and delete `devseed` scenarios (and related files in pkg/testdatagen/s
 
 ### _Deprecate and delete `devseed` scenarios (and related files in pkg/testdatagen/scenario)_
 
-Most of the pro and cons from above apply. Deleting the `devseed` data also adds the following considerations:
+Most of the pro and cons from option 2 apply. Deleting the `devseed` data also adds the following considerations:
 
 - `+` _Teams would not have to maintain `devseed` data._
 - `+` _There would be a singular way to create test data._
-- `-` _More work involved in implementing the ADR e.g. documentation updates,
-  regular training, leading by example._
+- `-` _More work involved in implementing the ADR e.g. removing code, documentation updates,
+  etc._
 - `-` _Teams would have to adjust to using the new `testharness` scenarios,
   rather than relying on existing move codes for testing_
 - `-` _Not all move scenarios or users are currently in
