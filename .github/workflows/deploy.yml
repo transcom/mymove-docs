@@ -17,7 +17,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version-file: ".node-version"
+          node-version-file: ".tool-versions"
           cache: "yarn"
 
       - name: Install yarn
@@ -30,7 +30,7 @@ jobs:
         run: yarn build
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.4.2
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           branch: docusaurus # the branch for the deployment
           folder: build # the folder getting deployed

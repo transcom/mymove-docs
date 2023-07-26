@@ -1,3 +1,7 @@
+---
+pagination_next: about/application-setup/database
+---
+
 # Prerequisites
 
 We have scripts that will install all the dependencies for you, as well as configure your shell file with all the required commands:

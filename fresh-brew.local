@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 
-configure_shell_file_for_nodenv() {
-  if [[ $SHELL == *fish ]]; then
-    append_to_file "$shell_file" 'status --is-interactive; and source (nodenv init -|psub)'
-  else
-    # shellcheck disable=SC2016
-    append_to_file "$shell_file" 'eval "$(nodenv init -)"'
-  fi
+asdf_plugin_is_installed() {
+  asdf plugin list -1 | grep -Fqx "$1"
 }
 
 fancy_echo "Running your customizations from fresh-brew.local ..."
@@ -19,17 +14,17 @@ if [ -f "Brewfile.local" ]; then
   fi
 fi
 
-node_version="$(cat < ".node-version")"
-
-fancy_echo "Installing node $node_version ..."
-if nodenv versions | grep "$node_version"; then
-  fancy_echo "node $node_version already installed."
+fancy_echo "Installing asdf plugins..."
+if ! asdf_plugin_is_installed "nodejs"; then
+  fancy_echo "Adding nodejs plugin to asdf..."
+  asdf plugin add nodejs
 else
-  brew upgrade node-build
-  nodenv install "$node_version"
+  fancy_echo "Updating asdf nodejs plugin..."
+  asdf plugin update nodejs
 fi
-fancy_echo "Configuring Nodenv..."
-configure_shell_file_for_nodenv
+
+fancy_echo "installing tools with asd..."
+asdf install
 
 fancy_echo "Installing dependencies with Yarn..."
 yarn install

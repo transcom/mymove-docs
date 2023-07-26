@@ -1,6 +1,5 @@
 ---
 id: Additional Setup
-sidebar_position: 1
 ---
 
 # Other Additional Setups

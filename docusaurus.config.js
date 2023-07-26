@@ -142,7 +142,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`
+      copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`,
     },
     prism: {
       theme: themes.oceanicNext,
@@ -179,22 +179,31 @@ module.exports = {
             spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/ghc.yaml',
             route: '/api/ghc',
           },
+          // Continue to support existing url for those that have bookmarked this link. We can route this to the oldest supported definition
           {
             spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml',
             route: '/api/prime',
+          },
+          {
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime.yaml',
+            route: '/api/prime/v1',
+          },
+          {
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/prime_v2.yaml',
+            route: '/api/prime/v2',
           },
           {
             spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/support.yaml',
             route: '/api/support',
           },
         ],
-      }
+      },
     ],
   ],
   themes: [
     '@saucelabs/theme-github-codeblock',
     [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
+      require.resolve('@easyops-cn/docusaurus-search-local'),
       /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
       ({
         // `hashed` is recommended as long-term-cache of index file is possible.
@@ -216,7 +225,7 @@ module.exports = {
           redirects.push(APIPages);
           return redirects.flat();
         })(),
-      }
+      },
     ],
   ],
 };

@@ -1,3 +1,7 @@
+---
+id: database
+---
+
 # Database
 
 You will need to setup a local database before you can begin working on the local server / client. Docker will need to

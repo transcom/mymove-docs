@@ -26,7 +26,7 @@ Git is likely already installed on your computer but you do have the option of u
 
 If you are using git from the terminal it is worth configuring your user settings in case you do end up wanting to ever work on features:
 
-1. From the Terminal set the user email and user name to match your GitHub account by changing the values in quotes below one line at a time. 
+1. From the Terminal set the user email and user name to match your GitHub account by changing the values in quotes below one line at a time.
 
 `git config --global user.email "trussel@truss.works"`
 
@@ -52,7 +52,7 @@ Docker is a container framework we use for running different services like datab
 
 1. Follow this link https://download.docker.com/mac/stable/Docker.dmg in your browser that will prompt you to download the Docker installer.
 2. When the download is finished, open it from your downloads folder if it didn't start automatically and follow the install instructions.
-3. When it's finished, it should add a whale icon with tetris looking pieces on top. 
+3. When it's finished, it should add a whale icon with tetris looking pieces on top.
 
 ## Installing other prerequisites
 
@@ -60,7 +60,7 @@ For the sake of time let's try to install all of these dependencies at once. Som
 
 1. From your Terminal copy and paste the command below and press the enter key
 
-`brew install awscli bash chamber jq asdf yarn pre-commit shellcheck postgresql nodenv opensc circleci direnv entr aws-vault watchman`
+`brew install asdf awscli bash chamber jq asdf yarn pre-commit shellcheck postgresql opensc circleci direnv entr aws-vault watchman`
 
 ## Defining your environment variables with the .envrc.local
 
@@ -74,25 +74,16 @@ For steps on how to setup AWS creds with Chamber click [here](https://dp3.atlass
 
 Click on the link to [ADR 0016 Browser Support](/docs/adrs/0016-Browser-Support.md) to view list of supported browsers.
 
-## Installing Go using asdf
+## Installing language tools using asdf
 
-asdf is a version manager we used to simplify installing and upgrading dependencies such as Go.
+asdf is a version manager we used to simplify installing and upgrading dependencies such as Go and Node.
 
-To enable asdf for installing and setting the Go version run this command from inside your mymove folder:
+To enable asdf for installing and setting the Go version run this command **from inside your mymove** folder:
 ```shell
-asdf plugin add golang && asdf install $(cat .tool-versions) && asdf global $(cat .tool-versions)
+asdf plugin add golang && asdf plugin add nodejs && asdf install && asdf global $(cat .tool-versions | grep golang)
 ```
 
-The current Go version being used on the project is inside the .tool-versions file.
-
-## Installing Node using nodenv
-
-nodenv is a version manager we use to manage multiple versions of node between projects.
-
-To install the current version of node used by the project (the value specified in .node-version file) run:
-```shell
-nodenv install $(cat .node-version) && nodenv local $(cat .node-version)
-```
+The current tool versions being used on the project is inside the .tool-versions file.
 
 ## Hooking up your path and version managers to your terminal .zshrc file
 
@@ -107,7 +98,6 @@ source /usr/local/opt/asdf/asdf.sh
 export GOPATH=${GOPATH:-$(go env GOPATH)}
 export PATH=$(go env GOPATH)/bin:$PATH
 eval "$(direnv hook zsh)"
-eval "$(nodenv init -)"
 ```
 
 You will need to restart your terminal or close and open a new window.
@@ -118,7 +108,7 @@ The next time you switch the the mymove folder in your terminal you will be prom
 
 Similar to how the mymove app is broken up into different hosts in the deployed environments (admin.move.mil, office.move.mil, and my.move.mil) we need to mimic this setup in our local system.  Normally when you are accessing a locally served app you can access it by entering the localhost value in the browser URL bar but this is not true in our case.
 
-To create unique local hosts for each app run the following command in your terminal: 
+To create unique local hosts for each app run the following command in your terminal:
 ```sh
 echo "127.0.0.1 milmovelocal\n\
 127.0.0.1 officelocal\n\
@@ -129,7 +119,7 @@ echo "127.0.0.1 milmovelocal\n\
 
 ## Setting up the database
 
-The mymove application uses a Postgres database to store persistent data.  Locally you can run it with no test data or there are a couple of seed scenario files that are helpful to create test users, moves, payment requests, etc... to make it easier to perform different tasks. 
+The mymove application uses a Postgres database to store persistent data.  Locally you can run it with no test data or there are a couple of seed scenario files that are helpful to create test users, moves, payment requests, etc... to make it easier to perform different tasks.
 
 The first time you want to start the database you need to run `make db_dev_run` to download the database Docker image.  You can check that the container named milmove-db-dev exists from the Docker dashboard in your menubar.  The milmove-db-dev container should now be green and have a status of running.
 
