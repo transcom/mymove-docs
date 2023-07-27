@@ -3,14 +3,18 @@ title: 0078 API Versioning
 description: How to implement API Versioning
 ---
 
+**Note:** The code organization parts of this are now superseded by [ADR0080 API Versioning based on Test Run](./0080-api-versioning-based-on-test-run.md).
+
 # How to implement API Versioning for Prime API
 
 **User Story:** *[MB-15994](https://dp3.atlassian.net/browse/MB-15994)*
 
 ## Problem Statement
+
 In order to support the Prime API Integration and prevent introducing potential breaking changes to the API, MilMove needs to version future updates to the Prime API. This ADR will attempt to address the "How?" questions associated with this endeavor. While some of the challenges involved are technical in nature, much of the challenge is coming up with patterns that are clear, understandable, and acceptable to the members of the engineering team.
 
 There are a few areas to consider when deciding how to implement API versioning:
+
 * [The overall versioning strategy (URL patterns, query params, headers, etc.)](#options-for-versioning-strategy)
 * [What endpoints will be incorporated into a new API version?](#codebase-management)
 * An overall file organization strategy - This could even be broken up into categories to consider on their own, because we don't necessarily want to take the same organization approach for all areas of the application
@@ -22,6 +26,7 @@ There are a few areas to consider when deciding how to implement API versioning:
 ## API Versioning Strategy
 
 ### SemVer
+
 The Prime API follows the SemVer (Semantic Versioning) convention, using a three-part version number: Major.Minor.Patch. Here's what each part signifies:
 
 Major versions incorporate significant changes, including backward-incompatible API changes.
@@ -33,6 +38,7 @@ Patch versions include backwards-compatible bug fixes.
 For example, a version could be noted as "2.1.3," where '2' is the major version, '1' is the minor version, and '3' is the patch version.
 
 #### Options on SemVer
+
 * Option 1: Allow for the prime to specify which minor/patch version to use
   * Pros: Would be really granular for the consumer of our API.
   * Cons: Would be a heavy lift to retain former minor and patch versions of our endpoints for the deprecation period.
@@ -43,6 +49,7 @@ For example, a version could be noted as "2.1.3," where '2' is the major version
 **Chosen Alternative**: Option 2. This meets our requirements and is easier to implement. We will use the minor/patch versions to note changes in our API.
 
 ### Options for Versioning Strategy
+
 There are a few options for implementing api versioning in our prime API.
 
 * Option 1: Include version in the URL patterns.
@@ -62,6 +69,7 @@ There are a few options for implementing api versioning in our prime API.
  builds off of our current routing for our API.
 
 ### Codebase management
+
 In order to mitigate the potential for our codebase to swell in size as we branch off versions of our
 APIs, we need to address which endpoints will get pulled into the new versions.
 
@@ -76,11 +84,12 @@ APIs, we need to address which endpoints will get pulled into the new versions.
 **Chosen Alternative:** Option 1. This would keep the codebase from swelling in size and would be easier for the engineers to maintain. With this approach we would need to address issues in documentation and file organization, which will be discussed below.
 
 ### File/Code Organization
+
 In the process of versioning our API, we will need to have some agreed upon patterns for organizing our files and code. There are three general areas we should consider and the file organization might differ based on the section of the code we are talking about.
 
 #### Swagger Organization
 
-**Current Setup:** In our swagger-def files we currently have a file for each api (`prime.yaml`, `ghc.yaml`, etc.). We also have some shared files in the `definitions`, `parameters`, `paths`, `responses` and `tags` directories. Some of the definitions in our swagger-def yaml files reference these shared definitions and some do not. Here is an [example](https://github.com/transcom/mymove/blob/66fdbaab15ea26e669195bf14f04a5a840d9795c/swagger-def/ghc.yaml#L3158-L3162) of where `current_address` uses the shared definitions, whereas `backup_contact` uses an internal defnition.
+**Current Setup:** In our swagger-def files we currently have a file for each api (`prime.yaml`, `ghc.yaml`, etc.). We also have some shared files in the `definitions`, `parameters`, `paths`, `responses` and `tags` directories. Some of the definitions in our swagger-def yaml files reference these shared definitions and some do not. Here is an [example](https://github.com/transcom/mymove/blob/66fdbaab15ea26e669195bf14f04a5a840d9795c/swagger-def/ghc.yaml#L3158-L3162) of where `current_address` uses the shared definitions, whereas `backup_contact` uses an internal definition.
 
 * Option 1: Keep a singular prime swagger-def file and modify the paths to point to either v1 or v2.
   * Pros: It would be less files to manage, especially the generated swagger and server files.
@@ -106,7 +115,6 @@ Here are some questions to consider, when adding a new endpoint to our version 2
 1. What do we do if we create a new endpoint that requires changes to the service that is called? How do we organize the functions/files? Do we create a new file in the services folder? Should we store these services files in a separate v2 subdir? What is the naming structure going to look like?
 2. What if the new endpoint does not require changes to the service? Should we make a new service anyway to prevent issues further down the line?
 
-
 * Option 1: Rename the old version to something that indicates it is old and add the new version to the same interface.
   * Pros: As we remove the deprecated endpoints, we will have less code duplication.
   * Cons: It will be easier to use the wrong service with the wrong endpoint.
@@ -125,9 +133,11 @@ There are definitely other alternatives out there. Please feel free to suggest a
 **Chosen Alternative:** Option 3. It is dependent on reliably setting the api version flag and getting it to the services. However, once this is accomplished, this option best separates the different versions.
 
 #### A Note on versioning our db/models
+
 While it would be technically possible to create versions of our db/models, we will want to avoid that if at all possible. The complications that this would introduce into our application would be great.
 
 ### Documentation
+
 Communicating version changes to the prime will be crucial. We will want to deploy our prime V2 api docs
 in the same manner that we deploy the [prime api docs](https://transcom.github.io/mymove-docs/api/prime).
 

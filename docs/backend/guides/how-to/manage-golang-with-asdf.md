@@ -35,14 +35,9 @@ Run `asdf install` to install the binary for the currently required version of g
 
 ### Configure global use of golang version
 
-Run `cat .tool-versions` to output what version of go we should be using
+Run `cat .tool-versions` or view the `.tool-versions` file in your editor to output what version of go we should be using
 
-```sh
-❯ cat .tool-versions
-golang 1.15.10
-```
-
-Then run `asdf global golang 1.15.10`
+Then run `asdf global golang <version>` where `<version>` is the version defined in `.tool-versions`
 
 ### Reload your shell
 
@@ -54,7 +49,7 @@ Run `asdf current` and `which go` to verify they point to the right versions. Th
 
 ```sh
 ❯ asdf current
-golang          1.15.10          /Users/john/projects/dod/mymove/.tool-versions
+golang          <version>          /Users/john/projects/dod/mymove/.tool-versions
 
 ❯ which go
 /Users/john/.asdf/shims/go
@@ -112,7 +107,7 @@ then run `source ~/.bash_profile` in the terminal to reload.
 If you are getting can't compile because library was compiled for `old version of go` vs `current version of go`. You probably should exit your shell and open a new one. Also ensure the below are in your shell's rc file.
 
 ```sh
-# Ensure that the `asdf.sh` file is run first before envoking any `go *`
+# Ensure that the `asdf.sh` file is run first before invoking any `go *`
 # commands.
 source $(brew --prefix asdf)/libexec/asdf.sh
 
