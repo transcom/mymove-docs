@@ -1,5 +1,5 @@
 ---
-title: "0083 Deprecating `devseed` Scenarios"
+title: '0083 Deprecating `devseed` Scenarios'
 description: |
   A description for ADR 0083
 ---
@@ -67,11 +67,39 @@ future if needed.
 - _Do nothing_
 - _Deprecate `devseed` scenarios and provide team-wide guidance on exclusively
   using `testharness` scenarios_
-- _Deprecate and delete `devseed` scenarios (and related files in pkg/testdatagen/scenario)_
+- _Deprecate and delete `devseed` scenarios (and related files in
+  `pkg/testdatagen/scenario`) after 90 days_
 
 ## Decision Outcome
 
-Deprecate and delete `devseed` scenarios (and related files in pkg/testdatagen/scenario). This will give us a singular way to create test data and remove the overhead of maintaining `devseed` data
+Deprecate and delete `devseed` scenarios (and related files in
+`pkg/testdatagen/scenario`) after 90 days on 8th of November, 2023. This will
+give us a singular way to create test data and remove the overhead of
+maintaining `devseed` data.
+
+Because of the 90 day timeline, Truss engineering will have plenty of time to
+work towards deleting the `devseed` scenario data and properly communicate it
+out to other practices. We will also be able to test things like deleting the
+scenarios from ephemeral deployments on a more relaxed timeline.
+
+In the meantime, we will also create a new `DangerJS` CI check which will warn
+committers that the `devseed` scenario data is deprecated and display a link
+back to this ADR. We will also add deprecation warnings across the various
+commands that execute `devseed` scenario data that link back to this ADR and
+display a warning message.
+
+:::tip
+
+Use the text below as inspiration for the deprecation message across our various
+automation tooling using `devseed` scenario data.
+
+> The `devseed` scenario data has been deprecated. Please see ADR 0083,
+> https://transcom.github.io/mymove-docs/docs/adrs/deprecating-devseed-scenarios
+
+:::
+
+This alternative comes with a risk of ownership since it will be implemented
+during a 90 day period.
 
 ## Pros and Cons of the Alternatives
 
@@ -98,16 +126,20 @@ Deprecate and delete `devseed` scenarios (and related files in pkg/testdatagen/s
 - `-` _`Devseed` can be used to batch-create scenarios with multiple related moves, but `testharness` currently only supports creation of individual moves_
 - `-` _Teams would still have to maintain `devseed` data_
 
-### _Deprecate and delete `devseed` scenarios (and related files in pkg/testdatagen/scenario)_
+### _Deprecate and delete `devseed` scenarios (and related files in `pkg/testdatagen/scenario`) after 90 days_
 
 Most of the pro and cons from option 2 apply. Deleting the `devseed` data also adds the following considerations:
 
+- `+` _90 days is enough time to properly acclimate to the new changes_
 - `+` _Teams would not have to maintain `devseed` data._
 - `+` _There would be a singular way to create test data._
-- `-` _More work involved in implementing the ADR e.g. removing code, documentation updates,
-  etc._
+- `-` _During and after the 90 day period, there will need to be a way for
+  Trussels to track this work._
+- `-` _More work involved in implementing the ADR e.g. removing code,
+  documentation updates, etc._
 - `-` _Teams would have to adjust to using the new `testharness` scenarios,
   rather than relying on existing move codes for testing_
-- `-` _Not all move scenarios or users are currently in
-  `testharness`, so Truss engineers may need to recreate some of the more commonly used/expected
-  moves using `testharness`_
+- `-` _Teams that rely on old `devseed` scenarios would need to train_
+- `-` _Not all move scenarios or users are currently in `testharness`, so Truss
+  engineers may need to recreate some of the more commonly used/expected moves
+  using `testharness`_
