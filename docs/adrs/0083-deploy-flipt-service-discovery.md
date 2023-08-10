@@ -1,5 +1,6 @@
 ---
-title: "0083 Deploy flipt using ECS service discovery"
+title: "0084 Deploy Flipt using ECS service discovery"
+description: "An ADR about how we deploy Flipt using AWS ECS service discovery."
 ---
 
 # Deploy flipt using ECS service discovery
