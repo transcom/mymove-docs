@@ -35,7 +35,7 @@ Using AWS Service Discovery means we have a single instance of flipt per environ
 ### Deploy a single flipt instance for all environments
 
 - `+` A single installation to manage
-- `-` It create a dependency between our environments and something we run outside of that environment. That would be a new pattern and one with security implications.
+- `-` It creates a dependency between our environments and something we run outside of that environment. This would be a new pattern and have security implications.
 
 ### Deploy flipt as a sidecar to the MilMove application
 
