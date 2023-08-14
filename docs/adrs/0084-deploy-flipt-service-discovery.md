@@ -46,7 +46,7 @@ Using AWS Service Discovery means we have a single instance of flipt per environ
 
 ### Deploy a single flipt instance to each environment using AWS Service Connect
 
-- '-' As of 2023-07-24, [AWS Service Connect is not available in GovCloud](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-connect.html) so, this is a non starter.
+- '-' As of 2023-07-24, [AWS Service Connect is not available in GovCloud](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-connect.html), so this is a non starter.
 
 ### Deploy a single flipt instance to each environment using AWS Service Discovery
 
