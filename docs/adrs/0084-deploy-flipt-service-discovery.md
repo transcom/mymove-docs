@@ -40,7 +40,7 @@ Using AWS Service Discovery means we have a single instance of flipt per environ
 ### Deploy flipt as a sidecar to the MilMove application
 
 - `+` No changes needed to the ECS infrastructure
-- `-` Inefficient use of resources, running multiple instances of the same service
+- `-` Inefficient use of resources, since it runs multiple instances of the same service
 - `-` Locks us into using the S3 storage system
 
 
