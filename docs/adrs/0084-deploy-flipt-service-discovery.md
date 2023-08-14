@@ -9,7 +9,7 @@ description: "An ADR about how we deploy Flipt using AWS ECS service discovery."
 
 In [ADR 0082 Use Flipt for feature flags](./0082-use-flipt-feature-flags.md) it was agreed we would use [flipt](https://flipt.io) to enable feature flags on MilMove. Now the question is how we should deploy it to our infrastructure.
 
-MilMove has multiple deployment environments (demo, experimental, loadtesting, staging and production) that have different uses and different tolerance for breaking changes and security measures. Ideally, each environment would be independent of the others.
+MilMove has multiple deployment environments (demo, experimental, loadtesting, staging and production) that have different uses and different tolerances for breaking changes and security measures. Ideally, each environment would be independent of the others.
 
 ## Considered Alternatives
 
