@@ -58,7 +58,6 @@ go version go1.16.4 darwin/amd64
 - Update files with the updated Docker image tag hash and/or Go version:
   - [Example PR](https://github.com/transcom/mymove/pull/10185)
   - Update the Go version number in:
-    - `.go-version`
     - `.tool-versions`
     - `go-version` in `.github/workflows/go-auto-approve.yml`
   - Update the Docker image tag hash in:
