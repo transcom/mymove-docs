@@ -13,7 +13,7 @@ Your test will live in `pkg/handlers/routing`, in a subdirectory corresponding t
 The name of the test file should correspond to the name of the file that contains the handler that the endpoint calls, `{handler_file_name}_test.go`. `pkg/handlers/internalapi/ppm_shipment.go` would have a corresponding test file in `pkg/handlers/routing/internalapi_test/ppm_shipment_test.go`.
 
 Generally, the test name and location should be
-```pkg/handlers/routing/{api_name}api_test/{handler_name}_test.go```
+```pkg/handlers/routing/{api_name}api_test/{handler_file_name}_test.go```
 
 ## Test structure
 
