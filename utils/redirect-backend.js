@@ -210,12 +210,6 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/backend/guides/troubleshoot-gex-connection',
-    from: [
-      '/docs/help/troubleshoot-gex-connection',
-    ],
-  },
-  {
     to: '/docs/backend/guides/how-to/upgrade-go-version',
     from: [
       '/docs/dev/versioning/upgrade-go-version',
