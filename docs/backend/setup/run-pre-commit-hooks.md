@@ -15,28 +15,6 @@ Pre-commit can be run by running the following command in terminal:
 
 If you would like to run an individual hook, for example if you want to only run *prettier*: `pre-commit run prettier -a`
 
-## Specifying and updating the Node version in the config
-
-By default, `pre-commit` uses the system-installed versions of languages. We prefer to manage versions with language managers such as `nodenv` and `asdf`. By default `nodenv` doesn't install Node system-wide, which can cause `pre-commit install-hooks` to hang without explanation. The solution is to either install the language globally (not ideal), or tell `pre-commit` to use a specific version of a language. We can either use the `language_version` key within a specific hook, or if we expect all Node hooks to use the same version, we can define a top-level `default_language_version` attribute where you can specify multiple languages and their versions, like this:
-```yaml
-default_language_version:
-  # this should match the version in .node-version at the root of this project
-  node: 12.21.0
-
-repos:
-  - repo: local
-    hooks:
-      - id: go-version
-        name: go version
-        entry: scripts/check-go-version
-        language: script
-        types: [go]
-```
-
-This specific language version should match the one we use on the project. For Node, this is defined in `.node-version`. When we upgrade Node, we should remember to update the `pre-commit` config file as well.
-
-Currently, it looks like `pre-commit` only supports Python, Node, and Ruby for specific language versions. See the [pre-commit documentation](https://pre-commit.com/#overriding-language-version) for more details.
-
 ## Editor Integration
 
 1. `golangci-lint` supports various [editors](https://github.com/golangci/golangci-lint/#editor-integration)
