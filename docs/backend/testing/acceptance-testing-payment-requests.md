@@ -6,6 +6,8 @@ sidebar_position: 3
 
 Link to a video walk-through example of acceptance testing a payment request. [Video in Google Drive](https://drive.google.com/file/d/1yDQAgRxGRGwkiwhUKgaor5C0vMtm6Ek4/view)
 
+EDI 858 Structure with segment significance and source data mapping can be found in [google drive](https://docs.google.com/spreadsheets/d/12vNs6X-jqLIeDTntvFkYUG98S_FOFyWSRNs8LQCeYwg/edit?usp=sharing).
+
 ## Pricing Acceptance Tool
 
 In lieu of the following instructions, you can use the `pricing-acceptance`
