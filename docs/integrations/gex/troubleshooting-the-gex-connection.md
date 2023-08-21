@@ -1,8 +1,4 @@
----
-sidebar_position: 11
----
-
-# Troubleshoot GEX Connection
+# Troubleshooting the GEX Connection
 
 ## 1. Retrieve certificates from chamber
 
