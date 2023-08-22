@@ -4,6 +4,12 @@ sidebar_position: 3
 
 # Acceptance testing payment requests
 
+:::note
+
+For more information about EDI, see our [EDI 858 page](../guides/edi/index.md)
+
+:::
+
 ## Pricing Acceptance Tool
 
 In lieu of the following instructions, you can use the `pricing-acceptance`
