@@ -20,4 +20,4 @@ All other EDI discovery and implementation docs can be found in this [google dri
 
 - [GEX](../../../integrations/gex/index.md)
 - [Acceptance Testing Payment Requests](../../testing/acceptance-testing-payment-requests.md)
-- [Acceptance Syncada](../../testing/acceptance-testing-syncada-edi-invoicing.md)
+- [Acceptance Testing Syncada](../../testing/acceptance-testing-syncada-edi-invoicing.md)
