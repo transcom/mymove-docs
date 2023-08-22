@@ -4,6 +4,12 @@ sidebar_position: 1
 
 # Acceptance testing Syncada
 
+:::note
+
+For more information about EDI, see our [EDI 858 page](../guides/edi/index.md)
+
+:::
+
 ## Prerequisites
 
 :::note
