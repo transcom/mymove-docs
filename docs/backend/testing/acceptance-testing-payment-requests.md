@@ -10,6 +10,8 @@ For more information about EDI, see our [EDI 858 page](../guides/edi/index.md)
 
 :::
 
+Link to a video walk-through example of acceptance testing a payment request. [Video in Google Drive](https://drive.google.com/file/d/1_u2JUCvZrZuw2Exjt4am3tnM3HeHwbCf/view?usp=drive_link) :lock:.
+
 ## Pricing Acceptance Tool
 
 In lieu of the following instructions, you can use the `pricing-acceptance`
