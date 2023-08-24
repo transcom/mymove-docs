@@ -13,8 +13,8 @@ Once Docker is up and running, the following commands will get `mymove` running 
    ```
 
    This command also ensures the database is up and running and that the
-   latest migrations are applied. See [Setup: Database](/docs/about/application-setup/04-database.md) and
-   [Setup: Server](/docs/about/application-setup/05-run-the-app/01-server.md) for more details.
+   latest migrations are applied. See [Setup: Database](/docs/getting-started/application-setup/04-database.md) and
+   [Setup: Server](/docs/getting-started/application-setup/05-run-the-app/01-server.md) for more details.
 
 1. Run the frontend client **in a separate terminal tab**
 
@@ -24,4 +24,4 @@ Once Docker is up and running, the following commands will get `mymove` running 
 
    This will ensure the frontend dependencies are installed and will
    automatically launch the browser and open the app at milmovelocal:3000.
-   See [Setup: MilMove Local Client](/docs/about/application-setup/05-run-the-app/02-milmove-local-client.md) for more details.
+   See [Setup: MilMove Local Client](/docs/getting-started/application-setup/05-run-the-app/02-milmove-local-client.md) for more details.

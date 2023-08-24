@@ -34,9 +34,9 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'about/index',
+          docId: 'getting-started/index',
           position: 'left',
-          label: 'About',
+          label: 'Getting Started',
         },
         {
           type: 'doc',
@@ -94,8 +94,8 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'About MilMove',
-              to: '/docs/about',
+              label: 'Getting Started',
+              to: '/docs/getting-started',
             },
             {
               label: 'Architecture Decision Records',

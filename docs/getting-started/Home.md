@@ -1,6 +1,6 @@
 ---
 id: index
-slug: /about/
+slug: /getting-started/
 sidebar_position: 1
 ---
 

@@ -1,5 +1,5 @@
 ---
-pagination_next: about/application-setup/database
+pagination_next: getting-started/application-setup/database
 ---
 
 # Prerequisites
@@ -23,7 +23,7 @@ installation:
 make deps
 ```
 
-This will install `pre-commit` hooks and frontend client dependencies. See [Dependencies](/docs/about/application-setup/dependencies) for more info.
+This will install `pre-commit` hooks and frontend client dependencies. See [Dependencies](/docs/getting-started/application-setup/dependencies) for more info.
 
 :::note
 that installing and configuring pre-commit the first time takes about 3 minutes.
