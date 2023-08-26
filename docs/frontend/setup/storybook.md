@@ -2,11 +2,11 @@
 sidebar_position: 2
 ---
 
-# How to Use and Run Storybook
+# Storybook
 
 ## What is Storybook
 
-Storybook is a user interface development environment and playground for UI components. The tool enables developers to create components independently and showcase components interactively in an isolated development environment. [Read more here](https://storybook.js.org/docs/basics/introduction/)
+[Storybook](https://storybook.js.org/) is a user interface development environment and playground for UI components. The tool enables developers to create components independently and showcase components interactively in an isolated development environment. The current components for MilMove are deployed to https://storybook.dp3.us after each build of the main branch.
 
 ## Basics
 
