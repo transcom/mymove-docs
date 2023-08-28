@@ -19,7 +19,9 @@ This command also ensures the database is up and running and that the latest mig
 make client_run
 ```
 
-This will ensure the frontend dependencies are installed and will automatically open the app in the browser at `milmovelocal:3000`.
+This will ensure the frontend dependencies are installed and will automatically open the app in the browser at `http://milmovelocal:3000`.
+
+If both the server and client are running, you should be able to view the Swagger UI at `http://milmovelocal:3000/swagger-ui/internal.html`.
 
 Once the app opens, select “Local Sign In” to easily create a new user or login as an existing user, without having to create a [Login.gov](http://Login.gov) account (which is how you’d normally sign in on non-dev environments).
 
@@ -31,7 +33,7 @@ That’s it! Congrats, you now have `mymove` running locally 🎉
 
 In the previous step, you were able to open the `mymove` app and login as a service member.
 
-Run the following command to open the local admin view at `adminlocal:3000`, which lets you do things like create new office users, service members, moves, and orders.
+Run the following command to open the local admin view at `http://adminlocal:3000`, which lets you do things like create new office users, service members, moves, and orders.
 
 ```bash
 make admin_client_run
@@ -49,7 +51,7 @@ First, ensure that you have a test account which can log into the office site. T
 make db_dev_e2e_populate
 ```
 
-Then run the following command to open the local office view at `officelocal:3000`:
+Then run the following command to open the local office view at `http://officelocal:3000`:
 
 ```bash
 make office_client_run

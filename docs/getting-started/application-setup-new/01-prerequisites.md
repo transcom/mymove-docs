@@ -6,6 +6,8 @@ Make sure you have the following tools installed on your computer:
 
 - [Homebrew](https://brew.sh/)
 - [Git](https://github.com/git-guides/install-git)
+- [Go](https://go.dev/doc/install)
+  - You can verify that you've installed Go by typing the following command: `go version`
 
 ## Git Configuration
 
