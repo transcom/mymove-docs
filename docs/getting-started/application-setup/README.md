@@ -3,13 +3,6 @@ id: Application Setup
 sidebar_position: 1
 ---
 
-Note: These instructions are a living document and often fall out-of-date.
-If you run into anything that needs correcting or updating, please create
-a PR with those changes to help those coming after you.
-
-There are two main ways we have for setting up local development:
-
-- Using `nix` with a bit of `homebrew`
-- Using primarily only `homebrew`
-
-Both need a bit of base setup before, but then you can follow whichever path you prefer after that. There are also a few parts that may be shared between both setups.
+Welcome to the MilMove Getting Started Guide! By the end of this guide, you should:
+- Have all the tools and dependencies you need to develop on the [`mymove`](https://github.com/transcom/mymove) project
+- Be able to run the [`mymove`](https://github.com/transcom/mymove) app locally as a service member, office worker, and an admin.

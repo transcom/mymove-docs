@@ -1,11 +1,11 @@
 ---
-pagination_next: getting-started/application-setup-new/direnv-setup
+pagination_next: getting-started/application-setup/direnv-setup
 ---
 
 # Option 2: Setup Using Nix
 
 :::info
-If you prefer to setup using Homebrew, go to [Option 1: Setup Using Homebrew](/docs/getting-started/application-setup-new/03-project-setup-homebrew-vs-nix/01-setup-homebrew.md).
+If you prefer to setup using Homebrew, go to [Option 1: Setup Using Homebrew](/docs/getting-started/application-setup/03-project-setup-homebrew-vs-nix/01-setup-homebrew.md).
 :::
 
 ## Initial Setup
@@ -42,7 +42,7 @@ Disable or uninstall `nodenv`, `asdf`, or any other version switchers for `mymov
 nix-env -i aws-vault chamber direnv bash
 ```
 
-2. Set up [AWS services](/docs/getting-started/application-setup-new/01-prerequisites.md).
+2. Set up [AWS services](/docs/getting-started/application-setup/01-prerequisites.md).
 3. Follow these steps to configure direnv (which was installed in Step 1).
     1. In `.zshrc` (or the relevant one for you), make sure the `nix` setup line (inserted by the `nix` installation) is run before the `direnv` hook setup.
 4. Run `./nix/update.sh`.

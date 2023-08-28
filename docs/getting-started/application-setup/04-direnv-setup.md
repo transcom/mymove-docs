@@ -1,6 +1,6 @@
 # Direnv Setup
 
-Now that you have the required dependencies installed (using [Homebrew](/docs/getting-started/application-setup-new/03-project-setup-homebrew-vs-nix/01-setup-homebrew.md) or [Nix](/docs/getting-started/application-setup-new/03-project-setup-homebrew-vs-nix/02-setup-nix.md)), it’s time to set up [direnv](https://direnv.net/), a tool we use to manage local environment variables.
+Now that you have the required dependencies installed (using [Homebrew](/docs/getting-started/application-setup/03-project-setup-homebrew-vs-nix/01-setup-homebrew.md) or [Nix](/docs/getting-started/application-setup/03-project-setup-homebrew-vs-nix/02-setup-nix.md)), it’s time to set up [direnv](https://direnv.net/), a tool we use to manage local environment variables.
 
 Run the following command from the `mymove` directory:
 

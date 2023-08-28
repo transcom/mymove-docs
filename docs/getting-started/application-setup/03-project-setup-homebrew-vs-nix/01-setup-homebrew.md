@@ -1,11 +1,11 @@
 ---
-pagination_next: getting-started/application-setup-new/direnv-setup
+pagination_next: getting-started/application-setup/direnv-setup
 ---
 
 # Option 1: Setup Using Homebrew
 
 :::info
-If you would prefer to setup using Nix, go to [Option 2: Setup Using Nix](/docs/getting-started/application-setup-new/03-project-setup-homebrew-vs-nix/02-setup-nix.md).
+If you would prefer to setup using Nix, go to [Option 2: Setup Using Nix](/docs/getting-started/application-setup/03-project-setup-homebrew-vs-nix/02-setup-nix.md).
 :::
 
 From the `mymove` repo, run the following command to install all the necessary dependencies and configure your shell file:

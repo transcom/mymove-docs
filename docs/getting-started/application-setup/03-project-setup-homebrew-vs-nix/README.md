@@ -23,6 +23,6 @@ Nix can be a great option, but it’s notoriously difficult to set up correctly 
 
 Homebrew, being the simpler and probably the more familiar way of managing packages, is a good choice if you want simple and fast installations *now*, at the cost of maybe having to deal with dependency conflicts in the future.
 
-If you want to continue setting up the project using Homebrew, go to [📄 Option 1: Setup Using Homebrew >>](/docs/getting-started/application-setup-new/03-project-setup-homebrew-vs-nix/01-setup-homebrew.md).
+If you want to continue setting up the project using Homebrew, go to [📄 Option 1: Setup Using Homebrew >>](/docs/getting-started/application-setup/03-project-setup-homebrew-vs-nix/01-setup-homebrew.md).
 
-If you want to continue setting up the project using Nix, go to [📄 Option 2: Setup Using Nix >>](/docs/getting-started/application-setup-new/03-project-setup-homebrew-vs-nix/02-setup-nix.md).
+If you want to continue setting up the project using Nix, go to [📄 Option 2: Setup Using Nix >>](/docs/getting-started/application-setup/03-project-setup-homebrew-vs-nix/02-setup-nix.md).
