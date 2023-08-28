@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## Design + Engineering Process for new components
 
-MilMove has defined a process for taking a new component from concept to design to implementation. This section of the doc will describe this process. We use [Storybook](https://storybook.js.org/) for showing the finished components and you can view all current ones on main by going to our [public storybook site](https://storybook.move.mil/). If you want to see things locally please check out the [How To Run Storybook](../setup/run-storybook.md) document.
+MilMove has defined a process for taking a new component from concept to design to implementation. This section of the doc will describe this process. We use [Storybook](https://storybook.js.org/) for showing the finished components and you can view all current ones on main by going to our [public storybook site](https://storybook.move.mil/). If you want to see things locally please check out the [How To Run Storybook](/docs/frontend/setup/storybook.md) document.
 
 ### Design delivers component design
 
