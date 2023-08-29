@@ -19,7 +19,7 @@ On the other hand, Homebrew focuses on providing a simple and user-friendly way 
 
 Ultimately, it’s up to you!
 
-Nix can be a great option, but it’s notoriously difficult to set up correctly as the [reference manual](https://nixos.org/manual/nix/stable/) is pretty dense, and just as difficult to uninstall if you decide not to use it later. But apparently, if set up correctly, it works *really* well.
+Nix can be a great option, but it’s known to have a steep learning curve and can be difficult to set up for first-time users. It also has less [documentation](https://nixos.org/manual/nix/stable/) available than other tools. Once working, it is usually a fairly seamless experience.
 
 Homebrew, being the simpler and probably the more familiar way of managing packages, is a good choice if you want simple and fast installations *now*, at the cost of maybe having to deal with dependency conflicts in the future.
 
