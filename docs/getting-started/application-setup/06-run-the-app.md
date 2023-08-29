@@ -1,5 +1,15 @@
 # Run the App
 
+## Accessing Web Applications
+
+To access the MilMove, Office, Prime API, and Admin local domains during local
+development, you will modify your `/etc/hosts` file to contain the following: 
+
+    127.0.0.1 milmovelocal
+    127.0.0.1 officelocal
+    127.0.0.1 adminlocal
+    127.0.0.1 primelocal
+
 ## Run the App as a Service Member
 
 We’re almost there! Just follow these last steps, and you’ll be having `mymove` running locally on your machine as a service member:
