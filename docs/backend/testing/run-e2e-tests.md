@@ -79,7 +79,7 @@ CircleCI UI.
 :::
 
 We use CircleCI to store artifacts for failed Cypress tests. These are available
-to all Trussels with GitHub repository access in the CircleCI UI. [Please see
+to all engineers with GitHub repository access in the CircleCI UI. [Please see
 the official CirclCI documentation about build
 artifacts][docs-circleci-artifacts]. The project's Artifacts are only stored on
 failed Integration Tests that run in CI. This is defined in our

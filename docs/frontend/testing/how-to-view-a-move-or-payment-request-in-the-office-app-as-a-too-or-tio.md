@@ -10,7 +10,7 @@ When a TOO or TIO signs in to the Office app, they see a list of moves with non-
 
 In database terms, this means the `gbloc` of the `office_user`'s `transportation_office` must match the `gbloc` of the `order`'s `origin_duty_station`'s `transportation_office`.
 
-If you don't have the app working locally, there is a [mapping on the Google Drive](https://docs.google.com/spreadsheets/d/1jMdHFmDbZP1CvIPQ_NYq0Fpht_svKGFRiykOgnpUZ5c/edit#gid=856605341) that shows which duty stations correspond to each transportation office GBLOC. 
+If you don't have the app working locally, there is a [mapping on the Google Drive](https://docs.google.com/spreadsheets/d/1jMdHFmDbZP1CvIPQ_NYq0Fpht_svKGFRiykOgnpUZ5c/edit#gid=856605341) that shows which duty stations correspond to each transportation office GBLOC.
 
 If you do have the app working locally, you can use the following scripts to match transportation offices to duty stations:
 
@@ -28,7 +28,7 @@ This will return all transportation offices with the same GBLOC as Scott AFB
 
 If you are participating in a slice demo for Transcom, or if you are testing the end-to-end flow of the app, the origin duty station you select for the service member must match the TOO/TIO's transportation office. Here's how you find out which duty station to pick:
 
-1. If you haven't already, create an office user with your Truss email (the same email you used to create a login.gov account) via the [admin](https://admin.stg.move.mil) site, and give yourself both the TOO and TIO roles.
+1. If you haven't already, create an office user with your work email (the same email you used to create a login.gov account) via the [admin](https://admin.stg.move.mil) site, and give yourself both the TOO and TIO roles.
 2. Sign in to the [admin](https://admin.stg.move.mil) site
 3. Look yourself up in the office users list
 4. Make a note of the name of the Transportation Office

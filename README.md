@@ -88,7 +88,11 @@ bash (curl -s https://raw.githubusercontent.com/monfresh/fresh-brew/main/fresh-p
 sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume --no-daemon
 ```
 
-Note: if you're using the Fish shell, you'll need to [complete an extra step](https://github.com/trussworks/Engineering-Playbook/tree/main/developing/nix#extra-setup-only-fish-shell-users).
+Note: if you're using the Fish shell, you'll need to add this to your `~/.config/fish/config.sh` (check out [nix-env.fish](https://github.com/lilyball/nix-env.fish)):
+
+```
+set -g fish_user_paths "/Users/[your_os_username]/.nix-profile/bin" $fish_user_paths
+```
 
 2. Quit and restart your terminal
 3. Run `direnv allow`

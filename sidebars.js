@@ -16,7 +16,7 @@ const adrDesc = `
   For new ADRs, please use the template in the sidebar.
 
   This list contains all of the architectural decision records for the MilMove
-  client and server application from the Application Engineering team at Truss.
+  client and server application.
 `;
 
 module.exports = {

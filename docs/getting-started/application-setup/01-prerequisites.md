@@ -14,8 +14,8 @@ Make sure you have the following tools installed on your computer:
 Once you have Git installed, set the global configurations to use your work email when making commits to our repositories:
 
 ```bash
-git config --global user.email "trussel@truss.works"
-git config --global user.name "Trusty Trussel"
+git config --global user.email "rhendricks@hooli.com"
+git config --global user.name "Richard Hendricks"
 ```
 
 Next, set up SSH by following the [official GitHub instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) so you can connect to GitHub without supplying credentials at each visit.

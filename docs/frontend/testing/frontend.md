@@ -12,8 +12,6 @@ MilMove has defined a process for taking a new component from concept to design 
 
 After the research and initial prototypes are made a designer will create a full design for a new component, card, or page. Once the design has passed the design team's review process the designer will deliver a link to the [Abstract](https://www.abstract.com/) design. Since engineers are not likely to have an Abstract account the designers will ensure that this link is a publicly viewable version. For example here is the link we used for the [TabNav](https://app.abstract.com/share/39907fe2-a5c6-4063-ac68-71bae522e296?mode=build&selected=3210965808-139C6AE4-167B-4B24-B583-C1F45CC3493D) component.
 
-We have added the github `@transcom/truss-design` as code owners of `src/stories` thus requiring their approval for these changes in addition to normal engineering review.
-
 ### Engineering
 
 Once an engineer has the Abstract design for a new component they can begin to implement it. The new process requires that all components have a [Storybook](https://storybook.js.org/) story created or updated for it. Storybook stories require approval from someone on the design team before they can be merged, preferable the designer who created the original Abstract design. We are following the [USWDS](#uswds) standard for design and implementation, so please review that section of this document. Be sure to use [USWDS mixins](https://designsystem.digital.gov/utilities/) and any components that are available in `react-uswds`. If there is a USWDS component not already in `react-uswds` please add it to that package and then make use of it.
@@ -98,7 +96,7 @@ our Continuous Integration and Continuous Delivery tools section.
 :::
 
 * We use [Happo](https://happo.io/) for visually testing Storybook components.
-* Happo will run automatically as a required check on open PRs. If Happo catches any visual diffs with existing components, it will fail and require a review. Anyone at Truss _can_ view the report on Happo and approve or reject changes, but this action should be completed by the designer or PM reviewing the PR for acceptance. When someone accepts or rejects a report, their name and the result will be reported back to the Github PR status.
+* Happo will run automatically as a required check on open PRs. If Happo catches any visual diffs with existing components, it will fail and require a review. Anyone who can review PRs can view the report on Happo and approve or reject changes, but this action should be completed by the designer or PM reviewing the PR for acceptance. When someone accepts or rejects a report, their name and the result will be reported back to the Github PR status.
 
 :::caution Storybook Addon Knobs
 The current version of Storybook used by Happo does not support [the library
