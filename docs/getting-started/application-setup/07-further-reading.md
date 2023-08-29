@@ -1,7 +1,3 @@
----
-pagination_next: null
----
-
 # Further Reading
 
 Now that you have your local environment set up, check out these docs to learn more about how we do development here:
