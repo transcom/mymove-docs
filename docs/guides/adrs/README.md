@@ -2,7 +2,7 @@
 title: ✍️  Welcome to writing ADRs
 ---
 
-Architecture Decision Records or **ADRs** are the way Trussel engineers
+Architecture Decision Records or **ADRs** are the way engineers
 communicate changes throughout the MilMove project. The term architecture can be
 read loosely as the more important words are decision records. To get started,
 take a look at [the ADR template](./template.md) and then copy it into

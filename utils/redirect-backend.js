@@ -90,12 +90,6 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/backend/guides/tariff400ng_items-update-data',
-    from: [
-      '/docs/dev/contributing/database/tariff400ng_items-update-data',
-    ],
-  },
-  {
     to: '/docs/backend/guides/database',
     from: [
       '/docs/dev/contributing/database/database',
@@ -213,12 +207,6 @@ module.exports = [
     to: '/docs/backend/guides/how-to/upgrade-go-version',
     from: [
       '/docs/dev/versioning/upgrade-go-version',
-    ],
-  },
-  {
-    to: '/docs/backend/guides/tariff400ng-yearly-import',
-    from: [
-      '/docs/dev/contributing/database/tariff400ng-yearly-import',
     ],
   },
   {

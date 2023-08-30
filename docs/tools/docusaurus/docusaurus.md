@@ -36,8 +36,8 @@ The file structure in our GitHub repo determines where your new page will show u
 ```text
 mymove-docs/
 ├── docs/  <- All of our docs should go in this directory
-│   ├── about/
-│   │   ├── ^ These docs give context on MilMove.
+│   ├── getting-started/
+│   │   ├── ^ These docs are a quick guide on how to get MilMove set up locally.
 │   ├── api/
 │   │   ├── ^ These docs are about the MilMove internal or external APIs.
 │   ├── backend/
@@ -205,14 +205,14 @@ or absolute to how it's laid out in the directory structure of the
 For example, linking to _Access a Global Application Variable_ in Docusaurus
 means that you can link to it like this.
 
-```markdown title="Linking from the file at docs/about/Home.md with a relative link"
+```markdown title="Linking from the file at docs/getting-started/Home.md with a relative link"
 [Access a Global Application Variable](../dev/contributing/backend/environment_variables/access-global-variables.md#how-to-access-a-global-application-variable)
 ```
 
 Notice in the above example that the path (`../dev/contributing/backend/`)
-is relative to the file `docs/about/Home.md`.
+is relative to the file `docs/getting-started/Home.md`.
 
-```markdown title="Linking from the file at docs/about/Home.md with an absolute link"
+```markdown title="Linking from the file at docs/getting-started/Home.md with an absolute link"
 [Access a Global Application Variable](/docs/dev/contributing/backend/environment_variables/access-global-variables.md#how-to-access-a-global-application-variable)
 ```
 

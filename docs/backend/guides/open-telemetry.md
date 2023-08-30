@@ -52,7 +52,7 @@ router.Use(otelmux.Middleware("auth"))
 #### HTTP handler
 
 Similar to the otelmux library the [Open Telemetry HTTP
-library](https://github.com/trussworks/otelhttp) is designed to wrap HTTP
+library](https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp) is designed to wrap HTTP
 handler functions. It has built in events (read & write) to report the request
 size, response size, and duration of the HTTP request.  It is more configurable
 than the `otelmux` middleware allowing you to filter out certain routes and other
@@ -61,8 +61,6 @@ controls.
 ```golang
 otelhttp.NewHandler(router, "server-tls", []otelHTTP.Option{otelHTTP.ReadEvents, otelHTTP.WriteEvents})
 ```
-
-Note: This implementation has been forked to the Trussworks GitHub to address bug fixes.
 
 #### SQL
 

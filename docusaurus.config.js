@@ -34,9 +34,9 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'about/index',
+          docId: 'getting-started/index',
           position: 'left',
-          label: 'About',
+          label: 'Getting Started',
         },
         {
           type: 'doc',
@@ -94,8 +94,8 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'About MilMove',
-              to: '/docs/about',
+              label: 'Getting Started',
+              to: '/docs/getting-started',
             },
             {
               label: 'Architecture Decision Records',
@@ -142,7 +142,8 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright ${new Date().getFullYear()}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`,
+      // Truss contract ends in 2023. Do not show a date that surpasses 2023 that involves Truss.
+      copyright: `Copyright ${Math.min(new Date().getFullYear(), 2023)}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`,
     },
     prism: {
       theme: themes.oceanicNext,
