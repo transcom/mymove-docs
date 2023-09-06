@@ -94,7 +94,13 @@ sed 's,^namespace:.*,namespace: development,' \
   < ../milmove-feature-flags/feature_flags/someenv_features.yaml \
   > config/flipt/storage/development.features.yaml
 make feature_flag_docker
+# now in another window you can start the server
+FEATURE_FLAG_SERVER_URL=http://localhost:9080 make server_run
+# and you can start the client in another window
+make client_run
 ```
+
+The admin console has a limited feature flag testing page you can use. Go to [http://adminlocal:3000/system/feature-flags](http://adminlocal:3000/system/feature-flags). If actually adding a new feature flag, you would want to test your code path directly.
 
 Use the [evaluation
 console](https://www.flipt.io/docs/introduction#evaluation-console) to
