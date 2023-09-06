@@ -99,3 +99,7 @@ make feature_flag_docker
 Use the [evaluation
 console](https://www.flipt.io/docs/introduction#evaluation-console) to
 see if the results are what you expected. Go to [http://localhost:9080](http://localhost:9080) to see the flipt console locally.
+
+## Updating feature flag deployments
+
+See the `transcom/milmove-feature-flags` repository for information how to update the deployments (e.g. update the image used by flipt).
