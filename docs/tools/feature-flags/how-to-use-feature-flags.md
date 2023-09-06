@@ -8,6 +8,8 @@ While MilMove uses Flipt, it has a generic feature flag API that hides most of F
 
 The feature flag data is stored in a separate, private repository `transcom/milmove-feature-flags`.
 
+As for 2023-09-06, feature flags have not been used for a full end to end feature deployment. This document may have some gaps because of that.
+
 ### Feature Flag Evaluation
 
 First, familiarize yourself with the key [Flipt Concepts](https://www.flipt.io/docs/concepts).
@@ -27,9 +29,9 @@ The [Context](https://www.flipt.io/docs/concepts#context) contains multiple bits
 
 ### MilMove Backend Feature Flag Service
 
-A [backend service object](../../backend/guides/service-objects/overview.md) has been created for feature flags that hides the specific Flipt API. This allows for using environment variable based feature flags in local development and/or when flipt is not availbale.
+A [backend service object](../../backend/guides/service-objects/overview.md) has been created for feature flags that hides the specific Flipt API. This allows for using environment variable based feature flags in local development and/or when flipt is not available.
 
-The primary APIs that will be used are `GetBooleanFlagForUser` and `GetVariantFlagForUser`. The feature flag service object sets the `entityID` for those requests to the ID of the user making the request. It populates some default information in the context, including:
+The recommended APIs for use in the backend are `GetBooleanFlagForUser` and `GetVariantFlagForUser`. The feature flag service object sets the `entityID` for those requests to the ID of the user making the request. It populates some default information in the context, including:
   * The application name (mil, office, admin)
   * If the user is an admin user, service member, or office user
   * The [permissions](../../backend/guides/roles-and-permissions.md) of the user
@@ -38,7 +40,7 @@ As we get more experience, we can add more information to the default context of
 
 In addition, the API allows the caller to provide additional context that could be used for a specific feature flag.
 
-For feature flags that are not specific to a particular user, the `GetBooleanFlag` and `GetVariantFlag` APIs allow for full customization of the `EntityID` and `Context`.
+For feature flags that are not specific to a particular user, use the `GetBooleanFlag` and `GetVariantFlag` APIs for full customization of the `EntityID` and `Context`.
 
 ### MilMove Backend Feature Flag Swagger API
 
