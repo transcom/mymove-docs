@@ -77,7 +77,7 @@ environment.
 1. When the PR is merged, the file for that environment will be copied
    to the S3 bucket for that environment. Flipt checks for updates in
    S3 periodically, and so the new settings should automagically
-   appear in flipt.
+   appear in Flipt.
 
 If for some reason you want to force a copy (e.g. the S3 bucket has
 changed), add/update a comment at the top of the file and open + merge
