@@ -89,7 +89,7 @@ for more on the file format.
 
 ### Local Testing
 
-You can run flipt locally with the feature flags for testing. When running locally in development mode, the namespace is `development`.
+You can run Flipt locally with the feature flags for testing. When running locally in development mode, the namespace is `development`.
 
 The idea is to copy the environment you want to test from `milmove-feature-flags` to the `mymove` project and update the namespace to `development`.
 
