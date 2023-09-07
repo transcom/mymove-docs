@@ -46,7 +46,7 @@ As we get more experience with feature flags, more information may be added to t
 
 In addition, the API allows the caller to provide additional context that could be used for a specific feature flag.
 
-For feature flags that are not specific to a particular user, use the `GetBooleanFlag` and `GetVariantFlag` APIs for full customization of the `EntityID` and `Context`.
+For feature flags that are not specific to a particular user, use the `GetBooleanFlag` and `GetVariantFlag` APIs for full customization of the `EntityID` and `Context`. These methods have been added in [transcom/mymove#11330](https://github.com/transcom/mymove/pull/11330).
 
 ### MilMove Backend Feature Flag Swagger API
 
