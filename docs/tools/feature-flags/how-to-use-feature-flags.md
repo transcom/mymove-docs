@@ -2,6 +2,12 @@
 
 ## Introduction
 
+:::caution
+
+As of September 6th, 2023, MilMove has not leveraged feature flags using Flipt and is still considered experimental. Unexpected behavior may occur because of this. Please updated this document with any new information after MilMove starts using Flipt.
+
+:::
+
 MilMove uses [Flipt](https://www.flipt.io) for feature flags. See [ADR 0082 Use Flipt for Feature Flags](../../adrs/0082-use-flipt-feature-flags.md) for why Flipt was chosen and [ADR 0084 Deploy Flipt using ECS service discovery](../../adrs/0084-deploy-flipt-service-discovery.md) for how Flipt is deployed in AWS.
 
 While MilMove uses Flipt, it has a generic feature flag API that hides most of Flipt's implementation details. This allows for using environment variables to simulate feature flags in local development without running a Flipt server and would facilitate moving to another feature flag provider in the future should that be desirable.
