@@ -83,7 +83,7 @@ If for some reason you want to force a copy (e.g. the S3 bucket has
 changed), add/update a comment at the top of the file and open + merge
 a PR.
 
-See the [flipt
+See the [Flipt
 documentation](https://www.flipt.io/docs/configuration/storage#object)
 for more on the file format.
 
