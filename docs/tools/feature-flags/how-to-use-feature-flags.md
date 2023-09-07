@@ -42,7 +42,7 @@ The current APIs for in the backend are `GetBooleanFlagForUser` and `GetVariantF
   * If the user is an admin user, service member, or office user
   * The [permissions](../../backend/guides/roles-and-permissions.md) of the user
 
-As we get more experience, we can add more information to the default context of a user.
+As we get more experience with feature flags, more information may be added to the default context of a user.
 
 In addition, the API allows the caller to provide additional context that could be used for a specific feature flag.
 
