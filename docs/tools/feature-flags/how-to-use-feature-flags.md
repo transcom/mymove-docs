@@ -112,7 +112,7 @@ The admin console has a limited feature flag testing page you can use. Go to [ht
 
 Use the [evaluation
 console](https://www.flipt.io/docs/introduction#evaluation-console) to
-see if the results are what you expected. Go to [http://localhost:9080](http://localhost:9080) to see the flipt console locally.
+see if the results are what you expected. Go to [http://localhost:9080](http://localhost:9080) to see the Flipt console locally.
 
 ## Updating feature flag deployments
 
