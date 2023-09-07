@@ -50,7 +50,7 @@ For feature flags that are not specific to a particular user, use the `GetBoolea
 
 ### MilMove Backend Feature Flag Swagger API
 
-The `GetBooleanFlagForUse` and `GetVariantFlagForUser` APIs are exposed in the internal API via the `/feature-flags/user-boolean/{key}` and `/feature-flags/user-variant/{key}` endpoints so that the frontend can query feature flag status.
+The `GetBooleanFlagForUse` and `GetVariantFlagForUser` APIs are exposed in the internal API via the `/feature-flags/user-boolean/{key}` and `/feature-flags/user-variant/{key}` endpoints so that the frontend can query feature flag status. These endpoints have been added in [transcom/mymove#11330](https://github.com/transcom/mymove/pull/11330).
 
 ### MilMove Frontend Feature Flag Component
 
