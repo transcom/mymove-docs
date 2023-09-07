@@ -31,7 +31,7 @@ Boolean flags are for when a feature can only be turned on or off. Variant flags
 
 The most common [Entity](https://www.flipt.io/docs/concepts#entities) to work with is a user and that is probably how most feature flags will be used: to determine if a particular user should have access to a feature or not.
 
-The [Context](https://www.flipt.io/docs/concepts#context) contains multiple bits of information that can by used by flipt to determine if a feature should be available to a user or not.
+The [Context](https://www.flipt.io/docs/concepts#context) contains multiple bits of information that can by used by Flipt to determine if a feature should be available to a user or not.
 
 ### MilMove Backend Feature Flag Service
 
