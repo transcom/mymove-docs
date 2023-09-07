@@ -35,7 +35,7 @@ The [Context](https://www.flipt.io/docs/concepts#context) contains multiple bits
 
 ### MilMove Backend Feature Flag Service
 
-A [backend service object](../../backend/guides/service-objects/overview.md) has been created for feature flags that hides the specific Flipt API. This allows for using environment variable based feature flags in local development and/or when flipt is not available.
+We use the [backend service object](../../backend/guides/service-objects/overview.md) for feature flags to wrap the specific endpoints in the Flipt API. This allows for using environment variable based feature flags in local development and/or when Flipt is not available.
 
 The recommended APIs for use in the backend are `GetBooleanFlagForUser` and `GetVariantFlagForUser`. The feature flag service object sets the `entityID` for those requests to the ID of the user making the request. It populates some default information in the context, including:
   * The application name (mil, office, admin)
