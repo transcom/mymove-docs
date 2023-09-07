@@ -37,7 +37,7 @@ The [Context](https://www.flipt.io/docs/concepts#context) contains multiple bits
 
 We use the [backend service object](../../backend/guides/service-objects/overview.md) for feature flags to wrap the specific endpoints in the Flipt API. This allows for using environment variable based feature flags in local development and/or when Flipt is not available.
 
-The recommended APIs for use in the backend are `GetBooleanFlagForUser` and `GetVariantFlagForUser`. The feature flag service object sets the `entityID` for those requests to the ID of the user making the request. It populates some default information in the context, including:
+The current APIs for in the backend are `GetBooleanFlagForUser` and `GetVariantFlagForUser`. These methods have been added in [transcom/mymove#11330](https://github.com/transcom/mymove/pull/11330). The feature flag service object sets the `entityID` for those requests to the ID of the user making the request. It populates some default information in the context, including:
   * The application name (mil, office, admin)
   * If the user is an admin user, service member, or office user
   * The [permissions](../../backend/guides/roles-and-permissions.md) of the user
