@@ -4,7 +4,7 @@
 
 :::caution
 
-As of September 6th, 2023, MilMove has not leveraged feature flags using Flipt, so feature flags are still considered experimental. Unexpected behavior may occur because of this. Please update this document with any new information after MilMove starts using Flipt.
+As of 2023-09-06, MilMove has not leveraged feature flags using Flipt, so feature flags are still considered experimental. Unexpected behavior may occur because of this. Please update this document with any new information after MilMove starts using Flipt.
 
 :::
 
@@ -55,6 +55,155 @@ The `GetBooleanFlagForUse` and `GetVariantFlagForUser` APIs are exposed in the i
 ### MilMove Frontend Feature Flag Component
 
 To allow for customizing the user presentation based on feature flags, we have a `FeatureFlag` component that uses the internal API to query the feature flag status.
+
+## Example Feature Flag Usage
+
+### Backend Boolean Feature Flag Usage
+
+Imagine you have a new endpoint that adds new functionality that you
+aren't ready to expose to every user. Add code to your handler that
+looks like
+
+```go
+
+const newFeatureFlagName = "can-use-feature"
+
+func (h SomeNewHandler) Handle(params newfeatureop.FeatureParams) middleware.Responder {
+	return h.AuditableAppContextFromRequestWithErrors(params.HTTPRequest,
+		func(appCtx appcontext.AppContext) (middleware.Responder, error) {
+			canUseFeature := false
+			flag, err := h.FeatureFlagFetcher().GetBooleanFlagForUser(params.HTTPRequest.Context(), appCtx, newFeatureFlagName, map[string]string{})
+			if err != nil {
+				// Some error reaching the feature flag server. Log it
+				// and set the default to false
+				appCtx.Logger().Error("Error fetching feature flag", zap.String("featureFlagKey", newFeatureFlagName), zap.Error(err))
+				canUseFeature = false
+			} else {
+				// the request was successful
+				canUseFeature = flag.Match
+			}
+
+			if !canUseFeature {
+				return newfeatureop.NewFeatureForbidden(), nil
+			}
+
+      // the actual handler code goes here
+  }
+}
+
+```
+
+### Backend Variant Feature Flag Usage
+
+Imagine you have want to have some parameter that is different per
+user.
+
+```go
+
+const newFeatureFlagName = "new-feature"
+
+func (h SomeNewHandler) Handle(params newfeatureop.FeatureParams) middleware.Responder {
+	return h.AuditableAppContextFromRequestWithErrors(params.HTTPRequest,
+		func(appCtx appcontext.AppContext) (middleware.Responder, error) {
+			defaultSize := 100
+			someThingSize := defaultSize
+			flag, err := h.FeatureFlagFetcher().GetVariantFlagForUser(params.HTTPRequest.Context(), appCtx, newFeatureFlagName, map[string]string{})
+			if err != nil {
+				// Some error reaching the feature flag server. Log it
+				// and set the default to false
+				appCtx.Logger().Error("Error fetching feature flag", zap.String("featureFlagKey", newFeatureFlagName), zap.Error(err))
+				someThingSize = defaultSize
+			} else {
+				// the request was successful
+				if flag.Match {
+					someThingSize, err = strconv.Atoi(flag.Variant)
+					if err != nil {
+						someThingSize = defaultSize
+					}
+				}
+			}
+
+			things := models.GetThings(appCtx.DB(), someThingSize)
+  }
+}
+
+```
+
+### Frontend Boolean Feature Flag
+
+Imagine you want to enable some new workflow only for certain users.
+
+```javascript
+import { FeatureFlag } from 'components/FeatureFlag/FeatureFlag';
+
+export const MyThing = () => {
+
+  const enabledThing = (
+    <div>
+      You can do the thing!
+    </div>
+  );
+
+  const disabledThing = (
+    <div>
+      Sorry, you can't do the thing.
+    </div>
+  );
+
+  const featureFlagRender = (flagValue) => {
+    if (flagValue === 'true') {
+      return enabledThing;
+    } else {
+      return disabledThing;
+    }
+  };
+
+   return <FeatureFlag flagKey="new-feature" render={featureFlagRender} />;
+}
+```
+
+### Frontend Variant Feature Flag
+
+Imagine you want to display different things to different users
+
+```javascript
+import { FeatureFlag } from 'components/FeatureFlag/FeatureFlag';
+
+export const MyThing = () => {
+
+  const thingOne = (
+    <div>
+      This theme is Thing One!
+    </div>
+  );
+
+  const thingTwo = (
+    <div>
+      This theme is Thing Two!
+    </div>
+  );
+
+  const thingThree = (
+    <div>
+      This theme is Thing Three!
+    </div>
+  )
+
+  const featureFlagRender = (flagValue) => {
+    switch(flagValue) {
+      case 'thingOne':
+        return thingOne;
+      case 'thingTwo':
+        return thingTwo;
+      default:
+        // default to thingThree
+        return thingThree;
+    }
+  };
+
+   return <FeatureFlag flagKey="new-feature" render={featureFlagRender} />;
+}
+```
 
 ## Deploying Feature Flags
 
