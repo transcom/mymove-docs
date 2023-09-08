@@ -4,7 +4,7 @@
 
 :::caution
 
-As of September 6th, 2023, MilMove has not leveraged feature flags using Flipt and is still considered experimental. Unexpected behavior may occur because of this. Please updated this document with any new information after MilMove starts using Flipt.
+As of September 6th, 2023, MilMove has not leveraged feature flags using Flipt, so feature flags are still considered experimental. Unexpected behavior may occur because of this. Please update this document with any new information after MilMove starts using Flipt.
 
 :::
 
