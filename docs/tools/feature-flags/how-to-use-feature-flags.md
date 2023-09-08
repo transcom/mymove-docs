@@ -14,7 +14,7 @@ While MilMove uses Flipt, it has a generic feature flag API that hides most of F
 
 The feature flag data is stored in a separate, private repository `transcom/milmove-feature-flags`.
 
-As for 2023-09-06, feature flags have not been used for a full end to end feature deployment. This document may have some gaps because of that.
+As of 2023-09-06, feature flags have not been used for a full end to end feature deployment. This document may have some gaps because of that.
 
 ### Feature Flag Evaluation
 
