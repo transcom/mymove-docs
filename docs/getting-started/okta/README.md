@@ -12,5 +12,5 @@ You can find an overview of Okta and how we use it at a high level [**HERE**](/d
 :::
 
 :::info
-Some tips on importing users via CSV file [**HERE**](/docs/getting-started/okta/csv-import.md).
+Some tips on importing users via CSV file [**HERE**](/docs/getting-started/okta/02-csv-import.md).
 :::
