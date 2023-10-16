@@ -52,7 +52,7 @@ This file contains all the columns that we need and will use in Okta. There are 
 ### Double Check - Triple Check
 
 :::danger
-If the `cac_edipi` or `gsa_id` is wrong, the user will not be able to log in. Additionally, please make sure that the value in the `role` column is either `office`, `admin`, or `hyrbid` and all lowercase. Please make sure to double check these values prior to importing.
+If the `cac_edipi` or `gsa_id` is wrong, the user will not be able to log in. Additionally, please make sure that the value in the `role` column is either `office`, `admin`, or `hybrid` and all lowercase. Please make sure to double check these values prior to importing.
 :::
 
 ## Importing CSV File into Okta
