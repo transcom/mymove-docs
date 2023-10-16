@@ -9,7 +9,7 @@ These are some common issues that have happened when implementing Okta. If your 
         <td align="center"><b>I am getting an "Access Denied" error from Okta when trying to log into MilMove</b></td>
     </tr>
     <tr>
-        <td align="center">It is likely that you are not assigned to the application in Okta, which means they are denying you access to that application when being redirected back. Please ensure that you are assigned to the appropriate group in Okta before attemtping to sign in again.</td>
+        <td align="center">It is likely that you are not assigned to the application in Okta, which means they are denying you access to that application when being redirected back. Please ensure that you are assigned to the appropriate group in Okta before attempting to sign in again.</td>
     </tr>
     <tr>
         <td align="center"><b>I am getting looped when trying to sign into MilMove</b></td>
