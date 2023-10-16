@@ -1,6 +1,6 @@
 ---
 id: Development
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 All of our code is intermingled in the top level directory of `mymove`. Here is an explanation of what some of these
