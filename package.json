@@ -30,7 +30,7 @@
     "prettier": "^3.0.3",
     "prism-react-renderer": "^2.0.6",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react-dom": "^18.2.0",
     "redocusaurus": "^1.6.3",
     "url": "0.11.3",
     "url-loader": "^4.1.1"
