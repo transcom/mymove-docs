@@ -32,6 +32,12 @@ The MilMove migration files are located in the `migrations/app` directory. There
 
 The `migrations_manifest.txt` file contains a list of all of the migrations in both `schema` and `secure`. This file is what tells the database which scripts to run when we call the `migrate` command. It will be updated automatically as part of the process of generating a new migration - you will likely never need to make manual updates to this file.
 
+:::danger
+<b>KNOW THE DIFFERENCE BETWEEN HOW DEV & OTHER ENVRIONEMNTS HANDLE MIGRATIONS</b><br/>
+Environments other than development runs the migration files ONCE and only ONCE. Once a BL item is deployed to staging, the migration file does not run again.<br/><br/>
+If a change needs to be made to the migration file after it has been pushed to main/staging, it is <b>imperative</b> to create a new migration file and to NOT edit the already deployed file.
+:::
+
 ## Setup
 
 Before running any of the commands listed here locally, make sure the DB is up and running:
