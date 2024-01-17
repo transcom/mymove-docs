@@ -4,7 +4,13 @@ sidebar_position: 3
 
 # Acceptance testing payment requests
 
-Link to a video walk-through example of acceptance testing a payment request. [Video in Google Drive](https://drive.google.com/file/d/1yDQAgRxGRGwkiwhUKgaor5C0vMtm6Ek4/view)
+:::note
+
+For more information about EDI, see our [EDI 858 page](../guides/edi/index.md)
+
+:::
+
+Link to a video walk-through example of acceptance testing a payment request. [Video in Google Drive](https://drive.google.com/file/d/1_u2JUCvZrZuw2Exjt4am3tnM3HeHwbCf/view?usp=drive_link) :lock:.
 
 ## Pricing Acceptance Tool
 

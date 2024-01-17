@@ -4,35 +4,22 @@ id: index
 ---
 # Technology Stack Resources
 
-## Frontend 
+## Frontend
 
-### React 
-* [React website](https://reactjs.org/) - provides some resources that are helpful for getting started.
+### React
+* [React website](https://reactjs.org/)
+* [Epic React](https://epicreact.dev/)
 
-#### Books / Courses / Tutorials
-* [Epic React](https://epicreact.dev/) - paid course that is popular at Truss.
+## Backend
 
-### Truss Resources
-* [Truss engineering playbook frontend resources](https://transcom.github.io/mymove-docs/docs/frontend)
-* [MilMove Frontend docs](https://transcom.github.io/mymove-docs/docs/frontend)
-
-## Backend 
-
-### Go 
-* [Golang Weekly newsletter](https://golangweekly.com) - source for a large number of the resources linked below.
-
-#### Books / Courses / Tutorials
+### Go
+* [Golang Weekly newsletter](https://golangweekly.com)
 * [A Tour of Go](https://go.dev/tour/list) - this is a nice entry point for the basics.
 * [Learn Go with Tests](https://quii.gitbook.io/learn-go-with-tests/)
 * [Practical Go Lessons](https://www.practical-go-lessons.com)
 * [Darker Corners of Go](https://rytisbiel.com/2021/03/06/darker-corners-of-go)
 * [Go By Example](https://gobyexample.com/)
-* [Go: The Complete Developer's Guide](https://www.udemy.com/course/go-the-complete-developers-guide) - paid course that's popular at Truss.
-
-#### Truss resources
-* [Truss engineering playbook resources for Go](https://playbook.truss.dev/docs/developing/languages/GO)
-* [Go pointer primer (repository)](https://github.com/trussworks/go-pointer-primer) - a guide to Go pointers authored by [MacRae](https://github.com/macrael)
-* [MilMove Backend documentation](https://transcom.github.io/mymove-docs/docs/backend/)
+* [Go: The Complete Developer's Guide](https://www.udemy.com/course/go-the-complete-developers-guide)
 
 #### Tools
 * [Spaghetti: a dependency analysis tool for Go packages](https://github.com/adonovan/spaghetti)

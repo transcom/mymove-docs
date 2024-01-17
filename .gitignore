@@ -24,13 +24,6 @@ yarn-error.log*
 .nix-disable
 .npmglobal
 
-# fresh-brew
-# These files are meant to be updated in the trussworks/fresh-brew repo
-Brewfile
-pour.sh
-Brewfile.local.lock.json
-Brewfile.lock.json
-
 # IDE config
 .idea
 .vscode

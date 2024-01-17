@@ -28,9 +28,9 @@ If you are using git from the terminal it is worth configuring your user setting
 
 1. From the Terminal set the user email and user name to match your GitHub account by changing the values in quotes below one line at a time.
 
-`git config --global user.email "trussel@truss.works"`
+`git config --global user.email "rhendricks@hooli.com"`
 
-`git config --global user.name "Trusty Trussel"`
+`git config --global user.name "Richard Hendricks"`
 
 ## Cloning the mymove repository from GitHub
 

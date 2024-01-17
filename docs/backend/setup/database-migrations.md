@@ -32,6 +32,12 @@ The MilMove migration files are located in the `migrations/app` directory. There
 
 The `migrations_manifest.txt` file contains a list of all of the migrations in both `schema` and `secure`. This file is what tells the database which scripts to run when we call the `migrate` command. It will be updated automatically as part of the process of generating a new migration - you will likely never need to make manual updates to this file.
 
+:::danger
+<b>KNOW THE DIFFERENCE BETWEEN HOW DEV & OTHER ENVRIONEMNTS HANDLE MIGRATIONS</b><br/>
+Environments other than development runs the migration files ONCE and only ONCE. Once a BL item is deployed to staging, the migration file does not run again.<br/><br/>
+If a change needs to be made to the migration file after it has been pushed to main/staging, it is <b>imperative</b> to create a new migration file and to NOT edit the already deployed file.
+:::
+
 ## Setup
 
 Before running any of the commands listed here locally, make sure the DB is up and running:
@@ -417,8 +423,8 @@ We are piggy-backing on the migration system for importing static datasets. This
    - a file in `migrations/app/secure` with no secret data. This one will be used to set up the dev db
    - a file in `tmp` which will be uploaded to S3 and contain sensitive data
 
-1. Edit the production migration first, and put whatever sensitive data in it that you need to.
-1. Copy the production migration into the local test migration.
+1. Edit the production migration (`tmp/<migration_name>`) first, and put whatever sensitive data in it that you need to.
+1. Copy the production migration into the local test migration (`migrations/app/secure/<migration_name>`).
 1. Scrub the test migration of sensitive data, but use it to test the gist of the production migration operation.
 1. Test the local secure migration by running:
     ```shell
@@ -428,8 +434,9 @@ We are piggy-backing on the migration system for importing static datasets. This
 
 1. Then verify the secure migration with sensitive data works by running:
     ```shell
-    psql-deployed-migrations< tmp/$NAME_OF_YOUR_SECURE_MIGRATION
+    psql-deployed-migrations< tmp/<migration_name>
     ```
+    Use the full filename for the `<migration_name` above, including the prepending time stamp and file extensions.
     This will load the sensitive data into the local `deployed_migrations` database.
     1. **NOTE:** This is not going to wrap the migration in a transaction. If it fails partway through, you'll need to clean it up or start fresh. If you do want to start fresh, you can:
         1. Comment out your secure migration in `migrations/app/migrations_manifest.txt`. Add a `# ` in front of it to comment it out.
@@ -458,13 +465,13 @@ We are piggy-backing on the migration system for importing static datasets. This
 
 To run a secure migration on ONLY staging (or other chosen environment), upload the migration only to the S3 environment and blank files to the others. 
 
-1. Similar to the "Upload the migration" step above, run `ENVIRONMENTS="stg" upload-secure-migration <production_migration_file>` where `ENVIRONMENTS` is a quoted list of all the environments you wish to upload to. The default is `"demo exp stg prd loadtest"` but you can just do staging and production with `ENVIRONMENTS="stg prd"`
+1. Similar to the "Upload the migration" step above, run `ENVIRONMENTS="stg" upload-secure-migration tmp/<production_migration_file>` where `ENVIRONMENTS` is a quoted list of all the environments you wish to upload to. The default is `"demo exp stg prd loadtest"` but you can just do staging and production with `ENVIRONMENTS="stg prd"`. You will be asked if you're ready to upload your new migration and can enter `y`. You will then be prompted to delete your `tmp/<production_migration_file>` and should do so.
 
 1. Check that it is listed in the S3 staging secure-migrations folder. For GovCloud account that would be `DISABLE_AWS_VAULT_WRAPPER=1 AWS_PROFILE=transcom-gov-id AWS_REGION=us-gov-west-1 aws-vault exec transcom-gov-milmove-stg -- aws s3 ls s3://transcom-gov-milmove-stg-app-us-gov-west-1/secure-migrations/`.
 
-1. Check that it is NOT listed in the S3 production folder. GovCloud: `DISABLE_AWS_VAULT_WRAPPER=1 AWS_PROFILE=transcom-gov-id AWS_REGION=us-gov-west-1 aws-vault exec transcom-gov-milmove-stg -- aws s3 ls s3://transcom-gov-milmove-prd-app-us-gov-west-1/secure-migrations/`.
+1. Check that it is NOT listed in the S3 production folder. GovCloud: `DISABLE_AWS_VAULT_WRAPPER=1 AWS_PROFILE=transcom-gov-id AWS_REGION=us-gov-west-1 aws-vault exec transcom-gov-milmove-prd -- aws s3 ls s3://transcom-gov-milmove-prd-app-us-gov-west-1/secure-migrations/`.
 
-1. Now upload empty files of the same name to the prd, exp, demo, and loadtest environments: `ENVIRONMENTS="exp prd demo loadtest" upload-secure-migration <empty_migration_file_with_same_name>`
+1. Create an empty file of the same name as your migration and upload that file to the prd, exp, demo, and loadtest environments: `ENVIRONMENTS="exp prd demo loadtest" upload-secure-migration <empty_migration_file_with_same_name>`. You can delete that file when you are finished.
 
 1. To verify upload and that the migration can be applied use the make target corresponding to your environment:
     - `make run_prd_migrations`

@@ -97,7 +97,7 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/frontend/setup/run-storybook',
+    to: '/docs/frontend/setup/storybook',
     from: [
       '/docs/dev/tools/run-storybook',
     ],

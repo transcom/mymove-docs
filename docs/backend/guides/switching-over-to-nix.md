@@ -39,14 +39,9 @@ With the above in mind, switching from our current flow to `nix` would not reall
   * It's something we've talked about being a limitation for full adoption and
     that we should consider contributing to `nix` by making it possible to
     install via `homebrew` or some other method.
-  * [Slack thread with more info](https://trussworks.slack.com/archives/C01KTH6HP7D/p1611793387004800).
 * Packages in `nix` can lag behind their counterparts in `homebrew`. This means that if we do switch, we either have to be ok with being behind, or we need to be willing to make contributions to `nix` to update the packages we care about.
 * Finding the hashes for any given package version can be a pain.
   * We have a [package search setup by Truss](https://ahobson.github.io/nix-package-search/#/search) that can help with this, but ideally we could do it easier.
-    * You can also use it on your command line like so:
-      ```shell
-      curl -sSfL https://ahobson.github.io/nix-package-search/nix/nixpkgs-unstable/all_packages.csv | grep 'awscli2'
-      ```
   * `niv` is another way we could mitigate this issue.
 
 ## What Would It Take To Switch Over
