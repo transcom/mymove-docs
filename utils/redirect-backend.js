@@ -299,4 +299,10 @@ module.exports = [
       '/docs/dev/contributing/backend/Using-EagerPreload-in-Pop',
     ],
   },
+  {
+    to: '/api/prime/v1/#tag/mtoShipment/operation/updateShipmentDestinationAddress',
+    from: [
+        '/api/prime/v1/#tag/mtoShipment/operation/createNonSITAddressUpdateRequest',
+    ],
+  },
 ];
