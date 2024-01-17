@@ -3,6 +3,10 @@ sidebar_position: 6
 ---
 # How to Set Up a Feature Flag
 
+:::info
+See experimental version of this page [here](add-an-experimental-feature-flag.md)
+:::
+
 There is a feature flag feature for both frontend and backend.  Here's how to set up a new feature flag.
 
 ## Frontend
