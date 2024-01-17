@@ -186,9 +186,15 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/backend/guides/how-to/set-up-a-feature-flag',
+    to: '/docs/frontend/guides/set-up-a-feature-flag.md',
     from: [
       '/docs/dev/contributing/backend/How-to-Set-Up-a-Feature-Flag',
+    ],
+  },
+  {
+    to: '/docs/frontend/guides/set-up-a-feature-flag.md',
+    from: [
+      '/docs/backend/guides/how-to/set-up-a-feature-flag',
     ],
   },
   {
