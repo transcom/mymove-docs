@@ -1,10 +1,7 @@
----
-sidebar_position: 6
----
-# How to Set Up a Feature Flag
+# How to Set Up a Frontend Feature Flag
 
 :::info
-See experimental version of this page [here](add-an-experimental-feature-flag.md)
+See how to implement an experimental backend feature flag (Without Flipt) [here](../../backend/guides/how-to/add-an-experimental-feature-flag.md)
 :::
 
 There is a feature flag feature for both frontend and backend.  Here's how to set up a new feature flag.

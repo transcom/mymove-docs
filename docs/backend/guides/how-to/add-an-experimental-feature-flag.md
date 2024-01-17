@@ -4,10 +4,6 @@ sidebar_position: 7
 
 # How to set up an experimental feature flag
 
-:::info
-See Flipt version of this page [here](set-up-a-feature-flag.md)
-:::
-
 Backend feature flags via the "experimental" way utilize environment variables rather than Flipt API or Chamber secrets.
 
 ## Setting up environment variables
