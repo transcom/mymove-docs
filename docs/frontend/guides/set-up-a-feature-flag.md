@@ -41,7 +41,7 @@ Access the flag value through context
    import { withContext } from 'shared/AppContext';
    ```
 
-2. wrap the exported component with `withContext`
+2. Wrap the exported component with `withContext`
 
    ```
    export default withContext(connect(mapStateToProps, mapDispatchToProps)(MyComponent));
