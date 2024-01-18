@@ -17,9 +17,19 @@ email,login,firstName,lastName,cac_edipi,gsa_id,role<br/>
 officeUser@email.com,officeUser@email.com,John,Office,1231231231,,office<br/>
 adminUser@email.com,adminUser@email.com,Jill,Admin,2342342342,,admin<br/>
 gsaUser@gsa.gov,gsaUser@gsa.gov,Jimmy,GSA,,3453453453453,office<br/>
-hybridUser@email.gov,hybridUser@email.gov,Susy,Hybrid,,5675675675,hybrid
+hybridUser@email.gov,hybridUser@email.gov,Susy,Hybrid,,5675675675,hybrid<br/>
+homeSafeUser@homesafe.com,homeSafeUser@homesafe.com,Home,Safe,,e417b7452d1fbbb6cef6f1ba8dcf25f5186dac4e,office<br/>
 </CodeBlock>
-This file contains all the columns that we need and will use in Okta. There are a bunch more properties that Okta uses for a profile, but these are the only ones we need for MilMove. Let's break it down:
+This file contains all the columns that we need and will use in Okta. There are a bunch more properties that Okta uses for a profile, but these are the only ones we need for MilMove. 
+
+:::info
+Right now MilMove's configuration in Okta supports the following root certificate & their respective chains:<br/>
+CA-3<br/>
+Entrust Managed Services Root CA<br/>
+ECA Root CA 4
+:::
+<br/>
+Let's break down what values go in what in the CSV file:
 <Tabs>
     <TabItem label="email" value="email" default>
     This will be the same as <b>login</b>, but it's imperative that this email is the primary email of the user and should be a <b>functional</b> email.
@@ -37,7 +47,8 @@ This file contains all the columns that we need and will use in Okta. There are 
     This will be the DoDID/EDIPI number that is located on the user's Smart Card. This number should only be <b>ten digits</b> in length and must be <b>unique</b>. Okta will not allow this user to be imported if this number already exists in their database. This can be left empty if the office user does not use a CAC.
     </TabItem>
     <TabItem label="gsa_id" value="gsa_id">
-    This column is specific for GSA users and they will need to provide this number or it can be found in their certificate. It is variable in length, but can be found in the <b>Subject Alternative Name</b> property in their certificate and are the numbers to the left of their <b>@gsa.gov</b> email found in that property. This can be empty when importing users that are not GSA users.
+    This column is specific for GSA users or ECA cert users (only in staging environment) and they will need to provide values that can be found in their certificate. <br/><br/><b>For GSA Users</b><br/>It is variable in length, but can be found in the <b>Subject Alternative Name</b> property in their certificate and are the numbers to the left of their <b>@gsa.gov</b> email found in that property. This can be empty when importing users that are not GSA users.
+    <br/><br/><b>For ECA Certificate Users</b><br/>For ECA certificate users we are using the <b>Subject Key Identifier</b> value in their certificate. This is a very long string that looks like: <CodeBlock>e417b7452d1fbbb6cef6f1ba8dcf25f5186dac4e</CodeBlock>
     </TabItem>
     <TabItem label="role" value="role">
     This will determine which groups the user is assigned to upon import. <b>This field is required</b>. The values in this column assign users to their respective groups, which allows for access to the application.
@@ -52,7 +63,9 @@ This file contains all the columns that we need and will use in Okta. There are 
 ### Double Check - Triple Check
 
 :::danger
-If the `cac_edipi` or `gsa_id` is wrong, the user will not be able to log in. Additionally, please make sure that the value in the `role` column is either `office`, `admin`, or `hybrid` and all lowercase. Please make sure to double check these values prior to importing.
+If the `cac_edipi` or `gsa_id` is wrong, the user will not be able to log in. Additionally, please make sure that the value in the `role` column is either `office`, `admin`, or `hybrid` and all lowercase. Please make sure to double check these values prior to importing.<br/><br/>
+GSA & ECA Certificate chains use the `gsa_id` column<br/>
+Anyone using CA-3 root certificates uses the `cac_edipi` column
 :::
 
 ## Importing CSV File into Okta
