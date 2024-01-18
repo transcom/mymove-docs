@@ -13,7 +13,7 @@ Backend feature flags via the "experimental" way utilize environment variables r
 Feature flags stored inside of the environment variables files should be prefixed with `FEATURE_FLAG_`. It must be prefixed this way in order for the `EnvFetcher` to properly retrieve it.
 
 Code example:
-`export FEATURE_FLAG_EXAMPLE=true` (Set's the feature flag *`example`* to true)
+`export FEATURE_FLAG_EXAMPLE=true` (Sets the feature flag *`example`* to true)
 
 ### CircleCI deployment flags
 
