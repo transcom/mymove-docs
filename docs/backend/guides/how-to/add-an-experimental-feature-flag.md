@@ -22,7 +22,7 @@ To set a feature flag as enabled or disabled within certain deployment environme
 When you export your feature flag variable for a specific environment, make sure you update its "app" and its respective "app-client-tls" file. Example:
 
 ```
-// ${environment} can be "prd", "exp", "stg", and so on.
+// ${environment} can be "prd", "exp", "stg", "loadtest", "demo", "review", and so on as environments change.
 
 config/env/{$environment}.app.env
 
