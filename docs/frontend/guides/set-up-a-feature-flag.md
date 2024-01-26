@@ -35,6 +35,8 @@ const environmentFlags = {development: Object.assign({}, defaultFlags, { myFeatu
 
 Access the flag value through context
 
+#### Context method
+
 1. To access context, import `withContext`
 
    ```
@@ -56,3 +58,20 @@ Access the flag value through context
 
    const showMyFeatureFlag = context.flags.myFeatureFlag;
    ```
+
+#### Detect flags method
+
+1. Import detectFlags
+   ```
+   import { detectFlags } from 'utils/featureFlags';
+   ```
+
+2. Assign flags to a constant
+  ```
+  const flags = detectFlags(process.env.NODE_ENV, window.location.host, window.location.search);
+  ```
+
+3. Grab flag for use
+  ```
+  flags.myFeatureFlag
+  ```
