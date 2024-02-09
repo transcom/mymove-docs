@@ -6,6 +6,13 @@ description: |
 
 # _Deprecating `devseed` Scenarios and use `testharness` Scenarios instead_
 
+:::info
+
+This documentation regarding the deprecation of the devseed usage and data, can be ignored, we will continue the use and evolving of devseed data as best fit to use in test scenarios.
+
+:::
+
+
 ## Background
 
 When working with or testing our system, it can be helpful to have sample data
