@@ -130,7 +130,7 @@ func (h SomeNewHandler) Handle(params newfeatureop.FeatureParams) middleware.Res
 You can declare a function in the `utils/featureFlags` that you can reuse to gather the value of the feature flag within the frontend.
 First, add your function to `utils/featureFlags` like so
 ```javascript
-// isYourFeatureFlagEnabled returns the Flipt feature flag value of multi move
+// isYourFeatureFlagEnabled returns the Flipt feature flag value of
 export function isYourFeatureFlagEnabled() {
   const flagKey = 'feature_flag'; // Just the key, not ${feature_flag}_key
   return getBooleanFeatureFlagForUser(flagKey, {}) // Swap with getVariantFeatureFlagForUser as necessary and handle switch case
@@ -139,7 +139,7 @@ export function isYourFeatureFlagEnabled() {
         // Found feature flag, "match" is its boolean value
         return result.match;
       }
-      throw new Error('multi move feature flag is undefined');
+      throw new Error('feature flag is undefined');
     })
     .catch((error) => {
       // On error, log it and then just return false setting it to be disabled.
