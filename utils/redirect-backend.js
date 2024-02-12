@@ -96,9 +96,10 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/backend/guides/feature-flags-in-the-app',
+    to: '/docs/tools/feature-flags/how-to-use-feature-flags',
     from: [
       '/docs/dev/contributing/backend/Feature-Flags-in-the-App',
+      '/docs/backend/guides/feature-flags-in-the-app',
     ],
   },
   {
@@ -186,8 +187,9 @@ module.exports = [
     ],
   },
   {
-    to: '/docs/frontend/guides/set-up-a-feature-flag',
+    to: '/docs/tools/feature-flags/how-to-use-feature-flags',
     from: [
+      '/docs/frontend/guides/set-up-a-feature-flag',
       '/docs/dev/contributing/backend/How-to-Set-Up-a-Feature-Flag',
       '/docs/backend/guides/how-to/set-up-a-feature-flag',
     ],
