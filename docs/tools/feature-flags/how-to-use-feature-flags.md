@@ -154,7 +154,8 @@ And once you have it created, navigate to the component you would like to implem
 Then, import your new function and use it
 
 ```javascript
-import { isMultiMoveEnabled } from '../../utils/featureFlags';
+// Rename to existing util function or to the new one you may have created
+import { isFeatureFlagEnabled } from '../../utils/featureFlags';
 ```
 
 For a class, add it to state and then call it in the `componentDidMount`
