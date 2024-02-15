@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmymove_docs=self.webpackChunkmymove_docs||[]).push([[8535],{97739:e=>{e.exports=JSON.parse('{"name":"docusaurus-plugin-redoc","id":"plugin-redoc-0"}')}}]);
