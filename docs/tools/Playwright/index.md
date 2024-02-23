@@ -16,3 +16,8 @@ Running Playwright Tests locally:
 1. You should see a browser window open and will see click thru as the tests are run.
 
 You can also debug the Playwright tests using this method and drop breakpoints in the file. When you hover over the lines in debugger the associated components in the browser window it opened will be highlighted as well.
+
+## Playwright documentation
+https://playwright.dev/docs/intro
+The documentation is well rounded. It also includes conventional use of specific playwright library functions regarding UI test practices.
+
