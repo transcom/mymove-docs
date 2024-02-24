@@ -3,6 +3,11 @@ sidebar_position: 1
 ---
 
 # Playwright
+
+## Playwright documentation
+https://playwright.dev/docs/intro
+The documentation is well rounded. It also includes conventional use of specific playwright library functions regarding UI test practices.
+
 ## Running Playwright locally with VSCode
 
 Running Playwright Tests locally:
