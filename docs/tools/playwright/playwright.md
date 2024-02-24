@@ -10,7 +10,6 @@ The documentation is well rounded. It also includes conventional use of specific
 
 ## Running Playwright locally with VSCode
 
-Running Playwright Tests locally:
 1. Install the **Playwright Test for VSCode** extension
 1. Press **Command+Shift+P** and then type: **Install Playwright** select what should be the first option **Test: Install Playwright**
 1. You will be asked which browsers you want to install, you can just use Chromium other are optional, you don't need the Github Actions one
