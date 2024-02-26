@@ -7,7 +7,9 @@ development, you will modify your `/etc/hosts` file to contain the following:
 
     127.0.0.1 milmovelocal
     127.0.0.1 officelocal
+    127.0.0.1 orderslocal
     127.0.0.1 adminlocal
+    127.0.0.1 engadminlocal
     127.0.0.1 primelocal
 
 ## Run the App as a Service Member
