@@ -3,15 +3,23 @@ id: index
 slug: /backend/guides/tget
 ---
 
+:::info
+
+The USTRANSCOM TRDM server is a SOAP-based server, communicating via XML instead of RESTful JSON.
+
+:::
+
 # TGET
 
-TGET stands for Transportation Global Edit Table. Each service has their own set of valid accounting codes, also known as TAC (transportation accounting codes).
+TGET stands for Transportation Global Edit Table. Each service has their own set of valid accounting codes, also known as TAC (transportation accounting codes). TAC's are associated with Lines of Accounting (LOA) to create proper 858 invoices.
 
 An example of this would be where the TOO (Transportation Ordering Officer) enters a TAC before approving a shipment. A TAC determines who pays for the shipping service (from which account). This TAC needs to be verified as a valid TAC. The MilMove application uses these to make sure that a customers order is valid. However, it should be noted that these codes do change and are updated.
 
 ## Context
 
-The current implmentation is based from a sample file that had been parsed to retrieve all the unique TAC values. A new table in the database was made called `transportation_accounting_codes` and a secure migration was done to put all those unique values into the database.
+The old implmentation is based from a sample file that had been parsed to retrieve all the unique TAC values. A new table in the database was made called `transportation_accounting_codes` and a secure migration was done to put all those unique values into the database. We have since updated this to be an automated AWS Lambda function to pull TGET data every week. We have three tables, with two being automated. The two automated tables, TAC `transportation_accounting_codes` and LOA `lines_of_accounting`, receive data dumps every Sunday. The third TGET table, `us_post_region_cities`, was a manual data dump. This is slated to be automated in the future.
+
+Click [here](https://github.com/transcom/trdm-lambda) for the trdm-lambda repository hosted on GitHub. For protected information on the TRDM lambda function, see [Confluence](https://dp3.atlassian.net/wiki/spaces/MT/pages/2275573761/TRDM+Soap+Proxy+API+Gateway+Lambda+Function). For open source documentation, see [this page](trdm-lambda.md).
 
 In the MilMove app, when a user enters a value in to the TAC field, a call gets made to our backend to check if the input shows up in the database. If the TAC value is invalid, the user is notified, but still allowed to proceed.
 
