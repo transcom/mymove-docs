@@ -127,35 +127,12 @@ func (h SomeNewHandler) Handle(params newfeatureop.FeatureParams) middleware.Res
 
 ### Frontend Defined Util for Feature Flag Logic
 
-You can declare a function in the `utils/featureFlags` that you can reuse to gather the value of the feature flag within the frontend.
-First, add your function to `utils/featureFlags` like so
-```javascript
-// isYourFeatureFlagEnabled returns the Flipt feature flag value of
-export function isYourFeatureFlagEnabled() {
-  const flagKey = 'feature_flag'; // Just the key, not ${feature_flag}_key
-  return getBooleanFeatureFlagForUser(flagKey, {}) // Swap with getVariantFeatureFlagForUser as necessary and handle switch case
-    .then((result) => {
-      if (result && typeof result.match !== 'undefined') {
-        // Found feature flag, "match" is its boolean value
-        return result.match;
-      }
-      throw new Error('feature flag is undefined');
-    })
-    .catch((error) => {
-      // On error, log it and then just return false setting it to be disabled.
-      // No need to return it for extra handling.
-      milmoveLogger.error(error);
-      return false;
-    });
-}
-```
 
-And once you have it created, navigate to the component you would like to implement feature flag logic for.
+And once you have it created in envrc, navigate to the component you would like to implement feature flag logic for.
 Then, import your new function and use it
 
 ```javascript
-// Rename to existing util function or to the new one you may have created
-import { isFeatureFlagEnabled } from '../../utils/featureFlags';
+import { isBooleanFlagEnabled } from '../../utils/featureFlags';
 ```
 
 For a class, add it to state and then call it in the `componentDidMount`
@@ -181,21 +158,13 @@ export class App extends Component {
 For a function, call and assign it in the `useEffect`
 
 ```javascript
-  useEffect(() => {
+const [yourFFHere, setYourFFHere] = useState();
+
+useEffect(() => {
   const fetchData = async () => {
-    try {
-      const isEnabled = await isFeatureFlagEnabled();
-      setIsFeatureFlagEnabled(isEnabled);
-    } catch (error) {
-      const { message } = error;
-      milmoveLogger.error({ message, info: null });
-      setErrorState({
-        hasError: true,
-        error,
-        info: null,
-      });
-      retryPageLoading(error);
-    }
+    isBooleanFlagEnlabed('your_ff_here').then((enabled) => {
+      setYourFFHere(enabled);
+    });
   };
   fetchData();
 }, [setErrorState]);
