@@ -146,7 +146,7 @@ export class App extends Component {
 
 
   componentDidMount() {
-    isFeatureFlagEnabled().then((enabled) => {
+    isBooleanFlagEnabled('your_ff_here').then((enabled) => {
       this.setState({
         featureFlag: enabled,
       });
