@@ -246,6 +246,27 @@ export const MyThing = () => {
 }
 ```
 
+## Jest Testing Feature Flags
+
+```javascript
+import { isBooleanFlagEnabled } from 'utils/featureFlags';
+```
+
+Add the following block to the top of your test file:
+
+```javascript
+jest.mock('utils/featureFlags', () => ({
+  ...jest.requireActual('utils/featureFlags'),
+  isBooleanFlagEnabled: jest.fn().mockImplementation(() => Promise.resolve(false)),
+}));
+```
+
+You can mock the boolean value in your tests with:
+
+```javascript
+isBooleanFlagEnabled.mockImplementation(() => Promise.resolve(YOUR_BOOLEAN_VALUE_HERE))
+```
+
 ## Deploying Feature Flags
 
 Each deployed environment has its own feature flag configuration. The
