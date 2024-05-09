@@ -143,7 +143,7 @@ module.exports = {
         },
       ],
       // Truss contract ends in 2023. Do not show a date that surpasses 2023 that involves Truss.
-      copyright: `Copyright ${Math.min(new Date().getFullYear(), 2023)}  U.S. Federal Government (in countries where recognized) and TrussWorks. Built with Docusaurus.`,
+      copyright: `Copyright ${Math.min(new Date().getFullYear(), 2024)}  U.S. Federal Government.`,
     },
     prism: {
       theme: themes.oceanicNext,
