@@ -111,3 +111,25 @@ Then, back over in your `INT` PR, you'll copy over all of the description in tha
 **Step 7**: Once you get at least 2 approvals, you're ready to request your PR to be merged into `main`! We only let a select few have the power of merging code into `main`, so find the member on your team that is a `CODEOWNER` and have them merge your PR!
 
 ## CONGRATS! YOU HAVE SUCCESSFULLY MERGED YOUR PR INTO `main`! :confetti_ball:
+
+## BUT WAIT! NOT DONE YET! :hand:
+
+Now we need to move some things in Agility and add one little thing before we can mark this BL item as complete.
+
+Navigate to [CircleCI](https://app.circleci.com/pipelines/github/transcom/mymove?branch=main) and find your PR that is currently building, or has already built, into `main`. Ensure you are looking at only builds into `main`.
+
+![Image showing merge conflicts](/img/create_pr/circleCI_main.png)
+
+You should see a big list of builds, but find the one that matches your branch and you'll see a number to the right of `mymove` on the left side of your build. This is your <strong>build number</strong>. Copy this number and open up your BL item in Agility (should currently be in the "Review/Merge Staging" column).
+
+![Image showing merge conflicts](/img/create_pr/circleCI_build_number.png)
+
+You should see a `more...` button at the bottom of the screen (above "Show Relationships"). Click that.
+
+Scroll down and you'll see a `Build` text input. Throw that <strong>build number</strong> in there.
+
+![Image showing merge conflicts](/img/create_pr/agility_build_number.png)
+
+Once that has saved you can now close the window and move the BL item over into "Complete".
+
+## CONGRATS! YOU HAVE NOW COMPLETED A BACKLOG ITEM FROM START TO FINISH! :partying_face:
