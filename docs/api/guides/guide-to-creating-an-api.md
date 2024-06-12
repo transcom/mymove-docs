@@ -13,8 +13,8 @@ Always start with swagger. This step creates your API's endpoint definitions and
 
 ## Creating a new API yaml
 
-All new API's require a new yaml file to be added in `mymove/swagger-def`. This directory holds many different specs and definitions as they get reused throughout the application.
-You will notice that there is also a `mymove/swagger` folder which holds what looks like to be a copy of `swagger-def`, please do not edit within this folder. The `swagger` folder
+All new API require a new yaml file to be added in `mymove/swagger-def`. This directory holds many different specs and definitions as they get reused throughout the application.
+You will notice that there is also a `mymove/swagger` folder which holds what looks to be a copy of `swagger-def`, please do not edit within this folder. The `swagger` folder
 holds the generated specs to be used within the backend of the codebase.
 After we have a base `.yaml` file for our new API and maybe even some tags and paths defined, we will generate Swagger and the new API definitions and specs will generated and be placed inside the `swagger` folder.
 
@@ -158,7 +158,7 @@ Currently, the five routers are as follows
 - Health Router
   - health server
 
-The proxy will be covered further along. Please navigate to the function that creates the desired router you want to host your API on. Created a new router should only ever be done if you are standing up a new server.
+The proxy will be covered further along. Please navigate to the function that creates the desired router you want to host your API on. Creating a new router should only ever be done if you are standing up a new server.
 
 This example will utilize the Prime router. The Prime router is stood up under the `newPrimeRouter` func, and currently looks like this:
 ```
