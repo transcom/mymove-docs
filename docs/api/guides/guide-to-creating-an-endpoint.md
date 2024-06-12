@@ -424,4 +424,5 @@ If you'd like to learn more about event triggers, you can find more details [her
 * [How to Deprecate an API Endpoint](/docs/api/guides/how-to-deprecate-endpoints)
 * [How to Test the Prime API](/docs/api/testing/how-to-test-the-prime-api)
 * [Creating an Endpoint](/docs/api/guides/guide-to-creating-an-endpoint)
+* [Creating an API](/docs/api/guides/guide-to-creating-an-api)
 * [Swagger tutorial](https://goswagger.io/tutorial/todo-list.html)

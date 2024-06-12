@@ -9,6 +9,7 @@ This page will collect guides and information on programming our external facing
 - [API Style Guide](api-style-guide)
 - [API Errors](api-errors)
 - [Guide to Creating an Endpoint](guide-to-creating-an-endpoint)
+- [Guide to Creating an API](guide-to-creating-an-api)
 - [How to Deprecate an API Endpoint](how-to-deprecate-endpoints)
 - [Acceptance Testing Prime API Endpoints](../testing/acceptance-testing-prime-api-endpoints)
 - [Push Notifications to Prime](../docs/push-notifications-to-prime)
