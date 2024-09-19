@@ -23,3 +23,19 @@ Things to modify:
     instructions [An example slack
     message](https://ustcdp3.slack.com/archives/CP6PTUPQF/p1624996730029000)
 11. Merge the PR in transcom/mymove
+
+# Troubleshooting
+
+If you're getting a wrong version of node error try the following steps:
+1. run `brew install nvm`
+2. run `mkdir ~/.nvm` to create nvm working directory
+3. add nvm to shell profile by running:
+    > ```
+    > export NVM_DIR="$HOME/.nvm"
+    > [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
+    > [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+    > ```
+4. run `nvm install 18.20.4` with the version of nodejs you want to install
+5. run `nvm use 18.20.4` with the version of nodejs you want to use
+
+If you're still encountering errors you can use nvm to uninstall the incorrect versions `nvm uninstall 18.20.2`
