@@ -1,2 +1,0 @@
-brew 'gh'
-brew 'git'
