@@ -18,8 +18,9 @@ Each deployed environment (demo, exp, loadtest, stg, prd) is in its
 own [Flipt Namespace](https://www.flipt.io/docs/concepts#namespaces) and only that single namespace is available in each environment.
 
 Flipt supports two kinds of feature flags:
- * [Boolean Flags](https://www.flipt.io/docs/concepts#boolean-flags)
- * [Variant Flags](https://www.flipt.io/docs/concepts#variant-flags)
+
+- [Boolean Flags](https://www.flipt.io/docs/concepts#boolean-flags)
+- [Variant Flags](https://www.flipt.io/docs/concepts#variant-flags)
 
 Boolean flags are for when a feature can only be turned on or off. Variant flags are for when a feature might have multiple options.
 
@@ -34,9 +35,10 @@ We use the [backend service object](../../backend/guides/service-objects/overvie
 For development environments, the feature flag service object will utilize environment variables set in `.envrc`. This is because if a Flipt URL is not provided, it will default to the EnvFetcher service object. Internal endpoints to fetch the feature flag value will utilize the same service object, but return different values depending on environment and configuration.
 
 The current APIs for in the backend are `GetBooleanFlagForUser` and `GetVariantFlagForUser`. These methods have been added in [transcom/mymove#11330](https://github.com/transcom/mymove/pull/11330). The feature flag service object sets the `entityID` for those requests to the ID of the user making the request. It populates some default information in the context, including:
-  * The application name (mil, office, admin)
-  * If the user is an admin user, service member, or office user
-  * The [permissions](../../backend/guides/roles-and-permissions.md) of the user
+
+- The application name (mil, office, admin)
+- If the user is an admin user, service member, or office user
+- The [permissions](../../backend/guides/roles-and-permissions.md) of the user
 
 As we get more experience with feature flags, more information may be added to the default context of a user.
 
@@ -55,6 +57,8 @@ To allow for customizing the user presentation based on feature flags, we have a
 ## Example Feature Flag Usage
 
 ### Backend Boolean Feature Flag Usage
+
+If you are checking for a boolean flag value in the area of the Prime API, you should use the GetBooleanFlag() function rather than the GetBooleanFlagForUser() function. The Prime API (using primelocal as the base URL for testing) is our way to test mTLS functionality. The GetBooleanFlagForUser() function relies on a session being created, which we don't have in the case of TLS authentication. Using GetBooleanFlagForUser() without that session will result in a nil session error, resulting in the Feature Flag check always returning False. Using GetBooleanFlag() does not rely on a session, and allows the true Feature Flag value to be checked and also ensures the the TLS handshake is truly under test.
 
 Imagine you have a new endpoint that adds new functionality that you
 aren't ready to expose to every user. Add code to your handler that
@@ -127,7 +131,6 @@ func (h SomeNewHandler) Handle(params newfeatureop.FeatureParams) middleware.Res
 
 ### Frontend Defined Util for Feature Flag Logic
 
-
 And once you have it created in envrc, navigate to the component you would like to implement feature flag logic for.
 Then, import your new function and use it
 
@@ -136,6 +139,7 @@ import { isBooleanFlagEnabled } from '../../utils/featureFlags';
 ```
 
 For a class, add it to state and then call it in the `componentDidMount`
+
 ```javascript
 export class App extends Component {
   constructor() {
@@ -143,7 +147,6 @@ export class App extends Component {
       featureFlag: false,
     };
   }
-
 
   componentDidMount() {
     isBooleanFlagEnabled('your_ff_here').then((enabled) => {
@@ -153,8 +156,8 @@ export class App extends Component {
     });
   }
 }
-
 ```
+
 For a function, call and assign it in the `useEffect`
 
 ```javascript
@@ -178,18 +181,9 @@ Imagine you want to enable some new workflow only for certain users.
 import { FeatureFlag } from 'components/FeatureFlag/FeatureFlag';
 
 export const MyThing = () => {
+  const enabledThing = <div>You can do the thing!</div>;
 
-  const enabledThing = (
-    <div>
-      You can do the thing!
-    </div>
-  );
-
-  const disabledThing = (
-    <div>
-      Sorry, you can't do the thing.
-    </div>
-  );
+  const disabledThing = <div>Sorry, you can't do the thing.</div>;
 
   const featureFlagRender = (flagValue) => {
     if (flagValue === 'true') {
@@ -199,8 +193,8 @@ export const MyThing = () => {
     }
   };
 
-   return <FeatureFlag flagKey="new-feature" render={featureFlagRender} />;
-}
+  return <FeatureFlag flagKey="new-feature" render={featureFlagRender} />;
+};
 ```
 
 ### Frontend Variant Feature Flag Rendering
@@ -211,27 +205,14 @@ Imagine you want to display different things to different users
 import { FeatureFlag } from 'components/FeatureFlag/FeatureFlag';
 
 export const MyThing = () => {
+  const thingOne = <div>This theme is Thing One!</div>;
 
-  const thingOne = (
-    <div>
-      This theme is Thing One!
-    </div>
-  );
+  const thingTwo = <div>This theme is Thing Two!</div>;
 
-  const thingTwo = (
-    <div>
-      This theme is Thing Two!
-    </div>
-  );
-
-  const thingThree = (
-    <div>
-      This theme is Thing Three!
-    </div>
-  )
+  const thingThree = <div>This theme is Thing Three!</div>;
 
   const featureFlagRender = (flagValue) => {
-    switch(flagValue) {
+    switch (flagValue) {
       case 'thingOne':
         return thingOne;
       case 'thingTwo':
@@ -242,8 +223,8 @@ export const MyThing = () => {
     }
   };
 
-   return <FeatureFlag flagKey="new-feature" render={featureFlagRender} />;
-}
+  return <FeatureFlag flagKey="new-feature" render={featureFlagRender} />;
+};
 ```
 
 ## Jest Testing Feature Flags
@@ -264,7 +245,7 @@ jest.mock('utils/featureFlags', () => ({
 You can mock the boolean value in your tests with:
 
 ```javascript
-isBooleanFlagEnabled.mockImplementation(() => Promise.resolve(YOUR_BOOLEAN_VALUE_HERE))
+isBooleanFlagEnabled.mockImplementation(() => Promise.resolve(YOUR_BOOLEAN_VALUE_HERE));
 ```
 
 ## Deploying Feature Flags
@@ -336,7 +317,6 @@ The admin console has a limited feature flag testing page you can use. Go to [ht
 Use the [evaluation
 console](https://www.flipt.io/docs/introduction#evaluation-console) to
 see if the results are what you expected. Go to [http://localhost:9080](http://localhost:9080) to see the Flipt console locally.
-
 
 ### CircleCI deployment flags
 
