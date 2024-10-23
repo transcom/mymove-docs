@@ -58,7 +58,7 @@ To allow for customizing the user presentation based on feature flags, we have a
 
 ### Backend Boolean Feature Flag Usage
 
-If you are checking for a boolean flag value in the area of the Prime API, you should use the GetBooleanFlag() function rather than the GetBooleanFlagForUser() function. The Prime API (using primelocal as the base URL for testing) is our way to test the mTLS functionality of the The GetBooleanFlagForUser() function relies on a session being created, which we don't have in the case of TLS authentication, and using GetBooleanFlagForUser() without that session will result in a nil session error, resulting in the Feature Flag check to always return False. Using GetBooleanFlag() does not rely on a session, and allows the true Feature Flag value to be checked and also ensures the the TLS handshake is truly under test.
+If you are checking for a boolean flag value in the area of the Prime API, you should use the GetBooleanFlag() function rather than the GetBooleanFlagForUser() function. The Prime API (using primelocal as the base URL for testing) is our way to test mTLS functionality. The GetBooleanFlagForUser() function relies on a session being created, which we don't have in the case of TLS authentication. Using GetBooleanFlagForUser() without that session will result in a nil session error, resulting in the Feature Flag check always returning False. Using GetBooleanFlag() does not rely on a session, and allows the true Feature Flag value to be checked and also ensures the the TLS handshake is truly under test.
 
 Imagine you have a new endpoint that adds new functionality that you
 aren't ready to expose to every user. Add code to your handler that
@@ -94,6 +94,9 @@ func (h SomeNewHandler) Handle(params newfeatureop.FeatureParams) middleware.Res
 ```
 
 ### Backend Variant Feature Flag Usage
+
+Imagine you have want to have some parameter that is different per
+user.
 
 ```go
 
