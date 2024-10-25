@@ -21,7 +21,7 @@
     "@easyops-cn/docusaurus-search-local": "^0.36.0",
     "@saucelabs/theme-github-codeblock": "0.2.3",
     "clsx": "^2.0.0",
-    "eslint": "^9.9.1",
+    "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "file-loader": "^6.2.0",
