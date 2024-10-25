@@ -201,6 +201,10 @@ module.exports = {
             spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/support.yaml',
             route: '/api/support',
           },
+          {
+            spec: 'https://raw.githubusercontent.com/transcom/mymove/main/swagger/pptas.yaml',
+            route: '/api/pptas',
+          },
         ],
       },
     ],
