@@ -114,6 +114,11 @@ module.exports = {
           label: 'Support',
           href: '/api/support',
         },
+        {
+          type: 'link',
+          label: 'PPTAS',
+          href: '/api/pptas',
+        }
       ],
     },
     {
