@@ -390,7 +390,7 @@ This section covers what it's like to add a new stored procedure. There are some
 :::note Pop Quirks with ; and $$
 
 Reading the [Buffalo Pop docs](https://gobuffalo.io/documentation/database/pop/) it was discovered that there's no mention of stored procedures.
-Our migrations are run through Pop and we encounted some issues when creating stored procedures.
+Our migrations are run through Pop and we encountered some issues when creating stored procedures.
 
 :::
 
