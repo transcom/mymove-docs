@@ -383,6 +383,72 @@ We have run into problems using a pointer receiver for `TableName`, perhpas due 
 models internally as type `interface{}` in its algorithms, and an
 [interface doesn't play well with pointer receivers](https://stackoverflow.com/questions/40823315/x-does-not-implement-y-method-has-a-pointer-receiver).
 
+### Adding a new stored procedure
+
+This section covers what it's like to add a new stored procedure. There are some atypical syntax workarounds we need to use within the Pop ORM.
+
+:::note Pop Quirks with ; and $$
+
+Reading the [Buffalo Pop docs](https://gobuffalo.io/documentation/database/pop/) it was discovered that there's no mention of stored procedures.
+Our migrations are run through Pop and we encounted some issues when creating stored procedures.
+
+:::
+
+For the sake of this section, we'll show you one example that didn't work and then changes were made that did allow it to work so you can see the difference. Steps taken:
+
+1. [Generated a new migration file](#creating-migrations).
+2. Open the generated SQL file and add the logic to create your stored procedure - typically using `$$` to wrap the logic in:
+    ```sql
+    CREATE TABLE IF NOT EXISTS test_logs (
+        id UUID DEFAULT uuid_generate_v4(),
+        message TEXT,
+        created_at TIMESTAMP DEFAULT NOW(),
+        PRIMARY KEY (id)
+    );
+
+    CREATE OR REPLACE PROCEDURE log_message_to_test_table(IN input_message TEXT)
+    AS $$
+    BEGIN
+        INSERT INTO test_logs (message)
+        VALUES (input_message);
+    END;
+    $$
+    LANGUAGE plpgsql;
+    ```
+3. When running this (either by `make server_run`, `make db_dev_fresh` or `make db_dev_migrate`), we were getting this error:
+    ```
+    error executing statement: "CREATE OR REPLACE PROCEDURE log_message_to_test_table
+    (IN input_message TEXT)\nLANGUAGE plpgsql\nAS $$\nBEGIN\nINSERT INTO test_logs (message)\nVALUES 
+    (input_message);": pq: unterminated dollar-quoted string at or near "$$
+    ```
+    Specifically the line `pq: unterminated dollar-quoted string at or near "$$` was frustrating because, as you can see, we are successfully closing the proc with `$$`
+
+:::note The workaround
+
+Since we know by looking into the Buffalo Pop docs that stored procs aren't mentioned, we assume they aren't supported natively. The error tells us that we need to change our approach and avoid using `$$` - we can assume Pop is freaking out when seeing the first semi-colon and isn't "hip" with the double dollar quoting.
+
+:::
+4. Rewrite the stored procedure to instead use single quotes instead of `$$` - this wraps our logic in raw SQL which will bypass any quirks that Pop is looking for.
+    ```sql
+    CREATE TABLE IF NOT EXISTS test_logs (
+        id UUID DEFAULT uuid_generate_v4(),
+        message TEXT,
+        created_at TIMESTAMP DEFAULT NOW(),
+        PRIMARY KEY (id)
+    );
+
+    CREATE OR REPLACE PROCEDURE log_message_to_test_table(IN input_message TEXT)
+    AS ' -- changing this to single quotes
+    BEGIN
+        INSERT INTO test_logs (message)
+        VALUES (input_message);
+    END;
+    '
+    LANGUAGE plpgsql;
+    ```
+5. Now when running `make server_run`, `make db_dev_fresh` or `make db_dev_migrate`, this migration passes!
+6. Remember that if you implement a `RAISE EXCEPTION` or involve any string, you'll need to wrap it in double single quotes `RAISE EXCEPTION ''Error doing something''` since the entire logic block is wrapped in single quotes
+
 ## Running Migrations
 
 Migrations are run by the `milmove migrate` command. This allows us to leverage different authentication methods for migrations in development and in production using the same code. To migrate you should use a command based on your DB:
