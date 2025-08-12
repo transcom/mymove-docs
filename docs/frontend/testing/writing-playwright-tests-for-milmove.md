@@ -201,3 +201,6 @@ testharness.Dispatch](https://github.com/transcom/mymove/blob/cf5ad992f2f3a83365
 
 Then the dispatcher uses the `actionDispatcher` map as described
 above.
+
+### 508 considerations
+By default when developing your playwright test, it will run in 508 strict mode. [E-05764](https://www13.v1host.com/USTRANSCOM38/assetdetail.v1?number=E-05764) added the enforcement of 508 compliance on all tests. This is done by using the `508enforcement` import file as outlined in eslint rule `no-restricted-imports`. Importing from `@playwright/test` is marked as not allowed, and instead `508enforcement` must be imported. This import maintains all of the existing `@playwright/test` functionality, but with the `test` import extended with a built-in `afterEach`. When your Playwright test finishes, this triggers the DOM to be scanned for 508 violations.
