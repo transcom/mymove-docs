@@ -108,3 +108,6 @@ await userEvent.paste(textBox, 'My verbose description');
 ```
 
 If the given form validates on every change, using `.type()` will validate for every character, while using `.paste()` will only validate once. If you find that using `.type()` is a bottleneck on your test, and both `.paste()` and `.type()` are otherwise appropriate, `.paste()` may be preferred.
+
+### 508 considerations
+By default when developing your jest test, it will run in 508 strict mode. [E-05764](https://www13.v1host.com/USTRANSCOM38/assetdetail.v1?number=E-05764) added the enforcement of 508 compliance on all tests. This is done via a global `afterEach` wrapper which runs axe against the DOM your jest test renders. When writing your test, your code may work properly but you may trigger this wrapper and see errors being reported in the wrapper file. This is normal and the 508 errors there should be addressed within your backlog item to prevent 508 violations from being added to the application.
